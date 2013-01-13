@@ -1,4 +1,4 @@
-package org.camelcookbook.routing.wiretap;
+package org.camelcookbook.routing.model;
 
 /**
  * Utility class that increments the age of a {@link Cheese}.

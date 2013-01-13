@@ -1,4 +1,4 @@
-package org.camelcookbook.routing.wiretap;
+package org.camelcookbook.routing.model;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;

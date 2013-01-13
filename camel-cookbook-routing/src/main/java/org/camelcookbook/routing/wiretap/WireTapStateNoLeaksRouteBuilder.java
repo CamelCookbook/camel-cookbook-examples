@@ -1,6 +1,8 @@
 package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.routing.model.CheeseCloningProcessor;
+import org.camelcookbook.routing.model.CheeseRipener;
 
 /**
  * Route showing wiretap without state leakage.

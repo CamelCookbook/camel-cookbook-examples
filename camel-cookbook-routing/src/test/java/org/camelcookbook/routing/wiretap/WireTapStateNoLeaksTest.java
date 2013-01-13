@@ -6,6 +6,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.camelcookbook.routing.model.Cheese;
 import org.junit.Assert;
 import org.junit.Test;
 

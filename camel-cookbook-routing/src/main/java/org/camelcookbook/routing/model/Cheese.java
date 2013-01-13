@@ -1,4 +1,4 @@
-package org.camelcookbook.routing.wiretap;
+package org.camelcookbook.routing.model;
 
 /**
  * Simple POJO that allows for leaky state between threads.

@@ -1,9 +1,9 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Simplest possible example of the wireTap EIP.
+ * Simplest possible example of the wiretap EIP.
  */
 public class WireTapRouteBuilder extends RouteBuilder {
 

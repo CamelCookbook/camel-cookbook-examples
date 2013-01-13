@@ -1,5 +1,8 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
+/**
+ * Simple POJO that allows for leaky state between threads.
+ */
 public class Cheese implements Cloneable {
     private int age;
 

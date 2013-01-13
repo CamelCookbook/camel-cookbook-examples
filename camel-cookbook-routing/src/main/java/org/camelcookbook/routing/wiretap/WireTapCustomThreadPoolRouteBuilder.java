@@ -1,4 +1,4 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolBuilder;
@@ -6,7 +6,7 @@ import org.apache.camel.builder.ThreadPoolBuilder;
 import java.util.concurrent.ExecutorService;
 
 /**
- * Simplest possible example of the wireTap EIP.
+ * Using a custom thread pool with a wiretap.
  */
 public class WireTapCustomThreadPoolRouteBuilder extends RouteBuilder {
 

@@ -1,8 +1,11 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.builder.RouteBuilder;
 
-class WireTapStateNoLeaksRouteBuilder extends RouteBuilder {
+/**
+ * Route showing wiretap without state leakage.
+ */
+public class WireTapStateNoLeaksRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {

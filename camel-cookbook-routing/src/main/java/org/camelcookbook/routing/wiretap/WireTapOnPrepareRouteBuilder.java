@@ -1,11 +1,11 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Simplest possible example of the wireTap EIP.
+ * Using the <code>onPrepare</code> statement to modify the tapped message during the send.
  */
 public class WireTapOnPrepareRouteBuilder extends RouteBuilder {
 

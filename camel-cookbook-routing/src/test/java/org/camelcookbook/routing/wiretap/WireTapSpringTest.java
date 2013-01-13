@@ -1,18 +1,19 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class WireTapTest extends CamelTestSupport {
+public class WireTapSpringTest extends CamelSpringTestSupport {
 
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new WireTapRouteBuilder();
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/wireTap-context.xml");
     }
 
     @Produce(uri = "direct:in")
@@ -39,4 +40,5 @@ public class WireTapTest extends CamelTestSupport {
         tapped.expectedBodyReceived().equals(messageBody);
         out.expectedBodyReceived().equals(messageBody);
     }
+
 }

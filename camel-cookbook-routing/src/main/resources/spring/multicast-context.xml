@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext id="routing.multicast" xmlns="http://camel.apache.org/schema/spring">
+
+        <route id="routing.multicast.simple">
+            <from uri="direct:in"/>
+            <multicast>
+                <to uri="mock:first"/>
+                <to uri="mock:second"/>
+                <to uri="mock:third"/>
+            </multicast>
+        </route>
+
+    </camelContext>
+
+
+</beans>

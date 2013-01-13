@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <bean id="cheeseCloningProcessor" class="org.camelcookbook.routing.CheeseCloningProcessor"/>
+    <bean id="cheeseCloningProcessor" class="org.camelcookbook.routing.wiretap.CheeseCloningProcessor"/>
 
     <camelContext id="routing.wireTap.stateNoLeaks" xmlns="http://camel.apache.org/schema/spring">
 
@@ -17,7 +17,7 @@
 
         <route id="routing.wireTap.tapped">
             <from uri="direct:processInBackground"/>
-            <bean beanType="org.camelcookbook.routing.CheeseRipener" method="ripen"/>
+            <bean beanType="org.camelcookbook.routing.wiretap.CheeseRipener" method="ripen"/>
             <to uri="mock:tapped"/>
         </route>
 

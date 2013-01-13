@@ -1,4 +1,4 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
@@ -9,7 +9,7 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class WireTapStateLeaksTest extends CamelTestSupport {
+public class WireTapStateNoLeaksTest extends CamelTestSupport {
 
     @Produce(uri = "direct:in")
     protected ProducerTemplate template;
@@ -22,11 +22,11 @@ public class WireTapStateLeaksTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new WireTapStateLeaksRouteBuilder();
+        return new WireTapStateNoLeaksRouteBuilder();
     }
 
     @Test
-    public void testOutMessageAffectedByTappedRoute() throws InterruptedException {
+    public void testOutMessageUnaffectedByTappedRoute() throws InterruptedException {
         Cheese cheese = new Cheese();
         cheese.setAge(1);
 
@@ -40,12 +40,12 @@ public class WireTapStateLeaksTest extends CamelTestSupport {
         tapped.assertIsSatisfied();
         out.assertIsSatisfied();
 
-        // both mock endpoints should receive the same
-        tapped.expectedBodyReceived().inMessage().equals(cheese);
         out.expectedBodyReceived().equals(cheese);
-
         Cheese outCheese = out.getExchanges().get(0).getIn().getBody(Cheese.class);
-        Assert.assertEquals(2, outCheese.getAge());
+        Assert.assertEquals(1, outCheese.getAge());
+
+        Cheese tappedCheese = tapped.getExchanges().get(0).getIn().getBody(Cheese.class);
+        Assert.assertEquals(2, tappedCheese.getAge());
     }
 
 }

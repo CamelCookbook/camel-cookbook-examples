@@ -1,9 +1,9 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
-* @author jakub
+* Route showing wiretap state leakage.
 */
 class WireTapStateLeaksRouteBuilder extends RouteBuilder {
 

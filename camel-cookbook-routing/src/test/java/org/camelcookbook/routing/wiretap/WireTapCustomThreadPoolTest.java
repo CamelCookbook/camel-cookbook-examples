@@ -1,20 +1,19 @@
-package org.camelcookbook.routing;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.*;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
-public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
+public class WireTapCustomThreadPoolTest extends CamelTestSupport {
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/wireTap-customThreadPool-context.xml");
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new WireTapCustomThreadPoolRouteBuilder();
     }
 
     @Produce(uri = "direct:in")

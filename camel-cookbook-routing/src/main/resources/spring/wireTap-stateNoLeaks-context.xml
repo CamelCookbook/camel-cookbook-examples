@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <bean id="cheeseCloningProcessor" class="org.camelcookbook.routing.CheeseCloningProcessor"/>
+
+    <camelContext id="routing.wireTap.stateNoLeaks" xmlns="http://camel.apache.org/schema/spring">
+
+        <route id="routing.wireTap">
+            <from uri="direct:in"/>
+            <wireTap uri="direct:processInBackground" onPrepareRef="cheeseCloningProcessor"/>
+            <to uri="mock:out"/>
+        </route>
+
+        <route id="routing.wireTap.tapped">
+            <from uri="direct:processInBackground"/>
+            <bean beanType="org.camelcookbook.routing.CheeseRipener" method="ripen"/>
+            <to uri="mock:tapped"/>
+        </route>
+
+    </camelContext>
+
+
+</beans>

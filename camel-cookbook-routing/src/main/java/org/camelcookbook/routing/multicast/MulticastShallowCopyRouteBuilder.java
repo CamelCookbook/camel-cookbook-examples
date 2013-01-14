@@ -16,12 +16,12 @@ public class MulticastShallowCopyRouteBuilder extends RouteBuilder {
             .to("mock:afterMulticast");
 
         from("direct:first")
-            .setHeader("modifiedBy").constant("first")
+            .setHeader("firstModifies").constant("apple")
             .setHeader("threadName").simple("${threadName}")
             .to("mock:first");
 
         from("direct:second")
-            .setHeader("modifiedBy").constant("second")
+            .setHeader("secondModifies").constant("banana")
             .setHeader("threadName").simple("${threadName}")
             .to("mock:second");
     }

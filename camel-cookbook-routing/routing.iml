@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="Osmorc" name="OSGi">
-      <configuration manifestGenerationMode="OsmorcControlled" manifestLocation="" jarfileLocation="routing-1.0-SNAPSHOT.jar" outputPathType="CompilerOutputPath" bndFileLocation="" bundlorFileLocation="" bundleActivator="" bundleSymbolicName="routing" bundleVersion="1.0.0.SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
-        <additionalProperties>
-          <property key="Bundle-Description" value="All Camel bundle projects should inherit from this one" />
-          <property key="Import-Package" value="*,org.apache.camel.osgi" />
-          <property key="Bundle-Name" value="routing" />
-          <property key="Include-Resource" value="spring/wireTap-context.xml=$MODULE_DIR$/src/main/resources/spring/wireTap-context.xml,spring/wireTap-customThreadPool-context.xml=$MODULE_DIR$/src/main/resources/spring/wireTap-customThreadPool-context.xml" />
-        </additionalProperties>
-        <additionalJARContents />
-      </configuration>
-    </facet>
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset1" name="XML Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/spring/wireTap-context.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/wireTap-customThreadPool-context.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring/wireTap-stateNoLeaks-context.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -23,6 +14,7 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
@@ -39,114 +31,16 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.camel:camel-test-spring:2.10.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.camel:camel-spring:2.10.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-context:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-context:3.0.7.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-aop:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-asm:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-beans:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-core:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-expression:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-tx:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-asm:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-beans:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-core:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-expression:3.0.7.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-tx:3.0.7.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.1.1.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-blueprint:2.10.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-core-xml:2.10.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-core-osgi:2.10.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.aries.blueprint:org.apache.aries.blueprint:0.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.aries:org.apache.aries.util:0.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.aries.testsupport:org.apache.aries.testsupport.unit:0.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.aries.proxy:org.apache.aries.proxy.api:0.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-jms:2.10.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-jms:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix.camel:org.apache.servicemix.camel.component:4.4.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix.nmr:org.apache.servicemix.nmr.osgi:1.5.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix.nmr:org.apache.servicemix.nmr.api:1.5.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix.nmr:org.apache.servicemix.nmr.core:1.5.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.felix:org.apache.felix.framework:3.0.9" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix:servicemix-utils:1.5.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.woodstox:woodstox-core-asl:4.1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.woodstox:stax2-api:3.1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix.specs:org.apache.servicemix.specs.jbi-api-1.0:1.8.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-activation_1.1_spec:1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix.specs:org.apache.servicemix.specs.locator:1.8.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.mongodb:mongo-java-driver:2.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.hazelcast:hazelcast:1.9.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sna-projects.krati:krati:0.4.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: log4j:log4j:1.2.16" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.idevlab:rjc:0.6.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-pool:commons-pool:1.5.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.ehcache:ehcache:1.5.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: backport-util-concurrent:backport-util-concurrent:3.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.jsr107cache:jsr107cache:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.osgi:spring-osgi-test:1.2.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.junit:com.springsource.junit:3.8.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.objectweb.asm:com.springsource.org.objectweb.asm:2.2.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.osgi:spring-osgi-core:1.2.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.osgi:spring-osgi-io:1.2.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.fusesource.commonman:commons-management:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.servicemix.nmr:org.apache.servicemix.nmr.spring:1.5.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-cxf:2.8.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-cxf-transport:2.8.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.cxf:cxf-rt-bindings-soap:2.4.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.cxf:cxf-api:2.4.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.cxf:cxf-common-utilities:2.4.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.ws.xmlschema:xmlschema-core:2.0.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.neethi:neethi:3.0.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: wsdl4j:wsdl4j:1.6.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.cxf:cxf-rt-databinding-jaxb:2.4.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.4-1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-jetty:2.10.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.camel:camel-http:2.8.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-servlet_2.5_spec:1.1.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-codec:commons-codec:1.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-server:7.5.4.v20111024" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-continuation:7.4.5.v20110725" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-http:7.4.5.v20110725" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-io:7.4.5.v20110725" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-util:7.4.5.v20110725" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-security:7.5.4.v20111024" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-servlet:7.5.4.v20111024" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-servlets:7.5.4.v20111024" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-client:7.5.4.v20111024" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jetty:jetty-jmx:7.5.4.v20111024" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.cxf:cxf-bundle:2.4.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:1.0.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-annotation_1.0_spec:1.1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.xml.bind:jaxb-api:2.2.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.velocity:velocity:1.7" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.xml.bind:jaxb-xjc:2.2.4-1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-javamail_1.4_spec:1.7.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.xml.soap:saaj-api:1.3.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec:1.1.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-jaxws_2.2_spec:1.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: xml-resolver:xml-resolver:1.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: asm:asm:3.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework:spring-web:3.0.6.RELEASE" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.xml.messaging.saaj:saaj-impl:1.3.12" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jvnet:mimepull:1.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: antlr:antlr:2.7.7" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.xmlbeans:xmlbeans:2.4.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.jettison:jettison:1.3.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.jra:jra:1.0-alpha-4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: rhino:js:1.7R2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.ws.security:wss4j:1.6.4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.santuario:xmlsec:1.4.6" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.opensaml:opensaml:2.5.1-1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.opensaml:openws:1.4.2-1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.opensaml:xmltooling:1.3.2-1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: joda-time:joda-time:1.6.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: xalan:xalan:2.7.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: xalan:serializer:2.7.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: bouncycastle:bcprov-jdk14:140" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: xfire:opensaml:1.0.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.xml.parsers:jaxp-ri:1.4.4" level="project" />
   </component>
 </module>
 

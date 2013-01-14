@@ -1,9 +1,6 @@
 package org.camelcookbook.routing.multicast;
 
-import org.apache.camel.EndpointInject;
-import org.apache.camel.Exchange;
-import org.apache.camel.Produce;
-import org.apache.camel.ProducerTemplate;
+import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
@@ -20,23 +17,26 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
-    private MockEndpoint first;
+    private MockEndpoint mockFirst;
 
     @EndpointInject(uri = "mock:second")
-    private MockEndpoint second;
+    private MockEndpoint mockSecond;
 
     @EndpointInject(uri = "mock:afterMulticast")
     private MockEndpoint afterMulticast;
 
+    // TODO this is checking too much stuff, split into seperate tests to clarify
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
         String messageBody = "Message to be multicast";
-        first.setExpectedMessageCount(1);
-        first.message(0).equals(messageBody);
-        first.message(0).header("modifiedBy").equals("first");
-        second.setExpectedMessageCount(1);
-        second.message(0).equals(messageBody);
-        second.message(0).header("modifiedBy").equals("second");
+        mockFirst.setExpectedMessageCount(1);
+        mockFirst.message(0).equals(messageBody);
+        mockFirst.message(0).header("firstModifies").equals("apple");
+
+        mockSecond.setExpectedMessageCount(1);
+        mockSecond.message(0).equals(messageBody);
+        mockSecond.message(0).header("secondModifies").equals("banana");
+        mockSecond.message(0).header("firstModifies").isNull();
 
         afterMulticast.setExpectedMessageCount(1);
         afterMulticast.message(0).equals(messageBody);
@@ -45,9 +45,19 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
         template.sendBody(messageBody);
 
         assertMockEndpointsSatisfied();
-        String firstThreadName = first.getExchanges().get(0).getIn().getHeader("threadName", String.class);
-        String secondThreadName = second.getExchanges().get(0).getIn().getHeader("threadName", String.class);
+
+        // check that all of the mock endpoints were reached by the same thread
+        String firstThreadName = getExchange(mockFirst).getIn().getHeader("threadName", String.class);
+        String secondThreadName = getExchange(mockSecond).getIn().getHeader("threadName", String.class);
         assertEquals(firstThreadName, secondThreadName);
+
+        // check that all of the messages participated in different transactions
+        assertNotEquals(getExchange(afterMulticast).getUnitOfWork(), getExchange(mockFirst).getUnitOfWork());
+        assertNotEquals(getExchange(afterMulticast).getUnitOfWork(), getExchange(mockSecond).getUnitOfWork());
+    }
+
+    private Exchange getExchange(MockEndpoint mock) {
+        return mock.getExchanges().get(0);
     }
 
 }

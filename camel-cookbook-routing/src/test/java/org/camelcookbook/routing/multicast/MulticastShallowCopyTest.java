@@ -8,6 +8,8 @@ import org.junit.Test;
 
 public class MulticastShallowCopyTest extends CamelTestSupport {
 
+    public static final String MESSAGE_BODY = "Message to be multicast";
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new MulticastShallowCopyRouteBuilder();
@@ -25,24 +27,49 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
     @EndpointInject(uri = "mock:afterMulticast")
     private MockEndpoint afterMulticast;
 
-    // TODO this is checking too much stuff, split into seperate tests to clarify
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
-        String messageBody = "Message to be multicast";
         mockFirst.setExpectedMessageCount(1);
-        mockFirst.message(0).equals(messageBody);
+        mockFirst.message(0).equals(MESSAGE_BODY);
         mockFirst.message(0).header("firstModifies").equals("apple");
 
         mockSecond.setExpectedMessageCount(1);
-        mockSecond.message(0).equals(messageBody);
+        mockSecond.message(0).equals(MESSAGE_BODY);
         mockSecond.message(0).header("secondModifies").equals("banana");
         mockSecond.message(0).header("firstModifies").isNull();
 
         afterMulticast.setExpectedMessageCount(1);
-        afterMulticast.message(0).equals(messageBody);
+        afterMulticast.message(0).equals(MESSAGE_BODY);
         afterMulticast.message(0).header("modifiedBy").isNull();
 
-        template.sendBody(messageBody);
+        template.sendBody(MESSAGE_BODY);
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testAllMessagesParticipateInDifferentTransactions() throws InterruptedException {
+        afterMulticast.setExpectedMessageCount(1);
+        mockFirst.setExpectedMessageCount(1);
+        mockSecond.setExpectedMessageCount(1);
+
+        template.sendBody(MESSAGE_BODY);
+
+        assertMockEndpointsSatisfied();
+
+        // check that all of the messages participated in different transactions
+        assertNotEquals(getExchange(afterMulticast).getUnitOfWork(), getExchange(mockFirst).getUnitOfWork());
+        assertNotEquals(getExchange(afterMulticast).getUnitOfWork(), getExchange(mockSecond).getUnitOfWork());
+    }
+
+
+    @Test
+    public void testAllEndpointsReachedBySameThread() throws InterruptedException {
+        afterMulticast.setExpectedMessageCount(1);
+        mockFirst.setExpectedMessageCount(1);
+        mockSecond.setExpectedMessageCount(1);
+
+        template.sendBody(MESSAGE_BODY);
 
         assertMockEndpointsSatisfied();
 
@@ -50,10 +77,6 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
         String firstThreadName = getExchange(mockFirst).getIn().getHeader("threadName", String.class);
         String secondThreadName = getExchange(mockSecond).getIn().getHeader("threadName", String.class);
         assertEquals(firstThreadName, secondThreadName);
-
-        // check that all of the messages participated in different transactions
-        assertNotEquals(getExchange(afterMulticast).getUnitOfWork(), getExchange(mockFirst).getUnitOfWork());
-        assertNotEquals(getExchange(afterMulticast).getUnitOfWork(), getExchange(mockSecond).getUnitOfWork());
     }
 
     private Exchange getExchange(MockEndpoint mock) {

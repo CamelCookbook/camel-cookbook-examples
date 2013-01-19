@@ -1,47 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ~ Copyright 2012 FuseSource ~ ~ Licensed under the Apache License, Version 
-	2.0 (the "License"); ~ you may not use this file except in compliance with 
-	the License. ~ You may obtain a copy of the License at ~ ~ http://www.apache.org/licenses/LICENSE-2.0 
-	~ ~ Unless required by applicable law or agreed to in writing, software ~ 
-	distributed under the License is distributed on an "AS IS" BASIS, ~ WITHOUT 
-	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. ~ See the 
-	License for the specific language governing permissions and ~ limitations 
-	under the License. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+<!--
+  ~ Copyright (C) Scott Cranton and Jakub Korab
+  ~ https://github.com/CamelCookbook
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<groupId>org.camelcookbook.examples</groupId>
-	<artifactId>camel-cookbook-examples</artifactId>
-	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
 
-	<name>${application-name}</name>
+    <groupId>org.camelcookbook.examples</groupId>
+    <artifactId>camel-cookbook-examples</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
 
-	<properties>
-		<application-name>Camel Cookbook Examples</application-name>
+    <name>${application-name}</name>
 
-		<camel-version>2.10.1</camel-version>
+    <properties>
+        <application-name>Camel Cookbook Examples</application-name>
+
+        <camel-version>2.10.1</camel-version>
 
         <slf4j.version>1.6.6</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <junit-version>4.11</junit-version>
 
-		<maven-compiler-plugin-version>2.5</maven-compiler-plugin-version>
-		<maven-bundle-plugin-version>2.3.6</maven-bundle-plugin-version>
-		<build-plugins-plugin-version>2.5</build-plugins-plugin-version>
-		<build-helper-plugin-version>1.7</build-helper-plugin-version>
+        <maven-compiler-plugin-version>2.5</maven-compiler-plugin-version>
+        <maven-bundle-plugin-version>2.3.6</maven-bundle-plugin-version>
+        <build-plugins-plugin-version>2.5</build-plugins-plugin-version>
+        <build-helper-plugin-version>1.7</build-helper-plugin-version>
 
-		<osgi-import-package>*,org.apache.camel.osgi</osgi-import-package>
+        <osgi-import-package>*,org.apache.camel.osgi</osgi-import-package>
         <fusesource-repo>http://repo.fusesource.com/nexus/content/groups/public/</fusesource-repo>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-	<modules>
+    <modules>
         <module>camel-cookbook-routing</module>
-	</modules>
+    </modules>
 
     <repositories>
         <repository>
@@ -58,7 +68,7 @@
     </pluginRepositories>
 
     <dependencyManagement>
-	    <dependencies>
+        <dependencies>
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-core</artifactId>
@@ -70,24 +80,24 @@
                 <version>${camel-version}</version>
             </dependency>
 
-	        <dependency>
-	            <groupId>org.apache.camel</groupId>
-	            <artifactId>camel-test</artifactId>
-	            <version>${camel-version}</version>
-	            <scope>test</scope>
-	        </dependency>
-	        <dependency>
-	            <groupId>org.apache.camel</groupId>
-	            <artifactId>camel-test-spring</artifactId>
-	            <version>${camel-version}</version>
-	            <scope>test</scope>
-	        </dependency>
-	        <dependency>
-	            <groupId>junit</groupId>
-	            <artifactId>junit</artifactId>
-	            <version>${junit-version}</version>
-	            <scope>test</scope>
-	        </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-test</artifactId>
+                <version>${camel-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-test-spring</artifactId>
+                <version>${camel-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit-version}</version>
+                <scope>test</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -106,35 +116,35 @@
                 <version>${log4j.version}</version>
             </dependency>
         </dependencies>
-	</dependencyManagement>
-	
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin-version}</version>
-					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
-					</configuration>
-				</plugin>
+    </dependencyManagement>
 
-				<!-- used to generate the MANIFEST-FILE of a bundle -->
-				<plugin>
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-bundle-plugin</artifactId>
-					<version>${maven-bundle-plugin-version}</version>
-					<extensions>true</extensions>
-					<configuration>
-						<instructions>
-							<Bundle-SymbolicName>${project.name}</Bundle-SymbolicName>
-							<Import-Package>${osgi-import-package}</Import-Package>
-						</instructions>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin-version}</version>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+
+                <!-- used to generate the MANIFEST-FILE of a bundle -->
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${maven-bundle-plugin-version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <instructions>
+                            <Bundle-SymbolicName>${project.name}</Bundle-SymbolicName>
+                            <Import-Package>${osgi-import-package}</Import-Package>
+                        </instructions>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

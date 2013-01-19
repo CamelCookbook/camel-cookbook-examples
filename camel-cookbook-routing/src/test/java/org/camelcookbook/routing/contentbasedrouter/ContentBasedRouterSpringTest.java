@@ -24,6 +24,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ContentBasedRouterSpringTest extends CamelSpringTestSupport {
 
+    @Override
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/contentBasedRouter-context.xml");
+    }
+
     @Test
     public void testWhen() throws Exception {
         getMockEndpoint("mock:camel").expectedMessageCount(1);
@@ -44,10 +49,5 @@ public class ContentBasedRouterSpringTest extends CamelSpringTestSupport {
         template.sendBody("direct:start", "Hello World");
 
         assertMockEndpointsSatisfied();
-    }
-
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/contentbasedrouter-context.xml");
     }
 }

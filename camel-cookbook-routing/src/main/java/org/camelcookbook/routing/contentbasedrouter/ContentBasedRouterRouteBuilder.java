@@ -23,15 +23,15 @@ public class ContentBasedRouterRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start").
-                choice().
+            choice().
                 when().simple("${body} contains 'Camel'").
                 to("mock:camel").
                 log("Camel ${body}").
-                otherwise().
+            otherwise().
                 to("mock:other").
                 log("Other ${body}").
-                end().
-                log("Message ${body}");
+            end().
+            log("Message ${body}");
 
     }
 }

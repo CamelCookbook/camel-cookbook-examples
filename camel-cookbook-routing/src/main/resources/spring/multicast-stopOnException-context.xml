@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <bean id="illegalArg" class="java.lang.IllegalArgumentException">
+        <constructor-arg value="something went horribly wrong"/>
+    </bean>
+
+    <camelContext id="routing.multicast.stopOnException" xmlns="http://camel.apache.org/schema/spring">
+
+        <route>
+            <from uri="direct:in"/>
+            <onException>
+                <exception>java.lang.IllegalArgumentException</exception>
+                <handled>
+                    <constant>true</constant>
+                </handled>
+                <log message="caught ${exception}"/>
+                <to uri="mock:exceptionHandler"/>
+            </onException>
+            <multicast stopOnException="true">
+                <to uri="direct:first"/>
+                <to uri="direct:second"/>
+            </multicast>
+            <to uri="mock:afterMulticast"/>
+        </route>
+
+        <route>
+            <from uri="direct:first"/>
+            <to uri="mock:first"/>
+            <throwException ref="illegalArg"/>
+        </route>
+
+        <route>
+            <from uri="direct:second"/>
+            <to uri="mock:second"/>
+        </route>
+
+    </camelContext>
+
+
+</beans>

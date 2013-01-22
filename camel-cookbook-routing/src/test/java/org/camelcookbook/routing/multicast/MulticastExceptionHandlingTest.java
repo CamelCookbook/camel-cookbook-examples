@@ -3,20 +3,21 @@ package org.camelcookbook.routing.multicast;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 // FIXME This behaviour is undefined  in Camel 2.10.2
 @Ignore
-public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
+public class MulticastExceptionHandlingTest extends CamelTestSupport {
+
+    public static final String MESSAGE_BODY = "Message to be multicast";
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/multicast-stopOnException-context.xml");
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new MulticastExceptionHandlingRouteBuilder();
     }
 
     @Produce(uri = "direct:in")
@@ -36,10 +37,8 @@ public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
-        String messageBody = "Message to be multicast";
-
         mockFirst.setExpectedMessageCount(1);
-        mockFirst.message(0).equals(messageBody);
+        mockFirst.message(0).equals(MESSAGE_BODY);
 
         mockSecond.setExpectedMessageCount(0);
 
@@ -47,7 +46,8 @@ public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
 
         exceptionHandler.setExpectedMessageCount(1);
 
-        template.sendBody(messageBody);
+        String response = (String) template.requestBody(MESSAGE_BODY);
+        assertEquals("Oops", response);
 
         assertMockEndpointsSatisfied();
     }

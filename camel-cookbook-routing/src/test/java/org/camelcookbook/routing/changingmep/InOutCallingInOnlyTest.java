@@ -59,6 +59,9 @@ public class InOutCallingInOnlyTest extends CamelTestSupport {
 
         // the bodies should be the same - shallow copy
         assertEquals(oneWayExchange.getIn().getBody(), afterOneWayExchange.getIn().getBody());
+
+        // the transactions are the same
+        assertEquals(oneWayExchange.getUnitOfWork(), afterOneWayExchange.getUnitOfWork());
     }
 
 }

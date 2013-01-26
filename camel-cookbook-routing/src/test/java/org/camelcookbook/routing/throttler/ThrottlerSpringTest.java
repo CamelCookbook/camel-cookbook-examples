@@ -17,16 +17,19 @@
 
 package org.camelcookbook.routing.throttler;
 
-import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.spi.ShutdownStrategy;
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThrottlerSpringTest extends CamelSpringTestSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(ThrottlerTest.class);
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
@@ -35,28 +38,34 @@ public class ThrottlerSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testThrottle() throws Exception {
-        final MockEndpoint mockEndpointUnthrottled = getMockEndpoint("mock:unthrottled");
-        mockEndpointUnthrottled.expectedMessageCount(10);
-        mockEndpointUnthrottled.setResultWaitTime(1000);
+        final int throttleRate = 5;
+        final int messageCount = throttleRate + 2;
 
-        final MockEndpoint mockEndpointThrottled = getMockEndpoint("mock:throttled");
-        mockEndpointThrottled.expectedMessageCount(5);
-        mockEndpointThrottled.setResultWaitTime(1000);
+        getMockEndpoint("mock:unthrottled").expectedMessageCount(messageCount);
+        getMockEndpoint("mock:throttled").expectedMessageCount(throttleRate);
+        getMockEndpoint("mock:after").expectedMessageCount(throttleRate);
 
-        final MockEndpoint mockEndpointAfter = getMockEndpoint("mock:after");
-        mockEndpointAfter.expectedMessageCount(5);
-        mockEndpointAfter.setResultWaitTime(1000);
+        ExecutorService executor = Executors.newFixedThreadPool(messageCount);
 
         // Send the message on separate threads as sendBody will block on the throttler
-        for (int i = 0; i < 10; i++) {
-            new Thread (new Runnable() {
+        final AtomicInteger threadCount = new AtomicInteger(0);
+        for (int i = 0; i < messageCount; i++) {
+            executor.execute(new Runnable() {
                 @Override
                 public void run() {
                     template.sendBody("direct:start", "Camel Rocks");
+
+                    final int threadId = threadCount.incrementAndGet();
+                    LOG.info("Thread {} finished", threadId);
                 }
-            }).start();
+            });
         }
 
         assertMockEndpointsSatisfied();
+
+        LOG.info("Threads completed {} of {}", threadCount.get(), messageCount);
+        assertEquals("Threads completed should equal throttle rate", throttleRate, threadCount.get());
+
+        executor.shutdownNow();
     }
 }

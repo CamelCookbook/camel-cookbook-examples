@@ -19,12 +19,12 @@ package org.camelcookbook.routing.throttler;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class ThrottlerRouteBuilder extends RouteBuilder {
+public class ThrottlerDynamicRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start").
             to("mock:unthrottled").
-            throttle(5).timePeriodMillis(10000).
+            throttle(header("ThrottleRate")).timePeriodMillis(10000).
                 to("mock:throttled").
             end().
             to("mock:after");

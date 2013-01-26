@@ -29,7 +29,7 @@
             <from uri="direct:start"/>
             <to uri="mock:unthrottled"/>
             <throttle timePeriodMillis="10000">
-                <constant>5</constant>
+                <header>ThrottleRate</header>
                 <to uri="mock:throttled"/>
             </throttle>
             <to uri="mock:after"/>

@@ -27,17 +27,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ThrottlerTest extends CamelTestSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(ThrottlerTest.class);
+public class ThrottlerDynamicTest extends CamelTestSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(ThrottlerDynamicTest.class);
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new ThrottlerRouteBuilder();
+        return new ThrottlerDynamicRouteBuilder();
     }
 
     @Test
-    public void testThrottle() throws Exception {
-        final int throttleRate = 5;
+    public void testThrottleDynamic() throws Exception {
+        final int throttleRate = 3;
         final int messageCount = throttleRate + 2;
 
         getMockEndpoint("mock:unthrottled").expectedMessageCount(messageCount);
@@ -52,7 +52,7 @@ public class ThrottlerTest extends CamelTestSupport {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    template.sendBody("direct:start", "Camel Rocks");
+                    template.sendBodyAndHeader("direct:start", "Camel Rocks", "ThrottleRate", throttleRate);
 
                     final int threadId = threadCount.incrementAndGet();
                     LOG.info("Thread {} finished", threadId);

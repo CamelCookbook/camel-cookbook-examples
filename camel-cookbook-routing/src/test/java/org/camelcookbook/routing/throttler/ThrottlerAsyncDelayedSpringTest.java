@@ -17,27 +17,23 @@
 
 package org.camelcookbook.routing.throttler;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.builder.ThreadPoolProfileBuilder;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(ThrottlerAsyncDelayedTest.class);
+public class ThrottlerAsyncDelayedSpringTest extends CamelSpringTestSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(ThrottlerAsyncDelayedSpringTest.class);
 
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        ThreadPoolProfileBuilder builder = new ThreadPoolProfileBuilder("myThrottler");
-        builder.maxQueueSize(5);
-        context.getExecutorServiceManager().registerThreadPoolProfile(builder.build());
-
-        return new ThrottlerAsyncDelayedRouteBuilder();
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/throttlerAsyncDelayed-context.xml");
     }
 
     @Test
@@ -57,7 +53,7 @@ public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    template.sendBody("direct:asyncDelayed", "Camel Rocks");
+                    template.sendBody("direct:start", "Camel Rocks");
 
                     final int threadId = threadCount.incrementAndGet();
                     LOG.info("Thread {} finished", threadId);

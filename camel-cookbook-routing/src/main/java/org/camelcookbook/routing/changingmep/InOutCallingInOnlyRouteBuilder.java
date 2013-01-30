@@ -28,6 +28,7 @@ public class InOutCallingInOnlyRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
+            .to("mock:beforeOneWay")
             .inOnly("direct:oneWay")
             .to("mock:afterOneWay")
             .transform().constant("Done");

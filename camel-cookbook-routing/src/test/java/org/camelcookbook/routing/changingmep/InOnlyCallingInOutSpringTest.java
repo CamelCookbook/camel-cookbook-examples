@@ -26,13 +26,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class InOnlyCallingInOutSpringTest extends CamelSpringTestSupport {
 
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/changingMep-inOnlyCallingInOut-context.xml");
-    }
-
     @Produce(uri = "direct:in")
     protected ProducerTemplate template;
+
+    @EndpointInject(uri = "mock:beforeMessageModified")
+    private MockEndpoint beforeMessageModified;
 
     @EndpointInject(uri = "mock:modifyMessage")
     private MockEndpoint modifyMessage;
@@ -40,22 +38,71 @@ public class InOnlyCallingInOutSpringTest extends CamelSpringTestSupport {
     @EndpointInject(uri = "mock:afterMessageModified")
     private MockEndpoint afterMessageModified;
 
+    @Override
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/changingMep-inOnlyCallingInOut-context.xml");
+    }
+
     @Test
-    public void testMEPChangedForModifyMessage() throws InterruptedException {
-        String messageBody = "message";
+    public void testInOnlyMEPChangedForModifyMessage() throws InterruptedException {
+        final String messageBody = "Camel Rocks";
+        final ExchangePattern callingMEP = ExchangePattern.InOnly;
+
+        beforeMessageModified.setExpectedMessageCount(1);
+        beforeMessageModified.message(0).body().isEqualTo(messageBody);
+        // Should always be the calling Exchange Pattern
+        beforeMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
 
         modifyMessage.setExpectedMessageCount(1);
         modifyMessage.message(0).body().isEqualTo(messageBody);
+        // Should always be InOut
         modifyMessage.message(0).exchangePattern().isEqualTo(ExchangePattern.InOut);
 
         afterMessageModified.setExpectedMessageCount(1);
-        afterMessageModified.message(0).body().isEqualTo("[message] has been modified!");
-        // the exchange pattern has now been modified for the remainder of the route
-        afterMessageModified.message(0).exchangePattern().isEqualTo(ExchangePattern.InOut);
+        afterMessageModified.message(0).body().isEqualTo("[" + messageBody + "] has been modified!");
+        // Should always be restored to the calling Exchange Pattern
+        afterMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
 
-        template.requestBody(messageBody);
+        // Explicitly set the Exchange Pattern
+        template.sendBody("direct:in", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
+
+        Exchange modifyMessageExchange = modifyMessage.getReceivedExchanges().get(0);
+        Exchange afterMessageModifiedExchange = afterMessageModified.getReceivedExchanges().get(0);
+
+        // these are not the same exchange objects
+        assertNotEquals(modifyMessageExchange, afterMessageModifiedExchange);
+
+        // the transactions are the same
+        assertEquals(modifyMessageExchange.getUnitOfWork(), afterMessageModifiedExchange.getUnitOfWork());
+    }
+
+    @Test
+    public void testInOutMEPChangedForModifyMessage() throws InterruptedException {
+        final String messageBody = "Camel Rocks";
+        final ExchangePattern callingMEP = ExchangePattern.InOut;
+
+        beforeMessageModified.setExpectedMessageCount(1);
+        beforeMessageModified.message(0).body().isEqualTo(messageBody);
+        // Should always be the calling Exchange Pattern
+        beforeMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
+
+        modifyMessage.setExpectedMessageCount(1);
+        modifyMessage.message(0).body().isEqualTo(messageBody);
+        // Should always be InOut
+        modifyMessage.message(0).exchangePattern().isEqualTo(ExchangePattern.InOut);
+
+        afterMessageModified.setExpectedMessageCount(1);
+        afterMessageModified.message(0).body().isEqualTo("[" + messageBody + "] has been modified!");
+        // Should always be restored to the calling Exchange Pattern
+        afterMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
+
+        // Explicitly set the Exchange Pattern
+        template.sendBody("direct:in", callingMEP, messageBody);
+
+        assertMockEndpointsSatisfied();
+
         Exchange modifyMessageExchange = modifyMessage.getReceivedExchanges().get(0);
         Exchange afterMessageModifiedExchange = afterMessageModified.getReceivedExchanges().get(0);
 

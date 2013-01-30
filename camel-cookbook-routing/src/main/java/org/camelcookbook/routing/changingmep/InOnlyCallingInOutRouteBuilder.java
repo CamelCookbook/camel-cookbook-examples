@@ -17,7 +17,6 @@
 
 package org.camelcookbook.routing.changingmep;
 
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
@@ -27,6 +26,7 @@ public class InOnlyCallingInOutRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
+            .to("mock:beforeMessageModified")
             .inOut("direct:modifyMessage")
             .to("mock:afterMessageModified");
 

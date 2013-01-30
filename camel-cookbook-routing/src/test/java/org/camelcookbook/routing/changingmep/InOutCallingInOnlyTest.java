@@ -26,13 +26,11 @@ import org.junit.Test;
 
 public class InOutCallingInOnlyTest extends CamelTestSupport {
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new InOutCallingInOnlyRouteBuilder();
-    }
-
     @Produce(uri = "direct:in")
     protected ProducerTemplate template;
+
+    @EndpointInject(uri = "mock:beforeOneWay")
+    private MockEndpoint beforeOneWay;
 
     @EndpointInject(uri = "mock:oneWay")
     private MockEndpoint oneWay;
@@ -40,20 +38,38 @@ public class InOutCallingInOnlyTest extends CamelTestSupport {
     @EndpointInject(uri = "mock:afterOneWay")
     private MockEndpoint afterOneWay;
 
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new InOutCallingInOnlyRouteBuilder();
+    }
+
     @Test
-    public void testMEPChangedForOneWay() throws InterruptedException {
-        String messageBody = "message";
+    public void testInOutMEPChangedForOneWay() throws InterruptedException {
+        final String messageBody = "Camel Rocks";
+        final ExchangePattern callingMEP = ExchangePattern.InOut;
+
+        beforeOneWay.setExpectedMessageCount(1);
+        // Should be calling Exchange Pattern
+        beforeOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
 
         oneWay.setExpectedMessageCount(1);
+        // Should always be InOnly
         oneWay.message(0).exchangePattern().isEqualTo(ExchangePattern.InOnly);
-        afterOneWay.setExpectedMessageCount(1);
-        afterOneWay.message(0).exchangePattern().isEqualTo(ExchangePattern.InOut);
 
-        template.requestBody(messageBody);
+        afterOneWay.setExpectedMessageCount(1);
+        // Should be restored to calling Exchange Pattern
+        afterOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
+
+        // requestBody always sets the Exchange Pattern to InOut
+        String response = template.requestBody("direct:in", messageBody, String.class);
+
+        assertEquals("Done", response);
 
         assertMockEndpointsSatisfied();
+
         Exchange oneWayExchange = oneWay.getReceivedExchanges().get(0);
         Exchange afterOneWayExchange = afterOneWay.getReceivedExchanges().get(0);
+
         // these are not the same exchange objects
         assertNotEquals(oneWayExchange, afterOneWayExchange);
 
@@ -64,4 +80,38 @@ public class InOutCallingInOnlyTest extends CamelTestSupport {
         assertEquals(oneWayExchange.getUnitOfWork(), afterOneWayExchange.getUnitOfWork());
     }
 
+    @Test
+    public void testInOnlyMEPChangedForOneWay() throws InterruptedException {
+        final String messageBody = "Camel Rocks";
+        final ExchangePattern callingMEP = ExchangePattern.InOnly;
+
+        beforeOneWay.setExpectedMessageCount(1);
+        // Should be calling Exchange Pattern
+        beforeOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
+
+        oneWay.setExpectedMessageCount(1);
+        // Should always be InOnly
+        oneWay.message(0).exchangePattern().isEqualTo(ExchangePattern.InOnly);
+
+        afterOneWay.setExpectedMessageCount(1);
+        // Should be restored to calling Exchange Pattern
+        afterOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
+
+        // Explicitly set Exchange Pattern
+        template.sendBody("direct:in", callingMEP, messageBody);
+
+        assertMockEndpointsSatisfied();
+
+        Exchange oneWayExchange = oneWay.getReceivedExchanges().get(0);
+        Exchange afterOneWayExchange = afterOneWay.getReceivedExchanges().get(0);
+
+        // these are not the same exchange objects
+        assertNotEquals(oneWayExchange, afterOneWayExchange);
+
+        // the bodies should be the same - shallow copy
+        assertEquals(oneWayExchange.getIn().getBody(), afterOneWayExchange.getIn().getBody());
+
+        // the transactions are the same
+        assertEquals(oneWayExchange.getUnitOfWork(), afterOneWayExchange.getUnitOfWork());
+    }
 }

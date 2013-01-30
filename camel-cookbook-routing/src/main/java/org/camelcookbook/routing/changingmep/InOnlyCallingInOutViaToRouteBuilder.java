@@ -27,6 +27,7 @@ public class InOnlyCallingInOutViaToRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
+            .to("mock:beforeMessageModified")
             .to(ExchangePattern.InOut, "direct:modifyMessage")
             .to("mock:afterMessageModified");
 

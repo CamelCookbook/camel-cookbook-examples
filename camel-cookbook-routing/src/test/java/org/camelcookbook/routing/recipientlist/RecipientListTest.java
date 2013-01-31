@@ -27,12 +27,7 @@ import org.junit.Test;
 
 public class RecipientListTest extends CamelTestSupport {
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RecipientListRouteBuilder();
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:order.priority")
@@ -46,6 +41,11 @@ public class RecipientListTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:unrecognized")
     private MockEndpoint unrecognized;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RecipientListRouteBuilder();
+    }
 
     @Test
     public void testNormalOrder() throws InterruptedException {

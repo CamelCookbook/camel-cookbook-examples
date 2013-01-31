@@ -28,12 +28,7 @@ import java.util.List;
 
 public class WireTapCustomThreadPoolTest extends CamelTestSupport {
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new WireTapCustomThreadPoolRouteBuilder();
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:tapped")
@@ -41,6 +36,11 @@ public class WireTapCustomThreadPoolTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:out")
     private MockEndpoint out;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new WireTapCustomThreadPoolRouteBuilder();
+    }
 
     @Test
     public void testMessageWireTappedInOrderBySameThread() throws InterruptedException {
@@ -69,6 +69,4 @@ public class WireTapCustomThreadPoolTest extends CamelTestSupport {
             Assert.assertEquals(firstExchangeThreadName, in.getHeader("threadName", String.class));
         }
     }
-
-
 }

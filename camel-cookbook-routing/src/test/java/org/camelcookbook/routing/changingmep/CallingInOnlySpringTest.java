@@ -18,19 +18,13 @@
 package org.camelcookbook.routing.changingmep;
 
 import org.apache.camel.*;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class InOutCallingInOnlySpringTest extends CamelSpringTestSupport {
-
-    @Produce(uri = "direct:in")
-    protected ProducerTemplate template;
-
+public class CallingInOnlySpringTest extends CamelSpringTestSupport {
     @EndpointInject(uri = "mock:beforeOneWay")
     private MockEndpoint beforeOneWay;
 
@@ -42,7 +36,7 @@ public class InOutCallingInOnlySpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/changingMep-inOutCallingInOnly-context.xml");
+        return new ClassPathXmlApplicationContext("spring/changingMep-CallingInOnly-context.xml");
     }
 
     @Test
@@ -63,7 +57,7 @@ public class InOutCallingInOnlySpringTest extends CamelSpringTestSupport {
         afterOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
 
         // Explicitly set Exchange Pattern
-        template.sendBody("direct:in", callingMEP, messageBody);
+        template.sendBody("direct:start", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
 
@@ -98,7 +92,7 @@ public class InOutCallingInOnlySpringTest extends CamelSpringTestSupport {
         afterOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
 
         // Explicitly set Exchange Pattern
-        template.sendBody("direct:in", callingMEP, messageBody);
+        template.sendBody("direct:start", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
 

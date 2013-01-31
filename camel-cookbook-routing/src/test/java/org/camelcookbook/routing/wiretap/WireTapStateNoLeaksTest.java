@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class WireTapStateNoLeaksTest extends CamelTestSupport {
 
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:tapped")
@@ -65,5 +65,4 @@ public class WireTapStateNoLeaksTest extends CamelTestSupport {
         Cheese tappedCheese = tapped.getExchanges().get(0).getIn().getBody(Cheese.class);
         Assert.assertEquals(2, tappedCheese.getAge());
     }
-
 }

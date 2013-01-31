@@ -20,12 +20,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       ">
 
     <camelContext id="routing.multicast" xmlns="http://camel.apache.org/schema/spring">
 
         <route id="routing.multicast.simple">
-            <from uri="direct:in"/>
+            <from uri="direct:start"/>
             <multicast>
                 <to uri="mock:first"/>
                 <to uri="mock:second"/>
@@ -34,6 +35,5 @@
         </route>
 
     </camelContext>
-
 
 </beans>

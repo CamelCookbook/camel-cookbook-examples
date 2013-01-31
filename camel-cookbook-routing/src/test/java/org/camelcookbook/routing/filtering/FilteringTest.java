@@ -32,15 +32,15 @@ public class FilteringTest extends CamelTestSupport {
 
     @Test
     public void testFirstFilter() throws Exception {
-        final MockEndpoint mockEntpointC = getMockEndpoint("mock:C");
-        mockEntpointC.expectedMessageCount(1);
-        mockEntpointC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
+        final MockEndpoint mockEndpointC = getMockEndpoint("mock:C");
+        mockEndpointC.expectedMessageCount(1);
+        mockEndpointC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
 
-        final MockEndpoint mockEntpointAfterC = getMockEndpoint("mock:afterC");
-        mockEntpointAfterC.expectedMessageCount(1);
+        final MockEndpoint mockEndpointAfterC = getMockEndpoint("mock:afterC");
+        mockEndpointAfterC.expectedMessageCount(1);
 
         // FILTER_MATCHED set to true if message matched previous Filter Predicate
-        mockEntpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
+        mockEndpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
 
         getMockEndpoint("mock:amel").expectedMessageCount(0);
 
@@ -59,11 +59,11 @@ public class FilteringTest extends CamelTestSupport {
     public void testSecondFilter() throws Exception {
         getMockEndpoint("mock:C").expectedMessageCount(0);
 
-        final MockEndpoint mockEntpointAfterC = getMockEndpoint("mock:afterC");
-        mockEntpointAfterC.expectedMessageCount(1);
+        final MockEndpoint mockEndpointAfterC = getMockEndpoint("mock:afterC");
+        mockEndpointAfterC.expectedMessageCount(1);
 
         // FILTER_MATCHED set to true if message matched previous Filter Predicate
-        mockEntpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, false);
+        mockEndpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, false);
 
         final MockEndpoint mockEndpointAmel = getMockEndpoint("mock:amel");
         mockEndpointAmel.expectedMessageCount(1);
@@ -82,15 +82,15 @@ public class FilteringTest extends CamelTestSupport {
 
     @Test
     public void testBothFilter() throws Exception {
-        final MockEndpoint mockEntpointC = getMockEndpoint("mock:C");
-        mockEntpointC.expectedMessageCount(1);
-        mockEntpointC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
+        final MockEndpoint mockEndpointC = getMockEndpoint("mock:C");
+        mockEndpointC.expectedMessageCount(1);
+        mockEndpointC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
 
-        final MockEndpoint mockEntpointAfterC = getMockEndpoint("mock:afterC");
-        mockEntpointAfterC.expectedMessageCount(1);
+        final MockEndpoint mockEndpointAfterC = getMockEndpoint("mock:afterC");
+        mockEndpointAfterC.expectedMessageCount(1);
 
         // FILTER_MATCHED set to true if message matched previous Filter Predicate
-        mockEntpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
+        mockEndpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, true);
 
         final MockEndpoint mockEndpointAmel = getMockEndpoint("mock:amel");
         mockEndpointAmel.expectedMessageCount(1);
@@ -111,11 +111,11 @@ public class FilteringTest extends CamelTestSupport {
     public void testOther() throws Exception {
         getMockEndpoint("mock:C").expectedMessageCount(0);
 
-        final MockEndpoint mockEntpointAfterC = getMockEndpoint("mock:afterC");
-        mockEntpointAfterC.expectedMessageCount(1);
+        final MockEndpoint mockEndpointAfterC = getMockEndpoint("mock:afterC");
+        mockEndpointAfterC.expectedMessageCount(1);
 
         // FILTER_MATCHED set to true if message matched previous Filter Predicate
-        mockEntpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, false);
+        mockEndpointAfterC.expectedPropertyReceived(Exchange.FILTER_MATCHED, false);
 
         getMockEndpoint("mock:amel").expectedMessageCount(0);
 

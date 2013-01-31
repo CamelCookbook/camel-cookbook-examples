@@ -22,11 +22,11 @@ import org.apache.camel.builder.RouteBuilder;
 public class ThrottlerAsyncDelayedRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:asyncDelayed").
-            to("mock:unthrottled").
-            throttle(5).timePeriodMillis(10000).asyncDelayed().executorServiceRef("myThrottler").
-                to("mock:throttled").
-            end().
-            to("mock:after");
+        from("direct:start")
+            .to("mock:unthrottled")
+            .throttle(5).timePeriodMillis(10000).asyncDelayed().executorServiceRef("myThrottler")
+                .to("mock:throttled")
+            .end()
+            .to("mock:after");
     }
 }

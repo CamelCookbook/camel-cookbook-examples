@@ -14,12 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @Ignore
 public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
 
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/multicast-stopOnException-context.xml");
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
@@ -33,6 +28,11 @@ public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
 
     @EndpointInject(uri = "mock:exceptionHandler")
     private MockEndpoint exceptionHandler;
+
+    @Override
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/multicast-stopOnException-context.xml");
+    }
 
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {

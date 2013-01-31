@@ -19,8 +19,6 @@ package org.camelcookbook.routing.multicast;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Aggregation strategy that concatenates String responses.

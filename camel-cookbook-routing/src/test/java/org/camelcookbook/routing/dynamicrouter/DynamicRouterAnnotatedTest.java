@@ -43,7 +43,7 @@ public class DynamicRouterAnnotatedTest extends CamelSpringTestSupport {
         getMockEndpoint("mock:other").expectedMessageCount(1);
         getMockEndpoint("mock:result").expectedMessageCount(1);
 
-        template.sendBody("direct:dynamicRouteAnnotated", "Camel Rocks");
+        template.sendBody("direct:start", "Camel Rocks");
 
         assertMockEndpointsSatisfied();
     }

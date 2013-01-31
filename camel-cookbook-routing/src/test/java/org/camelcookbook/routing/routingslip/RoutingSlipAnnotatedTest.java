@@ -35,7 +35,7 @@ public class RoutingSlipAnnotatedTest extends CamelSpringTestSupport {
         getMockEndpoint("mock:other").expectedMessageCount(1);
         getMockEndpoint("mock:oneMore").expectedMessageCount(1);
 
-        template.sendBodyAndHeader("direct:routingSlipAnnotated", "Camel Rocks", "myRoutingSlipHeader", "mock:a,direct:other");
+        template.sendBodyAndHeader("direct:start", "Camel Rocks", "myRoutingSlipHeader", "mock:a,direct:other");
 
         assertMockEndpointsSatisfied();
     }

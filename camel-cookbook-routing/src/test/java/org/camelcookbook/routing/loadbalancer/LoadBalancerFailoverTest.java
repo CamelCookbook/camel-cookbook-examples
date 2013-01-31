@@ -26,13 +26,7 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 public class LoadBalancerFailoverTest extends CamelTestSupport {
-
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new LoadBalancerFailoverRouteBuilder();
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
@@ -43,6 +37,11 @@ public class LoadBalancerFailoverTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:out")
     private MockEndpoint out;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new LoadBalancerFailoverRouteBuilder();
+    }
 
     @Test
     public void testMessageLoadBalancedWithFailover() throws InterruptedException {

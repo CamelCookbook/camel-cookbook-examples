@@ -28,12 +28,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class WireTapSpringTest extends CamelSpringTestSupport {
 
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/wireTap-context.xml");
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:tapped")
@@ -41,6 +36,11 @@ public class WireTapSpringTest extends CamelSpringTestSupport {
 
     @EndpointInject(uri = "mock:out")
     private MockEndpoint out;
+
+    @Override
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/wireTap-context.xml");
+    }
 
     @Test
     public void testMessageRoutedToWireTapEndpoint() throws InterruptedException {
@@ -57,5 +57,4 @@ public class WireTapSpringTest extends CamelSpringTestSupport {
         tapped.expectedBodyReceived().equals(messageBody);
         out.expectedBodyReceived().equals(messageBody);
     }
-
 }

@@ -27,13 +27,13 @@ public class MulticastWithAggregationTest extends CamelTestSupport {
 
     public static final String MESSAGE_BODY = "Message to be multicast";
 
+    @Produce(uri = "direct:start")
+    protected ProducerTemplate template;
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new MulticastWithAggregationRouteBuilder();
     }
-
-    @Produce(uri = "direct:in")
-    protected ProducerTemplate template;
 
     @Test
     public void testAggregationOfResponsesFromMulticast() throws InterruptedException {

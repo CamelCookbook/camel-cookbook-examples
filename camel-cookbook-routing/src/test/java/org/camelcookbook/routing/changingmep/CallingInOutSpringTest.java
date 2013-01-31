@@ -17,18 +17,16 @@
 
 package org.camelcookbook.routing.changingmep;
 
-import org.apache.camel.*;
+import org.apache.camel.EndpointInject;
+import org.apache.camel.Exchange;
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class InOnlyCallingInOutSpringTest extends CamelSpringTestSupport {
-
-    @Produce(uri = "direct:in")
-    protected ProducerTemplate template;
-
+public class CallingInOutSpringTest extends CamelSpringTestSupport {
     @EndpointInject(uri = "mock:beforeMessageModified")
     private MockEndpoint beforeMessageModified;
 
@@ -40,7 +38,7 @@ public class InOnlyCallingInOutSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/changingMep-inOnlyCallingInOut-context.xml");
+        return new ClassPathXmlApplicationContext("spring/changingMep-CallingInOut-context.xml");
     }
 
     @Test
@@ -64,7 +62,7 @@ public class InOnlyCallingInOutSpringTest extends CamelSpringTestSupport {
         afterMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
 
         // Explicitly set the Exchange Pattern
-        template.sendBody("direct:in", callingMEP, messageBody);
+        template.sendBody("direct:start", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
 
@@ -99,7 +97,7 @@ public class InOnlyCallingInOutSpringTest extends CamelSpringTestSupport {
         afterMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
 
         // Explicitly set the Exchange Pattern
-        template.sendBody("direct:in", callingMEP, messageBody);
+        template.sendBody("direct:start", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
 

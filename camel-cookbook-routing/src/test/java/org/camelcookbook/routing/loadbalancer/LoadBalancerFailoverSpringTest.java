@@ -27,13 +27,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class LoadBalancerFailoverSpringTest extends CamelSpringTestSupport {
-
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/loadBalancer-failover-context.xml");
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
@@ -44,6 +38,11 @@ public class LoadBalancerFailoverSpringTest extends CamelSpringTestSupport {
 
     @EndpointInject(uri = "mock:out")
     private MockEndpoint out;
+
+    @Override
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/loadBalancer-failover-context.xml");
+    }
 
     @Test
     public void testMessageLoadBalancedWithFailover() throws InterruptedException {

@@ -30,7 +30,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class WireTapStateNoLeaksSpringTest extends CamelSpringTestSupport {
 
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:tapped")
@@ -66,5 +66,4 @@ public class WireTapStateNoLeaksSpringTest extends CamelSpringTestSupport {
         Cheese tappedCheese = tapped.getExchanges().get(0).getIn().getBody(Cheese.class);
         Assert.assertEquals(2, tappedCheese.getAge());
     }
-
 }

@@ -28,7 +28,7 @@ public class MulticastWithAggregationOfRequestRouteBuilder extends RouteBuilder 
     public void configure() throws Exception {
         AggregationStrategy concatenationStrategy = new ConcatenatingAggregationStrategy();
 
-        from("direct:in")
+        from("direct:start")
             .enrich("direct:performMulticast", concatenationStrategy)
             .transform(body()); // copy the In message to the Out message; this will become the route response
 

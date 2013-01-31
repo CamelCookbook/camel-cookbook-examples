@@ -27,7 +27,7 @@
     <camelContext id="routing.wireTap.stateNoLeaks" xmlns="http://camel.apache.org/schema/spring">
 
         <route id="routing.wireTap">
-            <from uri="direct:in"/>
+            <from uri="direct:start"/>
             <wireTap uri="direct:processInBackground" onPrepareRef="cheeseCloningProcessor"/>
             <to uri="mock:out"/>
         </route>
@@ -39,6 +39,5 @@
         </route>
 
     </camelContext>
-
 
 </beans>

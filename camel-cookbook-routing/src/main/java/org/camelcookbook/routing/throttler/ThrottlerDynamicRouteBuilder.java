@@ -22,11 +22,11 @@ import org.apache.camel.builder.RouteBuilder;
 public class ThrottlerDynamicRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:start").
-            to("mock:unthrottled").
-            throttle(header("ThrottleRate")).timePeriodMillis(10000).
-                to("mock:throttled").
-            end().
-            to("mock:after");
+        from("direct:start")
+            .to("mock:unthrottled")
+            .throttle(header("ThrottleRate")).timePeriodMillis(10000)
+                .to("mock:throttled")
+            .end()
+            .to("mock:after");
     }
 }

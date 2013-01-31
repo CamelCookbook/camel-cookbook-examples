@@ -29,12 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MulticastTest extends CamelTestSupport {
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastRouteBuilder();
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
@@ -45,6 +40,11 @@ public class MulticastTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:third")
     private MockEndpoint third;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new MulticastRouteBuilder();
+    }
 
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {

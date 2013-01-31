@@ -26,7 +26,7 @@
     <camelContext xmlns="http://camel.apache.org/schema/spring">
 
         <route>
-            <from uri="direct:in"/>
+            <from uri="direct:start"/>
             <to uri="mock:beforeOneWay"/>
             <inOnly uri="direct:oneWay"/>
             <to uri="mock:afterOneWay"/>

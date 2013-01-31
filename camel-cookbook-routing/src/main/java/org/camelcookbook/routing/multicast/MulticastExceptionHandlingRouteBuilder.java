@@ -17,11 +17,9 @@
 
 package org.camelcookbook.routing.multicast;
 
-import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.routing.multicast.ConcatenatingAggregationStrategy;
 
 /**
  * Simple multicast example with parallel processing.
@@ -30,12 +28,11 @@ public class MulticastExceptionHandlingRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        onException(org.apache.camel.CamelExchangeException.class,
-                    org.apache.camel.CamelExecutionException.class)
-                .handled(true)
-                .transform(constant("Kaboom"));
+        onException(org.apache.camel.CamelExchangeException.class, org.apache.camel.CamelExecutionException.class)
+            .handled(true)
+            .transform(constant("Kaboom"));
 
-        from("direct:in")
+        from("direct:start")
             .multicast().aggregationStrategy(new ExceptionHandlingAggregationStrategy()).stopOnException()
                 .to("direct:first")
                 .to("direct:second")
@@ -50,11 +47,11 @@ public class MulticastExceptionHandlingRouteBuilder extends RouteBuilder {
             .end()
             .to("mock:first")
             .process(new Processor() {
-                @Override
-                public void process(Exchange exchange) throws Exception {
-                    throw new IllegalStateException("something went horribly wrong");
-                }
-            });
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        throw new IllegalStateException("something went horribly wrong");
+                    }
+                });
 
         from("direct:second")
             .to("mock:second");

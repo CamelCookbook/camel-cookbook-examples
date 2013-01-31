@@ -27,12 +27,7 @@ import org.junit.Test;
 
 public class WireTapTest extends CamelTestSupport {
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new WireTapRouteBuilder();
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:tapped")
@@ -40,6 +35,11 @@ public class WireTapTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:out")
     private MockEndpoint out;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new WireTapRouteBuilder();
+    }
 
     @Test
     public void testMessageRoutedToWireTapEndpoint() throws InterruptedException {

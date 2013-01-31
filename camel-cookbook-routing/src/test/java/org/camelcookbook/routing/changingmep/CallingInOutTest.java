@@ -23,11 +23,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-public class InOnlyCallingInOutTest extends CamelTestSupport {
-
-    @Produce(uri = "direct:in")
-    protected ProducerTemplate template;
-
+public class CallingInOutTest extends CamelTestSupport {
     @EndpointInject(uri = "mock:beforeMessageModified")
     private MockEndpoint beforeMessageModified;
 
@@ -39,7 +35,7 @@ public class InOnlyCallingInOutTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new InOnlyCallingInOutRouteBuilder();
+        return new CallingInOutRouteBuilder();
     }
 
     @Test
@@ -62,7 +58,7 @@ public class InOnlyCallingInOutTest extends CamelTestSupport {
         // the exchange pattern is restored after the inOut call to the calling MEP
         afterMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
 
-        template.sendBody("direct:in", callingMEP, messageBody);
+        template.sendBody("direct:start", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
 
@@ -96,7 +92,7 @@ public class InOnlyCallingInOutTest extends CamelTestSupport {
         // the exchange pattern is restored after the inOut call to the calling MEP
         afterMessageModified.message(0).exchangePattern().isEqualTo(callingMEP);
 
-        template.sendBody("direct:in", callingMEP, messageBody);
+        template.sendBody("direct:start", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
 

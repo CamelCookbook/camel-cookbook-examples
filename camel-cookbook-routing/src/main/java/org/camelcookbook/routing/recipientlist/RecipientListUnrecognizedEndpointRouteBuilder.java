@@ -25,7 +25,7 @@ import org.apache.camel.builder.RouteBuilder;
 public class RecipientListUnrecognizedEndpointRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:in")
+        from("direct:start")
             .setHeader("multicastTo").constant("direct:first,direct:second,direct:cheese")
             .recipientList().header("multicastTo").ignoreInvalidEndpoints();
 

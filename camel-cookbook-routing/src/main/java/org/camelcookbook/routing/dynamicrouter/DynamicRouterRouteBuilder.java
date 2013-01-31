@@ -22,10 +22,10 @@ import org.apache.camel.builder.RouteBuilder;
 public class DynamicRouterRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:start").
-            dynamicRouter(method(MyDynamicRouter.class, "routeMe"));
+        from("direct:start")
+            .dynamicRouter(method(MyDynamicRouter.class, "routeMe"));
 
-        from("direct:other").
-            to("mock:other");
+        from("direct:other")
+            .to("mock:other");
     }
 }

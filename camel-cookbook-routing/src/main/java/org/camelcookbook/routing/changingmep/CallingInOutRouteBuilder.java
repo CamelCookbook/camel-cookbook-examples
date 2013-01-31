@@ -19,11 +19,19 @@ package org.camelcookbook.routing.changingmep;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class InOnlyCallingInOutViaToTest extends InOnlyCallingInOutTest {
-
+/**
+ * Changing the MEP of a message for one endpoint invocation to InOut.
+ */
+public class CallingInOutRouteBuilder extends RouteBuilder {
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new InOnlyCallingInOutViaToRouteBuilder();
-    }
+    public void configure() throws Exception {
+        from("direct:start")
+            .to("mock:beforeMessageModified")
+            .inOut("direct:modifyMessage")
+            .to("mock:afterMessageModified");
 
+        from("direct:modifyMessage")
+            .to("mock:modifyMessage")
+            .transform(simple("[${body}] has been modified!"));
+    }
 }

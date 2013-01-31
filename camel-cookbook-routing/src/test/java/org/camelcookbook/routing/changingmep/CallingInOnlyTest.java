@@ -21,14 +21,9 @@ import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.routing.recipientlist.RecipientListRouteBuilder;
 import org.junit.Test;
 
-public class InOutCallingInOnlyTest extends CamelTestSupport {
-
-    @Produce(uri = "direct:in")
-    protected ProducerTemplate template;
-
+public class CallingInOnlyTest extends CamelTestSupport {
     @EndpointInject(uri = "mock:beforeOneWay")
     private MockEndpoint beforeOneWay;
 
@@ -40,7 +35,7 @@ public class InOutCallingInOnlyTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new InOutCallingInOnlyRouteBuilder();
+        return new CallingInOnlyRouteBuilder();
     }
 
     @Test
@@ -61,7 +56,7 @@ public class InOutCallingInOnlyTest extends CamelTestSupport {
         afterOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
 
         // requestBody always sets the Exchange Pattern to InOut
-        String response = template.requestBody("direct:in", messageBody, String.class);
+        String response = template.requestBody("direct:start", messageBody, String.class);
 
         assertEquals("Done", response);
 
@@ -98,7 +93,7 @@ public class InOutCallingInOnlyTest extends CamelTestSupport {
         afterOneWay.message(0).exchangePattern().isEqualTo(callingMEP);
 
         // Explicitly set Exchange Pattern
-        template.sendBody("direct:in", callingMEP, messageBody);
+        template.sendBody("direct:start", callingMEP, messageBody);
 
         assertMockEndpointsSatisfied();
 

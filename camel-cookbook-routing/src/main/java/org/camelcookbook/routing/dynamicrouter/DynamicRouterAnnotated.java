@@ -48,7 +48,7 @@ public class DynamicRouterAnnotated {
      * @param properties the properties map associated with the Camel Exchange
      * @return next endpoint uri(s) to route to or <tt>null</tt> to finish routing
      */
-    @Consume(uri = "direct:dynamicRouteAnnotated")
+    @Consume(uri = "direct:start")
     @DynamicRouter(delimiter = ",")
     public String routeMe(String body, @Properties Map<String, Object> properties) {
         LOG.info("Exchange.SLIP_ENDPOINT = {}, invoked = {}",

@@ -35,9 +35,9 @@ public class WireTapOnPrepareRouteBuilder extends RouteBuilder {
             }
         };
 
-        from("direct:in")
-                .wireTap("mock:tapped").onPrepare(markProcessed)
-                .to("mock:out");
+        from("direct:start")
+            .wireTap("mock:tapped").onPrepare(markProcessed)
+            .to("mock:out");
     }
 
 }

@@ -40,6 +40,13 @@ public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
         return new ThrottlerAsyncDelayedRouteBuilder();
     }
 
+    @Override
+    protected int getShutdownTimeout() {
+        // tell CamelTestSupport to shutdown in 1 second versus default of 10
+        // expect several in-flight messages that we don't care about
+        return 1;
+    }
+
     @Test
     public void testAsyncDelayedThrottle() throws Exception {
         final int throttleRate = 5;
@@ -57,7 +64,7 @@ public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    template.sendBody("direct:asyncDelayed", "Camel Rocks");
+                    template.sendBody("direct:start", "Camel Rocks");
 
                     final int threadId = threadCount.incrementAndGet();
                     LOG.info("Thread {} finished", threadId);

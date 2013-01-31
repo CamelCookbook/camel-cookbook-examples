@@ -30,12 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MulticastSpringTest extends CamelSpringTestSupport {
 
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/multicast-context.xml");
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
@@ -46,6 +41,11 @@ public class MulticastSpringTest extends CamelSpringTestSupport {
 
     @EndpointInject(uri = "mock:third")
     private MockEndpoint third;
+
+    @Override
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/multicast-context.xml");
+    }
 
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {

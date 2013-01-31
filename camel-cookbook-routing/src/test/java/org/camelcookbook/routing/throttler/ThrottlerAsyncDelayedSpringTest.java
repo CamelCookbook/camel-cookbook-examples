@@ -36,6 +36,13 @@ public class ThrottlerAsyncDelayedSpringTest extends CamelSpringTestSupport {
         return new ClassPathXmlApplicationContext("spring/throttlerAsyncDelayed-context.xml");
     }
 
+    @Override
+    protected int getShutdownTimeout() {
+        // tell CamelTestSupport to shutdown in 1 second versus default of 10
+        // expect several in-flight messages that we don't care about
+        return 1;
+    }
+
     @Test
     public void testAsyncDelayedThrottle() throws Exception {
         final int throttleRate = 5;

@@ -29,12 +29,7 @@ import java.util.List;
 
 public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
 
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/wireTap-customThreadPool-context.xml");
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:tapped")
@@ -42,6 +37,11 @@ public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
 
     @EndpointInject(uri = "mock:out")
     private MockEndpoint out;
+
+    @Override
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("spring/wireTap-customThreadPool-context.xml");
+    }
 
     @Test
     public void testMessageWireTappedInOrderBySameThread() throws InterruptedException {
@@ -70,6 +70,4 @@ public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
             Assert.assertEquals(firstExchangeThreadName, in.getHeader("threadName", String.class));
         }
     }
-
-
 }

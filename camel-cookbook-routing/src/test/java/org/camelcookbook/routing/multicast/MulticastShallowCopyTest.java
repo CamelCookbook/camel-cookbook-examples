@@ -27,12 +27,7 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
 
     public static final String MESSAGE_BODY = "Message to be multicast";
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastShallowCopyRouteBuilder();
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
@@ -43,6 +38,11 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:afterMulticast")
     private MockEndpoint afterMulticast;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new MulticastShallowCopyRouteBuilder();
+    }
 
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {

@@ -17,17 +17,18 @@
 
 package org.camelcookbook.routing.changingmep;
 
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Changing the MEP of a message for one endpoint invocation only from InOnly to InOut.
+ * Changing the MEP of a message for one endpoint invocation to InOut.
  */
-public class InOnlyCallingInOutRouteBuilder extends RouteBuilder {
+public class CallingInOutViaToRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:in")
+        from("direct:start")
             .to("mock:beforeMessageModified")
-            .inOut("direct:modifyMessage")
+            .to(ExchangePattern.InOut, "direct:modifyMessage")
             .to("mock:afterMessageModified");
 
         from("direct:modifyMessage")

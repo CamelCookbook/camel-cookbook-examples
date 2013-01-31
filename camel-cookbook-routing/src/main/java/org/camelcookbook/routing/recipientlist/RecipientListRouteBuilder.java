@@ -20,15 +20,15 @@ package org.camelcookbook.routing.recipientlist;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Simple multicast example.
+ * Simple RecipientList example.
  */
 public class RecipientListRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:in")
-                .setHeader("endpointsToBeTriggered")
-                .method(MessageRouter.class, "getEndpointsToRouteMessageTo")
-                .recipientList(header("endpointsToBeTriggered"));
+        from("direct:start")
+            .setHeader("endpointsToBeTriggered")
+            .method(MessageRouter.class, "getEndpointsToRouteMessageTo")
+            .recipientList(header("endpointsToBeTriggered"));
 
         from("direct:order.priority").to("mock:order.priority");
         from("direct:order.normal").to("mock:order.normal");

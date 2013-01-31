@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class RoutingSlipAnnotated {
 
-    @Consume(uri = "direct:routingSlipAnnotated")
+    @Consume(uri = "direct:start")
     @RoutingSlip(delimiter = ",")
     public List<String> routeMe(String body, @Headers Map<String, Object> headers) {
         ArrayList<String> results = new ArrayList<String>();

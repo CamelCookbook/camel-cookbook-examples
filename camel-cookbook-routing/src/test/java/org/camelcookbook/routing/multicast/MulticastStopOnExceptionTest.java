@@ -15,12 +15,7 @@ public class MulticastStopOnExceptionTest extends CamelTestSupport {
 
     public static final String MESSAGE_BODY = "Message to be multicast";
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastStopOnExceptionRouteBuilder();
-    }
-
-    @Produce(uri = "direct:in")
+    @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
     @EndpointInject(uri = "mock:first")
@@ -34,6 +29,11 @@ public class MulticastStopOnExceptionTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:exceptionHandler")
     private MockEndpoint exceptionHandler;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new MulticastStopOnExceptionRouteBuilder();
+    }
 
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {

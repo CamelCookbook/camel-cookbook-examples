@@ -28,10 +28,12 @@ public class CallingInOutRouteBuilder extends RouteBuilder {
         from("direct:start")
             .to("mock:beforeMessageModified")
             .inOut("direct:modifyMessage")
+                .to("log:mainRoute?showAll=true")
             .to("mock:afterMessageModified");
 
         from("direct:modifyMessage")
             .to("mock:modifyMessage")
+                .to("log:subRoute?showAll=true")
             .transform(simple("[${body}] has been modified!"));
     }
 }

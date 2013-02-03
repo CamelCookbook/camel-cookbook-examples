@@ -65,8 +65,8 @@ public class CallingInOutTest extends CamelTestSupport {
         Exchange modifyMessageExchange = modifyMessage.getReceivedExchanges().get(0);
         Exchange afterMessageModifiedExchange = afterMessageModified.getReceivedExchanges().get(0);
 
-        // these are not the same exchange objects
-        assertNotEquals(modifyMessageExchange, afterMessageModifiedExchange);
+        // these are the same exchange objects, but we can't just do an object comparison as mock: copies the Exchange
+        assertEquals(modifyMessageExchange.getExchangeId(), afterMessageModifiedExchange.getExchangeId());
 
         // the transactions are the same
         assertEquals(modifyMessageExchange.getUnitOfWork(), afterMessageModifiedExchange.getUnitOfWork());
@@ -99,8 +99,8 @@ public class CallingInOutTest extends CamelTestSupport {
         Exchange modifyMessageExchange = modifyMessage.getReceivedExchanges().get(0);
         Exchange afterMessageModifiedExchange = afterMessageModified.getReceivedExchanges().get(0);
 
-        // these are not the same exchange objects
-        assertNotEquals(modifyMessageExchange, afterMessageModifiedExchange);
+        // these are the same exchange objects, but we can't just do an object comparison as mock: copies the Exchange
+        assertEquals(modifyMessageExchange.getExchangeId(), afterMessageModifiedExchange.getExchangeId());
 
         // the transactions are the same
         assertEquals(modifyMessageExchange.getUnitOfWork(), afterMessageModifiedExchange.getUnitOfWork());

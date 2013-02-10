@@ -22,25 +22,24 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Simple multicast example with parallel processing.
+ * Multicast example with exceptions handled in the AggregationStrategy.
  */
-public class MulticastExceptionHandlingRouteBuilder extends RouteBuilder {
+public class MulticastExceptionHandlingStopOnExceptionRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-
-        onException(org.apache.camel.CamelExchangeException.class, org.apache.camel.CamelExecutionException.class)
-            .handled(true)
-            .transform(constant("Kaboom"));
 
         from("direct:start")
             .multicast().aggregationStrategy(new ExceptionHandlingAggregationStrategy()).stopOnException()
                 .to("direct:first")
                 .to("direct:second")
             .end()
+            .log("continuing with ${body}") // this will never be called
+            .to("mock:afterMulticast")
             .transform(body()); // copy the In message to the Out message; this will become the route response
 
         from("direct:first")
             .onException(Exception.class)
+                .handled(true)
                 .log("Caught exception")
                 .to("mock:exceptionHandler")
                 .transform(constant("Oops"))
@@ -54,7 +53,8 @@ public class MulticastExceptionHandlingRouteBuilder extends RouteBuilder {
                 });
 
         from("direct:second")
-            .to("mock:second");
+            .to("mock:second")
+            .transform(constant("All OK here"));
     }
 
 }

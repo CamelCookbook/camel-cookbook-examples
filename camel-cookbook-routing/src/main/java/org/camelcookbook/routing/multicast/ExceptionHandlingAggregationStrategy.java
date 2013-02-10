@@ -26,32 +26,34 @@ import org.slf4j.LoggerFactory;
  * Aggregation strategy that concatenates String responses.
  */
 public class ExceptionHandlingAggregationStrategy implements AggregationStrategy {
+    public static final String MULTICAST_EXCEPTION = "multicast_exception";
+
     private Logger logger = LoggerFactory.getLogger(ExceptionHandlingAggregationStrategy.class);
 
     @Override
-    public Exchange aggregate(Exchange exchange1, Exchange exchange2) {
-        if (exchange2.isFailed()) {
-            // error - work out what to do
-            Exception ex = exchange2.getException();
-            if (exchange1 == null) {
-                exchange2.setException(null);
-                exchange2.setProperty("multicast.exception", ex);
-                return exchange2;
-            } else {
-                exchange1.setProperty("multicast.exception", ex);
-                return exchange1;
+    public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+        if (oldExchange == null) {
+            if (newExchange.isFailed()) {
+                // this block only gets called if stopOnException() is not defined on the multicast
+                Exception ex = newExchange.getException();
+                newExchange.setException(null);
+                newExchange.setProperty(MULTICAST_EXCEPTION, ex);
             }
+            return newExchange;
         } else {
-            if (exchange1 == null) {
-                return exchange2;
-            } else {
-                String body1 = exchange1.getIn().getBody(String.class);
-                String body2 = exchange2.getIn().getBody(String.class);
-                String merged = (body1 == null) ? body2 : body1 + "," + body2;
-                exchange1.getIn().setBody(merged);
-                return exchange1;
+            if (newExchange.isFailed()) {
+                // this block only gets called if stopOnException() is not defined on the multicast
+                Exception ex = newExchange.getException();
+                oldExchange.setProperty(MULTICAST_EXCEPTION, ex);
             }
+            // merge the Strings
+            String body1 = oldExchange.getIn().getBody(String.class);
+            String body2 = newExchange.getIn().getBody(String.class);
+            String merged = (body1 == null) ? body2 : body1 + "," + body2;
+            oldExchange.getIn().setBody(merged);
+            return oldExchange;
         }
+
     }
 
 }

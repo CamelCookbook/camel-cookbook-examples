@@ -38,7 +38,7 @@ public class CallingInOutSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/changingMep-CallingInOut-context.xml");
+        return new ClassPathXmlApplicationContext("spring/changingMep-callingInOut-context.xml");
     }
 
     @Test

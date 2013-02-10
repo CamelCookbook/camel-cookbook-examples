@@ -27,7 +27,7 @@ public class RecipientListRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:start")
             .setHeader("endpointsToBeTriggered")
-            .method(MessageRouter.class, "getEndpointsToRouteMessageTo")
+                .method(MessageRouter.class, "getEndpointsToRouteMessageTo")
             .recipientList(header("endpointsToBeTriggered"));
 
         from("direct:order.priority").to("mock:order.priority");

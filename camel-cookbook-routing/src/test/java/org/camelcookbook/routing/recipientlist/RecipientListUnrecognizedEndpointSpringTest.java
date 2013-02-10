@@ -15,27 +15,43 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.routingslip;
+package org.camelcookbook.routing.recipientlist;
 
+import org.apache.camel.EndpointInject;
+import org.apache.camel.Produce;
+import org.apache.camel.ProducerTemplate;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class RoutingSlipAnnotatedTest extends CamelSpringTestSupport {
+public class RecipientListUnrecognizedEndpointSpringTest extends CamelSpringTestSupport {
+
+    @Produce(uri = "direct:start")
+    protected ProducerTemplate template;
+
+    @EndpointInject(uri = "mock:first")
+    private MockEndpoint first;
+
+    @EndpointInject(uri = "mock:second")
+    private MockEndpoint second;
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/routingSlip-annotated-context.xml");
+        return new ClassPathXmlApplicationContext("spring/recipientList-unrecognized-context.xml");
     }
 
     @Test
-    public void testRoutingSlipAnnotated() throws Exception {
-        getMockEndpoint("mock:a").expectedMessageCount(1);
-        getMockEndpoint("mock:other").expectedMessageCount(1);
-        getMockEndpoint("mock:oneMore").expectedMessageCount(1);
+    public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
+        String messageBody = "Message to be distributed via recipientList";
 
-        template.sendBodyAndHeader("direct:start", "Camel Rocks", "myRoutingSlipHeader", "mock:a,direct:other");
+        first.setExpectedMessageCount(1);
+        first.message(0).equals(messageBody);
+        second.setExpectedMessageCount(1);
+        second.message(0).equals(messageBody);
+
+        template.sendBody(messageBody);
 
         assertMockEndpointsSatisfied();
     }

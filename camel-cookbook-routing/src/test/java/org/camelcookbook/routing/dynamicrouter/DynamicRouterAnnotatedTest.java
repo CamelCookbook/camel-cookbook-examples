@@ -17,13 +17,7 @@
 
 package org.camelcookbook.routing.dynamicrouter;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.JndiRegistry;
-import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,7 +26,7 @@ public class DynamicRouterAnnotatedTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/dynamicRouterAnnotated-context.xml");
+        return new ClassPathXmlApplicationContext("spring/dynamicRouter-annotated-context.xml");
     }
 
     @Test

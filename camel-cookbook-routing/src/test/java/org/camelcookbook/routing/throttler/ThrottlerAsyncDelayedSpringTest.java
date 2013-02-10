@@ -33,7 +33,7 @@ public class ThrottlerAsyncDelayedSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/throttlerAsyncDelayed-context.xml");
+        return new ClassPathXmlApplicationContext("spring/throttler-asyncDelayed-context.xml");
     }
 
     @Override

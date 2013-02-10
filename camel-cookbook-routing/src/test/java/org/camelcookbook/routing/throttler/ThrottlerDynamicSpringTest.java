@@ -33,7 +33,7 @@ public class ThrottlerDynamicSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/throttlerDynamic-context.xml");
+        return new ClassPathXmlApplicationContext("spring/throttler-dynamic-context.xml");
     }
 
     @Test

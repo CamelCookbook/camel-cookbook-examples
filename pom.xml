@@ -30,19 +30,19 @@
     <properties>
         <application-name>Camel Cookbook Examples</application-name>
 
-        <camel-version>2.10.1</camel-version>
+        <camel-version>2.10.3</camel-version>
 
         <slf4j.version>1.6.6</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <junit-version>4.11</junit-version>
 
-        <maven-compiler-plugin-version>2.5</maven-compiler-plugin-version>
-        <maven-bundle-plugin-version>2.3.6</maven-bundle-plugin-version>
+        <maven-compiler-plugin-version>2.5.1</maven-compiler-plugin-version>
+        <maven-bundle-plugin-version>2.3.7</maven-bundle-plugin-version>
         <build-plugins-plugin-version>2.5</build-plugins-plugin-version>
         <build-helper-plugin-version>1.7</build-helper-plugin-version>
 
-        <osgi-import-package>*,org.apache.camel.osgi</osgi-import-package>
-        <fusesource-repo>http://repo.fusesource.com/nexus/content/groups/public/</fusesource-repo>
+        <osgi-import-package>*</osgi-import-package>
+        <fusesource-repo>http://repo.fusesource.com/nexus/content/repositories/releases/</fusesource-repo>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -54,15 +54,29 @@
 
     <repositories>
         <repository>
-            <id>fusesource</id>
+            <id>release.fusesource.org</id>
+            <name>FuseSource Release Repository</name>
             <url>${fusesource-repo}</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
-            <id>fusesource</id>
+            <id>release.fusesource.org</id>
+            <name>FuseSource Release Repository</name>
             <url>${fusesource-repo}</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </pluginRepository>
     </pluginRepositories>
 
@@ -118,32 +132,31 @@
 	</dependencyManagement>
 	
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin-version}</version>
-					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
-					</configuration>
-				</plugin>
+        <defaultGoal>install</defaultGoal>
 
-				<!-- used to generate the MANIFEST-FILE of a bundle -->
-				<plugin>
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-bundle-plugin</artifactId>
-					<version>${maven-bundle-plugin-version}</version>
-					<extensions>true</extensions>
-					<configuration>
-						<instructions>
-							<Bundle-SymbolicName>${project.name}</Bundle-SymbolicName>
-							<Import-Package>${osgi-import-package}</Import-Package>
-						</instructions>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <!-- used to generate the MANIFEST-FILE of a bundle -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven-bundle-plugin-version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Import-Package>${osgi-import-package}</Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 </project>

@@ -44,7 +44,7 @@ public class MulticastSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/multicast-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/multicast-context.xml");
     }
 
     @Test

@@ -44,7 +44,7 @@ public class LoadBalancerStickySpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/loadBalancer-sticky-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/loadBalancer-sticky-context.xml");
     }
 
     @Test

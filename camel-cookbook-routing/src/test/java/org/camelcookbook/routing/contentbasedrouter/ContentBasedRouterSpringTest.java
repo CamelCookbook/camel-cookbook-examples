@@ -26,7 +26,7 @@ public class ContentBasedRouterSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/contentBasedRouter-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/contentBasedRouter-context.xml");
     }
 
     @Test

@@ -28,7 +28,7 @@ public class DynamicRouterSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/dynamicRouter-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/dynamicRouter-context.xml");
     }
 
     @Test

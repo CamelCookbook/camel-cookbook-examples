@@ -48,7 +48,7 @@ public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/multicast-stopOnException-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/multicast-stopOnException-context.xml");
     }
 
     @Test

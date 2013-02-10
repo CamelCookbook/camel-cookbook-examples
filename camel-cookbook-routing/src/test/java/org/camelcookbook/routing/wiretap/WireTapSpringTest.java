@@ -39,7 +39,7 @@ public class WireTapSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/wireTap-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/wireTap-context.xml");
     }
 
     @Test

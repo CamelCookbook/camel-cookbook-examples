@@ -41,7 +41,7 @@ public class LoadBalancerFailoverSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/loadBalancer-failover-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/loadBalancer-failover-context.xml");
     }
 
     @Test

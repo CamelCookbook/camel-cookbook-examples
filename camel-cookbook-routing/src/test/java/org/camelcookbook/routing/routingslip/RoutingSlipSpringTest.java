@@ -26,7 +26,7 @@ public class RoutingSlipSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/routingSlip-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/routingSlip-context.xml");
     }
 
     @Test

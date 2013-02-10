@@ -45,7 +45,7 @@ public class RecipientListSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/recipientList-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/recipientList-context.xml");
     }
 
     @Test

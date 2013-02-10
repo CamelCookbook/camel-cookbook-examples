@@ -40,7 +40,7 @@ public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/wireTap-customThreadPool-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/wireTap-customThreadPool-context.xml");
     }
 
     @Test

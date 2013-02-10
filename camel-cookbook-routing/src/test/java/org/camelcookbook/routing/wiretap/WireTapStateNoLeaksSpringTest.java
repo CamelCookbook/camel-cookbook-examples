@@ -41,7 +41,7 @@ public class WireTapStateNoLeaksSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/wireTap-stateNoLeaks-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/wireTap-stateNoLeaks-context.xml");
     }
 
     @Test

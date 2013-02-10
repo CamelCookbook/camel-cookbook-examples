@@ -39,7 +39,7 @@ public class RecipientListUnrecognizedEndpointSpringTest extends CamelSpringTest
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/recipientList-unrecognized-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/recipientList-unrecognized-context.xml");
     }
 
     @Test

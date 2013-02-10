@@ -36,7 +36,7 @@ public class CallingInOnlySpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/changingMep-callingInOnly-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/changingMep-callingInOnly-context.xml");
     }
 
     @Test

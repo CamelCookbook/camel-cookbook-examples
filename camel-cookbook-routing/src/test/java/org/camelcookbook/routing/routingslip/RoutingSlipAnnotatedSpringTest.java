@@ -15,29 +15,27 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.dynamicrouter;
+package org.camelcookbook.routing.routingslip;
 
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class DynamicRouterAnnotatedTest extends CamelSpringTestSupport {
+public class RoutingSlipAnnotatedSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/dynamicRouter-annotated-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/routingSlip-annotated-context.xml");
     }
 
     @Test
-    public void testDynamicRouterAnnotated() throws Exception {
+    public void testRoutingSlipAnnotated() throws Exception {
         getMockEndpoint("mock:a").expectedMessageCount(1);
-        getMockEndpoint("mock:b").expectedMessageCount(1);
-        getMockEndpoint("mock:c").expectedMessageCount(1);
         getMockEndpoint("mock:other").expectedMessageCount(1);
-        getMockEndpoint("mock:result").expectedMessageCount(1);
+        getMockEndpoint("mock:oneMore").expectedMessageCount(1);
 
-        template.sendBody("direct:start", "Camel Rocks");
+        template.sendBodyAndHeader("direct:start", "Camel Rocks", "myRoutingSlipHeader", "mock:a,direct:other");
 
         assertMockEndpointsSatisfied();
     }

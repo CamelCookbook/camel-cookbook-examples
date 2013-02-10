@@ -28,7 +28,7 @@ public class FilteringSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("spring/filtering-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/filtering-context.xml");
     }
 
     @Test

@@ -43,12 +43,10 @@ public class WireTapOnPrepareTest extends CamelTestSupport {
 
     @Test
     public void testMessageRoutedToWireTapMarked() throws InterruptedException {
-        String messageBody = "Message to be tapped";
-        tapped.setExpectedMessageCount(1);
-        tapped.message(0).body().isEqualTo(messageBody);
+        final String messageBody = "Message to be tapped";
 
-        out.setExpectedMessageCount(1);
-        out.message(0).body().isEqualTo(messageBody);
+        tapped.expectedBodiesReceived(messageBody);
+        out.expectedBodiesReceived(messageBody);
 
         // TODO investigate - this is the inverse of what I would have expected
         tapped.message(0).header("processorAction").isNull();
@@ -56,8 +54,6 @@ public class WireTapOnPrepareTest extends CamelTestSupport {
 
         template.sendBody(messageBody);
 
-        // check that the endpoints both received the same message
-        tapped.assertIsSatisfied();
-        out.assertIsSatisfied();
+        assertMockEndpointsSatisfied();
     }
 }

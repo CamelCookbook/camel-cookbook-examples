@@ -45,10 +45,12 @@ public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testMessageWireTappedInOrderBySameThread() throws InterruptedException {
-        String messageBody = "Message to be tapped";
+        final String messageBody = "Message to be tapped";
         final int messagesToSend = 3;
+
         tapped.setExpectedMessageCount(messagesToSend);
         tapped.expectsAscending().header("messageCount");
+
         out.setExpectedMessageCount(messagesToSend);
         out.expectsAscending().header("messageCount");
 
@@ -56,9 +58,7 @@ public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
             template.sendBodyAndHeader(messageBody, "messageCount", messageCount);
         }
 
-        // check that the endpoints both received the same message
-        tapped.assertIsSatisfied();
-        out.assertIsSatisfied();
+        assertMockEndpointsSatisfied();
 
         List<Exchange> exchanges = tapped.getExchanges();
         String firstExchangeThreadName = null;

@@ -36,4 +36,16 @@ public class Cheese implements Cloneable {
         cheese.setAge(this.getAge());
         return cheese;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cheese cheese = (Cheese) o;
+
+        if (age != cheese.age) return false;
+
+        return true;
+    }
 }

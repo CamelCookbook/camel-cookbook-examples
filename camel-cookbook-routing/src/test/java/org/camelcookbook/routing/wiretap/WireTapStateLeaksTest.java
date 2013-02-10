@@ -24,8 +24,9 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.camelcookbook.routing.model.Cheese;
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.apache.camel.language.simple.SimpleLanguage.simple;
 
 public class WireTapStateLeaksTest extends CamelTestSupport {
 
@@ -45,24 +46,21 @@ public class WireTapStateLeaksTest extends CamelTestSupport {
 
     @Test
     public void testOutMessageAffectedByTappedRoute() throws InterruptedException {
-        Cheese cheese = new Cheese();
+        final Cheese cheese = new Cheese();
         cheese.setAge(1);
 
-        tapped.setExpectedMessageCount(1);
-        out.setExpectedMessageCount(1);
+        // should receive same object that was sent
+        out.expectedBodiesReceived(cheese);
+        // since no copy, should have updated age
+        out.message(0).expression(simple("${body.age} == 2"));
+
+        // should receive same object that was sent
+        tapped.expectedBodiesReceived(cheese);
+        tapped.message(0).expression(simple("${body.age} == 2"));
+        tapped.setResultWaitTime(1000);
 
         template.sendBody(cheese);
 
-        tapped.setResultWaitTime(1000);
-        // check that the endpoints both received the same message
-        tapped.assertIsSatisfied();
-        out.assertIsSatisfied();
-
-        // both mock endpoints should receive the same
-        tapped.expectedBodyReceived().inMessage().equals(cheese);
-        out.expectedBodyReceived().equals(cheese);
-
-        Cheese outCheese = out.getExchanges().get(0).getIn().getBody(Cheese.class);
-        Assert.assertEquals(2, outCheese.getAge());
+        assertMockEndpointsSatisfied();
     }
 }

@@ -43,17 +43,13 @@ public class WireTapTest extends CamelTestSupport {
 
     @Test
     public void testMessageRoutedToWireTapEndpoint() throws InterruptedException {
-        String messageBody = "Message to be tapped";
-        tapped.setExpectedMessageCount(1);
-        out.setExpectedMessageCount(1);
+        final String messageBody = "Message to be tapped";
+
+        tapped.expectedBodiesReceived(messageBody);
+        out.expectedBodiesReceived(messageBody);
 
         template.sendBody(messageBody);
 
-        // check that the endpoints both received the same message
-        tapped.assertIsSatisfied();
-        out.assertIsSatisfied();
-
-        tapped.expectedBodyReceived().equals(messageBody);
-        out.expectedBodyReceived().equals(messageBody);
+        assertMockEndpointsSatisfied();
     }
 }

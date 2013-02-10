@@ -27,9 +27,9 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-// FIXME This behaviour is undefined  in Camel 2.10.2
-@Ignore
 public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
+
+    public static final String MESSAGE_BODY = "Message to be multicast";
 
     @Produce(uri = "direct:start")
     protected ProducerTemplate template;
@@ -53,20 +53,17 @@ public class MulticastStopOnExceptionSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
-        String messageBody = "Message to be multicast";
-
         mockFirst.setExpectedMessageCount(1);
-        mockFirst.message(0).equals(messageBody);
+        mockFirst.message(0).equals(MESSAGE_BODY);
 
         mockSecond.setExpectedMessageCount(0);
 
         afterMulticast.setExpectedMessageCount(0);
-
         exceptionHandler.setExpectedMessageCount(1);
 
-        template.sendBody(messageBody);
+        String response = (String) template.requestBody(MESSAGE_BODY);
+        assertEquals("Oops", response);
 
         assertMockEndpointsSatisfied();
     }
-
 }

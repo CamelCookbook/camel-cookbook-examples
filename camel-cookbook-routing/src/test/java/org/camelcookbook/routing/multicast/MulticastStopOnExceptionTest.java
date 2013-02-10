@@ -26,8 +26,6 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Ignore;
 import org.junit.Test;
 
-// FIXME This behaviour is undefined  in Camel 2.10.2
-@Ignore
 public class MulticastStopOnExceptionTest extends CamelTestSupport {
 
     public static final String MESSAGE_BODY = "Message to be multicast";
@@ -59,12 +57,11 @@ public class MulticastStopOnExceptionTest extends CamelTestSupport {
 
         mockSecond.setExpectedMessageCount(0);
 
-        afterMulticast.setExpectedMessageCount(1);
-        afterMulticast.message(0).equals(MESSAGE_BODY);
-
+        afterMulticast.setExpectedMessageCount(0);
         exceptionHandler.setExpectedMessageCount(1);
 
-        template.sendBody(MESSAGE_BODY);
+        String response = (String) template.requestBody(MESSAGE_BODY);
+        assertEquals("Oops", response);
 
         assertMockEndpointsSatisfied();
     }

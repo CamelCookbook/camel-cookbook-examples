@@ -31,6 +31,18 @@
 
         <route>
             <from uri="direct:start"/>
+            <multicast stopOnException="true">
+                <to uri="direct:first"/>
+                <to uri="direct:second"/>
+            </multicast>
+            <to uri="mock:afterMulticast"/>
+            <transform>
+                <simple>${body}</simple>
+            </transform>
+        </route>
+
+        <route>
+            <from uri="direct:first"/>
             <onException>
                 <exception>java.lang.IllegalArgumentException</exception>
                 <handled>
@@ -38,16 +50,10 @@
                 </handled>
                 <log message="caught ${exception}"/>
                 <to uri="mock:exceptionHandler"/>
+                <transform>
+                    <constant>Oops</constant>
+                </transform>
             </onException>
-            <multicast stopOnException="true">
-                <to uri="direct:first"/>
-                <to uri="direct:second"/>
-            </multicast>
-            <to uri="mock:afterMulticast"/>
-        </route>
-
-        <route>
-            <from uri="direct:first"/>
             <to uri="mock:first"/>
             <throwException ref="illegalArg"/>
         </route>

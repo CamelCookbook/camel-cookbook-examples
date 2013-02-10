@@ -41,6 +41,7 @@
 
     <modules>
         <module>camel-cookbook-routing</module>
+        <module>camel-cookbook-transformation</module>
     </modules>
 
     <repositories>

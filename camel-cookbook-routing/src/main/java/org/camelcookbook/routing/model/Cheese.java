@@ -31,6 +31,7 @@ public class Cheese implements Cloneable {
         this.age = age;
     }
 
+    @Override
     public Cheese clone() {
         Cheese cheese = new Cheese();
         cheese.setAge(this.getAge());
@@ -47,5 +48,12 @@ public class Cheese implements Cloneable {
         if (age != cheese.age) return false;
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Cheese{" +
+                "age=" + age +
+                '}';
     }
 }

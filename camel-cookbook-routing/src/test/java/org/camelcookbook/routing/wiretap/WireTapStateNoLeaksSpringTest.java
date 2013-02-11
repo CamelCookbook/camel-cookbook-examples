@@ -24,12 +24,15 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.camelcookbook.routing.model.Cheese;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.apache.camel.language.simple.SimpleLanguage.simple;
 
 public class WireTapStateNoLeaksSpringTest extends CamelSpringTestSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(WireTapStateNoLeaksTest.class);
 
     @Produce(uri = "direct:start")
     protected ProducerTemplate template;
@@ -51,10 +54,10 @@ public class WireTapStateNoLeaksSpringTest extends CamelSpringTestSupport {
         cheese.setAge(1);
 
         // should receive same object that was sent
-        //out.expectedBodiesReceived(cheese); // bug in wire tap?
+        //out.expectedBodiesReceived(cheese); // bug in Wire Tap?
         out.setExpectedMessageCount(1);
         // since copy was sent to wire tap, age should remain unchanged
-        //out.message(0).body().isEqualTo(cheese); // bug in isEqualTo test?
+        //out.message(0).body().isEqualTo(cheese); // bug in Wire Tap?
         out.message(0).expression(simple("${body.age} == 1"));
 
         tapped.setExpectedMessageCount(1);
@@ -65,7 +68,18 @@ public class WireTapStateNoLeaksSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
 
-        // check that tapped got a different instance (copy) of message
-        assertNotEquals(cheese, tapped.message(0));
+        final Cheese outCheese = out.getReceivedExchanges().get(0).getIn().getBody(Cheese.class);
+        final Cheese tappedCheese = tapped.getReceivedExchanges().get(0).getIn().getBody(Cheese.class);
+
+        LOG.info("cheese = {}; out = {}; tapped = {}", new Cheese[]{cheese, outCheese, tappedCheese});
+
+        LOG.info("cheese == out = {}", (cheese == outCheese));
+        LOG.info("cheese == tapped = {}", (cheese == tappedCheese));
+        LOG.info("out == tapped = {}", (outCheese == tappedCheese));
+
+        assertNotSame(outCheese, tappedCheese);
+
+        // bug in Camel - CAMEL-6064 - copy should go to tapped
+        //assertSame(outCheese, cheese);
     }
 }

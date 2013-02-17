@@ -16,19 +16,19 @@
         <price>29.99</price>
     </book>
 
+    <book category="WEB">
+        <title lang="en">Learning XML</title>
+        <author>Erik T. Ray</author>
+        <year>2003</year>
+        <price>39.95</price>
+    </book>
+
     <book category="PROGRAMMING">
         <title lang="en">Camel Cookbook</title>
         <author>Scott Cranton</author>
         <author>Jakub Korab</author>
         <year>2013</year>
         <price>49.99</price>
-    </book>
-
-    <book category="WEB">
-        <title lang="en">Learning XML</title>
-        <author>Erik T. Ray</author>
-        <year>2003</year>
-        <price>39.95</price>
     </book>
 
 </bookstore>

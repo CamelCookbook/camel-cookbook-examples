@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xslt;
+package org.camelcookbook.transformation.xquery;
 
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.InputStream;
 
-public class XsltParamSpringTest extends CamelSpringTestSupport {
+public class XqueryParamTest extends CamelTestSupport {
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/xslt-param-context.xml");
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new XqueryParamRouteBuilder();
     }
 
     @Test
-    public void testXsltSpring() throws Exception {
+    public void testXqueryParam() throws Exception {
         final InputStream resource = getClass().getClassLoader().getResourceAsStream("bookstore.xml");
         final String request = context().getTypeConverter().convertTo(String.class, resource);
 

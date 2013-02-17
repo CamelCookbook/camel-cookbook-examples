@@ -7,6 +7,9 @@
 
     <xsl:template match="/">
         <books>
+            <xsl:attribute name="value">
+                <xsl:value-of select="$myParamValue" />
+            </xsl:attribute>
             <xsl:apply-templates select="/bookstore/book/title[../price>$myParamValue]">
                 <xsl:sort select="."/>
             </xsl:apply-templates>

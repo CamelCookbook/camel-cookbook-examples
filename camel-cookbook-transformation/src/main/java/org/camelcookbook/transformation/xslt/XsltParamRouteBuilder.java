@@ -19,10 +19,10 @@ package org.camelcookbook.transformation.xslt;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class XsltRouteBuilder extends RouteBuilder {
+public class XsltParamRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("xslt:book.xslt");
+            .to("xslt:book-param.xslt");
     }
 }

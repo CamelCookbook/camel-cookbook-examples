@@ -25,18 +25,18 @@
        ">
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <dataFormats>
+            <bindy id="bookModel" type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
+        </dataFormats>
+
         <route>
             <from uri="direct:unmarshal"/>
-            <unmarshal>
-                <bindy type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
-            </unmarshal>
+            <unmarshal ref="bookModel"/>
         </route>
 
         <route>
             <from uri="direct:marshal"/>
-            <marshal>
-                <bindy type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
-            </marshal>
+            <marshal ref="bookModel"/>
         </route>
     </camelContext>
 

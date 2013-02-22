@@ -1,4 +1,4 @@
-package org.camelcookbook.structuringroutes.javaapp;
+package org.camelcookbook.structuringroutes;
 
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;

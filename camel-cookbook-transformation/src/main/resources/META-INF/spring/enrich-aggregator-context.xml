@@ -25,7 +25,6 @@
        ">
 
     <bean id="myExpander" class="org.camelcookbook.transformation.enrich.AbbreviationExpander"/>
-
     <bean id="myMerger" class="org.camelcookbook.transformation.enrich.MergeInReplacementText"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">

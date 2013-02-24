@@ -21,7 +21,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 public class EnrichWithAggregatorRouteBuilder extends RouteBuilder {
-    private AggregationStrategy myMerger;
+    private MergeInReplacementText myMerger;
 
     @Override
     public void configure() throws Exception {
@@ -30,11 +30,11 @@ public class EnrichWithAggregatorRouteBuilder extends RouteBuilder {
             .enrich("bean:myExpander?method=expand", myMerger);
     }
 
-    public AggregationStrategy getMyMerger() {
+    public MergeInReplacementText getMyMerger() {
         return myMerger;
     }
 
-    public void setMyMerger(AggregationStrategy myMerger) {
+    public void setMyMerger(MergeInReplacementText myMerger) {
         this.myMerger = myMerger;
     }
 }

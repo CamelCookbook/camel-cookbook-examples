@@ -46,11 +46,10 @@ public class WireTapOnPrepareTest extends CamelTestSupport {
         final String messageBody = "Message to be tapped";
 
         tapped.expectedBodiesReceived(messageBody);
-        out.expectedBodiesReceived(messageBody);
+        tapped.message(0).header("processorAction").isNotNull();
 
-        // TODO investigate - this is the inverse of what I would have expected
-        tapped.message(0).header("processorAction").isNull();
-        out.message(0).header("processorAction").isNotNull();
+        out.expectedBodiesReceived(messageBody);
+        out.message(0).header("processorAction").isNull();
 
         template.sendBody(messageBody);
 

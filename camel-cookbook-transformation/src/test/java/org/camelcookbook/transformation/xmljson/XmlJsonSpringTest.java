@@ -61,6 +61,27 @@ public class XmlJsonSpringTest extends CamelSpringTestSupport {
 
         log.info(response);
         assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
+                "<a>" +
+                "<e category=\"COOKING\"><author>Giada De Laurentiis</author><price>30.00</price><title lang=\"en\">Everyday Italian</title><year>2005</year></e>" +
+                "<e category=\"CHILDREN\"><author>J K. Rowling</author><price>29.99</price><title lang=\"en\">Harry Potter</title><year>2005</year></e>" +
+                "<e category=\"WEB\"><author>Erik T. Ray</author><price>39.95</price><title lang=\"en\">Learning XML</title><year>2003</year></e>" +
+                "<e category=\"PROGRAMMING\"><author><e>Scott Cranton</e><e>Jakub Korab</e></author><price>49.99</price><title lang=\"en\">Camel Cookbook</title><year>2013</year></e>" +
+                "</a>\r\n", response);
+    }
+
+    @Test
+    public void testXmlJsonSpringUnmarshalBookstore() throws Exception {
+        final String request = "[" +
+                "{\"@category\":\"COOKING\",\"title\":{\"@lang\":\"en\",\"#text\":\"Everyday Italian\"},\"author\":\"Giada De Laurentiis\",\"year\":\"2005\",\"price\":\"30.00\"}," +
+                "{\"@category\":\"CHILDREN\",\"title\":{\"@lang\":\"en\",\"#text\":\"Harry Potter\"},\"author\":\"J K. Rowling\",\"year\":\"2005\",\"price\":\"29.99\"}," +
+                "{\"@category\":\"WEB\",\"title\":{\"@lang\":\"en\",\"#text\":\"Learning XML\"},\"author\":\"Erik T. Ray\",\"year\":\"2003\",\"price\":\"39.95\"}," +
+                "{\"@category\":\"PROGRAMMING\",\"title\":{\"@lang\":\"en\",\"#text\":\"Camel Cookbook\"},\"author\":[\"Scott Cranton\",\"Jakub Korab\"],\"year\":\"2013\",\"price\":\"49.99\"}" +
+                "]";
+
+        final String response = template.requestBody("direct:unmarshalBookstore", request, String.class);
+
+        log.info(response);
+        assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
                 "<bookstore>" +
                 "<book category=\"COOKING\"><author>Giada De Laurentiis</author><price>30.00</price><title lang=\"en\">Everyday Italian</title><year>2005</year></book>" +
                 "<book category=\"CHILDREN\"><author>J K. Rowling</author><price>29.99</price><title lang=\"en\">Harry Potter</title><year>2005</year></book>" +

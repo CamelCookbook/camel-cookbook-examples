@@ -26,17 +26,21 @@ import java.util.Arrays;
 public class XmlJsonRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
+        from("direct:marshal")
+            .marshal().xmljson()
+            .to("mock:marshalResult");
+
+        from("direct:unmarshal")
+            .unmarshal().xmljson()
+            .to("mock:unmarshalResult");
+
         XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
         xmlJsonFormat.setRootName("bookstore");
         xmlJsonFormat.setElementName("book");
         xmlJsonFormat.setExpandableProperties(Arrays.asList("author", "author"));
 
-        from("direct:marshal")
-            .marshal(xmlJsonFormat)
-            .to("mock:marshalResult");
-
-        from("direct:unmarshal")
+        from("direct:unmarshalBookstore")
             .unmarshal(xmlJsonFormat)
-            .to("mock:unmarshalResult");
+            .to("mock:unmarshalBookstoreResult");
     }
 }

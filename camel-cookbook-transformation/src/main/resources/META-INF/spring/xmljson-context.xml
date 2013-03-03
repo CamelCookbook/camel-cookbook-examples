@@ -31,12 +31,22 @@
 
         <route>
             <from uri="direct:marshal"/>
-            <marshal ref="myXmlJson"/>
+            <marshal>
+                <xmljson/>
+            </marshal>
             <to uri="mock:marshalResult"/>
         </route>
 
         <route>
             <from uri="direct:unmarshal"/>
+            <unmarshal>
+                <xmljson/>
+            </unmarshal>
+            <to uri="mock:unmarshalResult"/>
+        </route>
+
+        <route>
+            <from uri="direct:unmarshalBookstore"/>
             <unmarshal ref="myXmlJson"/>
             <to uri="mock:unmarshalResult"/>
         </route>

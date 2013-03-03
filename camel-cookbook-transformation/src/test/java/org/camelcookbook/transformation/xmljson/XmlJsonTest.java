@@ -19,8 +19,6 @@ package org.camelcookbook.transformation.xmljson;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.transformation.json.JsonRouteBuilder;
-import org.camelcookbook.transformation.json.View;
 import org.junit.Test;
 
 import java.io.InputStream;

@@ -25,19 +25,19 @@
        ">
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <dataFormats>
-            <json id="myJson"/>
-        </dataFormats>
-
         <route>
             <from uri="direct:marshal"/>
-            <marshal ref="myJson"/>
+            <marshal>
+                <json/>
+            </marshal>
             <to uri="mock:marshalResult"/>
         </route>
 
         <route>
             <from uri="direct:unmarshal"/>
-            <unmarshal ref="myJson"/>
+            <unmarshal>
+                <json/>
+            </unmarshal>
             <to uri="mock:unmarshalResult"/>
         </route>
     </camelContext>

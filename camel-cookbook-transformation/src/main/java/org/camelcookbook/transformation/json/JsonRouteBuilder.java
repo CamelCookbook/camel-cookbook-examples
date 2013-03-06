@@ -18,10 +18,6 @@
 package org.camelcookbook.transformation.json;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.converter.jaxb.JaxbDataFormat;
-import org.apache.camel.model.dataformat.JsonDataFormat;
-import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.spi.DataFormat;
 
 
 public class JsonRouteBuilder extends RouteBuilder {

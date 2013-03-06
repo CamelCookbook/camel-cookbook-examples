@@ -17,10 +17,10 @@
 
 package org.camelcookbook.transformation.xmljson;
 
+import java.util.Arrays;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.xmljson.XmlJsonDataFormat;
-
-import java.util.Arrays;
 
 
 public class XmlJsonRouteBuilder extends RouteBuilder {

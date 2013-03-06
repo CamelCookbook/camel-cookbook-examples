@@ -17,12 +17,12 @@
 
 package org.camelcookbook.transformation.xslt;
 
+import java.io.InputStream;
+
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.io.InputStream;
 
 public class XsltSpringTest extends CamelSpringTestSupport {
 

@@ -17,11 +17,11 @@
 
 package org.camelcookbook.transformation.xquery;
 
+import java.io.InputStream;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-
-import java.io.InputStream;
 
 public class XqueryTest extends CamelTestSupport {
 

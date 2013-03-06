@@ -18,7 +18,6 @@
 package org.camelcookbook.transformation.enrich;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 public class EnrichWithAggregatorRouteBuilder extends RouteBuilder {
     private MergeInReplacementText myMerger;

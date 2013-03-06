@@ -12,7 +12,7 @@ public class SedaTimerRouteBuilder extends RouteBuilder {
             .transform(constant("Ping"))
             .to("seda:longRunningPhase");
 
-        from("seda:longRunningPhase?concurrentConsumers=10").startupOrder(1)
+        from("seda:longRunningPhase?concurrentConsumers=15").startupOrder(1)
             .process(new LongRunningProcessor())
             .to("mock:out");
     }

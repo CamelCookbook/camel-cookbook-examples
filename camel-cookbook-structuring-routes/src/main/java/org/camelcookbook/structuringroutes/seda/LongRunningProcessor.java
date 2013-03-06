@@ -9,7 +9,7 @@ public class LongRunningProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Thread.sleep(3000);
+        Thread.sleep(DELAY_TIME);
         exchange.getIn().setBody("Long running process finished");
     }
 

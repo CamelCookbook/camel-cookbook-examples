@@ -34,7 +34,7 @@
             <to uri="seda:longRunningPhase"/>
         </route>
         <route>
-            <from uri="seda:longRunningPhase?concurrentConsumers=10"/>
+            <from uri="seda:longRunningPhase?concurrentConsumers=15"/>
             <process ref="longRunningProcessor"/>
             <to uri="mock:out"/>
         </route>

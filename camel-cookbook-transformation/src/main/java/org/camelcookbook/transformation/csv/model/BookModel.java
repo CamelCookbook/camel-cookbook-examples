@@ -17,28 +17,34 @@
 
 package org.camelcookbook.transformation.csv.model;
 
-import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
-import org.apache.camel.dataformat.bindy.annotation.DataField;
-
 import java.math.BigDecimal;
 import java.util.Date;
+
+import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
+import org.apache.camel.dataformat.bindy.annotation.DataField;
 
 @CsvRecord(separator = ",", crlf = "UNIX")
 public class BookModel {
 
     @DataField(pos = 1)
-    private String title;
+    private String category;
 
     @DataField(pos = 2)
+    private String title;
+
+    @DataField(pos = 3, defaultValue = "en")
+    private String titleLanguage;
+
+    @DataField(pos = 4)
     private String author1;
 
-    @DataField(pos = 3)
+    @DataField(pos = 5)
     private String author2;
 
-    @DataField(pos = 4, pattern = "MMM-yyyy")
+    @DataField(pos = 6, pattern = "MMM-yyyy")
     private Date publishDate;
 
-    @DataField(pos = 5, precision = 2)
+    @DataField(pos = 7, precision = 2)
     private BigDecimal price;
 
     public String getAuthor1() {
@@ -81,6 +87,22 @@ public class BookModel {
         this.title = title;
     }
 
+    public String getTitleLanguage() {
+        return titleLanguage;
+    }
+
+    public void setTitleLanguage(String titleLanguage) {
+        this.titleLanguage = titleLanguage;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,9 +112,13 @@ public class BookModel {
 
         if (author1 != null ? !author1.equals(bookModel.author1) : bookModel.author1 != null) return false;
         if (author2 != null ? !author2.equals(bookModel.author2) : bookModel.author2 != null) return false;
+        if (category != null ? !category.equals(bookModel.category) : bookModel.category != null) return false;
         if (price != null ? !price.equals(bookModel.price) : bookModel.price != null) return false;
-        if (publishDate != null ? !publishDate.equals(bookModel.publishDate) : bookModel.publishDate != null) return false;
+        if (publishDate != null ? !publishDate.equals(bookModel.publishDate) : bookModel.publishDate != null)
+            return false;
         if (title != null ? !title.equals(bookModel.title) : bookModel.title != null) return false;
+        if (titleLanguage != null ? !titleLanguage.equals(bookModel.titleLanguage) : bookModel.titleLanguage != null)
+            return false;
 
         return true;
     }
@@ -100,7 +126,9 @@ public class BookModel {
     @Override
     public String toString() {
         return "BookModel{" +
-                "title='" + title + '\'' +
+                "category='" + category + '\'' +
+                ", title='" + title + '\'' +
+                ", titleLanguage='" + titleLanguage + '\'' +
                 ", author1='" + author1 + '\'' +
                 ", author2='" + author2 + '\'' +
                 ", publishDate=" + publishDate +

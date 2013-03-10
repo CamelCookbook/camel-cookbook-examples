@@ -18,32 +18,39 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       ">
 
-    <bean id="dateFirstOrderFileNameProcessor" class="org.camelcookbook.structuringroutes.templating.OrderFileNameProcessor">
+    <bean id="dateFirstOrderFileNameProcessor"
+          class="org.camelcookbook.structuringroutes.templating.OrderFileNameProcessor">
         <property name="countryDateFormat" value="dd-MM-yyyy"/>
     </bean>
 
-    <bean id="monthFirstOrderFileNameProcessor" class="org.camelcookbook.structuringroutes.templating.OrderFileNameProcessor">
+    <bean id="monthFirstOrderFileNameProcessor"
+          class="org.camelcookbook.structuringroutes.templating.OrderFileNameProcessor">
         <property name="countryDateFormat" value="dd-MM-yyyy"/>
     </bean>
 
-    <bean id="ukOrdersRouteBuilder" class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
+    <bean id="ukOrdersRouteBuilder"
+          class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
         <property name="inputDirectory" value="/orders/in/UK"/>
         <property name="outputDirectory" value="/orders/out/UK"/>
         <property name="orderFileNameProcessor" ref="dateFirstOrderFileNameProcessor"/>
     </bean>
 
-    <bean id="usOrdersRouteBuilder" class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
+    <bean id="usOrdersRouteBuilder"
+          class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
         <property name="inputDirectory" value="/orders/in/US"/>
         <property name="outputDirectory" value="/orders/out/US"/>
         <property name="orderFileNameProcessor" ref="monthFirstOrderFileNameProcessor"/>
     </bean>
 
-    <bean id="jamaicaOrdersRouteBuilder" class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
+    <bean id="jamaicaOrdersRouteBuilder"
+          class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
         <property name="inputDirectory" value="/orders/in/JA"/>
         <property name="outputDirectory" value="/orders/out/JA"/>
         <property name="orderFileNameProcessor" ref="dateFirstOrderFileNameProcessor"/>

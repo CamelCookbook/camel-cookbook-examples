@@ -126,6 +126,11 @@
                 <artifactId>camel-xmljson</artifactId>
                 <version>${camel-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-xmlsecurity</artifactId>
+                <version>${camel-version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>commons-lang</groupId>

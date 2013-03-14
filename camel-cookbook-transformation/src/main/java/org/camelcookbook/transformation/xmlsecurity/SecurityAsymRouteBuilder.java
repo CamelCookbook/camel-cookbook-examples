@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.security;
+package org.camelcookbook.transformation.xmlsecurity;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.util.jsse.KeyStoreParameters;
@@ -24,7 +24,7 @@ import org.apache.xml.security.encryption.XMLCipher;
 public class SecurityAsymRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        final String tagXPath = "//booksignings/store/address";
+        final String tagXPath = "/booksignings/store/address";
         final boolean secureTagContents = true;
 
         final KeyStoreParameters trustStoreParameters = new KeyStoreParameters();

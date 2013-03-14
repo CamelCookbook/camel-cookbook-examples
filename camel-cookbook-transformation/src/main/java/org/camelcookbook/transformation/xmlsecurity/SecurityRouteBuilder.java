@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.security;
+package org.camelcookbook.transformation.xmlsecurity;
 
 import org.apache.camel.builder.RouteBuilder;
 
 public class SecurityRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        final String tagXPath = "//booksignings/store/address";
+        final String tagXPath = "/booksignings/store/address";
         final boolean secureTagContents = true;
+
+        // For the default Triple DES, the passPhrase is 24 Bytes
         final String passPhrase = "Do not tell anyone this.";
 
         from("direct:marshal")

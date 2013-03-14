@@ -25,14 +25,14 @@ import org.apache.camel.spi.DataFormat;
 public class JaxbRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        DataFormat jaxb = new JaxbDataFormat("org.camelcookbook.transformation.myschema");
+        DataFormat myJaxb = new JaxbDataFormat("org.camelcookbook.transformation.myschema");
 
         from("direct:marshal")
-            .marshal(jaxb)
+            .marshal(myJaxb)
             .to("mock:marshalResult");
 
         from("direct:unmarshal")
-            .unmarshal(jaxb)
+            .unmarshal(myJaxb)
             .to("mock:unmarshalResult");
     }
 }

@@ -37,8 +37,7 @@
                            xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
                            keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
                            recipientKeyAlias="scott"
-                           keyOrTrustStoreParametersId="trustStoreParams"
-                        />
+                           keyOrTrustStoreParametersId="trustStoreParams"/>
             </marshal>
             <to uri="mock:marshalResult"/>
         </route>
@@ -52,8 +51,7 @@
                            keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
                            recipientKeyAlias="scott"
                            keyOrTrustStoreParametersId="keyStoreParams"
-                           keyPassword="camelkeypass"
-                        />
+                           keyPassword="camelkeypass"/>
             </unmarshal>
             <to uri="mock:unmarshalResult"/>
         </route>

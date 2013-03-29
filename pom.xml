@@ -31,6 +31,7 @@
         <application-name>Camel Cookbook Examples</application-name>
 
         <camel-version>2.10.4</camel-version>
+        <activemq-version>5.8.0</activemq-version>
         <spring-version>3.0.7.RELEASE</spring-version>
         <commons-lang-version>2.6</commons-lang-version>
 
@@ -53,6 +54,7 @@
         <module>camel-cookbook-structuring-routes</module>
         <module>camel-cookbook-routing</module>
         <module>camel-cookbook-transformation</module>
+        <module>camel-cookbook-extend</module>
     </modules>
 
     <repositories>
@@ -130,6 +132,12 @@
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-xmlsecurity</artifactId>
                 <version>${camel-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-camel</artifactId>
+                <version>${activemq-version}</version>
             </dependency>
 
             <dependency>

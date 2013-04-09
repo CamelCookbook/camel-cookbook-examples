@@ -1,42 +1,36 @@
 package org.camelcookbook.examples.java;
 
-import org.apache.camel.CamelContext;
+import org.apache.camel.EndpointInject;
+import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.junit.After;
-import org.junit.Before;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 /**
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
  */
-public class SimpleTransformRouteBuilderTest {
+public class SimpleTransformRouteBuilderTest extends CamelTestSupport {
 
-    private CamelContext camelContext;
+    @Produce(uri = "direct:in")
+    private ProducerTemplate producerTemplate;
 
-    @Before
-    public void setUpContext() throws Exception {
-        this.camelContext = new DefaultCamelContext();
-        camelContext.addRoutes(new SimpleTransformRouteBuilder());
-        camelContext.start();
-    }
+    @EndpointInject(uri = "mock:out")
+    private MockEndpoint mockOut;
 
-    @After
-    public void cleanUpContext() throws Exception {
-        camelContext.stop();
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new SimpleTransformRouteBuilder();
     }
 
     @Test
     public void testPayloadIsTransformed() throws InterruptedException {
-        MockEndpoint out = camelContext.getEndpoint("mock:out", MockEndpoint.class);
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().isEqualTo("Modified: Cheese");
 
-        out.setExpectedMessageCount(1);
-        out.message(0).body().isEqualTo("Modified: Cheese");
+        producerTemplate.sendBody("Cheese");
 
-        ProducerTemplate producerTemplate = camelContext.createProducerTemplate();
-        producerTemplate.sendBody("direct:in", "Cheese");
-
-        out.assertIsSatisfied();
+        assertMockEndpointsSatisfied();
     }
 }

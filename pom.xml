@@ -30,7 +30,7 @@
 
         <camel-version>2.10.4</camel-version>
         <activemq-version>5.8.0</activemq-version>
-        <spring-version>3.0.7.RELEASE</spring-version>
+
         <commons-lang-version>2.6</commons-lang-version>
 
         <slf4j-version>1.6.6</slf4j-version>
@@ -39,8 +39,6 @@
 
         <maven-compiler-plugin-version>2.5.1</maven-compiler-plugin-version>
         <maven-bundle-plugin-version>2.3.7</maven-bundle-plugin-version>
-        <build-plugins-plugin-version>2.5</build-plugins-plugin-version>
-        <build-helper-plugin-version>1.7</build-helper-plugin-version>
 
         <osgi-import-package>*</osgi-import-package>
         <fusesource-repo>http://repo.fusesource.com/nexus/content/repositories/releases/</fusesource-repo>
@@ -139,6 +137,16 @@
                 <version>${activemq-version}</version>
             </dependency>
 
+            <!--
+                Ensure we're using matching camel version as activemq-camel
+                embeds camel-jms, and it may be an older version.
+            -->
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-jms</artifactId>
+                <version>${camel-version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
@@ -158,11 +166,6 @@
 	            <version>${camel-version}</version>
 	            <scope>test</scope>
 	        </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-core</artifactId>
-                <version>${spring-version}</version>
-            </dependency>
             <dependency>
 	            <groupId>junit</groupId>
 	            <artifactId>junit</artifactId>

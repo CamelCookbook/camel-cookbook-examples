@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.consume;
+package org.camelcookbook.extend.produce;
 
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ConsumeSpringTest extends CamelSpringTestSupport {
+public class ProduceSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/consume-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/produce-context.xml");
     }
 
     @Test
     public void testPojoConsume() throws Exception {
-        final String response = template.requestBody("activemq:queue:sayhello", "Scott", String.class);
+        // lookup our POJO; could also use Spring's ApplicationContext.getBean(...)
+        final ProducePojo producer = context.getRegistry().lookup("producer", ProducePojo.class);
+
+        final String response = producer.sayHello("Scott");
 
         assertEquals("Hello Scott", response);
     }

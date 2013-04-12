@@ -29,7 +29,7 @@
         <application-name>Camel Cookbook Examples</application-name>
 
         <camel-version>2.10.4</camel-version>
-        <activemq-version>5.8.0</activemq-version>
+        <activemq-version>5.7.0</activemq-version>
 
         <commons-lang-version>2.6</commons-lang-version>
 
@@ -42,6 +42,7 @@
 
         <osgi-import-package>*</osgi-import-package>
         <fusesource-repo>http://repo.fusesource.com/nexus/content/repositories/releases/</fusesource-repo>
+        <camel-repo>https://repository.apache.org/content/repositories/releases/</camel-repo>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -66,6 +67,17 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+        <repository>
+            <id>release.camel.apache.org</id>
+            <name>Camel Release Repository</name>
+            <url>${camel-repo}</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -73,6 +85,17 @@
             <id>release.fusesource.org</id>
             <name>FuseSource Release Repository</name>
             <url>${fusesource-repo}</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>release.camel.apache.org</id>
+            <name>Camel Release Repository</name>
+            <url>${camel-repo}</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>

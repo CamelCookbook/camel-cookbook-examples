@@ -33,6 +33,7 @@
 
         <commons-lang-version>2.6</commons-lang-version>
 
+        <spring-version>3.0.7.RELEASE</spring-version>
         <slf4j-version>1.6.6</slf4j-version>
         <log4j-version>1.2.17</log4j-version>
         <junit-version>4.11</junit-version>
@@ -189,6 +190,18 @@
 	            <version>${camel-version}</version>
 	            <scope>test</scope>
 	        </dependency>
+            <!--
+            needs to be explicitly listed due to conflict in transitive dependencies
+            in spring versions between camel-spring and camel-test-spring in 2.10.4
+            -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring-version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
             <dependency>
 	            <groupId>junit</groupId>
 	            <artifactId>junit</artifactId>

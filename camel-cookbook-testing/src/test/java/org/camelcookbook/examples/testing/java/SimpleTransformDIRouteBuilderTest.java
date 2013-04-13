@@ -1,4 +1,4 @@
-package org.camelcookbook.examples.java;
+package org.camelcookbook.examples.testing.java;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
@@ -9,7 +9,7 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 /**
- * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
+ * Test class that demonstrates the injection of mock endpoints into a route under test.
  */
 public class SimpleTransformDIRouteBuilderTest extends CamelTestSupport {
 

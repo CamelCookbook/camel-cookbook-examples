@@ -1,4 +1,4 @@
-package org.camelcookbook.examples.java;
+package org.camelcookbook.examples.testing.java;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;

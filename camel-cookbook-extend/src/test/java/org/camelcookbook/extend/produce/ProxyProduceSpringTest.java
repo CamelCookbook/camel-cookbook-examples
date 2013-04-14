@@ -22,19 +22,19 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ProduceSpringTest extends CamelSpringTestSupport {
+public class ProxyProduceSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/produce-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/produce-proxy-context.xml");
     }
 
     @Test
-    public void testPojoProduce() throws Exception {
+    public void testPojoProxyProduce() throws Exception {
         // lookup our POJO; could also use Spring's ApplicationContext.getBean(...)
-        final ProducePojo producer = context.getRegistry().lookup("producer", ProducePojo.class);
+        final ProxyProduce producer = context.getRegistry().lookup("proxyProduce", ProxyProduce.class);
 
-        final String response = producer.sayHello("Scott");
+        final String response = producer.doSomething("Scott");
 
         assertEquals("Hello Scott", response);
     }

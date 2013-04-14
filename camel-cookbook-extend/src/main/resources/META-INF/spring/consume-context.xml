@@ -38,7 +38,7 @@
         See http://camel.apache.org/activemq.html for more information.
     -->
     <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="brokerURL" value="vm://myBroker"/>
+        <property name="brokerURL" value="vm://myBroker?create=false"/>
     </bean>
 
     <bean class="org.camelcookbook.extend.consume.ConsumeMdb"/>

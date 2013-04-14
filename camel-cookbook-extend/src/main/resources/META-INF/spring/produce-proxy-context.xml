@@ -41,7 +41,7 @@
         <property name="brokerURL" value="vm://myBroker?create=false"/>
     </bean>
 
-    <bean id="producer" class="org.camelcookbook.extend.produce.ProducePojo"/>
+    <bean id="proxyProduce" class="org.camelcookbook.extend.produce.ProxyProduce"/>
     <bean class="org.camelcookbook.extend.consume.ConsumeMdb"/>
 
     <!-- depend on the broker so Spring will shutdown the embedded broker after Camel -->

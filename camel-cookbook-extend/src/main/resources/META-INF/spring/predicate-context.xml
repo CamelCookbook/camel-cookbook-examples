@@ -22,28 +22,17 @@
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
-        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
        ">
 
-    <!-- This creates an embedded ActiveMQ Broker -->
-    <broker xmlns="http://activemq.apache.org/schema/core" useJmx="true" persistent="false"
-            brokerName="myBroker" id="broker">
-        <transportConnectors>
-            <transportConnector uri="vm://myBroker"/>
-        </transportConnectors>
-    </broker>
+    <bean id="myPredicate" class="org.camelcookbook.extend.predicate.MyPredicate"/>
 
-    <!--
-        Lets connect the Camel ActiveMQ component to the embedded broker.
-        See http://camel.apache.org/activemq.html for more information.
-    -->
-    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="brokerURL" value="vm://myBroker?create=false"/>
-    </bean>
-
-    <bean id="producer" class="org.camelcookbook.extend.produce.ProducePojo"/>
-    <bean class="org.camelcookbook.extend.consume.ConsumeMdb"/>
-
-    <!-- depend on the broker so Spring will shutdown the embedded broker after Camel -->
-    <camelContext xmlns="http://camel.apache.org/schema/spring" depends-on="broker"/>
+    <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="direct:start"/>
+            <filter>
+                <method ref="myPredicate" method="isWhatIWant"/>
+                <to uri="mock:boston"/>
+            </filter>
+        </route>
+    </camelContext>
 </beans>

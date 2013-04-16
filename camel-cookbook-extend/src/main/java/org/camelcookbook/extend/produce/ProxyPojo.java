@@ -15,18 +15,8 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.consume;
+package org.camelcookbook.extend.produce;
 
-import org.apache.camel.Consume;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class ConsumeMdb {
-    private static final Logger LOG = LoggerFactory.getLogger(ConsumeMdb.class);
-
-    @Consume(uri = "activemq:queue:sayhello")
-    public String onMyMessage(String message) {
-        LOG.info("Message = {}", message);
-        return "Hello " + message;
-    }
+public interface ProxyPojo {
+    String sayHello(String name);
 }

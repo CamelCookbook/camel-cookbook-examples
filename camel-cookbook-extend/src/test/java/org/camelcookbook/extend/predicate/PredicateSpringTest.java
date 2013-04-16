@@ -15,27 +15,30 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.produce;
+package org.camelcookbook.extend.predicate;
 
 import org.apache.camel.test.junit4.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ProduceSpringTest extends CamelSpringTestSupport {
+public class PredicateSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/produce-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/predicate-context.xml");
     }
 
     @Test
-    public void testPojoProduce() throws Exception {
-        // lookup our POJO; could also use Spring's ApplicationContext.getBean(...)
-        final ProducePojo producer = context.getRegistry().lookup("producer", ProducePojo.class);
+    public void testMyPredicateSpring() throws Exception {
+        final String newYork = "<someXml><city>New York</city></someXml>";
+        final String boston = "<someXml><city>Boston</city></someXml>";
 
-        final String response = producer.sayHello("Scott");
+        getMockEndpoint("mock:boston").expectedBodiesReceived(boston);
 
-        assertEquals("Hello Scott", response);
+        template.sendBody("direct:start", newYork);
+        template.sendBody("direct:start", boston);
+
+        assertMockEndpointsSatisfied();
     }
 }

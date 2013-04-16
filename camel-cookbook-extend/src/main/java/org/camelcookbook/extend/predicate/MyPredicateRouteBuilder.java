@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.consume;
+package org.camelcookbook.extend.predicate;
 
-import org.apache.camel.Consume;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.camel.builder.RouteBuilder;
 
-public class ConsumeMdb {
-    private static final Logger LOG = LoggerFactory.getLogger(ConsumeMdb.class);
+public class MyPredicateRouteBuilder extends RouteBuilder {
+    @Override
+    public void configure() throws Exception {
+        MyPredicate predicate = new MyPredicate();
 
-    @Consume(uri = "activemq:queue:sayhello")
-    public String onMyMessage(String message) {
-        LOG.info("Message = {}", message);
-        return "Hello " + message;
+        from("direct:start")
+            .filter().method(predicate, "isWhatIWant")
+                .to("mock:boston");
     }
 }

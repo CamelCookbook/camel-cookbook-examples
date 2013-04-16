@@ -15,18 +15,12 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.consume;
+package org.camelcookbook.extend.predicate;
 
-import org.apache.camel.Consume;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.camel.language.XPath;
 
-public class ConsumeMdb {
-    private static final Logger LOG = LoggerFactory.getLogger(ConsumeMdb.class);
-
-    @Consume(uri = "activemq:queue:sayhello")
-    public String onMyMessage(String message) {
-        LOG.info("Message = {}", message);
-        return "Hello " + message;
+public class MyPredicateBeanBinding {
+    public boolean isWhatIWant(@XPath("/someXml/city/text()") String city) {
+        return "Boston".equals(city);
     }
 }

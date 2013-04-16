@@ -4,20 +4,26 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelSpringJUnit4ClassRunner;
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
+import org.camelcookbook.examples.testing.java.SimpleTransformRouteBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runner.Runner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
  */
-public class SimpleTransformSpringTest extends CamelSpringTestSupport {
+@RunWith(CamelSpringJUnit4ClassRunner.class)
+@ContextConfiguration({"/spring/test-properties-context.xml",
+        "/META-INF/spring/simpleTransform-context.xml"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+public class SimpleTransformSpringRunnerTest {
 
     @Autowired
     private CamelContext camelContext;
@@ -28,12 +34,6 @@ public class SimpleTransformSpringTest extends CamelSpringTestSupport {
     @EndpointInject(uri = "mock:out")
     private MockEndpoint mockOut;
 
-    @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/spring/test-properties-context.xml",
-                "/META-INF/spring/simpleTransform-context.xml");
-    }
-
     @Test
     public void testPayloadIsTransformed() throws InterruptedException {
         mockOut.setExpectedMessageCount(1);
@@ -41,17 +41,16 @@ public class SimpleTransformSpringTest extends CamelSpringTestSupport {
 
         producerTemplate.sendBody("Cheese");
 
-        assertMockEndpointsSatisfied();
+        MockEndpoint.assertIsSatisfied(camelContext);
     }
 
     @Test
-    public void testPayloadIsTransformedAgain() throws InterruptedException {
+    public void testPayloadIsTransformedAgainAndMocksWorkCorrectly() throws InterruptedException {
         mockOut.setExpectedMessageCount(1);
         mockOut.message(0).body().isEqualTo("Modified: Foo");
 
         producerTemplate.sendBody("Foo");
 
-        assertMockEndpointsSatisfied();
+        MockEndpoint.assertIsSatisfied(camelContext);
     }
-
 }

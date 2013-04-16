@@ -14,22 +14,26 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<modelVersion>4.0.0</modelVersion>
+    <groupId>org.camelcookbook.examples</groupId>
+    <artifactId>camel-cookbook-examples</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
 
-	<groupId>org.camelcookbook.examples</groupId>
-	<artifactId>camel-cookbook-examples</artifactId>
-	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
-
-	<name>${application-name}</name>
+    <name>${application-name}</name>
 
     <properties>
         <application-name>Camel Cookbook Examples</application-name>
 
         <camel-version>2.10.4</camel-version>
+
         <activemq-version>5.7.0</activemq-version>
+        <xbean.version>3.12</xbean.version>
 
         <commons-lang-version>2.6</commons-lang-version>
 
@@ -57,6 +61,7 @@
     </modules>
 
     <repositories>
+<!--
         <repository>
             <id>release.fusesource.org</id>
             <name>FuseSource Release Repository</name>
@@ -68,6 +73,8 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+-->
+<!--
         <repository>
             <id>release.camel.apache.org</id>
             <name>Camel Release Repository</name>
@@ -79,9 +86,11 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
+-->
     </repositories>
 
     <pluginRepositories>
+<!--
         <pluginRepository>
             <id>release.fusesource.org</id>
             <name>FuseSource Release Repository</name>
@@ -93,6 +102,8 @@
                 <enabled>true</enabled>
             </releases>
         </pluginRepository>
+-->
+<!--
         <pluginRepository>
             <id>release.camel.apache.org</id>
             <name>Camel Release Repository</name>
@@ -104,15 +115,16 @@
                 <enabled>true</enabled>
             </releases>
         </pluginRepository>
+-->
     </pluginRepositories>
 
     <dependencyManagement>
-	    <dependencies>
-	        <dependency>
-	            <groupId>org.apache.camel</groupId>
-	            <artifactId>camel-core</artifactId>
-	            <version>${camel-version}</version>
-	        </dependency>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-core</artifactId>
+                <version>${camel-version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-spring</artifactId>
@@ -159,6 +171,11 @@
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-camel</artifactId>
                 <version>${activemq-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xbean</groupId>
+                <artifactId>xbean-spring</artifactId>
+                <version>${xbean.version}</version>
             </dependency>
 
             <!--
@@ -227,9 +244,9 @@
                 <version>${log4j-version}</version>
             </dependency>
         </dependencies>
-	</dependencyManagement>
-	
-	<build>
+    </dependencyManagement>
+
+    <build>
         <defaultGoal>install</defaultGoal>
 
         <plugins>
@@ -256,5 +273,5 @@
                 </configuration>
             </plugin>
         </plugins>
-	</build>
+    </build>
 </project>

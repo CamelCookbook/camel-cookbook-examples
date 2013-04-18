@@ -23,7 +23,7 @@ public class MyProcessorRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-                .process(new MyProcessor())
-                .to("mock:result");
+            .process(new MyProcessor())
+            .to("mock:result");
     }
 }

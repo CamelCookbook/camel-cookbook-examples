@@ -20,20 +20,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-           http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
-           http://camel.apache.org/schema/spring
-           http://camel.apache.org/schema/spring/camel-spring.xsd">
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <propertyPlaceholder id="properties" location="ref:ctx.properties"/>
         <route>
-            <from uri="{{start.endpoint}}"/>
-            <transform>
-                <simple>Modified: ${body}</simple>
-            </transform>
-            <log message="Set message to ${body}"/>
-            <to uri="{{end.endpoint}}"/>
+            <from uri="direct:start"/>
+            <choice>
+                <when>
+                    <simple>${body} contains 'Camel'</simple>
+                    <to uri="mock:camel"/>
+                    <log message="Camel ${body}"/>
+                </when>
+                <otherwise>
+                    <to uri="mock:other"/>
+                    <log message="Other ${body}"/>
+                </otherwise>
+            </choice>
+            <log message="Message ${body}"/>
         </route>
     </camelContext>
 

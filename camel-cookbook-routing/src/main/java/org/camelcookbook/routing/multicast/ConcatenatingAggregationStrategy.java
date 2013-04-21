@@ -21,7 +21,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 /**
- * Aggregation strategy that concatenates String responses.
+ * Aggregation strategy that concatenates String mockreply.
  */
 public class ConcatenatingAggregationStrategy implements AggregationStrategy {
     @Override

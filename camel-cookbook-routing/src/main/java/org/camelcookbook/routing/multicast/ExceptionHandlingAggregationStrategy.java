@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Aggregation strategy that concatenates String responses.
+ * Aggregation strategy that concatenates String mockreply.
  */
 public class ExceptionHandlingAggregationStrategy implements AggregationStrategy {
     public static final String MULTICAST_EXCEPTION = "multicast_exception";

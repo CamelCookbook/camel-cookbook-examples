@@ -30,12 +30,12 @@ public class PropertyOverrideEtcBlueprintTest extends CamelBlueprintTestSupport 
     @Override
     protected String[] loadConfigAdminConfigurationFile() {
         return new String[] {
-            "src/test/resources/blueprint/org.camelcookbook.testing.cfg",
+            "src/test/resources/blueprint/org.camelcookbook.blueprint.cfg",
             "org.camelcookbook.testing" // Persistent ID
         };
     }
 
-    @Test @Ignore
+    @Test
     public void testPayloadIsTransformed() throws InterruptedException {
         mockOut.setExpectedMessageCount(1);
         mockOut.message(0).body().isEqualTo("etc: Cheese");
@@ -45,7 +45,7 @@ public class PropertyOverrideEtcBlueprintTest extends CamelBlueprintTestSupport 
         assertMockEndpointsSatisfied();
     }
 
-    @Test @Ignore
+    @Test
     public void testPayloadIsTransformedAgain() throws InterruptedException {
         mockOut.setExpectedMessageCount(1);
         mockOut.message(0).body().isEqualTo("etc: Foo");

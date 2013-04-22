@@ -2,22 +2,22 @@ package org.camelcookbook.examples.testing.java;
 
 import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.camel.builder.RouteBuilder;
 import org.junit.Test;
 
 /**
- * @author jkorab
+ * FIXME doesn't work from within Maven
  */
 public class CustomCamelContextConfigTest extends CamelTestSupport {
-    
+
     @Override
     public CamelContext createCamelContext() {
         CamelContext context = new DefaultCamelContext();
         ActiveMQComponent activeMQComponent = new ActiveMQComponent();
-        activeMQComponent.setBrokerURL("vm:localhost?broker.persistent=false");
+        activeMQComponent.setBrokerURL("vm:localhost?broker.persistent=false&broker.dataDirectory=target/activemq-data");
         context.addComponent("activemq", activeMQComponent);
         return context;
     }
@@ -28,10 +28,10 @@ public class CustomCamelContextConfigTest extends CamelTestSupport {
             @Override
             public void configure() {
                 from("direct:in")
-                    .to("activemq:orders");
+                        .to("activemq:orders");
 
                 from("activemq:orders")
-                    .to("mock:out");
+                        .to("mock:out");
             }
         };
     }

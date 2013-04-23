@@ -8,7 +8,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Test class that uses
+ * Test class that uses Camel's built-in AOP functionality to override the fixed endpoints.
  */
 public class FixedEndpointSpringTest extends CamelSpringTestSupport {
 
@@ -38,12 +38,11 @@ public class FixedEndpointSpringTest extends CamelSpringTestSupport {
         context.start();
 
         MockEndpoint out = getMockEndpoint("mock:out");
-
         out.setExpectedMessageCount(1);
         out.message(0).body().isEqualTo("Modified: Cheese");
 
         template.sendBody("direct:in", "Cheese");
 
-        out.assertIsSatisfied();
+        assertMockEndpointsSatisfied();
     }
 }

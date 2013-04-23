@@ -4,21 +4,21 @@ import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.component.seda.SedaComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 /**
- * FIXME doesn't work from within Maven
+ * Test class that demonstrates how a custom CamelContext can be configured for a test run.
  */
 public class CustomCamelContextConfigTest extends CamelTestSupport {
 
     @Override
     public CamelContext createCamelContext() {
         CamelContext context = new DefaultCamelContext();
-        ActiveMQComponent activeMQComponent = new ActiveMQComponent();
-        activeMQComponent.setBrokerURL("vm:localhost?broker.persistent=false&broker.dataDirectory=target/activemq-data");
-        context.addComponent("activemq", activeMQComponent);
+        // plug in a seda component, as we don't really need an embedded broker
+        context.addComponent("activemq", new SedaComponent());
         return context;
     }
 

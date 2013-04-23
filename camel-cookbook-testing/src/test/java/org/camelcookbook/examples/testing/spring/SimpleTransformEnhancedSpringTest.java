@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration({"/spring/test-properties-context.xml",
         "/META-INF/spring/simpleTransform-context.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class SimpleTransformSpringRunnerTest {
+public class SimpleTransformEnhancedSpringTest {
 
     @Autowired
     private CamelContext camelContext;

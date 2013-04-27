@@ -19,9 +19,6 @@ import org.springframework.test.context.ContextConfiguration;
  */
 public class SimpleTransformSpringTest extends CamelSpringTestSupport {
 
-    @Autowired
-    private CamelContext camelContext;
-
     @Produce(uri = "direct:in")
     private ProducerTemplate producerTemplate;
 

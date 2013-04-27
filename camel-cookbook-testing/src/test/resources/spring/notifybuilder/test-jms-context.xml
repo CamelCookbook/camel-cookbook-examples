@@ -26,22 +26,16 @@
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <!-- FIXME make it clear that these are live values, perhaps use ActiveMQ -->
-    <util:properties id="ctx.properties">
-        <prop key="someName">in</prop>
-        <prop key="start.endpoint">direct:${someName}</prop>
-        <prop key="end.endpoint">mock:out</prop>
-    </util:properties>
 
-    <bean id="propertiesPlaceholder"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="propertiesArray">
-            <list>
-                <ref bean="ctx.properties"/>
-            </list>
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="vm:myEmbeddedBroker"/>
+            </bean>
         </property>
     </bean>
 
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="pooledConnectionFactory"/>
+    </bean>
 </beans>
-
-

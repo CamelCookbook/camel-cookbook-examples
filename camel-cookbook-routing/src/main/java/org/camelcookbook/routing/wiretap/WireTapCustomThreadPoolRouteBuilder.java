@@ -17,10 +17,10 @@
 
 package org.camelcookbook.routing.wiretap;
 
+import java.util.concurrent.ExecutorService;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolBuilder;
-
-import java.util.concurrent.ExecutorService;
 
 /**
  * Using a custom thread pool with a wiretap.

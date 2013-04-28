@@ -17,7 +17,7 @@
 
 package org.camelcookbook.extend.produce;
 
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,7 +32,7 @@ public class ProduceSpringTest extends CamelSpringTestSupport {
     @Test
     public void testPojoProduce() throws Exception {
         // lookup our POJO; could also use Spring's ApplicationContext.getBean(...)
-        final ProducePojo producer = context.getRegistry().lookup("producer", ProducePojo.class);
+        final ProducePojo producer = context.getRegistry().lookupByNameAndType("producer", ProducePojo.class);
 
         final String response = producer.sayHello("Scott");
 

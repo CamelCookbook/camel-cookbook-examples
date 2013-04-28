@@ -17,13 +17,14 @@
 
 package org.camelcookbook.routing.routingslip;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.camel.Consume;
 import org.apache.camel.Headers;
 import org.apache.camel.RoutingSlip;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class RoutingSlipAnnotated {
 
@@ -35,9 +36,7 @@ public class RoutingSlipAnnotated {
         Object slip = headers.get("myRoutingSlipHeader");
         if (slip != null) {
             String[] uris = slip.toString().split(",");
-            for (String uri : uris) {
-                results.add(uri);
-            }
+            Collections.addAll(results, uris);
         }
 
         results.add("mock:oneMore");

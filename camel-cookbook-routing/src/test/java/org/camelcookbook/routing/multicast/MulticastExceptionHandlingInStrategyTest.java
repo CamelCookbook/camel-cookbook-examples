@@ -67,5 +67,4 @@ public class MulticastExceptionHandlingInStrategyTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

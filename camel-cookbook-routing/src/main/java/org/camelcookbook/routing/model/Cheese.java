@@ -45,9 +45,7 @@ public class Cheese implements Cloneable {
 
         Cheese cheese = (Cheese) o;
 
-        if (age != cheese.age) return false;
-
-        return true;
+        return age == cheese.age;
     }
 
     @Override

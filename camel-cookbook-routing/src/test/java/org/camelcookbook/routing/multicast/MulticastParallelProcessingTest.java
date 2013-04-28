@@ -59,7 +59,6 @@ public class MulticastParallelProcessingTest extends CamelTestSupport {
         assertNotEquals(getExchange(afterMulticast).getUnitOfWork(), getExchange(mockSecond).getUnitOfWork());
     }
 
-
     @Test
     public void testAllEndpointsReachedByDifferentThreads() throws InterruptedException {
         afterMulticast.setExpectedMessageCount(1);
@@ -85,5 +84,4 @@ public class MulticastParallelProcessingTest extends CamelTestSupport {
     private Exchange getExchange(MockEndpoint mock) {
         return mock.getExchanges().get(0);
     }
-
 }

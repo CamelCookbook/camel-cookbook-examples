@@ -28,7 +28,7 @@ public class EnrichWithAggregatorTest extends CamelTestSupport {
     protected RouteBuilder createRouteBuilder() throws Exception {
         EnrichWithAggregatorRouteBuilder routeBuilder = new EnrichWithAggregatorRouteBuilder();
 
-        routeBuilder.setMyMerger(context().getRegistry().lookup("myMerger", MergeInReplacementText.class));
+        routeBuilder.setMyMerger(context().getRegistry().lookupByNameAndType("myMerger", MergeInReplacementText.class));
 
         return routeBuilder;
     }

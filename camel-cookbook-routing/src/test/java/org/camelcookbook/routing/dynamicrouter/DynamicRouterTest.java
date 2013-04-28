@@ -19,7 +19,6 @@ package org.camelcookbook.routing.dynamicrouter;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.routing.contentbasedrouter.ContentBasedRouterRouteBuilder;
 import org.junit.Test;
 
 public class DynamicRouterTest extends CamelTestSupport {

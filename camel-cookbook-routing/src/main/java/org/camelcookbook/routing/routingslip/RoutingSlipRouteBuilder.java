@@ -20,7 +20,7 @@ package org.camelcookbook.routing.routingslip;
 import org.apache.camel.builder.RouteBuilder;
 
 public class RoutingSlipRouteBuilder extends RouteBuilder {
-    public static String ROUTING_SLIP_HEADER = "myRoutingSlipHeader";
+    public final static String ROUTING_SLIP_HEADER = "myRoutingSlipHeader";
 
     @Override
     public void configure() throws Exception {

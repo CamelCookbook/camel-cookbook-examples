@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.apache.camel.util.CastUtils;
 import org.camelcookbook.transformation.csv.model.BookModel;
 import org.junit.Test;

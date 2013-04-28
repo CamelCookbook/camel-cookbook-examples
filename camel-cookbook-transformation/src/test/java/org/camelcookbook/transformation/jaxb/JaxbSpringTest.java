@@ -17,7 +17,7 @@
 
 package org.camelcookbook.transformation.jaxb;
 
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.transformation.myschema.Book;
 import org.camelcookbook.transformation.myschema.Bookstore;
 import org.junit.Test;

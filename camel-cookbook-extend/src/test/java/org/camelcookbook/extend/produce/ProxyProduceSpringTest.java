@@ -17,7 +17,7 @@
 
 package org.camelcookbook.extend.produce;
 
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,7 +32,7 @@ public class ProxyProduceSpringTest extends CamelSpringTestSupport {
     @Test
     public void testPojoProxyProduce() throws Exception {
         // lookup our POJO; could also use Spring's ApplicationContext.getBean(...)
-        final ProxyProduce producer = context.getRegistry().lookup("proxyProduce", ProxyProduce.class);
+        final ProxyProduce producer = context.getRegistry().lookupByNameAndType("proxyProduce", ProxyProduce.class);
 
         final String response = producer.doSomething("Scott");
 

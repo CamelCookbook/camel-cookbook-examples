@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CustomTransactionalResource {
 
-    private static Logger logger = LoggerFactory.getLogger(CustomTransactionalResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomTransactionalResource.class);
 
     public void initTransaction(Exchange exchange) {
         UnitOfWork unitOfWork = exchange.getUnitOfWork();

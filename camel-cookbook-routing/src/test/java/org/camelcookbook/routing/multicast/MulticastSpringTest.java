@@ -17,16 +17,16 @@
 
 package org.camelcookbook.routing.multicast;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelSpringTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.concurrent.TimeUnit;
 
 public class MulticastSpringTest extends CamelSpringTestSupport {
 
@@ -61,5 +61,4 @@ public class MulticastSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied(5, TimeUnit.SECONDS);
     }
-
 }

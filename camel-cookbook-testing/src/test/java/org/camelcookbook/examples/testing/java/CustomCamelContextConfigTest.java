@@ -1,6 +1,5 @@
 package org.camelcookbook.examples.testing.java;
 
-import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -28,23 +27,23 @@ public class CustomCamelContextConfigTest extends CamelTestSupport {
             @Override
             public void configure() {
                 from("direct:in")
-                        .to("activemq:orders");
+                    .to("activemq:orders");
 
                 from("activemq:orders")
-                        .to("mock:out");
+                    .to("mock:out");
             }
         };
     }
 
     @Test
     public void testMessagesFlowOverQueue() throws InterruptedException {
-        MockEndpoint out = getMandatoryEndpoint("mock:out", MockEndpoint.class);
+        MockEndpoint out = getMockEndpoint("mock:out");
         out.setExpectedMessageCount(1);
+        out.expectedBodiesReceived("hello");
 
         template.sendBody("direct:in", "hello");
 
         assertMockEndpointsSatisfied();
-        out.expectedBodiesReceived("hello");
     }
 
 }

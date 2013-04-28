@@ -52,10 +52,9 @@ public class AdviceWithWeaveTest extends CamelTestSupport {
         context.start();
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
-        mockOut.message(0).body().equals("Fast reply to: request");
+        mockOut.message(0).body().isEqualTo("Fast reply to: request");
 
-        ProducerTemplate in = context.createProducerTemplate();
-        in.sendBody("direct:in", "request");
+        template.sendBody("direct:in", "request");
 
         assertMockEndpointsSatisfied();
     }

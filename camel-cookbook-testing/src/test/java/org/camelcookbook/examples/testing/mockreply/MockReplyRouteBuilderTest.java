@@ -40,7 +40,7 @@ public class MockReplyRouteBuilderTest extends CamelTestSupport {
     @Test
     public void testReplyingWithHeaderFromMockByExpression() throws InterruptedException {
         mockReplying.returnReplyHeader("responder", ConstantLanguage.constant("fakeService"));
-        mockOut.message(0).header("responder").equals("fakeService");
+        mockOut.message(0).header("responder").isEqualTo("fakeService");
 
         in.sendBody("Camel");
 

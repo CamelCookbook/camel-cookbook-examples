@@ -12,7 +12,6 @@ import org.junit.Test;
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
  */
 public class FirstPrinciplesRouteBuilderTest {
-
     private CamelContext camelContext;
 
     @Before

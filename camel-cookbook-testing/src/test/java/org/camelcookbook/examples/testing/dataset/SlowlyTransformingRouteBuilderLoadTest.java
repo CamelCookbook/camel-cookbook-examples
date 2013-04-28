@@ -16,6 +16,7 @@ public class SlowlyTransformingRouteBuilderLoadTest extends CamelTestSupport {
     @Override
     protected CamelContext createCamelContext() throws Exception {
         final int testBatchSize = 1000;
+
         InputDataSet inputDataSet = new InputDataSet();
         inputDataSet.setSize(testBatchSize);
 
@@ -25,8 +26,8 @@ public class SlowlyTransformingRouteBuilderLoadTest extends CamelTestSupport {
         SimpleRegistry registry = new SimpleRegistry();
         registry.put("input", inputDataSet);
         registry.put("expectedOutput", expectedOutputDataSet);
-        CamelContext context = new DefaultCamelContext(registry);
-        return context;
+
+        return new DefaultCamelContext(registry);
     }
 
     @Override

@@ -17,15 +17,11 @@
 
 package org.camelcookbook.examples.testing.mocks;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.spi.Synchronization;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-
-import java.util.List;
 
 public class ContentBasedRouterTest extends CamelTestSupport {
 
@@ -38,14 +34,12 @@ public class ContentBasedRouterTest extends CamelTestSupport {
     public void testWhen() throws Exception {
         MockEndpoint mockCamel = getMockEndpoint("mock:camel");
         mockCamel.expectedMessageCount(2);
-        mockCamel.message(0).body().equals("Camel Rocks");
-        mockCamel.message(0).header("verified").equals(true);
-
+        mockCamel.message(0).body().isEqualTo("Camel Rocks");
+        mockCamel.message(0).header("verified").isEqualTo(true);
         mockCamel.message(0).arrives().noLaterThan(50).millis().beforeNext();
         mockCamel.message(0).simple("${header[verified]} == true");
 
-        CamelContext camelContext = context();
-        MockEndpoint mockOther = camelContext.getEndpoint("mock:other", MockEndpoint.class);
+        MockEndpoint mockOther = getMockEndpoint("mock:other");
         mockOther.expectedMessageCount(0);
 
         template.sendBody("direct:start", "Camel Rocks");

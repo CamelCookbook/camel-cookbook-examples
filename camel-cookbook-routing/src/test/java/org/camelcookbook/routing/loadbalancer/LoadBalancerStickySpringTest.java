@@ -49,18 +49,21 @@ public class LoadBalancerStickySpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testMessageLoadBalancedToStickyEndpoints() throws InterruptedException {
-        String messageBody = "Client has bought something";
+        final String messageBody = "Client has bought something";
+
         first.setExpectedMessageCount(4);
-        first.message(0).header("customerId").equals(0);
-        first.message(1).header("customerId").equals(3);
-        first.message(2).header("customerId").equals(0);
-        first.message(3).header("customerId").equals(3);
+        first.message(0).header("customerId").isEqualTo(0);
+        first.message(1).header("customerId").isEqualTo(3);
+        first.message(2).header("customerId").isEqualTo(0);
+        first.message(3).header("customerId").isEqualTo(3);
+
         second.setExpectedMessageCount(2);
-        first.message(0).header("customerId").equals(1);
-        first.message(1).header("customerId").equals(1);
+        second.message(0).header("customerId").isEqualTo(1);
+        second.message(1).header("customerId").isEqualTo(1);
+
         third.setExpectedMessageCount(2);
-        first.message(0).header("customerId").equals(2);
-        first.message(1).header("customerId").equals(2);
+        third.message(0).header("customerId").isEqualTo(2);
+        third.message(1).header("customerId").isEqualTo(2);
 
         for (int messageCount = 0; messageCount < 2; messageCount++) {
             for (int customerCount = 0; customerCount < 4; customerCount++) {

@@ -69,7 +69,7 @@ public class VmTest {
 
         MockEndpoint out = externalLoggingContext.getEndpoint("mock:out", MockEndpoint.class);
         out.setExpectedMessageCount(1);
-        out.message(0).body().equals("logging: something happened");
+        out.message(0).body().isEqualTo("logging: something happened");
 
         producerTemplate.sendBody("direct:in", "something happened");
         out.assertIsSatisfied(1000);

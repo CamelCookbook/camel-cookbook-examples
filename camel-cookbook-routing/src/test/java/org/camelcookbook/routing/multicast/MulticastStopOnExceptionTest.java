@@ -52,7 +52,7 @@ public class MulticastStopOnExceptionTest extends CamelTestSupport {
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
         mockFirst.setExpectedMessageCount(1);
-        mockFirst.message(0).equals(MESSAGE_BODY);
+        mockFirst.message(0).body().isEqualTo(MESSAGE_BODY);
 
         mockSecond.setExpectedMessageCount(0);
 

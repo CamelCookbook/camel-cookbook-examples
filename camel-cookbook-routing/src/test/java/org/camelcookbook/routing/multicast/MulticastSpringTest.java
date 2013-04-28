@@ -51,11 +51,11 @@ public class MulticastSpringTest extends CamelSpringTestSupport {
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
         String messageBody = "Message to be multicast";
         first.setExpectedMessageCount(1);
-        first.message(0).equals(messageBody);
+        first.message(0).body().isEqualTo(messageBody);
         second.setExpectedMessageCount(1);
-        second.message(0).equals(messageBody);
+        second.message(0).body().isEqualTo(messageBody);
         third.setExpectedMessageCount(1);
-        third.message(0).equals(messageBody);
+        third.message(0).body().isEqualTo(messageBody);
 
         template.sendBody(messageBody);
 

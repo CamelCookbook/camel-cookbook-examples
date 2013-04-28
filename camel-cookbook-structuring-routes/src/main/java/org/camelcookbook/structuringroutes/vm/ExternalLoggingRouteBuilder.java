@@ -40,7 +40,8 @@ public class ExternalLoggingRouteBuilder extends RouteBuilder {
         from(logMessageSourceUri)
             .setHeader(LOGGING_THREAD_NAME, simple("${threadName}"))
             .delay(1000)
-            .log("Logged message to backend system ${body} by thread[${threadName}] ")
+            .log("Logged message to backend system ${body} by thread[${threadName}]")
+            .setBody(simple("logging: ${body}"))
             .to("mock:out");
     }
 }

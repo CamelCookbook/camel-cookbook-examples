@@ -63,19 +63,18 @@ public class MulticastParallelProcessingTest extends CamelTestSupport {
     public void testAllEndpointsReachedByDifferentThreads() throws InterruptedException {
         afterMulticast.setExpectedMessageCount(1);
         mockFirst.setExpectedMessageCount(1);
-        mockFirst.message(0).exchangePattern().equals(ExchangePattern.InOnly);
         mockSecond.setExpectedMessageCount(1);
-        mockSecond.message(0).exchangePattern().equals(ExchangePattern.InOnly);
 
-        String response = (String) template.requestBody(MESSAGE_BODY);
+        final String response = (String) template.requestBody(MESSAGE_BODY);
         assertEquals("response", response);
 
         assertMockEndpointsSatisfied();
 
         // check that all of the mock endpoints were reached by the different threads
-        String mainThreadName = getExchange(afterMulticast).getIn().getHeader("threadName", String.class);
-        String firstThreadName = getExchange(mockFirst).getIn().getHeader("threadName", String.class);
-        String secondThreadName = getExchange(mockSecond).getIn().getHeader("threadName", String.class);
+        final String mainThreadName = getExchange(afterMulticast).getIn().getHeader("threadName", String.class);
+        final String firstThreadName = getExchange(mockFirst).getIn().getHeader("threadName", String.class);
+        final String secondThreadName = getExchange(mockSecond).getIn().getHeader("threadName", String.class);
+
         assertNotEquals(firstThreadName, mainThreadName);
         assertNotEquals(firstThreadName, secondThreadName);
         assertNotEquals(mainThreadName, secondThreadName);

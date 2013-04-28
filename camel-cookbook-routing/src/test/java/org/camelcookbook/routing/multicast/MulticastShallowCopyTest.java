@@ -50,16 +50,16 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
     @Test
     public void testMessageRoutedToMulticastEndpoints() throws InterruptedException {
         mockFirst.setExpectedMessageCount(1);
-        mockFirst.message(0).equals(MESSAGE_BODY);
-        mockFirst.message(0).header("firstModifies").equals("apple");
+        mockFirst.message(0).body().isEqualTo(MESSAGE_BODY);
+        mockFirst.message(0).header("firstModifies").isEqualTo("apple");
 
         mockSecond.setExpectedMessageCount(1);
-        mockSecond.message(0).equals(MESSAGE_BODY);
-        mockSecond.message(0).header("secondModifies").equals("banana");
+        mockSecond.message(0).body().isEqualTo(MESSAGE_BODY);
+        mockSecond.message(0).header("secondModifies").isEqualTo("banana");
         mockSecond.message(0).header("firstModifies").isNull();
 
         afterMulticast.setExpectedMessageCount(1);
-        afterMulticast.message(0).equals(MESSAGE_BODY);
+        afterMulticast.message(0).body().isEqualTo(MESSAGE_BODY);
         afterMulticast.message(0).header("modifiedBy").isNull();
 
         template.sendBody(MESSAGE_BODY);

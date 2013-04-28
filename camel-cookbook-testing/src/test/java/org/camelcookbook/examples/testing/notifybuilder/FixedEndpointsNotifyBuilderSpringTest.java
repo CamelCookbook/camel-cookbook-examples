@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.NotifyBuilder;
@@ -42,7 +41,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/META-INF/spring/fixedEndpoints-context.xml",
-        "/spring/notifybuilder/test-jms-context.xml"})
+                       "/spring/notifybuilder/test-jms-context.xml"})
 public class FixedEndpointsNotifyBuilderSpringTest {
 
     @Autowired
@@ -56,9 +55,9 @@ public class FixedEndpointsNotifyBuilderSpringTest {
         final String messageText = "testMessage";
 
         NotifyBuilder notify = new NotifyBuilder(camelContext)
-                .from("activemq:in")
-                .whenDone(1)
-                .create();
+            .from("activemq:in")
+            .whenDone(1)
+            .create();
 
         sendMessageBody(messageText);
         assertTrue(notify.matches(10, TimeUnit.SECONDS));

@@ -63,5 +63,4 @@ public class ContentBasedRouterTest extends CamelTestSupport {
         // asserts that all the mock objects involved in this test are happy
         assertMockEndpointsSatisfied();
     }
-
 }

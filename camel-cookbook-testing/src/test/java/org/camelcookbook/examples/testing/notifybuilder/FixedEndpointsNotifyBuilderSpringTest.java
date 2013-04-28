@@ -1,4 +1,27 @@
+/*
+ * Copyright (C) Scott Cranton and Jakub Korab
+ * https://github.com/CamelCookbook
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.camelcookbook.examples.testing.notifybuilder;
+
+import java.util.concurrent.TimeUnit;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.NotifyBuilder;
@@ -9,16 +32,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -54,9 +69,9 @@ public class FixedEndpointsNotifyBuilderSpringTest {
         final String messageText = "testMessage";
 
         NotifyBuilder notify = new NotifyBuilder(camelContext)
-                .fromRoute("modifyPayloadBetweenQueues")
-                .whenDone(1)
-                .create();
+            .fromRoute("modifyPayloadBetweenQueues")
+            .whenDone(1)
+            .create();
 
         sendMessageBody(messageText);
         assertTrue(notify.matches(10, TimeUnit.SECONDS));
@@ -67,11 +82,11 @@ public class FixedEndpointsNotifyBuilderSpringTest {
         final String messageText = "testMessage";
 
         NotifyBuilder notify = new NotifyBuilder(camelContext)
-                .from("activemq:in")
-                .whenDone(1)
-                .whenBodiesDone("Modified: testMessage")
-                .wereSentTo("activemq:out")
-                .create();
+            .from("activemq:in")
+            .whenDone(1)
+            .whenBodiesDone("Modified: testMessage")
+            .wereSentTo("activemq:out")
+            .create();
 
         sendMessageBody(messageText);
         assertTrue(notify.matches(10, TimeUnit.SECONDS));
@@ -86,10 +101,10 @@ public class FixedEndpointsNotifyBuilderSpringTest {
         mock.message(0).header("count").isNull();
 
         NotifyBuilder notify = new NotifyBuilder(camelContext)
-                .from("activemq:in")
-                .whenDone(1).wereSentTo("activemq:out")
-                .whenDoneSatisfied(mock)
-                .create();
+            .from("activemq:in")
+            .whenDone(1).wereSentTo("activemq:out")
+            .whenDoneSatisfied(mock)
+            .create();
 
         sendMessageBody(messageText);
         assertTrue(notify.matches(10, TimeUnit.SECONDS));
@@ -98,9 +113,9 @@ public class FixedEndpointsNotifyBuilderSpringTest {
     @Test
     public void testMessageFiltering() throws InterruptedException {
         NotifyBuilder notify = new NotifyBuilder(camelContext)
-                .from("activemq:in")
-                .whenExactlyDone(1).filter().simple("${body} contains 'test'")
-                .create();
+            .from("activemq:in")
+            .whenExactlyDone(1).filter().simple("${body} contains 'test'")
+            .create();
 
         sendMessageBody("testMessage");
         sendMessageBody("realMessage");
@@ -112,10 +127,8 @@ public class FixedEndpointsNotifyBuilderSpringTest {
         jmsTemplate.send("in", new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                TextMessage textMessage = session.createTextMessage(messageText);
-                return textMessage;
+                return session.createTextMessage(messageText);
             }
         });
     }
-
 }

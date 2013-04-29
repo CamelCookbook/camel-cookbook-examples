@@ -35,6 +35,8 @@
         <activemq-version>5.8.0</activemq-version>
         <xbean.version>3.13</xbean.version>
 
+        <aries-blueprint-cm-version>1.0.0</aries-blueprint-cm-version>
+
         <commons-lang-version>2.6</commons-lang-version>
 
         <spring-version>3.1.4.RELEASE</spring-version>
@@ -137,6 +139,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.aries.blueprint</groupId>
+                <artifactId>org.apache.aries.blueprint.cm</artifactId>
+                <version>${aries-blueprint-cm-version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-saxon</artifactId>
                 <version>${camel-version}</version>
@@ -177,6 +185,13 @@
                 <artifactId>activemq-camel</artifactId>
                 <version>${activemq-version}</version>
             </dependency>
+
+<!--
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-kahadb-store</artifactId>
+                <version>${activemq-version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-all</artifactId>
@@ -187,6 +202,7 @@
                 <artifactId>xbean-spring</artifactId>
                 <version>${xbean.version}</version>
             </dependency>
+-->
 
             <!--
                 Ensure we're using matching camel version as activemq-camel

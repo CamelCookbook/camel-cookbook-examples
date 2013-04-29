@@ -25,7 +25,7 @@
        ">
 
     <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="brokerURL" value="vm:myEmbeddedBroker"/>
+        <property name="brokerURL" value="vm://myEmbeddedBroker?broker.persistent=false"/>
     </bean>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">

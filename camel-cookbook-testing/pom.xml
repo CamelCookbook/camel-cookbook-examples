@@ -46,13 +46,14 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-camel</artifactId>
+            <groupId>org.apache.aries.blueprint</groupId>
+            <artifactId>org.apache.aries.blueprint.cm</artifactId>
+            <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-all</artifactId>
-            <scope>runtime</scope>
+            <artifactId>activemq-camel</artifactId>
         </dependency>
 
         <dependency>

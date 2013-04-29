@@ -20,6 +20,9 @@ package org.camelcookbook.extend.binding;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Unit test for {@link MyBean}
+ */
 public class MyBeanTest {
     @Test
     public void testHello() {

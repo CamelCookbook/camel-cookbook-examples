@@ -26,10 +26,10 @@ import org.apache.camel.Processor;
  */
 public class ComplicatedProcessor implements Processor {
 
-    public static final String PROCESSOR_TEXT = "SOMETHING";
 
     @Override
     public void process(Exchange exchange) throws Exception {
+        final String something = "SOMETHING";
         Message in = exchange.getIn();
         String action = in.getHeader("action", String.class);
         if ((action == null) || (action.isEmpty())) {
@@ -38,9 +38,9 @@ public class ComplicatedProcessor implements Processor {
             in.setHeader("actionTaken", true);
             String body = in.getBody(String.class);
             if (action.equals("append")) {
-                in.setBody(body + " " + PROCESSOR_TEXT);
+                in.setBody(body + " " + something);
             } else if (action.equals("prepend")) {
-                in.setBody(PROCESSOR_TEXT + " " + body);
+                in.setBody(something + " " + body);
             } else {
                 throw new IllegalArgumentException(
                         "Unrecognized action requested: [" + action + "]");

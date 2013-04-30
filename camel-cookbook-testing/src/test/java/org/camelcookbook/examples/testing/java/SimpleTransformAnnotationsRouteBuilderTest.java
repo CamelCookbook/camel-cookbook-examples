@@ -15,40 +15,38 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.examples.testing.exchange;
+package org.camelcookbook.examples.testing.java;
 
+import org.apache.camel.EndpointInject;
+import org.apache.camel.Produce;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+/**
+ * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
+ */
+public class SimpleTransformAnnotationsRouteBuilderTest extends CamelTestSupport {
 
-public class ComplicatedProcessorTest extends CamelTestSupport {
+    @Produce(uri = "direct:in")
+    private ProducerTemplate producerTemplate;
+
+    @EndpointInject(uri = "mock:out")
+    private MockEndpoint mockOut;
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .process(new ComplicatedProcessor())
-                    .to("mock:out");
-            }
-        };
+        return new SimpleTransformRouteBuilder();
     }
 
     @Test
-    public void testPrepend() throws Exception {
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
-        mockOut.message(0).body().isEqualTo("SOMETHING text");
-        mockOut.message(0).header("actionTaken").isEqualTo(true);
+    public void testPayloadIsTransformed() throws InterruptedException {
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().isEqualTo("Modified: Cheese");
 
-        Map<String, Object> headers = new HashMap<String, Object>();
-        headers.put("action", "prepend");
-
-        template.sendBodyAndHeaders("direct:in", "text", headers);
+        producerTemplate.sendBody("Cheese");
 
         assertMockEndpointsSatisfied();
     }

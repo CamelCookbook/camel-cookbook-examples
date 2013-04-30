@@ -17,24 +17,35 @@
 
 package org.camelcookbook.examples.testing.spring;
 
-import org.apache.camel.EndpointInject;
-import org.apache.camel.Produce;
-import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Properties;
+
 /**
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
  */
-public class SimpleTransformSpringTest extends CamelSpringTestSupport {
+public class SimpleTransformPropertiesInjectingSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/spring/test-properties-context.xml",
-                                                  "/META-INF/spring/simpleTransform-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/simpleTransform-context.xml");
+    }
+
+    @Override
+    protected Boolean ignoreMissingLocationWithPropertiesComponent() {
+        return true;
+    }
+
+    @Override
+    protected Properties useOverridePropertiesWithPropertiesComponent() {
+        Properties properties = new Properties();
+        properties.setProperty("start.endpoint", "direct:in");
+        properties.setProperty("end.endpoint", "mock:out");
+        return properties;
     }
 
     @Test

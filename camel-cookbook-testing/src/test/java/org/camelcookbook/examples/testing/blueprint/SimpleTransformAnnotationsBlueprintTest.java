@@ -27,7 +27,13 @@ import org.junit.Test;
 /**
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
  */
-public class SimpleTransformBlueprintTest extends CamelBlueprintTestSupport {
+public class SimpleTransformAnnotationsBlueprintTest extends CamelBlueprintTestSupport {
+
+    @Produce(uri = "direct:in")
+    private ProducerTemplate producerTemplate;
+
+    @EndpointInject(uri = "mock:out")
+    private MockEndpoint mockOut;
 
     @Override
     protected String getBlueprintDescriptor() {
@@ -37,22 +43,20 @@ public class SimpleTransformBlueprintTest extends CamelBlueprintTestSupport {
 
     @Test
     public void testPayloadIsTransformed() throws InterruptedException {
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
         mockOut.message(0).body().isEqualTo("Modified: Cheese");
 
-        template.sendBody("direct:in", "Cheese");
+        producerTemplate.sendBody("Cheese");
 
         assertMockEndpointsSatisfied();
     }
 
     @Test
     public void testPayloadIsTransformedAgain() throws InterruptedException {
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
         mockOut.message(0).body().isEqualTo("Modified: Foo");
 
-        template.sendBody("direct:in", "Foo");
+        producerTemplate.sendBody("Foo");
 
         assertMockEndpointsSatisfied();
     }

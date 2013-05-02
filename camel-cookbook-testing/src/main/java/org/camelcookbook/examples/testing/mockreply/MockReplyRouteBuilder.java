@@ -23,7 +23,7 @@ import org.apache.camel.builder.RouteBuilder;
  * Simple route that expects a response from a mock endpoint.
  */
 public class MockReplyRouteBuilder extends RouteBuilder {
-
+    // TODO make inline 
     @Override
     public void configure() {
         from("direct:in")

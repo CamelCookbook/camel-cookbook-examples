@@ -28,7 +28,7 @@ import org.apache.camel.util.ExchangeHelper;
  * This is a duplicate of the StringDataFormat already in Camel...
  */
 public class EbcdicDataFormat implements DataFormat {
-    private String codepage = "CP037"; // US EBCDIC 037 code page
+    private String codepage = "CP037"; // US EBCDIC code page 000037
 
     public EbcdicDataFormat() {
     }
@@ -39,13 +39,13 @@ public class EbcdicDataFormat implements DataFormat {
 
     @Override
     public void marshal(Exchange exchange, Object graph, OutputStream stream) throws Exception {
-        final String str = ExchangeHelper.convertToType(exchange, String.class, graph);
+        final String str = ExchangeHelper.convertToMandatoryType(exchange, String.class, graph);
         stream.write(str.getBytes(codepage));
     }
 
     @Override
     public Object unmarshal(Exchange exchange, InputStream stream) throws Exception {
-        final byte[] bytes = ExchangeHelper.convertToType(exchange, byte[].class, stream);
+        final byte[] bytes = ExchangeHelper.convertToMandatoryType(exchange, byte[].class, stream);
         return new String(bytes, codepage);
     }
 }

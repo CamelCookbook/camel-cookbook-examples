@@ -28,7 +28,7 @@ public class ReverseDataFormatTest extends CamelTestSupport {
     }
 
     @Test
-    public void testMarshal() throws Exception {
+    public void testMarshalReverse() throws Exception {
         final byte[] bytes = new byte[]{0x1, 0x2, 0x3, 0x4};
 
         byte[] result = template.requestBody("direct:marshal", bytes, byte[].class);
@@ -37,7 +37,7 @@ public class ReverseDataFormatTest extends CamelTestSupport {
     }
 
     @Test
-    public void testUnmarshal() throws Exception {
+    public void testUnmarshalReverse() throws Exception {
         final byte[] bytes = new byte[]{0x1, 0x2, 0x3, 0x4};
 
         byte[] result = template.requestBody("direct:unmarshal", bytes, byte[].class);

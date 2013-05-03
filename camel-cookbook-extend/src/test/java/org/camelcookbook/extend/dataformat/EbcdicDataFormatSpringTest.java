@@ -17,18 +17,19 @@
 
 package org.camelcookbook.extend.dataformat;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class EbcdicDataFormatTest extends CamelTestSupport {
+public class EbcdicDataFormatSpringTest extends CamelSpringTestSupport {
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new EbcdicDataFormatRouteBuilder();
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("META-INF/spring/dataformat-ebcdic-context.xml");
     }
 
     @Test
-    public void testMarshalEbcdic() throws Exception {
+    public void testMarshalEbcdicSpring() throws Exception {
         final String ascii = "Mainframes rock!";
         final byte[] expected = {-44, -127, -119, -107, -122, -103, -127, -108, -123, -94, 64, -103, -106, -125, -110, 90};
 
@@ -38,7 +39,7 @@ public class EbcdicDataFormatTest extends CamelTestSupport {
     }
 
     @Test
-    public void testUnmarshalEbcdic() throws Exception {
+    public void testUnmarshalEbcdicSpring() throws Exception {
         final byte[] ebcdic = {-29, -119, -108, -123, 64, -93, -106, 64, -92, -105, -121, -103, -127, -124, -123, 75, 75, 75};
 
         final String result = template.requestBody("direct:unmarshal", ebcdic, String.class);

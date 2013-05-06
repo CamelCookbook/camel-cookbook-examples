@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.datatype;
+package org.camelcookbook.extend.typeconverter;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;

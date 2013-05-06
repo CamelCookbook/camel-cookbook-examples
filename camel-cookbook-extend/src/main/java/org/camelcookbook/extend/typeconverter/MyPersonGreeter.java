@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.datatype;
+package org.camelcookbook.extend.typeconverter;
 
 public class MyPersonGreeter {
     public String sayHello(MyPerson person) {

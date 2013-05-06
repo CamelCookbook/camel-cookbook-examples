@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.datatype;
+package org.camelcookbook.extend.typeconverter;
 
 import org.apache.camel.Converter;
 
 @Converter
-public class MyPersonTypeConverter {
+public final class MyPersonTypeConverter {
     /**
      * Utility classes should not have a public constructor.
      */
@@ -37,7 +37,7 @@ public class MyPersonTypeConverter {
             final MyPerson person = new MyPerson();
 
             person.setFirstName(str.substring(0, index));
-            person.setLastName(str.substring(index + 1));
+            person.setLastName(str.substring(index + 1)); // skip the '|' at index
 
             return person;
         }

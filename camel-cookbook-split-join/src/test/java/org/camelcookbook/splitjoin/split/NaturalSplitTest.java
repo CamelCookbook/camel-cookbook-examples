@@ -1,10 +1,9 @@
-package org.camelcookbook.splitjoin;
+package org.camelcookbook.splitjoin.split;
 
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,11 +13,17 @@ import java.util.TreeSet;
 /**
  * Demonstrates the splitting of arrays, Lists and Iterators into the elements that make them up.
  */
-public class NaturalSplitSpringTest extends CamelSpringTestSupport {
-
+public class NaturalSplitTest extends CamelTestSupport {
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/naturalSplit-context.xml");
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                from("direct:in")
+                    .split(body())
+                    .to("mock:out");
+            }
+        };
     }
 
     @Test
@@ -64,5 +69,4 @@ public class NaturalSplitSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

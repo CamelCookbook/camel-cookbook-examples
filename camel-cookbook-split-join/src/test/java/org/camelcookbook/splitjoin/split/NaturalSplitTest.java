@@ -5,10 +5,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Demonstrates the splitting of arrays, Lists and Iterators into the elements that make them up.
@@ -21,6 +18,8 @@ public class NaturalSplitTest extends CamelTestSupport {
             public void configure() throws Exception {
                 from("direct:in")
                     .split(body())
+                        .to("mock:split")
+                    .end()
                     .to("mock:out");
             }
         };
@@ -28,11 +27,16 @@ public class NaturalSplitTest extends CamelTestSupport {
 
     @Test
     public void testSplitArray() throws Exception {
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
-        mockOut.expectedMessageCount(3);
-        mockOut.expectedBodiesReceived("one", "two", "three");
-
         String[] array = new String[] {"one", "two", "three"};
+
+        MockEndpoint mockSplit = getMockEndpoint("mock:split");
+        mockSplit.expectedMessageCount(3);
+        mockSplit.expectedBodiesReceived("one", "two", "three");
+
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.expectedMessageCount(1);
+        mockOut.message(0).body().isEqualTo(array);
+
         template.sendBody("direct:in", array);
 
         assertMockEndpointsSatisfied();
@@ -40,14 +44,18 @@ public class NaturalSplitTest extends CamelTestSupport {
 
     @Test
     public void testSplitList() throws Exception {
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
-        mockOut.expectedMessageCount(3);
-        mockOut.expectedBodiesReceived("one", "two", "three");
-
         List<String> list = new LinkedList<String>();
         list.add("one");
         list.add("two");
         list.add("three");
+
+        MockEndpoint mockSplit = getMockEndpoint("mock:split");
+        mockSplit.expectedMessageCount(3);
+        mockSplit.expectedBodiesReceived("one", "two", "three");
+
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.expectedMessageCount(1);
+        mockOut.message(0).body().isEqualTo(list);
 
         template.sendBody("direct:in", list);
 
@@ -56,16 +64,21 @@ public class NaturalSplitTest extends CamelTestSupport {
 
     @Test
     public void testSplitIterable() throws Exception {
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
-        mockOut.expectedMessageCount(3);
-        mockOut.expectedBodiesReceivedInAnyOrder("one", "two", "three");
-
         Set<String> set = new TreeSet<String>();
         set.add("one");
         set.add("two");
         set.add("three");
+        Iterator<String> iterator = set.iterator();
 
-        template.sendBody("direct:in", set.iterator());
+        MockEndpoint mockSplit = getMockEndpoint("mock:split");
+        mockSplit.expectedMessageCount(3);
+        mockSplit.expectedBodiesReceivedInAnyOrder("one", "two", "three");
+
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.expectedMessageCount(1);
+        mockOut.message(0).body().isEqualTo(iterator);
+
+        template.sendBody("direct:in", iterator);
 
         assertMockEndpointsSatisfied();
     }

@@ -29,8 +29,9 @@
             <from uri="direct:in"/>
             <split>
                 <simple>${body}</simple>
-                <to uri="mock:out"/>
+                <to uri="mock:split"/>
             </split>
+            <to uri="mock:out"/>
         </route>
     </camelContext>
 

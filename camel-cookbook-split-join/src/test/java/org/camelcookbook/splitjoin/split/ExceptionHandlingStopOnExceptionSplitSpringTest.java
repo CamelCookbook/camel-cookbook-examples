@@ -7,37 +7,23 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Demonstrates that the remaining split elements will be not processed after an exception is thrown
  * when <code>stopOnException</code> is used on the split block.
  */
-public class ExceptionHandlingStopOnExceptionSplitTest extends CamelTestSupport {
+public class ExceptionHandlingStopOnExceptionSplitSpringTest extends CamelSpringTestSupport {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(simple("${body}")).stopOnException()
-                        .process(new Processor() {
-                            @Override
-                            public void process(Exchange exchange) throws Exception {
-                                if (exchange.getProperty("CamelSplitIndex").equals(1)) {
-                                    throw new IllegalStateException("boom");
-                                }
-                            }
-                        })
-                        .to("mock:split")
-                    .end()
-                    .to("mock:out");
-            }
-        };
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("/META-INF/spring/exceptionHandlingStopOnExceptionSplit-context.xml");
     }
 
     @Test

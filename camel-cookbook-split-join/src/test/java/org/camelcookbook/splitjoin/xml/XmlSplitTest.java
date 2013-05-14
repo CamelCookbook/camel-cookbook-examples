@@ -20,7 +20,7 @@ public class XmlSplitTest extends CamelTestSupport {
             @Override
             public void configure() throws Exception {
             from("direct:in")
-                .split(xpath("/books/book[@category = 'Technology']/authors/author/text()"))
+                .split(xpath("//book[@category='Tech']/authors/author/text()"))
                 .to("mock:out");
             }
         };

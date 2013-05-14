@@ -1,5 +1,5 @@
 <books xmlns="http://camelcookbook.org/schema/books">
-	<book category="Technology" title="Camel Enterprise Integration Cookbook">
+	<book category="Tech" title="Camel Enterprise Integration Cookbook">
 		<authors>
 			<author>Scott Cranton</author>
 			<author>Jakub Korab</author>

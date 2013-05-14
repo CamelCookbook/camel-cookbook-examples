@@ -1,6 +1,7 @@
 package org.camelcookbook.splitjoin.xml;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.xml.Namespaces;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
@@ -13,15 +14,17 @@ import java.io.InputStream;
  *
  * This test is intended to be run out of Maven, as it references the target directory.
  */
-public class XmlNamespaceSplitTest extends CamelTestSupport {
+public class XmlNamespacesSplitTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
+            Namespaces namespaces = new Namespaces("c", "http://camelcookbook.org/schema/books")
+                .add("se", "http://camelcookbook.org/schema/somethingElse");
+
             from("direct:in")
-                .split(xpath("//c:book[@category='Tech']/c:authors/c:author/text()")
-                        .namespace("c", "http://camelcookbook.org/schema/books"))
+                .split(namespaces.xpath("//c:book[@category='Tech']/c:authors/c:author/text()"))
                 .to("mock:out");
             }
         };

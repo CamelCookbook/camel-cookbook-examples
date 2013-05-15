@@ -22,10 +22,27 @@
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+           http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
        ">
 
+    <broker xmlns="http://activemq.apache.org/schema/core" useJmx="false" brokerName="myEmbeddedBroker" persistent="false">
+        <systemUsage>
+            <systemUsage>
+                <memoryUsage>
+                    <memoryUsage limit="32 mb"/>
+                </memoryUsage>
+                <tempUsage>
+                    <tempUsage limit="32 mb"/>
+                </tempUsage>
+            </systemUsage>
+        </systemUsage>
+        <transportConnectors>
+            <transportConnector uri="vm://myEmbeddedBroker" />
+        </transportConnectors>
+    </broker>
+
     <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="brokerURL" value="vm://myEmbeddedBroker?broker.persistent=false"/>
+        <property name="brokerURL" value="vm://myEmbeddedBroker"/>
     </bean>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">

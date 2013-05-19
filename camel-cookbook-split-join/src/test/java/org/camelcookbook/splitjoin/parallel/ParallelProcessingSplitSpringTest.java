@@ -18,7 +18,7 @@ public class ParallelProcessingSplitSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/parallelSplit-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/parallelProcessingSplit-context.xml");
     }
 
     @Test

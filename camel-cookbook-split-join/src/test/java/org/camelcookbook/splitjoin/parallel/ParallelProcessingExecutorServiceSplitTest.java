@@ -7,12 +7,13 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 /**
- * Test class that demonstrates exception handling when processing split messages in parallel.
+ * Test class that demonstrates split message processing in parallel.
  * @author jkorab
  */
-public class ParallelProcessingTimeoutSplitTest extends CamelTestSupport {
+public class ParallelProcessingExecutorServiceSplitTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
@@ -20,23 +21,11 @@ public class ParallelProcessingTimeoutSplitTest extends CamelTestSupport {
             @Override
             public void configure() throws Exception {
                 from("direct:in")
-                    .split(body()).parallelProcessing().timeout(5000)
+                    .split(body()).parallelProcessing().executorService(Executors.newSingleThreadExecutor())
                         .log("Processing message[${property.CamelSplitIndex}]")
-                        .to("direct:delay20th")
+                        .to("mock:split")
                     .end()
                     .to("mock:out");
-
-                from("direct:delay20th")
-                    .choice()
-                        .when(simple("${property.CamelSplitIndex} == 20"))
-                            .to("direct:longDelay")
-                        .otherwise()
-                            .to("mock:split")
-                    .endChoice();
-
-                from("direct:longDelay")
-                    .delay(5000)
-                    .to("mock:delayed");
             }
         };
     }
@@ -48,24 +37,16 @@ public class ParallelProcessingTimeoutSplitTest extends CamelTestSupport {
         for (int i = 0; i < fragmentCount; i++) {
             messageFragments.add("fragment" + i);
         }
-
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
-        mockSplit.setExpectedMessageCount(fragmentCount - 1);
-
-        ArrayList<String> expectedFragments = new ArrayList<String>(messageFragments);
-        int indexDelayed = 20;
-        expectedFragments.remove(indexDelayed);
-        mockSplit.expectedBodiesReceivedInAnyOrder(expectedFragments);
-
-        MockEndpoint mockDelayed = getMockEndpoint("mock:delayed");
-        mockDelayed.setExpectedMessageCount(1);
+        mockSplit.setExpectedMessageCount(fragmentCount);
+        mockSplit.expectedBodiesReceived(messageFragments);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
-
+        mockOut.message(0).body().isEqualTo(messageFragments);
 
         template.sendBody("direct:in", messageFragments);
-        assertMockEndpointsSatisfied();
 
+        assertMockEndpointsSatisfied();
     }
 }

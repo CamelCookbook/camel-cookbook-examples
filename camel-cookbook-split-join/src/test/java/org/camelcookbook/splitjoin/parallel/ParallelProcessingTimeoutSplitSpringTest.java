@@ -3,7 +3,10 @@ package org.camelcookbook.splitjoin.parallel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,33 +15,11 @@ import java.util.List;
  * Test class that demonstrates exception handling when processing split messages in parallel.
  * @author jkorab
  */
-public class ParallelProcessingTimeoutSplitTest extends CamelTestSupport {
+public class ParallelProcessingTimeoutSplitSpringTest extends CamelSpringTestSupport {
 
     @Override
-    public RouteBuilder createRouteBuilder() {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(body()).parallelProcessing().timeout(5000)
-                        .log("Processing message[${property.CamelSplitIndex}]")
-                        .to("direct:delay20th")
-                    .end()
-                    .to("mock:out");
-
-                from("direct:delay20th")
-                    .choice()
-                        .when(simple("${property.CamelSplitIndex} == 20"))
-                            .to("direct:longDelay")
-                        .otherwise()
-                            .to("mock:split")
-                    .endChoice();
-
-                from("direct:longDelay")
-                    .delay(5000)
-                    .to("mock:delayed");
-            }
-        };
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("/META-INF/spring/parallelProcessingTimeoutSplit-context.xml");
     }
 
     @Test

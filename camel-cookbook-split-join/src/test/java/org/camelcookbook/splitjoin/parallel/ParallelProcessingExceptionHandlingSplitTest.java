@@ -49,10 +49,6 @@ public class ParallelProcessingExceptionHandlingSplitTest extends CamelTestSuppo
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
         mockSplit.setMinimumExpectedMessageCount(indexOnWhichExceptionThrown);
 
-        ArrayList<String> expectedFragments = new ArrayList<String>(messageFragments);
-        expectedFragments.remove(indexOnWhichExceptionThrown);
-        mockSplit.expectedBodiesReceivedInAnyOrder(expectedFragments);
-
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(0);
 

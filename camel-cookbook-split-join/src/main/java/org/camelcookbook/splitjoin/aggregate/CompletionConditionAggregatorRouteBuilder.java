@@ -5,12 +5,13 @@ import org.apache.camel.builder.RouteBuilder;
 /**
 * @author jkorab
 */
-class SimpleAggregatorRouteBuilder extends RouteBuilder {
+class CompletionConditionAggregatorRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
             .log("${threadName} - ${body}")
-            .aggregate(header("group"), new SetAggregationStrategy()).completionSize(5)
+            .aggregate(header("group"), new SetAggregationStrategy())
+                    .completionPredicate(simple("${body.size} == 5"))
                 .log("${threadName} - out")
                 .to("mock:out")
             .end();

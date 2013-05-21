@@ -13,14 +13,13 @@ public class SetAggregationStrategy implements AggregationStrategy{
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
         String body = newExchange.getIn().getBody(String.class);
-        Set<String> set;
         if (oldExchange == null) {
-            set = new HashSet<String>();
+            Set<String> set = new HashSet<String>();
             set.add(body);
             newExchange.getIn().setBody(set);
             return newExchange;
         }  else {
-            set = oldExchange.getIn().getBody(Set.class);
+            Set<String> set = oldExchange.getIn().getBody(Set.class);
             set.add(body);
             return oldExchange;
         }

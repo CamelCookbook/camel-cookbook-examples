@@ -24,13 +24,13 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="concatenatingAggregationRepository"
-          class="org.camelcookbook.splitjoin.aggregate.ConcatenatingAggregationStrategy"/>
+    <bean id="setAggregationRepository"
+          class="org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
             <from uri="direct:in"/>
-            <aggregate strategyRef="concatenatingAggregationRepository" completionSize="5">
+            <aggregate strategyRef="setAggregationRepository" completionSize="5">
                 <correlationExpression>
                     <simple>${headers.group}</simple>
                 </correlationExpression>

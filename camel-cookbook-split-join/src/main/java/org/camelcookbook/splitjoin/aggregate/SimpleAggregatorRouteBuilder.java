@@ -9,8 +9,8 @@ class SimpleAggregatorRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .log("${threadName} - in")
-            .aggregate(new ConcatenatingAggregationStrategy())
+            .log("${threadName} - ${body}")
+            .aggregate(new SetAggregationStrategy())
                     .header("group").completionSize(5)
                 .log("${threadName} - out")
                 .to("mock:out")

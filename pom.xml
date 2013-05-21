@@ -58,6 +58,7 @@
         <module>camel-cookbook-testing</module>
         <module>camel-cookbook-extend</module>
         <module>camel-cookbook-split-join</module>
+        <module>camel-cookbook-error</module>
     </modules>
 
     <repositories>

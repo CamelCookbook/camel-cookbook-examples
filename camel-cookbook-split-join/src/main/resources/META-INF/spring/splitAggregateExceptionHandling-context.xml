@@ -24,22 +24,36 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="setAggregationStrategy"
-          class="org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy"/>
+    <bean id="exceptionHandlingSetAggregationStrategy"
+          class="org.camelcookbook.splitjoin.splitaggregate.ExceptionHandlingSetAggregationStrategy"/>
+
+    <bean id="ise" class="java.lang.IllegalStateException"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
             <from uri="direct:in"/>
-            <aggregate strategyRef="setAggregationStrategy">
-                <correlationExpression>
-                    <simple>${headers.group}</simple>
-                </correlationExpression>
-                <completionPredicate>
-                    <simple>${body.size} == 5</simple>
-                </completionPredicate>
-                <to uri="mock:out"/>
-            </aggregate>
+            <split strategyRef="exceptionHandlingSetAggregationStrategy">
+                <simple>${body}</simple>
+                <inOut uri="direct:someBackEnd"/>
+            </split>
+            <to uri="mock:out"/>
         </route>
+
+        <route>
+            <from uri="direct:someBackEnd"/>
+            <choice>
+                <when>
+                    <simple>${header.CamelSplitIndex} == 1</simple>
+                    <throwException ref="ise"/>
+                </when>
+                <otherwise>
+                    <transform>
+                        <simple>Processed: ${body}</simple>
+                    </transform>
+                </otherwise>
+            </choice>
+        </route>
+
     </camelContext>
 
 </beans>

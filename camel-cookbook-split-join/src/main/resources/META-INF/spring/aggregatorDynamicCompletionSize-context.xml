@@ -24,13 +24,13 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="setAggregationRepository"
+    <bean id="setAggregationStrategy"
           class="org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
             <from uri="direct:in"/>
-            <aggregate strategyRef="setAggregationRepository">
+            <aggregate strategyRef="setAggregationStrategy">
                 <correlationExpression>
                     <simple>${headers.group}</simple>
                 </correlationExpression>

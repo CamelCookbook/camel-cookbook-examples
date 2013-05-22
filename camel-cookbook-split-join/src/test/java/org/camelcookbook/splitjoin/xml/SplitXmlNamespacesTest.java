@@ -9,21 +9,14 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 /**
- * Demonstrates the splitting of Xml files through XPath expression.
+ * Demonstrates the splitting of Xml files through XPath expression using Namespaces.
  *
  * This test is intended to be run out of Maven, as it references the target directory.
  */
-public class XmlSplitTest extends CamelTestSupport {
+public class SplitXmlNamespacesTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-            from("direct:in")
-                .split(xpath("//book[@category='Tech']/authors/author/text()"))
-                .to("mock:out");
-            }
-        };
+        return new SplitXmlNamespacesRouteBuilder();
     }
 
     @Test
@@ -33,7 +26,7 @@ public class XmlSplitTest extends CamelTestSupport {
         mockOut.expectedBodiesReceived("Scott Cranton", "Jakub Korab");
 
 
-        String filename = "target/classes/xml/books.xml";
+        String filename = "target/classes/xml/books-ns.xml";
         assertFileExists(filename);
         InputStream booksStream = new FileInputStream(filename);
 
@@ -41,4 +34,5 @@ public class XmlSplitTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
+
 }

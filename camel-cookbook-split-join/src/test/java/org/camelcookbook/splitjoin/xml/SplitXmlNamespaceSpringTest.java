@@ -1,9 +1,10 @@
 package org.camelcookbook.splitjoin.xml;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -13,18 +14,11 @@ import java.io.InputStream;
  *
  * This test is intended to be run out of Maven, as it references the target directory.
  */
-public class XmlNamespaceSplitTest extends CamelTestSupport {
+public class SplitXmlNamespaceSpringTest extends CamelSpringTestSupport {
+
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-            from("direct:in")
-                .split(xpath("//c:book[@category='Tech']/c:authors/c:author/text()")
-                        .namespace("c", "http://camelcookbook.org/schema/books"))
-                .to("mock:out");
-            }
-        };
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("/META-INF/spring/splitXmlNamespace-context.xml");
     }
 
     @Test

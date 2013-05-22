@@ -1,10 +1,9 @@
 package org.camelcookbook.splitjoin.xml;
 
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -14,11 +13,10 @@ import java.io.InputStream;
  *
  * This test is intended to be run out of Maven, as it references the target directory.
  */
-public class XmlNamespaceSplitSpringTest extends CamelSpringTestSupport {
-
+public class SplitXmlNamespaceTest extends CamelTestSupport {
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/splitXmlNamespace-context.xml");
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new SplitXmlNamespaceRouteBuilder();
     }
 
     @Test
@@ -36,4 +34,5 @@ public class XmlNamespaceSplitSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
+
 }

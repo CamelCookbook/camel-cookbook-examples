@@ -14,7 +14,7 @@ import java.io.InputStream;
  *
  * This test is intended to be run out of Maven, as it references the target directory.
  */
-public class XmlSplitSpringTest extends CamelSpringTestSupport {
+public class SplitXmlSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {

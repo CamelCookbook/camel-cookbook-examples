@@ -5,13 +5,12 @@ import org.apache.camel.builder.RouteBuilder;
 /**
 * @author jkorab
 */
-class DynamicCompletionSizeAggregatorRouteBuilder extends RouteBuilder {
+class AggregatorSimpleRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
             .log("${threadName} - ${body}")
-            .aggregate(header("group"), new SetAggregationStrategy())
-                    .completionSize(header("batchSize"))
+            .aggregate(header("group"), new SetAggregationStrategy()).completionSize(5)
                 .log("${threadName} - out")
                 .to("mock:out")
             .end();

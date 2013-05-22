@@ -1,8 +1,6 @@
 package org.camelcookbook.splitjoin.split;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -14,11 +12,11 @@ import java.util.List;
 /**
  * Demonstrates the splitting of a List by using a Simple expression to locate it in an object graph.
  */
-public class SimpleExpressionSplitSpringTest extends CamelSpringTestSupport {
+public class SplitSimpleExpressionSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/simpleExpressionSplit-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/splitSimpleExpression-context.xml");
     }
 
     @Test

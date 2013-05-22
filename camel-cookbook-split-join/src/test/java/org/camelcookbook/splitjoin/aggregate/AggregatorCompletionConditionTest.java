@@ -7,19 +7,18 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Test class that demonstrates a simple example of aggregation.
+ * Test class that demonstrates a use of completion conditions with aggregation.
  * @author jkorab
  */
-public class SimpleAggregatorTest extends CamelTestSupport {
+public class AggregatorCompletionConditionTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SimpleAggregatorRouteBuilder();
+        return new AggregatorCompletionConditionRouteBuilder();
     }
 
     @Test

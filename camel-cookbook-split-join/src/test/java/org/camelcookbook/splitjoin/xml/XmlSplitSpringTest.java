@@ -1,8 +1,6 @@
 package org.camelcookbook.splitjoin.xml;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -20,7 +18,7 @@ public class XmlSplitSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/xmlSplit-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/splitXml-context.xml");
     }
 
     @Test

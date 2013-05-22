@@ -1,33 +1,25 @@
 package org.camelcookbook.splitjoin.parallel;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 /**
- * Test class that demonstrates split message processing in parallel.
+ * Test class that demonstrates split message processing in parallel through a custom executor service.
+ *
  * @author jkorab
  */
-public class ParallelProcessingExecutorServiceSplitTest extends CamelTestSupport {
+public class SplitParallelProcessingExecutorServiceSpringTest extends CamelSpringTestSupport {
 
     @Override
-    public RouteBuilder createRouteBuilder() {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(body()).parallelProcessing().executorService(Executors.newSingleThreadExecutor())
-                        .log("Processing message[${property.CamelSplitIndex}]")
-                        .to("mock:split")
-                    .end()
-                    .to("mock:out");
-            }
-        };
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext(
+                "/META-INF/spring/splitParallelProcessingExecutorService-context.xml");
     }
 
     @Test
@@ -39,7 +31,7 @@ public class ParallelProcessingExecutorServiceSplitTest extends CamelTestSupport
         }
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
         mockSplit.setExpectedMessageCount(fragmentCount);
-        mockSplit.expectedBodiesReceived(messageFragments);
+        mockSplit.expectedBodiesReceivedInAnyOrder(messageFragments);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
@@ -49,4 +41,5 @@ public class ParallelProcessingExecutorServiceSplitTest extends CamelTestSupport
 
         assertMockEndpointsSatisfied();
     }
+
 }

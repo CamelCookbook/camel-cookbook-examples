@@ -7,23 +7,14 @@ import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Demonstrates the splitting of a List by using a Simple expression to locate it in an object graph.
  */
-public class SimpleExpressionSplitTest extends CamelTestSupport {
+public class SplitSimpleExpressionTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(simple("${body.wrapped}"))
-                    .to("mock:out");
-            }
-        };
+        return new SplitSimpleExpressionRouteBuilder();
     }
 
     @Test

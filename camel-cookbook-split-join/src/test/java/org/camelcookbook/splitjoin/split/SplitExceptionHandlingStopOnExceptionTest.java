@@ -2,8 +2,6 @@ package org.camelcookbook.splitjoin.split;
 
 import org.apache.camel.CamelExchangeException;
 import org.apache.camel.CamelExecutionException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
@@ -15,29 +13,12 @@ import org.slf4j.LoggerFactory;
  * Demonstrates that the remaining split elements will be not processed after an exception is thrown
  * when <code>stopOnException</code> is used on the split block.
  */
-public class ExceptionHandlingStopOnExceptionSplitTest extends CamelTestSupport {
+public class SplitExceptionHandlingStopOnExceptionTest extends CamelTestSupport {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(simple("${body}")).stopOnException()
-                        .process(new Processor() {
-                            @Override
-                            public void process(Exchange exchange) throws Exception {
-                                if (exchange.getProperty("CamelSplitIndex").equals(1)) {
-                                    throw new IllegalStateException("boom");
-                                }
-                            }
-                        })
-                        .to("mock:split")
-                    .end()
-                    .to("mock:out");
-            }
-        };
+        return new SplitExceptionHandlingStopOnExceptionRouteBuilder();
     }
 
     @Test

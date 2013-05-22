@@ -1,38 +1,22 @@
 package org.camelcookbook.splitjoin.parallel;
 
-import org.apache.camel.CamelExecutionException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 /**
  * Test class that demonstrates split message processing in parallel.
  * @author jkorab
  */
-public class ParallelProcessingSplitTest extends CamelTestSupport {
+public class SplitParallelProcessingExecutorServiceTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(body()).parallelProcessing().executorService(Executors.newSingleThreadExecutor())
-                        .log("Processing message[${property.CamelSplitIndex}]")
-                        .to("mock:split")
-                    .end()
-                    .to("mock:out");
-            }
-        };
+        return new SplitParallelProcessingExecutorServiceRouteBuilder();
     }
 
     @Test
@@ -44,7 +28,7 @@ public class ParallelProcessingSplitTest extends CamelTestSupport {
         }
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
         mockSplit.setExpectedMessageCount(fragmentCount);
-        mockSplit.expectedBodiesReceivedInAnyOrder(messageFragments);
+        mockSplit.expectedBodiesReceived(messageFragments);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
@@ -54,4 +38,5 @@ public class ParallelProcessingSplitTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
+
 }

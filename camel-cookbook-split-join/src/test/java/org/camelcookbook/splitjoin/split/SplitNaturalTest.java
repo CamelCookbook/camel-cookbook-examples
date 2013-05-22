@@ -10,19 +10,10 @@ import java.util.*;
 /**
  * Demonstrates the splitting of arrays, Lists and Iterators into the elements that make them up.
  */
-public class NaturalSplitTest extends CamelTestSupport {
+public class SplitNaturalTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(body())
-                        .to("mock:split")
-                    .end()
-                    .to("mock:out");
-            }
-        };
+        return new SplitNaturalRouteBuilder();
     }
 
     @Test
@@ -82,4 +73,5 @@ public class NaturalSplitTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
+
 }

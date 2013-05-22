@@ -4,10 +4,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.*;
 
@@ -15,11 +12,11 @@ import java.util.*;
  * Test class that demonstrates a use of a dynamic completion size with aggregation.
  * @author jkorab
  */
-public class DynamicCompletionSizeAggregatorSpringTest extends CamelSpringTestSupport {
+public class AggregatorDynamicCompletionSizeTest extends CamelTestSupport {
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/dynamicCompletionSizeAggregator-context.xml");
+    public RouteBuilder createRouteBuilder() {
+        return new AggregatorDynamicCompletionSizeRouteBuilder();
     }
 
     @Test

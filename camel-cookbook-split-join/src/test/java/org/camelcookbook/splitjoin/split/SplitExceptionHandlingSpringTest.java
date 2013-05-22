@@ -1,11 +1,7 @@
 package org.camelcookbook.splitjoin.split;
 
 import org.apache.camel.CamelExecutionException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -16,12 +12,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Demonstrates that the remaining split elements will be processed by default after an exception is thrown.
  */
-public class ExceptionHandlingSplitSpringTest extends CamelSpringTestSupport {
+public class SplitExceptionHandlingSpringTest extends CamelSpringTestSupport {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/exceptionHandlingSplit-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/splitExceptionHandling-context.xml");
     }
 
     @Test

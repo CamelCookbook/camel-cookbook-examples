@@ -12,33 +12,11 @@ import java.util.List;
  * Test class that demonstrates exception handling when processing split messages in parallel.
  * @author jkorab
  */
-public class ParallelProcessingTimeoutSplitTest extends CamelTestSupport {
+public class SplitParallelProcessingTimeoutTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(body()).parallelProcessing().timeout(5000)
-                        .log("Processing message[${property.CamelSplitIndex}]")
-                        .to("direct:delay20th")
-                    .end()
-                    .to("mock:out");
-
-                from("direct:delay20th")
-                    .choice()
-                        .when(simple("${property.CamelSplitIndex} == 20"))
-                            .to("direct:longDelay")
-                        .otherwise()
-                            .to("mock:split")
-                    .endChoice();
-
-                from("direct:longDelay")
-                    .delay(5000)
-                    .to("mock:delayed");
-            }
-        };
+        return new SplitParallelProcessingTimeoutRouteBuilder();
     }
 
     @Test
@@ -68,4 +46,5 @@ public class ParallelProcessingTimeoutSplitTest extends CamelTestSupport {
         assertMockEndpointsSatisfied();
 
     }
+
 }

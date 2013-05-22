@@ -8,17 +8,10 @@ import org.junit.Test;
 /**
  * Shows how multi-line Strings may be split using a token.
  */
-public class MultiLineSplitTest extends CamelTestSupport {
+public class SplitMultiLineTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:in")
-                    .split(body().tokenize("\n"))
-                    .to("mock:out");
-            }
-        };
+        return new SplitMultiLineRouteBuilder();
     }
 
     @Test
@@ -31,4 +24,5 @@ public class MultiLineSplitTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
+
 }

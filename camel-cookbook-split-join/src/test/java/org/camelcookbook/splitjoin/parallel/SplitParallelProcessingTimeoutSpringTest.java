@@ -10,15 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Test class that demonstrates split message processing in parallel.
- *
+ * Test class that demonstrates exception handling when processing split messages in parallel.
  * @author jkorab
  */
-public class ParallelProcessingSplitSpringTest extends CamelSpringTestSupport {
+public class SplitParallelProcessingTimeoutSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/parallelProcessingSplit-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/splitParallelProcessingTimeout-context.xml");
     }
 
     @Test
@@ -28,17 +27,24 @@ public class ParallelProcessingSplitSpringTest extends CamelSpringTestSupport {
         for (int i = 0; i < fragmentCount; i++) {
             messageFragments.add("fragment" + i);
         }
+
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
-        mockSplit.setExpectedMessageCount(fragmentCount);
-        mockSplit.expectedBodiesReceivedInAnyOrder(messageFragments);
+        mockSplit.setExpectedMessageCount(fragmentCount - 1);
+
+        ArrayList<String> expectedFragments = new ArrayList<String>(messageFragments);
+        int indexDelayed = 20;
+        expectedFragments.remove(indexDelayed);
+        mockSplit.expectedBodiesReceivedInAnyOrder(expectedFragments);
+
+        MockEndpoint mockDelayed = getMockEndpoint("mock:delayed");
+        mockDelayed.setExpectedMessageCount(1);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
-        mockOut.message(0).body().isEqualTo(messageFragments);
+
 
         template.sendBody("direct:in", messageFragments);
-
         assertMockEndpointsSatisfied();
-    }
 
+    }
 }

@@ -4,24 +4,21 @@ import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Test class that demonstrates a use of completion conditions with aggregation.
+ * Test class that demonstrates a simple example of aggregation.
  * @author jkorab
  */
-public class CompletionConditionAggregatorSpringTest extends CamelSpringTestSupport {
+public class AggregatorSimpleTest extends CamelTestSupport {
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/completionConditionAggregator-context.xml");
+    public RouteBuilder createRouteBuilder() {
+        return new AggregatorSimpleRouteBuilder();
     }
 
     @Test

@@ -11,11 +11,11 @@ import java.util.*;
 /**
  * Demonstrates the splitting of arrays, Lists and Iterators into the elements that make them up.
  */
-public class NaturalSplitSpringTest extends CamelSpringTestSupport {
+public class SplitNaturalSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/naturalSplit-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/splitNatural-context.xml");
     }
 
     @Test

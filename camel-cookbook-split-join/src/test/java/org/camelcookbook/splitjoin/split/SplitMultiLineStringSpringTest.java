@@ -1,8 +1,6 @@
 package org.camelcookbook.splitjoin.split;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -11,10 +9,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Shows how multi-line Strings may be split using a token.
  */
-public class MultiLineStringSplitSpringTest extends CamelSpringTestSupport {
+public class SplitMultiLineStringSpringTest extends CamelSpringTestSupport {
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/multiLineStringSplit-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/splitMultiLineString-context.xml");
     }
 
     @Test

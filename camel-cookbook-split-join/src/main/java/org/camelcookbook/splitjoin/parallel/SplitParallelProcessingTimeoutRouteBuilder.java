@@ -9,7 +9,7 @@ class SplitParallelProcessingTimeoutRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(body()).parallelProcessing().timeout(2000)
+            .split(body()).parallelProcessing().timeout(1000)
                 .log("Processing message[${property.CamelSplitIndex}]")
                 .to("direct:delay20th")
             .end()
@@ -24,7 +24,7 @@ class SplitParallelProcessingTimeoutRouteBuilder extends RouteBuilder {
             .endChoice();
 
         from("direct:longDelay")
-            .delay(3000)
+            .delay(1500)
             .to("mock:delayed");
     }
 }

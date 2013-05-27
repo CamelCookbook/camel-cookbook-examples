@@ -24,36 +24,32 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
+    <bean id="setAggregationStrategy"
+          class="org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy"/>
+
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
             <from uri="direct:in"/>
-            <split parallelProcessing="true" timeout="1000">
-                <simple>${body}</simple>
-                <log message="Processing message[${property.CamelSplitIndex}]"/>
-                <to uri="direct:delay20th"/>
+            <split>
+                <xpath>//book</xpath>
+                <setHeader headerName="category">
+                    <xpath resultType="String">string(/book/@category)</xpath>
+                </setHeader>
+                <transform>
+                    <xpath resultType="String">string(/book/@title)</xpath>
+                </transform>
+                <to uri="direct:groupByCategory"/>
             </split>
-            <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="direct:delay20th"/>
-            <choice>
-                <when>
-                    <simple>${property.CamelSplitIndex} == 20</simple>
-                    <to uri="direct:longDelay"/>
-                </when>
-                <otherwise>
-                    <to uri="mock:split"/>
-                </otherwise>
-            </choice>
-        </route>
-
-        <route>
-            <from uri="direct:longDelay"/>
-            <delay>
-                <constant>1500</constant>
-            </delay>
-            <to uri="mock:delayed"/>
+            <from uri="direct:groupByCategory"/>
+            <aggregate strategyRef="setAggregationStrategy" completionTimeout="500">
+                <correlationExpression>
+                    <simple>${header[category]}</simple>
+                </correlationExpression>
+                <to uri="mock:out"/>
+            </aggregate>
         </route>
 
     </camelContext>

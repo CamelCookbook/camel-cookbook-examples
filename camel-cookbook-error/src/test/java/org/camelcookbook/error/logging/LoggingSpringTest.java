@@ -41,7 +41,28 @@ public class LoggingSpringTest extends CamelSpringTestSupport {
 
         boolean threwException = false;
         try {
-            template.sendBody("direct:start", "Bar");
+            template.sendBody("direct:start", "KaBoom");
+        } catch (Throwable e) {
+            threwException = true;
+        }
+        assertTrue(threwException);
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testLoggingRouteSpecificSpring() throws Exception {
+        getMockEndpoint("mock:result").expectedMessageCount(1);
+
+        try {
+            template.sendBody("direct:routeSpecific", "Foo");
+        } catch (Throwable e) {
+            fail("Shouldn't get here");
+        }
+
+        boolean threwException = false;
+        try {
+            template.sendBody("direct:routeSpecific", "KaBoom");
         } catch (Throwable e) {
             threwException = true;
         }

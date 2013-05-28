@@ -27,10 +27,21 @@
     <bean id="flakyProcessor" class="org.camelcookbook.error.logging.FlakyProcessor"/>
 
     <camelContext errorHandlerRef="loggingErrorHandler" xmlns="http://camel.apache.org/schema/spring">
-        <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler" logName="MyLoggingErrorHandler"/>
+        <errorHandler id="loggingErrorHandler"
+                      type="LoggingErrorHandler"
+                      logName="MyLoggingErrorHandler"/>
+        <errorHandler id="myRouteSpecificLoggingErrorHandler"
+                      type="LoggingErrorHandler"
+                      logName="MyRouteSpecificLogging"/>
 
         <route>
             <from uri="direct:start"/>
+            <bean ref="flakyProcessor"/>
+            <to uri="mock:result"/>
+        </route>
+
+        <route errorHandlerRef="myRouteSpecificLoggingErrorHandler">
+            <from uri="direct:routeSpecific"/>
             <bean ref="flakyProcessor"/>
             <to uri="mock:result"/>
         </route>

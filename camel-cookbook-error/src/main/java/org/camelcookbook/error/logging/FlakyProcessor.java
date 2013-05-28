@@ -20,10 +20,8 @@ package org.camelcookbook.error.logging;
 import org.apache.camel.Exchange;
 
 public class FlakyProcessor {
-    private int i = 1;
-
     public void doSomething(Exchange exchange) throws FlakyException {
-        if ((i++ % 2) == 0) {
+        if ("KaBoom".equalsIgnoreCase(exchange.getIn().getBody(String.class))) {
             throw new FlakyException("FlakyProcessor has gone Flaky");
         }
     }

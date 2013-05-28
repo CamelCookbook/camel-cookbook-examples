@@ -22,8 +22,13 @@ import org.apache.camel.builder.RouteBuilder;
 public class LoggingRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        errorHandler(loggingErrorHandler("MyLoggingErrorHandler"));
+        errorHandler(loggingErrorHandler().logName("MyLoggingErrorHandler"));
 
         from("direct:start").bean(FlakyProcessor.class).to("mock:result");
+
+        from("direct:routeSpecific")
+            .errorHandler(loggingErrorHandler().logName("MyRouteSpecificLogging"))
+            .bean(FlakyProcessor.class)
+            .to("mock:result");
     }
 }

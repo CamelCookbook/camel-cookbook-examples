@@ -1,9 +1,10 @@
-package org.camelcookbook.splitjoin.aggregatetimeouts;
+package org.camelcookbook.splitjoin.aggregateparallel;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.camelcookbook.splitjoin.aggregateparallel.AggregatorCompletionTimeoutParallelRouteBuilder;
 import org.junit.Test;
 
 import java.util.Arrays;

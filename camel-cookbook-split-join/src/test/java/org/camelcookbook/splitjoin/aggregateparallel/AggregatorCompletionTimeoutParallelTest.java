@@ -1,18 +1,19 @@
 package org.camelcookbook.splitjoin.aggregateparallel;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.splitjoin.aggregateparallel.AggregatorCompletionTimeoutParallelRouteBuilder;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Message;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Test;
+
 /**
  * Test class that demonstrates a aggregation using timeouts with parallel processing of the results.
+ *
  * @author jkorab
  */
 public class AggregatorCompletionTimeoutParallelTest extends CamelTestSupport {
@@ -40,12 +41,27 @@ public class AggregatorCompletionTimeoutParallelTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
 
-        List<Exchange> receivedExchanges = mockOut.getReceivedExchanges();
-        Set<String> odd = receivedExchanges.get(0).getIn().getBody(Set.class);
-        assertTrue(odd.containsAll(Arrays.asList("One", "Three", "Five", "Seven", "Nine")));
+        final List<Exchange> receivedExchanges = mockOut.getReceivedExchanges();
+        final Message message1 = receivedExchanges.get(0).getIn();
+        final Message message2 = receivedExchanges.get(1).getIn();
 
-        Set<String> even = receivedExchanges.get(1).getIn().getBody(Set.class);
-        assertTrue(even.containsAll(Arrays.asList("Two", "Four", "Six", "Eight", "Ten")));
+        log.info("exchange(0).header.group = {}", message1.getHeader("group"));
+        log.info("exchange(0).property.CamelAggregatedCompletedBy = {}", message1.getExchange().getProperty("CamelAggregatedCompletedBy"));
+        log.info("exchange(1).header.group = {}", message2.getHeader("group"));
+        log.info("exchange(1).property.CamelAggregatedCompletedBy = {}", message2.getExchange().getProperty("CamelAggregatedCompletedBy"));
+
+        final List<String> odd = Arrays.asList("One", "Three", "Five", "Seven", "Nine");
+        final List<String> even = Arrays.asList("Two", "Four", "Six", "Eight", "Ten");
+
+        final Set<String> set1 = message1.getBody(Set.class);
+        final Set<String> set2 = message2.getBody(Set.class);
+
+        if ("odd".equals(message1.getHeader("group"))) {
+            assertTrue(set1.containsAll(odd));
+            assertTrue(set2.containsAll(even));
+        } else {
+            assertTrue(set1.containsAll(even));
+            assertTrue(set2.containsAll(odd));
+        }
     }
-
 }

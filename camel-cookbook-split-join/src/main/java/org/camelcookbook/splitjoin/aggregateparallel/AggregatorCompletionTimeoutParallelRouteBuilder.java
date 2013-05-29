@@ -1,11 +1,11 @@
-package org.camelcookbook.splitjoin.aggregatetimeouts;
+package org.camelcookbook.splitjoin.aggregateparallel;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
 /**
-* @author jkorab
-*/
+ * @author jkorab
+ */
 class AggregatorCompletionTimeoutParallelRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

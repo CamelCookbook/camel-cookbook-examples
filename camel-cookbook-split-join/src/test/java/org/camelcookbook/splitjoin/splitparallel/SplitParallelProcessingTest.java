@@ -1,4 +1,4 @@
-package org.camelcookbook.splitjoin.parallel;
+package org.camelcookbook.splitjoin.splitparallel;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Test class that demonstrates exception handling when processing split messages in parallel.
+ * Test class that demonstrates split message processing in parallel.
  * @author jkorab
  */
-public class SplitParallelProcessingTimeoutTest extends CamelTestSupport {
+public class SplitParallelProcessingTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SplitParallelProcessingTimeoutRouteBuilder();
+        return new SplitParallelProcessingRouteBuilder();
     }
 
     @Test
@@ -26,25 +26,17 @@ public class SplitParallelProcessingTimeoutTest extends CamelTestSupport {
         for (int i = 0; i < fragmentCount; i++) {
             messageFragments.add("fragment" + i);
         }
-
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
-        mockSplit.setExpectedMessageCount(fragmentCount - 1);
-
-        ArrayList<String> expectedFragments = new ArrayList<String>(messageFragments);
-        int indexDelayed = 20;
-        expectedFragments.remove(indexDelayed);
-        mockSplit.expectedBodiesReceivedInAnyOrder(expectedFragments);
-
-        MockEndpoint mockDelayed = getMockEndpoint("mock:delayed");
-        mockDelayed.setExpectedMessageCount(1);
+        mockSplit.setExpectedMessageCount(fragmentCount);
+        mockSplit.expectedBodiesReceivedInAnyOrder(messageFragments);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
-
+        mockOut.message(0).body().isEqualTo(messageFragments);
 
         template.sendBody("direct:in", messageFragments);
-        assertMockEndpointsSatisfied();
 
+        assertMockEndpointsSatisfied();
     }
 
 }

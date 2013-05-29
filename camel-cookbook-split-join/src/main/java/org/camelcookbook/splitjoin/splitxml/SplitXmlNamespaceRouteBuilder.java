@@ -1,4 +1,4 @@
-package org.camelcookbook.splitjoin.xml;
+package org.camelcookbook.splitjoin.splitxml;
 
 import org.apache.camel.builder.RouteBuilder;
 

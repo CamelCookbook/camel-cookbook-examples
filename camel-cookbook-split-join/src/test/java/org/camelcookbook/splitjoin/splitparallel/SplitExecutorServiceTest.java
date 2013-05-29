@@ -1,4 +1,4 @@
-package org.camelcookbook.splitjoin.parallel;
+package org.camelcookbook.splitjoin.splitparallel;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -12,11 +12,11 @@ import java.util.List;
  * Test class that demonstrates split message processing in parallel.
  * @author jkorab
  */
-public class SplitParallelProcessingExecutorServiceTest extends CamelTestSupport {
+public class SplitExecutorServiceTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SplitParallelProcessingExecutorServiceRouteBuilder();
+        return new SplitExecutorServiceRouteBuilder();
     }
 
     @Test
@@ -28,7 +28,7 @@ public class SplitParallelProcessingExecutorServiceTest extends CamelTestSupport
         }
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
         mockSplit.setExpectedMessageCount(fragmentCount);
-        mockSplit.expectedBodiesReceived(messageFragments);
+        mockSplit.expectedBodiesReceivedInAnyOrder(messageFragments);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);

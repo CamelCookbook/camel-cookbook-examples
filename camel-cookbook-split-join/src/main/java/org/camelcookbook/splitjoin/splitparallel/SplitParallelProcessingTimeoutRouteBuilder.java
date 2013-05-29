@@ -1,4 +1,4 @@
-package org.camelcookbook.splitjoin.parallel;
+package org.camelcookbook.splitjoin.splitparallel;
 
 import org.apache.camel.builder.RouteBuilder;
 

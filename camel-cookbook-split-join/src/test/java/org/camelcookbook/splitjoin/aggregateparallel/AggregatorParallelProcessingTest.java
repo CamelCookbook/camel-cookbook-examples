@@ -16,11 +16,11 @@ import org.junit.Test;
  *
  * @author jkorab
  */
-public class AggregatorCompletionTimeoutParallelTest extends CamelTestSupport {
+public class AggregatorParallelProcessingTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregatorCompletionTimeoutParallelRouteBuilder();
+        return new AggregatorParallelProcessingRouteBuilder();
     }
 
     @Test

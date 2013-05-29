@@ -28,15 +28,21 @@
           class="org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <threadPool id="customPool" poolSize="20" threadName="pool"/>
+
         <route>
             <from uri="direct:in"/>
             <aggregate strategyRef="setAggregationStrategy"
                        completionSize="10"
-                       completionTimeout="1000"
-                       parallelProcessing="true">
+                       completionTimeout="400"
+                       executorServiceRef="customPool">
                 <correlationExpression>
                     <simple>${headers.group}</simple>
                 </correlationExpression>
+                <delay>
+                    <constant>500</constant>
+                </delay>
+                <log message="${threadName} - processing output"/>
                 <to uri="mock:out"/>
             </aggregate>
         </route>

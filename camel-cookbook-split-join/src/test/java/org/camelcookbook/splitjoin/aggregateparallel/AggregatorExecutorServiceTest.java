@@ -1,28 +1,26 @@
 package org.camelcookbook.splitjoin.aggregateparallel;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Message;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.camel.Exchange;
-import org.apache.camel.Message;
-import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
-import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Test class that demonstrates a aggregation using timeouts with parallel processing of the results.
  *
  * @author jkorab
  */
-public class AggregatorCompletionTimeoutParallelSpringTest extends CamelSpringTestSupport {
+public class AggregatorExecutorServiceTest extends CamelTestSupport {
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregatorCompletionTimeoutParallel-context.xml");
+    public RouteBuilder createRouteBuilder() {
+        return new AggregatorExecutorServiceRouteBuilder();
     }
 
     @Test

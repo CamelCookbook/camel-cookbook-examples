@@ -1,4 +1,4 @@
-package org.camelcookbook.splitjoin.parallel;
+package org.camelcookbook.splitjoin.splitparallel;
 
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Test class that demonstrates split message processing in parallel.
+ * Test class that demonstrates split message processing in parallel through a custom executor service.
  *
  * @author jkorab
  */
-public class SplitParallelProcessingSpringTest extends CamelSpringTestSupport {
+public class SplitExecutorServiceSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/splitParallelProcessing-context.xml");
+        return new ClassPathXmlApplicationContext(
+                "/META-INF/spring/splitExecutorService-context.xml");
     }
 
     @Test

@@ -1,4 +1,4 @@
-package org.camelcookbook.splitjoin.xml;
+package org.camelcookbook.splitjoin.splitxml;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -9,14 +9,14 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 /**
- * Demonstrates the splitting of Xml files through XPath expression using Namespaces.
+ * Demonstrates the splitting of Xml files through XPath expression.
  *
  * This test is intended to be run out of Maven, as it references the target directory.
  */
-public class SplitXmlNamespaceTest extends CamelTestSupport {
+public class SplitXmlTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitXmlNamespaceRouteBuilder();
+        return new SplitXmlRouteBuilder();
     }
 
     @Test
@@ -26,7 +26,7 @@ public class SplitXmlNamespaceTest extends CamelTestSupport {
         mockOut.expectedBodiesReceived("Scott Cranton", "Jakub Korab");
 
 
-        String filename = "target/classes/xml/books-ns.xml";
+        String filename = "target/classes/xml/books.xml";
         assertFileExists(filename);
         InputStream booksStream = new FileInputStream(filename);
 

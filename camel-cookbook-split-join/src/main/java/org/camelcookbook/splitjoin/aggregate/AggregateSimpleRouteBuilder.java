@@ -5,7 +5,7 @@ import org.apache.camel.builder.RouteBuilder;
 /**
 * @author jkorab
 */
-class AggregatorSimpleRouteBuilder extends RouteBuilder {
+class AggregateSimpleRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")

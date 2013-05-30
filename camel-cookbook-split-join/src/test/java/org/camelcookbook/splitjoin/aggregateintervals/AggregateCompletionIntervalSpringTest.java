@@ -1,8 +1,6 @@
 package org.camelcookbook.splitjoin.aggregateintervals;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -12,12 +10,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Test class that demonstrates a aggregation using completion intervals.
  * @author jkorab
  */
-public class AggregatorCompletionIntervalSpringTest extends CamelSpringTestSupport {
+public class AggregateCompletionIntervalSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregatorCompletionInterval-context.xml");
+                "/META-INF/spring/aggregateCompletionInterval-context.xml");
     }
 
     @Test

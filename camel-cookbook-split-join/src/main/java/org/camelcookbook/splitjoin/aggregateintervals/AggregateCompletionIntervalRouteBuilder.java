@@ -1,18 +1,20 @@
-package org.camelcookbook.splitjoin.aggregate;
+package org.camelcookbook.splitjoin.aggregateintervals;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
 /**
 * @author jkorab
 */
-class AggregatorCompletionConditionRouteBuilder extends RouteBuilder {
+class AggregateCompletionIntervalRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
             .log("${threadName} - ${body}")
             .aggregate(header("group"), new SetAggregationStrategy())
-                    .completionPredicate(simple("${body.size} == 5"))
+                    .completionSize(10).completionInterval(400)
                 .log("${threadName} - out")
+                .delay(500)
                 .to("mock:out")
             .end();
     }

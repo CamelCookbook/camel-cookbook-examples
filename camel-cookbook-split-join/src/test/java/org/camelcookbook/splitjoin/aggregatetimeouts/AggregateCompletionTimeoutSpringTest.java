@@ -1,4 +1,4 @@
-package org.camelcookbook.splitjoin.aggregate;
+package org.camelcookbook.splitjoin.aggregatetimeouts;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -12,14 +12,15 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Test class that demonstrates a use of completion conditions with aggregation.
+ * Test class that demonstrates a aggregation using timeouts.
  * @author jkorab
  */
-public class AggregatorCompletionConditionSpringTest extends CamelSpringTestSupport {
+public class AggregateCompletionTimeoutSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/aggregatorCompletionCondition-context.xml");
+        return new ClassPathXmlApplicationContext(
+                "/META-INF/spring/aggregateCompletionTimeout-context.xml");
     }
 
     @Test

@@ -14,11 +14,11 @@ import java.util.Set;
  * Test class that demonstrates a aggregation using timeouts.
  * @author jkorab
  */
-public class AggregatorCompletionTimeoutTest extends CamelTestSupport {
+public class AggregateCompletionTimeoutTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregatorCompletionTimeoutRouteBuilder();
+        return new AggregateCompletionTimeoutRouteBuilder();
     }
 
     @Test

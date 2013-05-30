@@ -1,9 +1,5 @@
 package org.camelcookbook.splitjoin.aggregateparallel;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -12,17 +8,21 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Test class that demonstrates a aggregation using timeouts with parallel processing of the results.
  *
  * @author jkorab
  */
-public class AggregatorParallelProcessingSpringTest extends CamelSpringTestSupport {
+public class AggregateExecutorServiceSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregatorParallelProcessing-context.xml");
+                "/META-INF/spring/aggregateExecutorService-context.xml");
     }
 
     @Test

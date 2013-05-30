@@ -1,11 +1,10 @@
 package org.camelcookbook.splitjoin.aggregate;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.*;
 
@@ -13,11 +12,11 @@ import java.util.*;
  * Test class that demonstrates a use of a dynamic completion size with aggregation.
  * @author jkorab
  */
-public class AggregatorDynamicCompletionSizeSpringTest extends CamelSpringTestSupport {
+public class AggregateDynamicCompletionSizeTest extends CamelTestSupport {
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/aggregatorDynamicCompletionSize-context.xml");
+    public RouteBuilder createRouteBuilder() {
+        return new AggregateDynamicCompletionSizeRouteBuilder();
     }
 
     @Test

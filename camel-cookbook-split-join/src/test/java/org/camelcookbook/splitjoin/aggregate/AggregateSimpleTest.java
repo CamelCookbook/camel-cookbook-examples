@@ -14,11 +14,11 @@ import java.util.Set;
  * Test class that demonstrates a simple example of aggregation.
  * @author jkorab
  */
-public class AggregatorSimpleTest extends CamelTestSupport {
+public class AggregateSimpleTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregatorSimpleRouteBuilder();
+        return new AggregateSimpleRouteBuilder();
     }
 
     @Test

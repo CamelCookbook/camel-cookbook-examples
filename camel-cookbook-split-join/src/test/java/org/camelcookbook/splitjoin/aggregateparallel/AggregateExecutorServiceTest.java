@@ -2,11 +2,10 @@ package org.camelcookbook.splitjoin.aggregateparallel;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,12 +16,11 @@ import java.util.Set;
  *
  * @author jkorab
  */
-public class AggregatorExecutorServiceSpringTest extends CamelSpringTestSupport {
+public class AggregateExecutorServiceTest extends CamelTestSupport {
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregatorExecutorService-context.xml");
+    public RouteBuilder createRouteBuilder() {
+        return new AggregateExecutorServiceRouteBuilder();
     }
 
     @Test

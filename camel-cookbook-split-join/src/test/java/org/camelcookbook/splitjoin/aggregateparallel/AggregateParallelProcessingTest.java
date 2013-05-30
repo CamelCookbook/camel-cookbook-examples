@@ -16,11 +16,11 @@ import org.junit.Test;
  *
  * @author jkorab
  */
-public class AggregatorParallelProcessingTest extends CamelTestSupport {
+public class AggregateParallelProcessingTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregatorParallelProcessingRouteBuilder();
+        return new AggregateParallelProcessingRouteBuilder();
     }
 
     @Test

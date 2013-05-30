@@ -1,24 +1,25 @@
 package org.camelcookbook.splitjoin.aggregate;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Test class that demonstrates a use of completion conditions with aggregation.
+ * Test class that demonstrates a simple example of aggregation.
  * @author jkorab
  */
-public class AggregatorCompletionConditionTest extends CamelTestSupport {
+public class AggregateSimpleSpringTest extends CamelSpringTestSupport {
 
     @Override
-    public RouteBuilder createRouteBuilder() {
-        return new AggregatorCompletionConditionRouteBuilder();
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("/META-INF/spring/aggregateSimple-context.xml");
     }
 
     @Test
@@ -46,5 +47,4 @@ public class AggregatorCompletionConditionTest extends CamelTestSupport {
         Set<String> even = receivedExchanges.get(1).getIn().getBody(Set.class);
         assertTrue(even.containsAll(Arrays.asList("Two", "Four", "Six", "Eight", "Ten")));
     }
-
 }

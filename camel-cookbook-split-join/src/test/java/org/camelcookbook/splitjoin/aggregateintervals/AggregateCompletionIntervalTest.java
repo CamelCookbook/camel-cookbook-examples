@@ -3,18 +3,17 @@ package org.camelcookbook.splitjoin.aggregateintervals;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.splitjoin.aggregateintervals.AggregatorCompletionIntervalRouteBuilder;
 import org.junit.Test;
 
 /**
  * Test class that demonstrates a aggregation using completion intervals.
  * @author jkorab
  */
-public class AggregatorCompletionIntervalTest extends CamelTestSupport {
+public class AggregateCompletionIntervalTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregatorCompletionIntervalRouteBuilder();
+        return new AggregateCompletionIntervalRouteBuilder();
     }
 
     @Test

@@ -1,20 +1,18 @@
-package org.camelcookbook.splitjoin.aggregatetimeouts;
+package org.camelcookbook.splitjoin.aggregate;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
 /**
 * @author jkorab
 */
-class AggregatorCompletionTimeoutRouteBuilder extends RouteBuilder {
+class AggregateDynamicCompletionSizeRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
             .log("${threadName} - ${body}")
             .aggregate(header("group"), new SetAggregationStrategy())
-                    .completionSize(10).completionTimeout(1000)
+                    .completionSize(header("batchSize"))
                 .log("${threadName} - out")
-                .delay(500)
                 .to("mock:out")
             .end();
     }

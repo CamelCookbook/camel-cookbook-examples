@@ -18,28 +18,29 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <threadPoolProfile id="myThrottler"
-                           poolSize="5"
-                           maxPoolSize="20"
-                           maxQueueSize="1000"
-                           rejectedPolicy="CallerRuns"/>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <threadPoolProfile id="myThrottler"
+                       poolSize="5"
+                       maxPoolSize="20"
+                       maxQueueSize="1000"
+                       rejectedPolicy="CallerRuns"/>
 
-        <route>
-            <from uri="direct:start"/>
-            <to uri="mock:unthrottled"/>
-            <throttle timePeriodMillis="10000" asyncDelayed="true" executorServiceRef="myThrottler">
-                <constant>5</constant>
-                <to uri="mock:throttled"/>
-            </throttle>
-            <to uri="mock:after"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:start"/>
+      <to uri="mock:unthrottled"/>
+      <throttle timePeriodMillis="10000" asyncDelayed="true" executorServiceRef="myThrottler">
+        <constant>5</constant>
+        <to uri="mock:throttled"/>
+      </throttle>
+      <to uri="mock:after"/>
+    </route>
+  </camelContext>
 
 </beans>

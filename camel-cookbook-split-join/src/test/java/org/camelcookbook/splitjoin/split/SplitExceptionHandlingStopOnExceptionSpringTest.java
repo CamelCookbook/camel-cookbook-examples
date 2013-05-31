@@ -41,7 +41,7 @@ public class SplitExceptionHandlingStopOnExceptionSpringTest extends CamelSpring
 
     @Test
     public void testNoElementsProcessedAfterException() throws Exception {
-        String[] array = new String[] {"one", "two", "three"};
+        String[] array = new String[]{"one", "two", "three"};
 
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
         mockSplit.expectedMessageCount(1);
@@ -58,7 +58,5 @@ public class SplitExceptionHandlingStopOnExceptionSpringTest extends CamelSpring
             log.info(ex.getMessage());
             assertMockEndpointsSatisfied();
         }
-
     }
-
 }

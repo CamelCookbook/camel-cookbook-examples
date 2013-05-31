@@ -18,44 +18,45 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="messageRouter" class="org.camelcookbook.routing.recipientlist.MessageRouter"/>
+  <bean id="messageRouter" class="org.camelcookbook.routing.recipientlist.MessageRouter"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:start"/>
-            <setHeader headerName="endpointsToBeTriggered">
-                <method ref="messageRouter" method="getEndpointsToRouteMessageTo"/>
-            </setHeader>
-            <recipientList>
-                <header>endpointsToBeTriggered</header>
-            </recipientList>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:start"/>
+      <setHeader headerName="endpointsToBeTriggered">
+        <method ref="messageRouter" method="getEndpointsToRouteMessageTo"/>
+      </setHeader>
+      <recipientList>
+        <header>endpointsToBeTriggered</header>
+      </recipientList>
+    </route>
 
-        <route>
-            <from uri="direct:order.priority"/>
-            <to uri="mock:order.priority"/>
-        </route>
+    <route>
+      <from uri="direct:order.priority"/>
+      <to uri="mock:order.priority"/>
+    </route>
 
-        <route>
-            <from uri="direct:order.normal"/>
-            <to uri="mock:order.normal"/>
-        </route>
+    <route>
+      <from uri="direct:order.normal"/>
+      <to uri="mock:order.normal"/>
+    </route>
 
-        <route>
-            <from uri="direct:billing"/>
-            <to uri="mock:billing"/>
-        </route>
+    <route>
+      <from uri="direct:billing"/>
+      <to uri="mock:billing"/>
+    </route>
 
-        <route>
-            <from uri="direct:unrecognized"/>
-            <to uri="mock:unrecognized"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:unrecognized"/>
+      <to uri="mock:unrecognized"/>
+    </route>
+  </camelContext>
 
 </beans>

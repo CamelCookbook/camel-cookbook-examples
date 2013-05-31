@@ -24,13 +24,13 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:start"/>
-            <transform>
-                <simple>Hello ${body}</simple>
-            </transform>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:start"/>
+      <transform>
+        <simple>Hello ${body}</simple>
+      </transform>
+    </route>
+  </camelContext>
 
 </beans>

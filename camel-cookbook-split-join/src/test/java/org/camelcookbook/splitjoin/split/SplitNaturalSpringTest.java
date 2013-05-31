@@ -37,7 +37,7 @@ public class SplitNaturalSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testSplitArray() throws Exception {
-        String[] array = new String[] {"one", "two", "three"};
+        String[] array = new String[]{"one", "two", "three"};
 
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
         mockSplit.expectedMessageCount(3);
@@ -92,5 +92,4 @@ public class SplitNaturalSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

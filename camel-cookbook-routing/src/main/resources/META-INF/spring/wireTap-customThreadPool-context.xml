@@ -17,31 +17,32 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext id="routing.wireTap.customThreadPool" xmlns="http://camel.apache.org/schema/spring">
+  <camelContext id="routing.wireTap.customThreadPool" xmlns="http://camel.apache.org/schema/spring">
 
-        <threadPool id="oneThreadOnly" threadName="JustMeDoingTheTapping"
-                    poolSize="1" maxPoolSize="1" maxQueueSize="100"/>
+    <threadPool id="oneThreadOnly" threadName="JustMeDoingTheTapping"
+                poolSize="1" maxPoolSize="1" maxQueueSize="100"/>
 
-        <route id="routing.wireTap.simple">
-            <from uri="direct:start"/>
-            <wireTap uri="direct:tapped" executorServiceRef="oneThreadOnly"/>
-            <to uri="mock:out"/>
-        </route>
+    <route id="routing.wireTap.simple">
+      <from uri="direct:start"/>
+      <wireTap uri="direct:tapped" executorServiceRef="oneThreadOnly"/>
+      <to uri="mock:out"/>
+    </route>
 
-        <route id="routing.wireTap.tapped">
-            <from uri="direct:tapped"/>
-            <setHeader headerName="threadName">
-                <simple>${threadName}</simple>
-            </setHeader>
-            <to uri="mock:tapped"/>
-        </route>
+    <route id="routing.wireTap.tapped">
+      <from uri="direct:tapped"/>
+      <setHeader headerName="threadName">
+        <simple>${threadName}</simple>
+      </setHeader>
+      <to uri="mock:tapped"/>
+    </route>
 
-    </camelContext>
+  </camelContext>
 
 </beans>

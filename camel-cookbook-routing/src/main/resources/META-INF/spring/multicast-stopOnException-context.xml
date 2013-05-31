@@ -17,52 +17,53 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="illegalArg" class="java.lang.IllegalArgumentException">
-        <constructor-arg value="something went horribly wrong"/>
-    </bean>
+  <bean id="illegalArg" class="java.lang.IllegalArgumentException">
+    <constructor-arg value="something went horribly wrong"/>
+  </bean>
 
-    <camelContext id="routing.multicast.stopOnException" xmlns="http://camel.apache.org/schema/spring">
+  <camelContext id="routing.multicast.stopOnException" xmlns="http://camel.apache.org/schema/spring">
 
-        <route>
-            <from uri="direct:start"/>
-            <multicast stopOnException="true">
-                <to uri="direct:first"/>
-                <to uri="direct:second"/>
-            </multicast>
-            <to uri="mock:afterMulticast"/>
-            <transform>
-                <simple>${body}</simple>
-            </transform>
-        </route>
+    <route>
+      <from uri="direct:start"/>
+      <multicast stopOnException="true">
+        <to uri="direct:first"/>
+        <to uri="direct:second"/>
+      </multicast>
+      <to uri="mock:afterMulticast"/>
+      <transform>
+        <simple>${body}</simple>
+      </transform>
+    </route>
 
-        <route>
-            <from uri="direct:first"/>
-            <onException>
-                <exception>java.lang.IllegalArgumentException</exception>
-                <handled>
-                    <constant>true</constant>
-                </handled>
-                <log message="caught ${exception}"/>
-                <to uri="mock:exceptionHandler"/>
-                <transform>
-                    <constant>Oops</constant>
-                </transform>
-            </onException>
-            <to uri="mock:first"/>
-            <throwException ref="illegalArg"/>
-        </route>
+    <route>
+      <from uri="direct:first"/>
+      <onException>
+        <exception>java.lang.IllegalArgumentException</exception>
+        <handled>
+          <constant>true</constant>
+        </handled>
+        <log message="caught ${exception}"/>
+        <to uri="mock:exceptionHandler"/>
+        <transform>
+          <constant>Oops</constant>
+        </transform>
+      </onException>
+      <to uri="mock:first"/>
+      <throwException ref="illegalArg"/>
+    </route>
 
-        <route>
-            <from uri="direct:second"/>
-            <to uri="mock:second"/>
-        </route>
+    <route>
+      <from uri="direct:second"/>
+      <to uri="mock:second"/>
+    </route>
 
-    </camelContext>
+  </camelContext>
 
 </beans>

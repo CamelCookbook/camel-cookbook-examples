@@ -19,7 +19,6 @@ package org.camelcookbook.transformation.json;
 
 import org.apache.camel.builder.RouteBuilder;
 
-
 public class JsonRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

@@ -19,7 +19,6 @@ package org.camelcookbook.structuringroutes.seda;
 
 import org.apache.camel.builder.RouteBuilder;
 
-
 public class SedaTimerRouteBuilder extends RouteBuilder {
     public final static int TIMER_PERIOD = 200;
 

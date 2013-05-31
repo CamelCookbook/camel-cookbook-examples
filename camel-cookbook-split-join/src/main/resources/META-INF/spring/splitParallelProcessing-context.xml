@@ -18,22 +18,23 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:in"/>
-            <split parallelProcessing="true">
-                <simple>${body}</simple>
-                <log message="Processing message[${property.CamelSplitIndex}]"/>
-                <to uri="mock:split"/>
-            </split>
-            <to uri="mock:out"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:in"/>
+      <split parallelProcessing="true">
+        <simple>${body}</simple>
+        <log message="Processing message[${property.CamelSplitIndex}]"/>
+        <to uri="mock:split"/>
+      </split>
+      <to uri="mock:out"/>
+    </route>
+  </camelContext>
 
 </beans>

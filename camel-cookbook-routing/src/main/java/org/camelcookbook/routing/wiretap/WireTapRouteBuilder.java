@@ -30,5 +30,4 @@ public class WireTapRouteBuilder extends RouteBuilder {
             .wireTap("mock:tapped")
             .to("mock:out");
     }
-
 }

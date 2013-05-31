@@ -23,10 +23,7 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author jkorab
- */
-public class SetAggregationStrategy implements AggregationStrategy{
+public class SetAggregationStrategy implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
         String body = newExchange.getIn().getBody(String.class);
@@ -35,7 +32,7 @@ public class SetAggregationStrategy implements AggregationStrategy{
             set.add(body);
             newExchange.getIn().setBody(set);
             return newExchange;
-        }  else {
+        } else {
             Set<String> set = oldExchange.getIn().getBody(Set.class);
             set.add(body);
             return oldExchange;

@@ -25,11 +25,11 @@ public class ContentBasedRouterRouteBuilder extends RouteBuilder {
         from("direct:start")
             .choice()
                 .when().simple("${body} contains 'Camel'")
-                .to("mock:camel")
-                .log("Camel ${body}")
-            .otherwise()
-                .to("mock:other")
-                .log("Other ${body}")
+                    .to("mock:camel")
+                    .log("Camel ${body}")
+                .otherwise()
+                    .to("mock:other")
+                    .log("Other ${body}")
             .end()
             .log("Message ${body}");
     }

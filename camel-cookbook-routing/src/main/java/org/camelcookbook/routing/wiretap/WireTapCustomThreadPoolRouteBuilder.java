@@ -42,5 +42,4 @@ public class WireTapCustomThreadPoolRouteBuilder extends RouteBuilder {
             .setHeader("threadName").simple("${threadName}")
             .to("mock:tapped");
     }
-
 }

@@ -18,27 +18,29 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:start"/>
-            <choice>
-                <when>
-                    <simple>${body} contains 'Camel'</simple>
-                    <to uri="mock:camel"/>
-                    <log message="Camel ${body}"/>
-                </when>
-                <otherwise>
-                    <to uri="mock:other"/>
-                    <log message="Other ${body}"/>
-                </otherwise>
-            </choice>
-            <log message="Message ${body}"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:start"/>
+      <choice>
+        <when>
+          <simple>${body} contains 'Camel'</simple>
+          <to uri="mock:camel"/>
+          <log message="Camel ${body}"/>
+        </when>
+        <otherwise>
+          <to uri="mock:other"/>
+          <log message="Other ${body}"/>
+        </otherwise>
+      </choice>
+      <log message="Message ${body}"/>
+    </route>
+  </camelContext>
 
 </beans>

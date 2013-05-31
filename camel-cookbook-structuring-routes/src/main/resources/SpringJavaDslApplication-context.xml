@@ -25,12 +25,12 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="mylogger" class="org.apache.camel.component.log.LogComponent"/>
-    <bean id="logMessageOnTimerEvent"
-          class="org.camelcookbook.structuringroutes.LogMessageOnTimerEventRouteBuilder"/>
+  <bean id="mylogger" class="org.apache.camel.component.log.LogComponent"/>
+  <bean id="logMessageOnTimerEvent"
+        class="org.camelcookbook.structuringroutes.LogMessageOnTimerEventRouteBuilder"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <routeBuilder ref="logMessageOnTimerEvent"/>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <routeBuilder ref="logMessageOnTimerEvent"/>
+  </camelContext>
 
 </beans>

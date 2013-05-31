@@ -22,9 +22,6 @@ import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
 import java.util.concurrent.Executors;
 
-/**
- * @author jkorab
- */
 class AggregateExecutorServiceRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

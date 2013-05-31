@@ -27,7 +27,6 @@ import java.util.List;
 
 /**
  * Test class that demonstrates exception handling when processing split messages in parallel.
- * @author jkorab
  */
 public class SplitParallelProcessingExceptionHandlingTest extends CamelTestSupport {
 
@@ -57,7 +56,5 @@ public class SplitParallelProcessingExceptionHandlingTest extends CamelTestSuppo
         } catch (Exception e) {
             assertMockEndpointsSatisfied();
         }
-
     }
-
 }

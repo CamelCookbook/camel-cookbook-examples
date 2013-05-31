@@ -18,32 +18,34 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="flakyProcessor" class="org.camelcookbook.error.logging.FlakyProcessor"/>
+  <bean id="flakyProcessor" class="org.camelcookbook.error.logging.FlakyProcessor"/>
 
-    <camelContext errorHandlerRef="loggingErrorHandler" xmlns="http://camel.apache.org/schema/spring">
-        <errorHandler id="loggingErrorHandler"
-                      type="LoggingErrorHandler"
-                      logName="MyLoggingErrorHandler"/>
-        <errorHandler id="myRouteSpecificLoggingErrorHandler"
-                      type="LoggingErrorHandler"
-                      logName="MyRouteSpecificLogging"/>
+  <camelContext errorHandlerRef="loggingErrorHandler" xmlns="http://camel.apache.org/schema/spring">
+    <errorHandler id="loggingErrorHandler"
+                  type="LoggingErrorHandler"
+                  logName="MyLoggingErrorHandler"/>
+    <errorHandler id="myRouteSpecificLoggingErrorHandler"
+                  type="LoggingErrorHandler"
+                  logName="MyRouteSpecificLogging"/>
 
-        <route>
-            <from uri="direct:start"/>
-            <bean ref="flakyProcessor"/>
-            <to uri="mock:result"/>
-        </route>
+    <route>
+      <from uri="direct:start"/>
+      <bean ref="flakyProcessor"/>
+      <to uri="mock:result"/>
+    </route>
 
-        <route errorHandlerRef="myRouteSpecificLoggingErrorHandler">
-            <from uri="direct:routeSpecific"/>
-            <bean ref="flakyProcessor"/>
-            <to uri="mock:result"/>
-        </route>
-    </camelContext>
+    <route errorHandlerRef="myRouteSpecificLoggingErrorHandler">
+      <from uri="direct:routeSpecific"/>
+      <bean ref="flakyProcessor"/>
+      <to uri="mock:result"/>
+    </route>
+  </camelContext>
+
 </beans>

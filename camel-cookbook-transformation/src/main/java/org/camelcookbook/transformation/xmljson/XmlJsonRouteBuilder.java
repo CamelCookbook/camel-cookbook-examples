@@ -22,7 +22,6 @@ import java.util.Arrays;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.xmljson.XmlJsonDataFormat;
 
-
 public class XmlJsonRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

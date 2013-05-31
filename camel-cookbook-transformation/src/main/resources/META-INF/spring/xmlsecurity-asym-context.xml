@@ -25,36 +25,36 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camel:keyStoreParameters id="keyStoreParams" resource="keystore.jks" password="camelstorepass"/>
-    <camel:keyStoreParameters id="trustStoreParams" resource="truststore.jks" password="camelstorepass"/>
+  <camel:keyStoreParameters id="keyStoreParams" resource="keystore.jks" password="camelstorepass"/>
+  <camel:keyStoreParameters id="trustStoreParams" resource="truststore.jks" password="camelstorepass"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:marshal"/>
-            <marshal>
-                <secureXML secureTag="/booksignings/store/address"
-                           secureTagContents="true"
-                           xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
-                           keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
-                           recipientKeyAlias="scott"
-                           keyOrTrustStoreParametersId="trustStoreParams"/>
-            </marshal>
-            <to uri="mock:marshalResult"/>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:marshal"/>
+      <marshal>
+        <secureXML secureTag="/booksignings/store/address"
+                   secureTagContents="true"
+                   xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
+                   keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
+                   recipientKeyAlias="scott"
+                   keyOrTrustStoreParametersId="trustStoreParams"/>
+      </marshal>
+      <to uri="mock:marshalResult"/>
+    </route>
 
-        <route>
-            <from uri="direct:unmarshal"/>
-            <unmarshal>
-                <secureXML secureTag="/booksignings/store/address"
-                           secureTagContents="true"
-                           xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
-                           keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
-                           recipientKeyAlias="scott"
-                           keyOrTrustStoreParametersId="keyStoreParams"
-                           keyPassword="camelkeypass"/>
-            </unmarshal>
-            <to uri="mock:unmarshalResult"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:unmarshal"/>
+      <unmarshal>
+        <secureXML secureTag="/booksignings/store/address"
+                   secureTagContents="true"
+                   xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
+                   keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
+                   recipientKeyAlias="scott"
+                   keyOrTrustStoreParametersId="keyStoreParams"
+                   keyPassword="camelkeypass"/>
+      </unmarshal>
+      <to uri="mock:unmarshalResult"/>
+    </route>
+  </camelContext>
 
 </beans>

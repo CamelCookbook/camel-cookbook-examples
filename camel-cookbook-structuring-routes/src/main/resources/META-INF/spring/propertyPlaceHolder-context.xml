@@ -25,16 +25,16 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <propertyPlaceholder id="properties" location="classpath:placeholder.properties"/>
-        <route>
-            <from uri="{{start.endpoint}}"/>
-            <transform>
-                <simple>{{transform.message}}: ${body}</simple>
-            </transform>
-            <log message="Set message to ${body}"/>
-            <to uri="{{end.endpoint}}"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <propertyPlaceholder id="properties" location="classpath:placeholder.properties"/>
+    <route>
+      <from uri="{{start.endpoint}}"/>
+      <transform>
+        <simple>{{transform.message}}: ${body}</simple>
+      </transform>
+      <log message="Set message to ${body}"/>
+      <to uri="{{end.endpoint}}"/>
+    </route>
+  </camelContext>
 
 </beans>

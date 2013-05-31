@@ -27,7 +27,6 @@ import java.util.List;
 
 /**
  * Test class that demonstrates exception handling when processing split messages in parallel.
- * @author jkorab
  */
 public class SplitParallelProcessingTimeoutTest extends CamelTestSupport {
 
@@ -61,7 +60,5 @@ public class SplitParallelProcessingTimeoutTest extends CamelTestSupport {
 
         template.sendBody("direct:in", messageFragments);
         assertMockEndpointsSatisfied();
-
     }
-
 }

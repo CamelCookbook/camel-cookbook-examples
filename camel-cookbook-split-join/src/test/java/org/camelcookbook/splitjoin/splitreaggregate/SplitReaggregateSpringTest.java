@@ -64,13 +64,11 @@ public class SplitReaggregateSpringTest extends CamelSpringTestSupport {
         String category = in.getHeader("category", String.class);
         if (category.equals("Tech")) {
             assertTrue(books.containsAll(Arrays.asList("Camel Enterprise Integration Cookbook")));
-        } else if (category.equals("Cooking")){
+        } else if (category.equals("Cooking")) {
             assertTrue(books.containsAll(Arrays.asList("Camel Cookbook",
                     "Double decandence with extra cream", "Cooking with Butter")));
         } else {
             fail();
         }
     }
-
-
 }

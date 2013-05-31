@@ -30,7 +30,6 @@ import java.util.Set;
 
 /**
  * Test class that demonstrates a use of completion conditions with aggregation.
- * @author jkorab
  */
 public class AggregateCompletionConditionSpringTest extends CamelSpringTestSupport {
 
@@ -64,5 +63,4 @@ public class AggregateCompletionConditionSpringTest extends CamelSpringTestSuppo
         Set<String> even = receivedExchanges.get(1).getIn().getBody(Set.class);
         assertTrue(even.containsAll(Arrays.asList("Two", "Four", "Six", "Eight", "Ten")));
     }
-
 }

@@ -28,10 +28,10 @@ import org.apache.commons.lang.StringUtils;
 /**
  * Processor class that takes a line of CSV as an input on the Exchange:
  * <ol>
- *     <li>gets the first field,</li>
- *     <li>parses it according to a country-specific date format</li>
- *     <li>sets the CamelFileName header to the date the file should be written to</li>
- *     <li>changes the first field to the universal one.</li>
+ *   <li>gets the first field,</li>
+ *   <li>parses it according to a country-specific date format</li>
+ *   <li>sets the CamelFileName header to the date the file should be written to</li>
+ *   <li>changes the first field to the universal one.</li>
  * </ol>
  */
 public class OrderFileNameProcessor implements Processor {

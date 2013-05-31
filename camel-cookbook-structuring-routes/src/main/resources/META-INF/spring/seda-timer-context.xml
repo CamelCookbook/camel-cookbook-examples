@@ -25,21 +25,21 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="longRunningProcessor" class="org.camelcookbook.structuringroutes.seda.LongRunningProcessor"/>
+  <bean id="longRunningProcessor" class="org.camelcookbook.structuringroutes.seda.LongRunningProcessor"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="timer:ping?period=200"/>
-            <transform>
-                <constant>Ping</constant>
-            </transform>
-            <to uri="seda:longRunningPhase"/>
-        </route>
-        <route>
-            <from uri="seda:longRunningPhase?concurrentConsumers=15"/>
-            <process ref="longRunningProcessor"/>
-            <to uri="mock:out"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="timer:ping?period=200"/>
+      <transform>
+        <constant>Ping</constant>
+      </transform>
+      <to uri="seda:longRunningPhase"/>
+    </route>
+    <route>
+      <from uri="seda:longRunningPhase?concurrentConsumers=15"/>
+      <process ref="longRunningProcessor"/>
+      <to uri="mock:out"/>
+    </route>
+  </camelContext>
 
 </beans>

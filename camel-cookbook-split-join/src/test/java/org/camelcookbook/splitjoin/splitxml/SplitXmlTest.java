@@ -27,7 +27,7 @@ import java.io.InputStream;
 
 /**
  * Demonstrates the splitting of Xml files through XPath expression.
- *
+ * <p/>
  * This test is intended to be run out of Maven, as it references the target directory.
  */
 public class SplitXmlTest extends CamelTestSupport {
@@ -51,5 +51,4 @@ public class SplitXmlTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

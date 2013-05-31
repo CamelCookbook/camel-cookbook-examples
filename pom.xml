@@ -15,305 +15,308 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.camelcookbook.examples</groupId>
-    <artifactId>camel-cookbook-examples</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+  <groupId>org.camelcookbook.examples</groupId>
+  <artifactId>camel-cookbook-examples</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
 
-    <name>${application-name}</name>
+  <name>${application-name}</name>
 
-    <properties>
-        <application-name>Camel Cookbook Examples</application-name>
+  <properties>
+    <application-name>Camel Cookbook Examples</application-name>
 
-        <camel-version>2.11.0</camel-version>
+    <camel-version>2.11.0</camel-version>
 
-        <activemq-version>5.8.0</activemq-version>
-        <xbean.version>3.13</xbean.version>
+    <activemq-version>5.8.0</activemq-version>
+    <xbean.version>3.13</xbean.version>
 
-        <aries-blueprint-cm-version>1.0.0</aries-blueprint-cm-version>
+    <aries-blueprint-cm-version>1.0.0</aries-blueprint-cm-version>
 
-        <commons-lang-version>2.6</commons-lang-version>
+    <commons-lang-version>2.6</commons-lang-version>
 
-        <spring-version>3.1.4.RELEASE</spring-version>
-        <slf4j-version>1.7.5</slf4j-version>
-        <log4j-version>1.2.17</log4j-version>
-        <junit-version>4.11</junit-version>
+    <spring-version>3.1.4.RELEASE</spring-version>
+    <slf4j-version>1.7.5</slf4j-version>
+    <log4j-version>1.2.17</log4j-version>
+    <junit-version>4.11</junit-version>
 
-        <maven-compiler-plugin-version>2.5.1</maven-compiler-plugin-version>
-        <maven-bundle-plugin-version>2.3.7</maven-bundle-plugin-version>
+    <maven-compiler-plugin-version>2.5.1</maven-compiler-plugin-version>
+    <maven-bundle-plugin-version>2.3.7</maven-bundle-plugin-version>
 
-        <osgi-import-package>*</osgi-import-package>
-        <fusesource-repo>http://repo.fusesource.com/nexus/content/repositories/releases/</fusesource-repo>
-        <camel-repo>https://repository.apache.org/content/repositories/releases/</camel-repo>
+    <osgi-import-package>*</osgi-import-package>
+    <fusesource-repo>http://repo.fusesource.com/nexus/content/repositories/releases/</fusesource-repo>
+    <camel-repo>https://repository.apache.org/content/repositories/releases/</camel-repo>
 
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
-    <modules>
-        <module>camel-cookbook-structuring-routes</module>
-        <module>camel-cookbook-routing</module>
-        <module>camel-cookbook-transformation</module>
-        <module>camel-cookbook-testing</module>
-        <module>camel-cookbook-extend</module>
-        <module>camel-cookbook-split-join</module>
-        <module>camel-cookbook-error</module>
-    </modules>
+  <modules>
+    <module>camel-cookbook-structuring-routes</module>
+    <module>camel-cookbook-routing</module>
+    <module>camel-cookbook-transformation</module>
+    <module>camel-cookbook-testing</module>
+    <module>camel-cookbook-extend</module>
+    <module>camel-cookbook-split-join</module>
+    <module>camel-cookbook-error</module>
+  </modules>
 
-    <repositories>
+  <repositories>
 <!--
-        <repository>
-            <id>release.fusesource.org</id>
-            <name>FuseSource Release Repository</name>
-            <url>${fusesource-repo}</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
+    <repository>
+      <id>release.fusesource.org</id>
+      <name>FuseSource Release Repository</name>
+      <url>${fusesource-repo}</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
 -->
 <!--
-        <repository>
-            <id>release.camel.apache.org</id>
-            <name>Camel Release Repository</name>
-            <url>${camel-repo}</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
+    <repository>
+      <id>release.camel.apache.org</id>
+      <name>Camel Release Repository</name>
+      <url>${camel-repo}</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
 -->
-    </repositories>
+  </repositories>
 
-    <pluginRepositories>
+  <pluginRepositories>
 <!--
-        <pluginRepository>
-            <id>release.fusesource.org</id>
-            <name>FuseSource Release Repository</name>
-            <url>${fusesource-repo}</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
+    <pluginRepository>
+      <id>release.fusesource.org</id>
+      <name>FuseSource Release Repository</name>
+      <url>${fusesource-repo}</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository>
 -->
 <!--
-        <pluginRepository>
-            <id>release.camel.apache.org</id>
-            <name>Camel Release Repository</name>
-            <url>${camel-repo}</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
+    <pluginRepository>
+      <id>release.camel.apache.org</id>
+      <name>Camel Release Repository</name>
+      <url>${camel-repo}</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository>
 -->
-    </pluginRepositories>
+  </pluginRepositories>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-core</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-spring</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-blueprint</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-core</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-spring</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-blueprint</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
 
-            <dependency>
-                <groupId>org.apache.aries.blueprint</groupId>
-                <artifactId>org.apache.aries.blueprint.cm</artifactId>
-                <version>${aries-blueprint-cm-version}</version>
-            </dependency>
+      <dependency>
+        <groupId>org.apache.aries.blueprint</groupId>
+        <artifactId>org.apache.aries.blueprint.cm</artifactId>
+        <version>${aries-blueprint-cm-version}</version>
+      </dependency>
 
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-saxon</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-bindy</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jaxb</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-xstream</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jackson</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-xmljson</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-xmlsecurity</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-script</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-saxon</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-bindy</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-jaxb</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-xstream</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-jackson</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-xmljson</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-xmlsecurity</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-script</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
 
-            <dependency>
-                <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-camel</artifactId>
-                <version>${activemq-version}</version>
-            </dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-camel</artifactId>
+        <version>${activemq-version}</version>
+      </dependency>
 
 <!--
-            <dependency>
-                <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-kahadb-store</artifactId>
-                <version>${activemq-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.activemq</groupId>
-                <artifactId>activemq-all</artifactId>
-                <version>${activemq-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.xbean</groupId>
-                <artifactId>xbean-spring</artifactId>
-                <version>${xbean.version}</version>
-            </dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-kahadb-store</artifactId>
+        <version>${activemq-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-all</artifactId>
+        <version>${activemq-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xbean</groupId>
+        <artifactId>xbean-spring</artifactId>
+        <version>${xbean.version}</version>
+      </dependency>
 -->
 
-            <!--
-                Ensure we're using matching camel version as activemq-camel
-                embeds camel-jms, and it may be an older version.
-            -->
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jms</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-script</artifactId>
-                <version>${camel-version}</version>
-            </dependency>
+      <!--
+        Ensure we're using matching camel version as activemq-camel
+        embeds camel-jms, and it may be an older version.
+      -->
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-jms</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-script</artifactId>
+        <version>${camel-version}</version>
+      </dependency>
 
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons-lang-version}</version>
-            </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>${commons-lang-version}</version>
+      </dependency>
 
-            <!-- testing dependencies -->
-	        <dependency>
-	            <groupId>org.apache.camel</groupId>
-	            <artifactId>camel-test</artifactId>
-	            <version>${camel-version}</version>
-	            <scope>test</scope>
-	        </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-test-spring</artifactId>
-                <version>${camel-version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-test-blueprint</artifactId>
-                <version>${camel-version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!--
-            needs to be explicitly listed due to conflict in transitive dependencies
-            in spring versions between camel-spring and camel-test-spring in 2.10.4
-            -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring-version}</version>
-                <scope>test</scope>
-            </dependency>
+      <!-- testing dependencies -->
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-test</artifactId>
+        <version>${camel-version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-test-spring</artifactId>
+        <version>${camel-version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-test-blueprint</artifactId>
+        <version>${camel-version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!--
+        needs to be explicitly listed due to conflict in transitive dependencies
+        in spring versions between camel-spring and camel-test-spring in 2.10.4
+      -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring-version}</version>
+        <scope>test</scope>
+      </dependency>
 
 
-            <dependency>
-	            <groupId>junit</groupId>
-	            <artifactId>junit</artifactId>
-	            <version>${junit-version}</version>
-	            <scope>test</scope>
-	        </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit-version}</version>
+        <scope>test</scope>
+      </dependency>
 
-            <!-- logging dependencies -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j-version}</version>
-            </dependency>
+      <!-- logging dependencies -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j-version}</version>
+      </dependency>
 
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j-version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j-version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <build>
-        <defaultGoal>install</defaultGoal>
+  <build>
+    <defaultGoal>install</defaultGoal>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin-version}</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin-version}</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
 
-            <!-- used to generate the MANIFEST-FILE of a bundle -->
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>${maven-bundle-plugin-version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Import-Package>${osgi-import-package}</Import-Package>
-                    </instructions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+      <!-- used to generate the MANIFEST-FILE of a bundle -->
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${maven-bundle-plugin-version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Import-Package>${osgi-import-package}</Import-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

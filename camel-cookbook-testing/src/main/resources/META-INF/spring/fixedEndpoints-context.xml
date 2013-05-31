@@ -18,6 +18,7 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -25,35 +26,38 @@
            http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
        ">
 
-    <broker xmlns="http://activemq.apache.org/schema/core" useJmx="false" brokerName="myEmbeddedBroker" persistent="false">
-        <systemUsage>
-            <systemUsage>
-                <memoryUsage>
-                    <memoryUsage limit="32 mb"/>
-                </memoryUsage>
-                <tempUsage>
-                    <tempUsage limit="32 mb"/>
-                </tempUsage>
-            </systemUsage>
-        </systemUsage>
-        <transportConnectors>
-            <transportConnector uri="vm://myEmbeddedBroker" />
-        </transportConnectors>
-    </broker>
+  <broker xmlns="http://activemq.apache.org/schema/core"
+          useJmx="false"
+          brokerName="myEmbeddedBroker"
+          persistent="false">
+    <systemUsage>
+      <systemUsage>
+        <memoryUsage>
+          <memoryUsage limit="32 mb"/>
+        </memoryUsage>
+        <tempUsage>
+          <tempUsage limit="32 mb"/>
+        </tempUsage>
+      </systemUsage>
+    </systemUsage>
+    <transportConnectors>
+      <transportConnector uri="vm://myEmbeddedBroker"/>
+    </transportConnectors>
+  </broker>
 
-    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="brokerURL" value="vm://myEmbeddedBroker"/>
-    </bean>
+  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="brokerURL" value="vm://myEmbeddedBroker"/>
+  </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route id="modifyPayloadBetweenQueues">
-            <from uri="activemq:in"/>
-            <transform>
-                <simple>Modified: ${body}</simple>
-            </transform>
-            <log message="Set message to ${body}"/>
-            <to uri="activemq:out"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route id="modifyPayloadBetweenQueues">
+      <from uri="activemq:in"/>
+      <transform>
+        <simple>Modified: ${body}</simple>
+      </transform>
+      <log message="Set message to ${body}"/>
+      <to uri="activemq:out"/>
+    </route>
+  </camelContext>
 
 </beans>

@@ -18,26 +18,28 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="myBean" class="org.camelcookbook.extend.binding.MyBean"/>
+  <bean id="myBean" class="org.camelcookbook.extend.binding.MyBean"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:normal"/>
-            <bean ref="myBean" method="sayHello(${body}, false)"/>
-        </route>
-        <route>
-            <from uri="direct:hipster"/>
-            <bean ref="myBean" method="sayHello(${body}, true)"/>
-        </route>
-        <route>
-            <from uri="direct:undecided"/>
-            <bean ref="myBean" method="sayHello(${body}, ${header.hipster})"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:normal"/>
+      <bean ref="myBean" method="sayHello(${body}, false)"/>
+    </route>
+    <route>
+      <from uri="direct:hipster"/>
+      <bean ref="myBean" method="sayHello(${body}, true)"/>
+    </route>
+    <route>
+      <from uri="direct:undecided"/>
+      <bean ref="myBean" method="sayHello(${body}, ${header.hipster})"/>
+    </route>
+  </camelContext>
+
 </beans>

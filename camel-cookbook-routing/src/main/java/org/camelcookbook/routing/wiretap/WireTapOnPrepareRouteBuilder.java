@@ -39,5 +39,4 @@ public class WireTapOnPrepareRouteBuilder extends RouteBuilder {
             .wireTap("mock:tapped").onPrepare(markProcessed)
             .to("mock:out");
     }
-
 }

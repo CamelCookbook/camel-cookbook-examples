@@ -30,7 +30,6 @@ import java.util.Set;
 
 /**
  * Test class that demonstrates a simple example of aggregation.
- * @author jkorab
  */
 public class AggregateSimpleSpringTest extends CamelSpringTestSupport {
 

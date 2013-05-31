@@ -29,7 +29,6 @@ import java.util.Set;
 
 /**
  * Test class that demonstrates a simple example of aggregation.
- * @author jkorab
  */
 public class AggregateSimpleTest extends CamelTestSupport {
 
@@ -63,5 +62,4 @@ public class AggregateSimpleTest extends CamelTestSupport {
         Set<String> even = receivedExchanges.get(1).getIn().getBody(Set.class);
         assertTrue(even.containsAll(Arrays.asList("Two", "Four", "Six", "Eight", "Ten")));
     }
-
 }

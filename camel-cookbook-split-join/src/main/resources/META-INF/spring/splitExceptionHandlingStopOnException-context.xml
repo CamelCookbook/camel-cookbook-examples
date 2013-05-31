@@ -18,29 +18,30 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="ise" class="java.lang.IllegalStateException"/>
+  <bean id="ise" class="java.lang.IllegalStateException"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:in"/>
-            <split stopOnException="true">
-                <simple>${body}</simple>
-                <choice>
-                    <when>
-                        <simple>${header.CamelSplitIndex} == 1</simple>
-                        <throwException ref="ise"/>
-                    </when>
-                </choice>
-                <to uri="mock:split"/>
-            </split>
-            <to uri="mock:out"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:in"/>
+      <split stopOnException="true">
+        <simple>${body}</simple>
+        <choice>
+          <when>
+            <simple>${header.CamelSplitIndex} == 1</simple>
+            <throwException ref="ise"/>
+          </when>
+        </choice>
+        <to uri="mock:split"/>
+      </split>
+      <to uri="mock:out"/>
+    </route>
+  </camelContext>
 
 </beans>

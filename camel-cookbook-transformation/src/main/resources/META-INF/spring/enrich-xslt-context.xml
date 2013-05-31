@@ -24,11 +24,11 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:start"/>
-            <enrich uri="xslt:book.xslt"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:start"/>
+      <enrich uri="xslt:book.xslt"/>
+    </route>
+  </camelContext>
 
 </beans>

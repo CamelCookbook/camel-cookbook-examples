@@ -34,7 +34,6 @@ import static junit.framework.Assert.assertFalse;
  * relying on CamelTestSupport.
  */
 public class DirectVmTest {
-
     private CamelContext testHarnessContext;
     private CamelContext externalLoggingContext;
 
@@ -76,6 +75,5 @@ public class DirectVmTest {
         Message message = out.getExchanges().get(0).getIn();
         assertFalse(message.getHeader("harness.threadName").equals(
                 message.getHeader(ExternalLoggingRouteBuilder.LOGGING_THREAD_NAME)));
-
     }
 }

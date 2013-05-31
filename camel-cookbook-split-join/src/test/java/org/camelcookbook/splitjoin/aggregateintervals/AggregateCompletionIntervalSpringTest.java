@@ -25,7 +25,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Test class that demonstrates a aggregation using completion intervals.
- * @author jkorab
  */
 public class AggregateCompletionIntervalSpringTest extends CamelSpringTestSupport {
 
@@ -53,10 +52,9 @@ public class AggregateCompletionIntervalSpringTest extends CamelSpringTestSuppor
 
         assertMockEndpointsSatisfied();
     }
-    
+
     private void sendAndSleep(String endpointUri, String body, String headerName, String headerValue) throws InterruptedException {
         template.sendBodyAndHeader(endpointUri, body, headerName, headerValue);
         Thread.sleep(100);
     }
-
 }

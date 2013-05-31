@@ -25,11 +25,11 @@
              http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.0.0.xsd
            ">
 
-    <cm:property-placeholder persistent-id="org.camelcookbook.testing">
-        <cm:default-properties>
-            <cm:property name="transform.message" value="Modified"/>
-        </cm:default-properties>
-    </cm:property-placeholder>
+  <cm:property-placeholder persistent-id="org.camelcookbook.testing">
+    <cm:default-properties>
+      <cm:property name="transform.message" value="Modified"/>
+    </cm:default-properties>
+  </cm:property-placeholder>
 
 </blueprint>
 

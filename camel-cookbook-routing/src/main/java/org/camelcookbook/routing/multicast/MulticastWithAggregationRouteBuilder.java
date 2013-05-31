@@ -38,5 +38,4 @@ public class MulticastWithAggregationRouteBuilder extends RouteBuilder {
         from("direct:second")
             .transform(constant("second response"));
     }
-
 }

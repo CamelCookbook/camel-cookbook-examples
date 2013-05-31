@@ -18,31 +18,32 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <dataFormats>
-            <secureXML id="mySecureXml"
-                       secureTag="/booksignings/store/address"
-                       secureTagContents="true"
-                       passPhrase="Do not tell anyone this."/>
-        </dataFormats>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <dataFormats>
+      <secureXML id="mySecureXml"
+                 secureTag="/booksignings/store/address"
+                 secureTagContents="true"
+                 passPhrase="Do not tell anyone this."/>
+    </dataFormats>
 
-        <route>
-            <from uri="direct:marshal"/>
-            <marshal ref="mySecureXml"/>
-            <to uri="mock:marshalResult"/>
-        </route>
+    <route>
+      <from uri="direct:marshal"/>
+      <marshal ref="mySecureXml"/>
+      <to uri="mock:marshalResult"/>
+    </route>
 
-        <route>
-            <from uri="direct:unmarshal"/>
-            <unmarshal ref="mySecureXml"/>
-            <to uri="mock:unmarshalResult"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:unmarshal"/>
+      <unmarshal ref="mySecureXml"/>
+      <to uri="mock:unmarshalResult"/>
+    </route>
+  </camelContext>
 
 </beans>

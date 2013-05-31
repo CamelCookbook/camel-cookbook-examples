@@ -18,32 +18,33 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:start"/>
-            <setHeader headerName="multicastTo">
-                <constant>direct:first,direct:second,websphere:cheese</constant>
-            </setHeader>
-            <recipientList ignoreInvalidEndpoints="true">
-                <header>multicastTo</header>
-            </recipientList>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:start"/>
+      <setHeader headerName="multicastTo">
+        <constant>direct:first,direct:second,websphere:cheese</constant>
+      </setHeader>
+      <recipientList ignoreInvalidEndpoints="true">
+        <header>multicastTo</header>
+      </recipientList>
+    </route>
 
-        <route>
-            <from uri="direct:first"/>
-            <to uri="mock:first"/>
-        </route>
+    <route>
+      <from uri="direct:first"/>
+      <to uri="mock:first"/>
+    </route>
 
-        <route>
-            <from uri="direct:second"/>
-            <to uri="mock:second"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:second"/>
+      <to uri="mock:second"/>
+    </route>
+  </camelContext>
 
 </beans>

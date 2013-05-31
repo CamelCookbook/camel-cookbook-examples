@@ -29,7 +29,6 @@ import java.util.Set;
 
 /**
  * Test class that demonstrates a aggregation using timeouts.
- * @author jkorab
  */
 public class AggregateCompletionTimeoutTest extends CamelTestSupport {
 
@@ -63,5 +62,4 @@ public class AggregateCompletionTimeoutTest extends CamelTestSupport {
         Set<String> even = receivedExchanges.get(1).getIn().getBody(Set.class);
         assertTrue(even.containsAll(Arrays.asList("Two", "Four", "Six", "Eight", "Ten")));
     }
-
 }

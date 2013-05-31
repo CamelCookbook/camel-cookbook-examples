@@ -19,9 +19,6 @@ package org.camelcookbook.splitjoin.aggregate;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
-* @author jkorab
-*/
 class AggregateSimpleRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

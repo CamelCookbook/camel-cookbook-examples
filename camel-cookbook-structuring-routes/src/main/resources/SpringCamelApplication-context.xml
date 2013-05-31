@@ -25,14 +25,14 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="mylogger" class="org.apache.camel.component.log.LogComponent"/>
+  <bean id="mylogger" class="org.apache.camel.component.log.LogComponent"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="timer:logMessageTimer?period=1s"/>
-            <to uri="mylogger:insideTheRoute?showHeaders=true"/>
-            <log message="Event triggered by ${property.CamelTimerName} at ${header.CamelTimerFiredTime}"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="timer:logMessageTimer?period=1s"/>
+      <to uri="mylogger:insideTheRoute?showHeaders=true"/>
+      <log message="Event triggered by ${property.CamelTimerName} at ${header.CamelTimerFiredTime}"/>
+    </route>
+  </camelContext>
 
 </beans>

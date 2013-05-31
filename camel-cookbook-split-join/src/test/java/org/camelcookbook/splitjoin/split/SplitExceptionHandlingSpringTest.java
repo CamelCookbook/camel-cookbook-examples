@@ -39,7 +39,7 @@ public class SplitExceptionHandlingSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testRemainderElementsProcessedOnException() throws Exception {
-        String[] array = new String[] {"one", "two", "three"};
+        String[] array = new String[]{"one", "two", "three"};
 
         MockEndpoint mockSplit = getMockEndpoint("mock:split");
         mockSplit.expectedMessageCount(2);
@@ -55,7 +55,5 @@ public class SplitExceptionHandlingSpringTest extends CamelSpringTestSupport {
             assertTrue(ex.getCause() instanceof IllegalStateException);
             assertMockEndpointsSatisfied();
         }
-
     }
-
 }

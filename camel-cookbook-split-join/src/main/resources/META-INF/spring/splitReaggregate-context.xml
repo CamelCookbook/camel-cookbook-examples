@@ -18,40 +18,40 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="setAggregationStrategy"
-          class="org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy"/>
+  <bean id="setAggregationStrategy"
+        class="org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:in"/>
-            <split>
-                <xpath>//book</xpath>
-                <setHeader headerName="category">
-                    <xpath resultType="String">string(/book/@category)</xpath>
-                </setHeader>
-                <transform>
-                    <xpath resultType="String">string(/book/@title)</xpath>
-                </transform>
-                <to uri="direct:groupByCategory"/>
-            </split>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:in"/>
+      <split>
+        <xpath>//book</xpath>
+        <setHeader headerName="category">
+          <xpath resultType="String">string(/book/@category)</xpath>
+        </setHeader>
+        <transform>
+          <xpath resultType="String">string(/book/@title)</xpath>
+        </transform>
+        <to uri="direct:groupByCategory"/>
+      </split>
+    </route>
 
-        <route>
-            <from uri="direct:groupByCategory"/>
-            <aggregate strategyRef="setAggregationStrategy" completionTimeout="500">
-                <correlationExpression>
-                    <simple>${header[category]}</simple>
-                </correlationExpression>
-                <to uri="mock:out"/>
-            </aggregate>
-        </route>
-
-    </camelContext>
+    <route>
+      <from uri="direct:groupByCategory"/>
+      <aggregate strategyRef="setAggregationStrategy" completionTimeout="500">
+        <correlationExpression>
+          <simple>${header[category]}</simple>
+        </correlationExpression>
+        <to uri="mock:out"/>
+      </aggregate>
+    </route>
+  </camelContext>
 
 </beans>

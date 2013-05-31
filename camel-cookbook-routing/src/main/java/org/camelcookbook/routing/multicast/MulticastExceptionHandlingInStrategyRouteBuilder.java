@@ -27,7 +27,6 @@ import org.apache.camel.builder.RouteBuilder;
 public class MulticastExceptionHandlingInStrategyRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-
         from("direct:start")
             .multicast().aggregationStrategy(new ExceptionHandlingAggregationStrategy())
                 .to("direct:first")
@@ -45,15 +44,14 @@ public class MulticastExceptionHandlingInStrategyRouteBuilder extends RouteBuild
             .end()
             .to("mock:first")
             .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        throw new IllegalStateException("something went horribly wrong");
-                    }
-                });
+                @Override
+                public void process(Exchange exchange) throws Exception {
+                    throw new IllegalStateException("something went horribly wrong");
+                }
+            });
 
         from("direct:second")
             .to("mock:second")
             .transform(constant("All OK here"));
     }
-
 }

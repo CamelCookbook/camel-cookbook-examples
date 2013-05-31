@@ -17,27 +17,28 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <bean id="cheeseCloningProcessor" class="org.camelcookbook.routing.model.CheeseCloningProcessor"/>
+  <bean id="cheeseCloningProcessor" class="org.camelcookbook.routing.model.CheeseCloningProcessor"/>
 
-    <camelContext id="routing.wireTap.stateNoLeaks" xmlns="http://camel.apache.org/schema/spring">
+  <camelContext id="routing.wireTap.stateNoLeaks" xmlns="http://camel.apache.org/schema/spring">
 
-        <route id="routing.wireTap">
-            <from uri="direct:start"/>
-            <wireTap uri="direct:processInBackground" onPrepareRef="cheeseCloningProcessor"/>
-            <to uri="mock:out"/>
-        </route>
+    <route id="routing.wireTap">
+      <from uri="direct:start"/>
+      <wireTap uri="direct:processInBackground" onPrepareRef="cheeseCloningProcessor"/>
+      <to uri="mock:out"/>
+    </route>
 
-        <route id="routing.wireTap.tapped">
-            <from uri="direct:processInBackground"/>
-            <bean beanType="org.camelcookbook.routing.model.CheeseRipener" method="ripen"/>
-            <to uri="mock:tapped"/>
-        </route>
+    <route id="routing.wireTap.tapped">
+      <from uri="direct:processInBackground"/>
+      <bean beanType="org.camelcookbook.routing.model.CheeseRipener" method="ripen"/>
+      <to uri="mock:tapped"/>
+    </route>
 
-    </camelContext>
+  </camelContext>
 
 </beans>

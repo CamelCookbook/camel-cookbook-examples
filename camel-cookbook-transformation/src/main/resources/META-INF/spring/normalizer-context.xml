@@ -25,41 +25,41 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="myNormalizer" class="org.camelcookbook.transformation.normalizer.MyNormalizer"/>
+  <bean id="myNormalizer" class="org.camelcookbook.transformation.normalizer.MyNormalizer"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:start"/>
-            <choice>
-                <when>
-                    <simple>${header.CamelFileName} regex '.*\.csv$'</simple>
-                    <unmarshal>
-                        <bindy type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
-                    </unmarshal>
-                    <bean ref="myNormalizer" method="bookModelToJaxb"/>
-                    <to uri="mock:csv"/>
-                </when>
-                <when>
-                    <simple>${header.CamelFileName} regex '.*\.json$'</simple>
-                    <unmarshal>
-                        <xmljson rootName="bookstore" elementName="book" expandableProperties="author author"/>
-                    </unmarshal>
-                    <to uri="mock:json"/>
-                </when>
-                <when>
-                    <simple>${header.CamelFileName} regex '.*\.xml$'</simple>
-                    <unmarshal>
-                        <jaxb contextPath="org.camelcookbook.transformation.myschema"/>
-                    </unmarshal>
-                    <to uri="mock:xml"/>
-                </when>
-                <otherwise>
-                    <to uri="mock:unknown"/>
-                    <stop/>
-                </otherwise>
-            </choice>
-            <to uri="mock:normalized"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:start"/>
+      <choice>
+        <when>
+          <simple>${header.CamelFileName} regex '.*\.csv$'</simple>
+          <unmarshal>
+            <bindy type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
+          </unmarshal>
+          <bean ref="myNormalizer" method="bookModelToJaxb"/>
+          <to uri="mock:csv"/>
+        </when>
+        <when>
+          <simple>${header.CamelFileName} regex '.*\.json$'</simple>
+          <unmarshal>
+            <xmljson rootName="bookstore" elementName="book" expandableProperties="author author"/>
+          </unmarshal>
+          <to uri="mock:json"/>
+        </when>
+        <when>
+          <simple>${header.CamelFileName} regex '.*\.xml$'</simple>
+          <unmarshal>
+            <jaxb contextPath="org.camelcookbook.transformation.myschema"/>
+          </unmarshal>
+          <to uri="mock:xml"/>
+        </when>
+        <otherwise>
+          <to uri="mock:unknown"/>
+          <stop/>
+        </otherwise>
+      </choice>
+      <to uri="mock:normalized"/>
+    </route>
+  </camelContext>
 
 </beans>

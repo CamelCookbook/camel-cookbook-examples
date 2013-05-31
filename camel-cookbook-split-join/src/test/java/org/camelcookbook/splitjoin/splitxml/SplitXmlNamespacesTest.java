@@ -27,7 +27,7 @@ import java.io.InputStream;
 
 /**
  * Demonstrates the splitting of Xml files through XPath expression using Namespaces.
- *
+ * <p/>
  * This test is intended to be run out of Maven, as it references the target directory.
  */
 public class SplitXmlNamespacesTest extends CamelTestSupport {
@@ -42,7 +42,6 @@ public class SplitXmlNamespacesTest extends CamelTestSupport {
         mockOut.expectedMessageCount(2);
         mockOut.expectedBodiesReceived("Scott Cranton", "Jakub Korab");
 
-
         String filename = "target/classes/xml/books-ns.xml";
         assertFileExists(filename);
         InputStream booksStream = new FileInputStream(filename);
@@ -51,5 +50,4 @@ public class SplitXmlNamespacesTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

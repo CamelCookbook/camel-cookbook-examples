@@ -24,6 +24,12 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 public class DirectLoopTest extends CamelTestSupport {
+    @Produce(uri = "direct:in")
+    ProducerTemplate in;
+
+    @EndpointInject(uri = "mock:out")
+    MockEndpoint out;
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
@@ -53,13 +59,6 @@ public class DirectLoopTest extends CamelTestSupport {
         };
     }
 
-    @Produce(uri = "direct:in")
-    ProducerTemplate in;
-
-    @EndpointInject(uri = "mock:out")
-    MockEndpoint out;
-
-
     @Test
     public void testInOutMessage() throws Exception {
         String message = "hello";
@@ -70,5 +69,4 @@ public class DirectLoopTest extends CamelTestSupport {
         in.sendBody(message);
         assertMockEndpointsSatisfied();
     }
-
 }

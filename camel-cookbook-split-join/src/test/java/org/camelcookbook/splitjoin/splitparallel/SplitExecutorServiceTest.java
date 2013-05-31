@@ -27,7 +27,6 @@ import java.util.List;
 
 /**
  * Test class that demonstrates split message processing in parallel.
- * @author jkorab
  */
 public class SplitExecutorServiceTest extends CamelTestSupport {
 
@@ -55,5 +54,4 @@ public class SplitExecutorServiceTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

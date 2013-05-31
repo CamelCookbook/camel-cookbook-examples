@@ -20,9 +20,6 @@ package org.camelcookbook.splitjoin.aggregateintervals;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-/**
-* @author jkorab
-*/
 class AggregateCompletionIntervalRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

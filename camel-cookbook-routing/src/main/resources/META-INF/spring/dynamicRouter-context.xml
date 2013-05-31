@@ -18,26 +18,27 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="myDynamicRouter" class="org.camelcookbook.routing.dynamicrouter.MyDynamicRouter"/>
+  <bean id="myDynamicRouter" class="org.camelcookbook.routing.dynamicrouter.MyDynamicRouter"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:start"/>
-            <dynamicRouter>
-                <method ref="myDynamicRouter" method="routeMe"/>
-            </dynamicRouter>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:start"/>
+      <dynamicRouter>
+        <method ref="myDynamicRouter" method="routeMe"/>
+      </dynamicRouter>
+    </route>
 
-        <route>
-            <from uri="direct:other"/>
-            <to uri="mock:other"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:other"/>
+      <to uri="mock:other"/>
+    </route>
+  </camelContext>
 
 </beans>

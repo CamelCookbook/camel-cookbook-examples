@@ -19,9 +19,6 @@ package org.camelcookbook.splitjoin.splitparallel;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
-* @author jkorab
-*/
 class SplitParallelProcessingExceptionHandlingRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

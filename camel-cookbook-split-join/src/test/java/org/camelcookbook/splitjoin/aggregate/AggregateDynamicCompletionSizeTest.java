@@ -27,7 +27,6 @@ import java.util.*;
 
 /**
  * Test class that demonstrates a use of a dynamic completion size with aggregation.
- * @author jkorab
  */
 public class AggregateDynamicCompletionSizeTest extends CamelTestSupport {
 
@@ -68,5 +67,4 @@ public class AggregateDynamicCompletionSizeTest extends CamelTestSupport {
         Set<String> odd = receivedExchanges.get(1).getIn().getBody(Set.class);
         assertTrue(odd.containsAll(Arrays.asList("One", "Three", "Five", "Seven", "Nine")));
     }
-
 }

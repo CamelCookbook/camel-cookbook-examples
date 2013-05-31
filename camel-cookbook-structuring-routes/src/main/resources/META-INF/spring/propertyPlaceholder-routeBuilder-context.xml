@@ -25,11 +25,11 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="propertyConsumingRouteBuilder" class="org.camelcookbook.structuringroutes.PropertyConsumingRouteBuilder"/>
+  <bean id="propertyConsumingRouteBuilder" class="org.camelcookbook.structuringroutes.PropertyConsumingRouteBuilder"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <propertyPlaceholder id="properties" location="classpath:placeholder.properties"/>
-        <routeBuilder ref="propertyConsumingRouteBuilder"/>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <propertyPlaceholder id="properties" location="classpath:placeholder.properties"/>
+    <routeBuilder ref="propertyConsumingRouteBuilder"/>
+  </camelContext>
 
 </beans>

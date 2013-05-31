@@ -27,15 +27,14 @@ import org.apache.camel.builder.RouteBuilder;
 public class MulticastStopOnExceptionRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-
         from("direct:start")
-                .multicast().stopOnException()
-                    .to("direct:first")
-                    .to("direct:second")
-                .end()
-                .log("continuing with ${body}") // this will never be called
-                .to("mock:afterMulticast")
-                .transform(body()); // copy the In message to the Out message; this will become the route response
+            .multicast().stopOnException()
+                .to("direct:first")
+                .to("direct:second")
+            .end()
+            .log("continuing with ${body}") // this will never be called
+            .to("mock:afterMulticast")
+            .transform(body()); // copy the In message to the Out message; this will become the route response
 
         from("direct:first")
             .onException(Exception.class)

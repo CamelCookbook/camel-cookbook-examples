@@ -31,5 +31,4 @@ public class PropertyConsumingRouteBuilder extends RouteBuilder {
             .log("Set message to ${body}")
             .to("{{end.endpoint}}");
     }
-
 }

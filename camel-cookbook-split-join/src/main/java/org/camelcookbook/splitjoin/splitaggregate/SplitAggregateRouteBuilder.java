@@ -20,9 +20,6 @@ package org.camelcookbook.splitjoin.splitaggregate;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-/**
- * @author jkorab
- */
 public class SplitAggregateRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

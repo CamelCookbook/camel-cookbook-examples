@@ -55,5 +55,4 @@ public class OrderProcessingRouteBuilder extends RouteBuilder {
                 .to(outputUri)
             .end();
     }
-
 }

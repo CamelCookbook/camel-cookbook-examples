@@ -24,7 +24,6 @@ import org.junit.Test;
 
 /**
  * Test class that demonstrates a aggregation using completion intervals.
- * @author jkorab
  */
 public class AggregateCompletionIntervalTest extends CamelTestSupport {
 
@@ -51,10 +50,9 @@ public class AggregateCompletionIntervalTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-    
+
     private void sendAndSleep(String endpointUri, String body, String headerName, String headerValue) throws InterruptedException {
         template.sendBodyAndHeader(endpointUri, body, headerName, headerValue);
         Thread.sleep(100);
     }
-
 }

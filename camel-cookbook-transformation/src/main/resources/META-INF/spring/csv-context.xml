@@ -18,26 +18,27 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <dataFormats>
-            <bindy id="bookModel" type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
-        </dataFormats>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <dataFormats>
+      <bindy id="bookModel" type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
+    </dataFormats>
 
-        <route>
-            <from uri="direct:unmarshal"/>
-            <unmarshal ref="bookModel"/>
-        </route>
+    <route>
+      <from uri="direct:unmarshal"/>
+      <unmarshal ref="bookModel"/>
+    </route>
 
-        <route>
-            <from uri="direct:marshal"/>
-            <marshal ref="bookModel"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:marshal"/>
+      <marshal ref="bookModel"/>
+    </route>
+  </camelContext>
 
 </beans>

@@ -21,9 +21,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
-/**
-* @author jkorab
-*/
 class SplitExceptionHandlingStopOnExceptionRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

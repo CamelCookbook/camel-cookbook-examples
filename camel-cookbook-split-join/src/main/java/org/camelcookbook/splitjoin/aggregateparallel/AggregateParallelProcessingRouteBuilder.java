@@ -20,9 +20,6 @@ package org.camelcookbook.splitjoin.aggregateparallel;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-/**
- * @author jkorab
- */
 class AggregateParallelProcessingRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

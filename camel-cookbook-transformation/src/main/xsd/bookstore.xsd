@@ -18,33 +18,33 @@
 <xs:schema version="1.0"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:element name="bookstore">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="book" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+  <xs:element name="bookstore">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="book" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
-    <xs:element name="book">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="title">
-                    <xs:complexType>
-                        <xs:simpleContent>
-                            <xs:extension base="xs:string">
-                                <xs:attribute name="lang" type="xs:string"/>
-                            </xs:extension>
-                        </xs:simpleContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="author" type="xs:string" maxOccurs="unbounded"/>
-                <xs:element name="year" type="xs:int"/>
-                <xs:element name="price" type="xs:double"/>
-            </xs:sequence>
-            <xs:attribute name="category" type="xs:string"/>
-        </xs:complexType>
-    </xs:element>
+  <xs:element name="book">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="title">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="lang" type="xs:string"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="author" type="xs:string" maxOccurs="unbounded"/>
+        <xs:element name="year" type="xs:int"/>
+        <xs:element name="price" type="xs:double"/>
+      </xs:sequence>
+      <xs:attribute name="category" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
 
 </xs:schema>
 

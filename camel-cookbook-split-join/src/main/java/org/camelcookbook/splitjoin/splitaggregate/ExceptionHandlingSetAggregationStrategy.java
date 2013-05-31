@@ -17,11 +17,11 @@
 
 package org.camelcookbook.splitjoin.splitaggregate;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.processor.aggregate.AggregationStrategy;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 public class ExceptionHandlingSetAggregationStrategy implements AggregationStrategy {
     @Override

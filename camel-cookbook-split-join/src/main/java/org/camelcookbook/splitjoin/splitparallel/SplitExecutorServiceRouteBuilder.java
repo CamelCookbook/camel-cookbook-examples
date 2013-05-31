@@ -17,9 +17,9 @@
 
 package org.camelcookbook.splitjoin.splitparallel;
 
-import org.apache.camel.builder.RouteBuilder;
-
 import java.util.concurrent.Executors;
+
+import org.apache.camel.builder.RouteBuilder;
 
 class SplitExecutorServiceRouteBuilder extends RouteBuilder {
     @Override

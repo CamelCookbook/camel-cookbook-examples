@@ -17,13 +17,13 @@
 
 package org.camelcookbook.splitjoin.split;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Demonstrates the splitting of a List by using a Simple expression to locate it in an object graph.

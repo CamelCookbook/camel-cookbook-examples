@@ -17,19 +17,18 @@
 
 package org.camelcookbook.splitjoin.splitreaggregate;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Message;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.splitjoin.splitaggregate.SplitAggregateRouteBuilder;
-import org.junit.Test;
-
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.Message;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Test;
 
 /**
  * Demonstrates the splitting of a payload, processing of each of the fragments and reaggregating the results.

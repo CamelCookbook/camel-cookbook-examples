@@ -17,15 +17,15 @@
 
 package org.camelcookbook.splitjoin.splitaggregate;
 
+import java.util.Arrays;
+import java.util.Set;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.Arrays;
-import java.util.Set;
 
 /**
  * Demonstrates the handling of an exception during splitting and aggregation.

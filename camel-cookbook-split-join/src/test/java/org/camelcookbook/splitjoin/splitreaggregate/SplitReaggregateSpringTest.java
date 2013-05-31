@@ -17,6 +17,12 @@
 
 package org.camelcookbook.splitjoin.splitreaggregate;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -24,12 +30,6 @@ import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Demonstrates the splitting of a payload, processing of each of the fragments and reaggregating the results.

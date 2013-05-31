@@ -17,10 +17,10 @@
 
 package org.camelcookbook.splitjoin.aggregateparallel;
 
+import java.util.concurrent.Executors;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
-
-import java.util.concurrent.Executors;
 
 class AggregateExecutorServiceRouteBuilder extends RouteBuilder {
     @Override

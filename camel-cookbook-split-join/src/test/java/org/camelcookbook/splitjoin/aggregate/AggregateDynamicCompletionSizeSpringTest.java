@@ -17,14 +17,14 @@
 
 package org.camelcookbook.splitjoin.aggregate;
 
+import java.util.*;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.*;
 
 /**
  * Test class that demonstrates a use of a dynamic completion size with aggregation.

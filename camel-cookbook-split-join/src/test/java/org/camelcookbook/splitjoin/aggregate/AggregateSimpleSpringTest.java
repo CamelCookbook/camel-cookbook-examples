@@ -17,16 +17,16 @@
 
 package org.camelcookbook.splitjoin.aggregate;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Test class that demonstrates a simple example of aggregation.

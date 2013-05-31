@@ -17,13 +17,13 @@
 
 package org.camelcookbook.splitjoin.splitparallel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Test class that demonstrates split message processing in parallel.

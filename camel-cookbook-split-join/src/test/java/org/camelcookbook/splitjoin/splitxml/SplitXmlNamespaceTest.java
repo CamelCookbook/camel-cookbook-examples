@@ -17,13 +17,13 @@
 
 package org.camelcookbook.splitjoin.splitxml;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 /**
  * Demonstrates the splitting of Xml files through XPath expression using Namespaces.

@@ -17,12 +17,12 @@
 
 package org.camelcookbook.splitjoin.split;
 
+import java.util.*;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-
-import java.util.*;
 
 /**
  * Demonstrates the splitting of arrays, Lists and Iterators into the elements that make them up.

@@ -24,14 +24,15 @@ public class SplitReaggregateRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(xpath("//book"))
-                .setHeader("category", xpath("string(/book/@category)").stringResult())
-                .transform(xpath("string(/book/@title)").stringResult())
+            .split(xpath("/books/book"))
+                .setHeader("category", xpath("/book/@category").stringResult())
+                .transform(xpath("/book/@title").stringResult())
                 .to("direct:groupByCategory")
             .end();
 
         from("direct:groupByCategory")
             .aggregate(header("category"), new SetAggregationStrategy()).completionTimeout(500)
-            .to("mock:out");
+                .to("mock:out")
+            .end();
     }
 }

@@ -34,6 +34,7 @@ class SplitParallelProcessingExceptionHandlingRouteBuilder extends RouteBuilder 
                 .when(simple("${property.CamelSplitIndex} == 20"))
                     .throwException(new IllegalStateException("boom"))
                 .otherwise()
-                    .to("mock:split");
+                    .to("mock:split")
+            .end();
     }
 }

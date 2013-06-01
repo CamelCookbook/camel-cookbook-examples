@@ -23,7 +23,8 @@ class SplitXmlRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(xpath("//book[@category='Tech']/authors/author/text()"))
-                .to("mock:out");
+            .split(xpath("/books/book[@category='Tech']/authors/author/text()"))
+                .to("mock:out")
+            .end();
     }
 }

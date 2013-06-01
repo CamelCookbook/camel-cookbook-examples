@@ -42,7 +42,6 @@ public class SplitXmlNamespaceTest extends CamelTestSupport {
         mockOut.expectedMessageCount(2);
         mockOut.expectedBodiesReceived("Scott Cranton", "Jakub Korab");
 
-
         String filename = "target/classes/xml/books-ns.xml";
         assertFileExists(filename);
         InputStream booksStream = new FileInputStream(filename);

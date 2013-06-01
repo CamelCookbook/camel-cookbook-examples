@@ -24,6 +24,7 @@ class SplitMultiLineRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:in")
             .split(body().tokenize("\n"))
-            .to("mock:out");
+                .to("mock:out")
+            .end();
     }
 }

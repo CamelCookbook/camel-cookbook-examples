@@ -27,7 +27,8 @@ class SplitXmlNamespacesRouteBuilder extends RouteBuilder {
                 .add("se", "http://camelcookbook.org/schema/somethingElse");
 
         from("direct:in")
-            .split(namespaces.xpath("//c:book[@category='Tech']/c:authors/c:author/text()"))
-                .to("mock:out");
+            .split(namespaces.xpath("/c:books/c:book[@category='Tech']/c:authors/c:author/text()"))
+                .to("mock:out")
+            .end();
     }
 }

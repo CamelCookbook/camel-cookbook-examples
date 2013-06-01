@@ -29,7 +29,7 @@
     <route>
       <from uri="direct:in"/>
       <split>
-        <xpath>//book[@category='Tech']/authors/author/text()</xpath>
+        <xpath>/books/book[@category='Tech']/authors/author/text()</xpath>
         <to uri="mock:out"/>
       </split>
     </route>

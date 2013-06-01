@@ -24,6 +24,7 @@ class SplitSimpleExpressionRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:in")
             .split(simple("${body.wrapped}"))
-            .to("mock:out");
+                .to("mock:out")
+            .end();
     }
 }

@@ -32,12 +32,12 @@
     <route>
       <from uri="direct:in"/>
       <split>
-        <xpath>//book</xpath>
+        <xpath>/books/book</xpath>
         <setHeader headerName="category">
-          <xpath resultType="String">string(/book/@category)</xpath>
+          <xpath resultType="String">/book/@category</xpath>
         </setHeader>
         <transform>
-          <xpath resultType="String">string(/book/@title)</xpath>
+          <xpath resultType="String">/book/@title</xpath>
         </transform>
         <to uri="direct:groupByCategory"/>
       </split>

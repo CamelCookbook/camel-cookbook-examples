@@ -42,7 +42,6 @@ public class SplitXmlTest extends CamelTestSupport {
         mockOut.expectedMessageCount(2);
         mockOut.expectedBodiesReceived("Scott Cranton", "Jakub Korab");
 
-
         String filename = "target/classes/xml/books.xml";
         assertFileExists(filename);
         InputStream booksStream = new FileInputStream(filename);

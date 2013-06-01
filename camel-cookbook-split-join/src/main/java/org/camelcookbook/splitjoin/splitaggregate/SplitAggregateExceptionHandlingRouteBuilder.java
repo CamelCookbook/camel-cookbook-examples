@@ -33,6 +33,7 @@ public class SplitAggregateExceptionHandlingRouteBuilder extends RouteBuilder {
                 .when(simple("${header.CamelSplitIndex} == 1"))
                     .throwException(new IllegalStateException())
                 .otherwise()
-                    .transform(simple("Processed: ${body}"));
+                    .transform(simple("Processed: ${body}"))
+            .end();
     }
 }

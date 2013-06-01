@@ -34,7 +34,8 @@ class SplitParallelProcessingTimeoutRouteBuilder extends RouteBuilder {
                 .when(simple("${property.CamelSplitIndex} == 20"))
                     .to("direct:longDelay")
                 .otherwise()
-                    .to("mock:split");
+                    .to("mock:split")
+            .end();
 
         from("direct:longDelay")
             .delay(1500)

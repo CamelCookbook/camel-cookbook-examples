@@ -64,7 +64,7 @@ public class SplitReaggregateTest extends CamelTestSupport {
             assertTrue(books.containsAll(Arrays.asList("Camel Enterprise Integration Cookbook")));
         } else if (category.equals("Cooking")) {
             assertTrue(books.containsAll(Arrays.asList("Camel Cookbook",
-                    "Double decandence with extra cream", "Cooking with Butter")));
+                    "Double decadence with extra cream", "Cooking with Butter")));
         } else {
             fail();
         }

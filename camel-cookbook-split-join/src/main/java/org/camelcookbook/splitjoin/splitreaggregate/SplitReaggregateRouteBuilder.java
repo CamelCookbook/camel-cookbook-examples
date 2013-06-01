@@ -34,5 +34,14 @@ public class SplitReaggregateRouteBuilder extends RouteBuilder {
             .aggregate(header("category"), new SetAggregationStrategy()).completionTimeout(500)
                 .to("mock:out")
             .end();
+
+        from("direct:combined")
+            .split(xpath("/books/book"))
+                .setHeader("category", xpath("/book/@category").stringResult())
+                .transform(xpath("/book/@title").stringResult())
+                .aggregate(header("category"), new SetAggregationStrategy()).completionTimeout(500)
+                    .to("mock:out")
+                .endParent()
+            .end();
     }
 }

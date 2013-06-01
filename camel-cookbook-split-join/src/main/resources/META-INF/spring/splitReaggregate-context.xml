@@ -52,6 +52,25 @@
         <to uri="mock:out"/>
       </aggregate>
     </route>
+
+    <route>
+      <from uri="direct:combined"/>
+      <split>
+        <xpath>/books/book</xpath>
+        <setHeader headerName="category">
+          <xpath resultType="String">/book/@category</xpath>
+        </setHeader>
+        <transform>
+          <xpath resultType="String">/book/@title</xpath>
+        </transform>
+        <aggregate strategyRef="setAggregationStrategy" completionTimeout="500">
+          <correlationExpression>
+            <simple>${header[category]}</simple>
+          </correlationExpression>
+          <to uri="mock:out"/>
+        </aggregate>
+      </split>
+    </route>
   </camelContext>
 
 </beans>

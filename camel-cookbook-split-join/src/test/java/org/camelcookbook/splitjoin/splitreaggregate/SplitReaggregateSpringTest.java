@@ -58,6 +58,23 @@ public class SplitReaggregateSpringTest extends CamelSpringTestSupport {
         assertBooksByCategory(receivedExchanges.get(1));
     }
 
+    @Test
+    public void testSplitAggregatesResponsesCombined() throws Exception {
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.expectedMessageCount(2);
+
+        String filename = "target/classes/xml/books-extended.xml";
+        assertFileExists(filename);
+        InputStream booksStream = new FileInputStream(filename);
+
+        template.sendBody("direct:combined", booksStream);
+
+        assertMockEndpointsSatisfied();
+        List<Exchange> receivedExchanges = mockOut.getReceivedExchanges();
+        assertBooksByCategory(receivedExchanges.get(0));
+        assertBooksByCategory(receivedExchanges.get(1));
+    }
+
     private void assertBooksByCategory(Exchange exchange) {
         Message in = exchange.getIn();
         Set<String> books = in.getBody(Set.class);

@@ -18,6 +18,7 @@
 package org.camelcookbook.error.retry;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.error.shared.SporadicProcessor;
 
 public class RetryRouteBuilder extends RouteBuilder {
     @Override

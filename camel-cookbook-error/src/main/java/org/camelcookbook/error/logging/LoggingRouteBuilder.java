@@ -18,6 +18,7 @@
 package org.camelcookbook.error.logging;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.error.shared.FlakyProcessor;
 
 public class LoggingRouteBuilder extends RouteBuilder {
     @Override

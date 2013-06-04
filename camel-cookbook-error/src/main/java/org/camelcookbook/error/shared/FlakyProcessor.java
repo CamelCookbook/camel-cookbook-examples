@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.retry;
+package org.camelcookbook.error.shared;
 
-public class SporadicException extends Exception {
-    public SporadicException() {
-        super();
-    }
+import org.apache.camel.Exchange;
 
-    public SporadicException(String message) {
-        super(message);
+public class FlakyProcessor {
+    public void doSomething(Exchange exchange) throws FlakyException {
+        if ("KaBoom".equalsIgnoreCase(exchange.getIn().getBody(String.class))) {
+            throw new FlakyException("FlakyProcessor has gone Flaky");
+        }
     }
 }

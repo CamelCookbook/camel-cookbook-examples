@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.logging;
+package org.camelcookbook.error.shared;
 
 public class FlakyException extends Exception {
     public FlakyException() {

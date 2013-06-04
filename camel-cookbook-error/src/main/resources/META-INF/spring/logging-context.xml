@@ -25,7 +25,7 @@
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-  <bean id="flakyProcessor" class="org.camelcookbook.error.logging.FlakyProcessor"/>
+  <bean id="flakyProcessor" class="org.camelcookbook.error.shared.FlakyProcessor"/>
 
   <camelContext errorHandlerRef="loggingErrorHandler" xmlns="http://camel.apache.org/schema/spring">
     <errorHandler id="loggingErrorHandler"

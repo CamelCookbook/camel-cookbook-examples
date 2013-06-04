@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.retry;
+package org.camelcookbook.error.shared;
 
 import org.apache.camel.Exchange;
 import org.slf4j.Logger;

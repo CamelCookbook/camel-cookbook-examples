@@ -25,7 +25,7 @@
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-  <bean id="sporadicProcessor" class="org.camelcookbook.error.retry.SporadicProcessor"/>
+  <bean id="sporadicProcessor" class="org.camelcookbook.error.shared.SporadicProcessor"/>
 
   <camelContext errorHandlerRef="myErrorHandler" xmlns="http://camel.apache.org/schema/spring">
     <errorHandler id="myErrorHandler"

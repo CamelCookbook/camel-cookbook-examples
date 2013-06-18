@@ -17,12 +17,8 @@
 
 package org.camelcookbook.error.dlq;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.ExchangePattern;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.error.shared.FlakyProcessor;
-import org.camelcookbook.error.shared.SporadicProcessor;
 
 public class DlqRouteBuilder extends RouteBuilder {
     @Override
@@ -30,13 +26,13 @@ public class DlqRouteBuilder extends RouteBuilder {
         errorHandler(deadLetterChannel("seda:error"));
 
         from("direct:start")
-            .routeId("myDlqRoute")
+                .routeId("myDlqRoute")
             .setHeader("myHeader").constant("changed")
             .bean(FlakyProcessor.class)
             .to("mock:result");
 
         from("direct:multiroute")
-            .routeId("myDlqMultistepRoute")
+                .routeId("myDlqMultistepRoute")
             .setHeader("myHeader").constant("multistep")
             .inOut("seda:flakyroute")
             .setHeader("myHeader").constant("changed")
@@ -44,37 +40,37 @@ public class DlqRouteBuilder extends RouteBuilder {
 
         from("seda:flakyroute")
                 .routeId("myFlakyRoute")
-                .setHeader("myHeader").constant("flaky")
-                .bean(FlakyProcessor.class);
+            .setHeader("myHeader").constant("flaky")
+            .bean(FlakyProcessor.class);
 
         from("direct:multirouteOriginal")
-            .routeId("myDlqMultistepOriginalRoute")
+                .routeId("myDlqMultistepOriginalRoute")
             .setHeader("myHeader").constant("multistep")
             .inOut("seda:flakyrouteOriginal")
             .setHeader("myHeader").constant("changed")
             .to("mock:result");
 
         from("seda:flakyrouteOriginal")
-            .routeId("myFlakyRouteOriginal")
+                .routeId("myFlakyRouteOriginal")
                 .errorHandler(deadLetterChannel("seda:error").useOriginalMessage())
             .setHeader("myHeader").constant("flaky")
             .bean(FlakyProcessor.class);
 
         from("direct:routeSpecific")
-            .routeId("myDlqSpecificRoute")
-            .errorHandler(deadLetterChannel("seda:error"))
+                .routeId("myDlqSpecificRoute")
+                .errorHandler(deadLetterChannel("seda:error"))
             .bean(FlakyProcessor.class)
             .to("mock:result");
 
         from("direct:useOriginal")
-            .routeId("myDlqOriginalRoute")
-            .errorHandler(deadLetterChannel("seda:error").useOriginalMessage())
+                .routeId("myDlqOriginalRoute")
+                .errorHandler(deadLetterChannel("seda:error").useOriginalMessage())
             .setHeader("myHeader").constant("changed")
             .bean(FlakyProcessor.class)
             .to("mock:result");
 
         from("seda:error")
-            .routeId("myDlqChannelRoute")
+                .routeId("myDlqChannelRoute")
             .to("log:dlq?showAll=true&multiline=true")
             .to("mock:error");
     }

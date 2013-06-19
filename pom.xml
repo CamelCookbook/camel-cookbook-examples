@@ -63,6 +63,7 @@
     <module>camel-cookbook-extend</module>
     <module>camel-cookbook-split-join</module>
     <module>camel-cookbook-error</module>
+    <module>camel-cookbook-parallel-processing</module>
   </modules>
 
   <repositories>

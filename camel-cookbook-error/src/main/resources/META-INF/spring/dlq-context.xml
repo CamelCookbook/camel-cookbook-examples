@@ -25,93 +25,93 @@
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="flakyProcessor" class="org.camelcookbook.error.shared.FlakyProcessor"/>
+  <bean id="flakyProcessor" class="org.camelcookbook.error.shared.FlakyProcessor"/>
 
-    <camelContext errorHandlerRef="dlqErrorHandler" xmlns="http://camel.apache.org/schema/spring">
-        <errorHandler id="dlqErrorHandler"
-                      type="DeadLetterChannel"
-                      deadLetterUri="seda:error"/>
+  <camelContext errorHandlerRef="dlqErrorHandler" xmlns="http://camel.apache.org/schema/spring">
+    <errorHandler id="dlqErrorHandler"
+                  type="DeadLetterChannel"
+                  deadLetterUri="seda:error"/>
 
-        <errorHandler id="dlqRouteSpecificErrorHandler"
-                      type="DeadLetterChannel"
-                      deadLetterUri="seda:error"/>
+    <errorHandler id="dlqRouteSpecificErrorHandler"
+                  type="DeadLetterChannel"
+                  deadLetterUri="seda:error"/>
 
-        <errorHandler id="dlqRouteSpecificOriginalErrorHandler"
-                      type="DeadLetterChannel"
-                      deadLetterUri="seda:error"
-                      useOriginalMessage="true"/>
+    <errorHandler id="dlqRouteSpecificOriginalErrorHandler"
+                  type="DeadLetterChannel"
+                  deadLetterUri="seda:error"
+                  useOriginalMessage="true"/>
 
-        <route id="myDlqRoute">
-            <from uri="direct:start"/>
-            <setHeader headerName="myHeader">
-                <constant>changed</constant>
-            </setHeader>
-            <bean ref="flakyProcessor"/>
-            <to uri="mock:result"/>
-        </route>
+    <route id="myDlqRoute">
+      <from uri="direct:start"/>
+      <setHeader headerName="myHeader">
+        <constant>changed</constant>
+      </setHeader>
+      <bean ref="flakyProcessor"/>
+      <to uri="mock:result"/>
+    </route>
 
-        <route id="myDlqMultistepRoute">
-            <from uri="direct:multiroute"/>
-            <setHeader headerName="myHeader">
-                <constant>multistep</constant>
-            </setHeader>
-            <inOut uri="seda:flakyroute"/>
-            <setHeader headerName="myHeader">
-                <constant>changed</constant>
-            </setHeader>
-            <to uri="mock:result"/>
-        </route>
+    <route id="myDlqMultistepRoute">
+      <from uri="direct:multiroute"/>
+      <setHeader headerName="myHeader">
+        <constant>multistep</constant>
+      </setHeader>
+      <inOut uri="seda:flakyroute"/>
+      <setHeader headerName="myHeader">
+        <constant>changed</constant>
+      </setHeader>
+      <to uri="mock:result"/>
+    </route>
 
-        <route id="myFlakyRoute">
-            <from uri="seda:flakyroute"/>
-            <setHeader headerName="myHeader">
-                <constant>flaky</constant>
-            </setHeader>
-            <bean ref="flakyProcessor"/>
-        </route>
+    <route id="myFlakyRoute">
+      <from uri="seda:flakyroute"/>
+      <setHeader headerName="myHeader">
+        <constant>flaky</constant>
+      </setHeader>
+      <bean ref="flakyProcessor"/>
+    </route>
 
-        <route id="myDlqMultistepOriginalRoute">
-            <from uri="direct:multirouteOriginal"/>
-            <setHeader headerName="myHeader">
-                <constant>multistep</constant>
-            </setHeader>
-            <inOut uri="seda:flakyrouteOriginal"/>
-            <setHeader headerName="myHeader">
-                <constant>changed</constant>
-            </setHeader>
-            <to uri="mock:result"/>
-        </route>
+    <route id="myDlqMultistepOriginalRoute">
+      <from uri="direct:multirouteOriginal"/>
+      <setHeader headerName="myHeader">
+        <constant>multistep</constant>
+      </setHeader>
+      <inOut uri="seda:flakyrouteOriginal"/>
+      <setHeader headerName="myHeader">
+        <constant>changed</constant>
+      </setHeader>
+      <to uri="mock:result"/>
+    </route>
 
-        <route id="myFlakyRouteOriginal"
-               errorHandlerRef="dlqRouteSpecificOriginalErrorHandler">
-            <from uri="seda:flakyrouteOriginal"/>
-            <setHeader headerName="myHeader">
-                <constant>flaky</constant>
-            </setHeader>
-            <bean ref="flakyProcessor"/>
-        </route>
+    <route id="myFlakyRouteOriginal"
+           errorHandlerRef="dlqRouteSpecificOriginalErrorHandler">
+      <from uri="seda:flakyrouteOriginal"/>
+      <setHeader headerName="myHeader">
+        <constant>flaky</constant>
+      </setHeader>
+      <bean ref="flakyProcessor"/>
+    </route>
 
-        <route id="myDlqSpecificRoute"
-               errorHandlerRef="dlqRouteSpecificErrorHandler">
-            <from uri="seda:routeSpecific"/>
-            <bean ref="flakyProcessor"/>
-            <to uri="mock:result"/>
-        </route>
+    <route id="myDlqSpecificRoute"
+           errorHandlerRef="dlqRouteSpecificErrorHandler">
+      <from uri="seda:routeSpecific"/>
+      <bean ref="flakyProcessor"/>
+      <to uri="mock:result"/>
+    </route>
 
-        <route id="myDlqOriginalRoute"
-               errorHandlerRef="dlqRouteSpecificOriginalErrorHandler">
-            <from uri="direct:useOriginal"/>
-            <setHeader headerName="myHeader">
-                <constant>changed</constant>
-            </setHeader>
-            <bean ref="flakyProcessor"/>
-            <to uri="mock:result"/>
-        </route>
+    <route id="myDlqOriginalRoute"
+           errorHandlerRef="dlqRouteSpecificOriginalErrorHandler">
+      <from uri="direct:useOriginal"/>
+      <setHeader headerName="myHeader">
+        <constant>changed</constant>
+      </setHeader>
+      <bean ref="flakyProcessor"/>
+      <to uri="mock:result"/>
+    </route>
 
-        <route id="myDlqChannelRoute">
-            <from uri="seda:error"/>
-            <to uri="mock:error"/>
-        </route>
-    </camelContext>
+    <route id="myDlqChannelRoute">
+      <from uri="seda:error"/>
+      <to uri="mock:error"/>
+    </route>
+  </camelContext>
 
 </beans>

@@ -15,23 +15,14 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.shared;
+package org.camelcookbook.error.retrycustom;
 
 import org.apache.camel.Exchange;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.camel.Processor;
 
-public class FlakyProcessor {
-    private final static Logger LOG = LoggerFactory.getLogger(FlakyProcessor.class);
-
-    public void doSomething(Exchange exchange) throws FlakyException {
-        if (exchange.getProperty("optimizeBit", false, boolean.class)) {
-            LOG.info("FlakyProcessor works with optimizationBit set");
-            return;
-        }
-
-        if ("KaBoom".equalsIgnoreCase(exchange.getIn().getBody(String.class))) {
-            throw new FlakyException("FlakyProcessor has gone Flaky");
-        }
+public class RetryCustomProcessor implements Processor {
+    @Override
+    public void process(Exchange exchange) {
+        exchange.setProperty("optimizeBit", true);
     }
 }

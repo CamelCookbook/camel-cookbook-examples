@@ -31,6 +31,7 @@ public class FlakyProcessor {
         }
 
         if ("KaBoom".equalsIgnoreCase(exchange.getIn().getBody(String.class))) {
+            LOG.error("Throwing FlakyException");
             throw new FlakyException("FlakyProcessor has gone Flaky");
         }
     }

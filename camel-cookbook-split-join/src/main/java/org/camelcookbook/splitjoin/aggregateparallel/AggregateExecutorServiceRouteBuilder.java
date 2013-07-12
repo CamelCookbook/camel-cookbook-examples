@@ -29,7 +29,7 @@ class AggregateExecutorServiceRouteBuilder extends RouteBuilder {
             .aggregate(header("group"), new SetAggregationStrategy())
                     .completionSize(10).completionTimeout(400)
                     .executorService(Executors.newFixedThreadPool(20))
-                .log("${threadName} - procesessing output")
+                .log("${threadName} - processing output")
                 .delay(500)
                 .to("mock:out")
             .end();

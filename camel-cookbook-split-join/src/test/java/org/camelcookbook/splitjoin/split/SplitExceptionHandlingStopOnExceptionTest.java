@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * when <code>stopOnException</code> is used on the split block.
  */
 public class SplitExceptionHandlingStopOnExceptionTest extends CamelTestSupport {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {

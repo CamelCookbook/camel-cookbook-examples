@@ -27,7 +27,7 @@ class AggregateParallelProcessingRouteBuilder extends RouteBuilder {
             .aggregate(header("group"), new SetAggregationStrategy())
                     .completionSize(10).completionTimeout(400)
                     .parallelProcessing()
-                .log("${threadName} - procesessing output")
+                .log("${threadName} - processing output")
                 .delay(500)
                 .to("mock:out")
             .end();

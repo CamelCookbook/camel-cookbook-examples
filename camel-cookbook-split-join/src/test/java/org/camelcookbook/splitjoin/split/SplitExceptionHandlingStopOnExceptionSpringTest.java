@@ -32,7 +32,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * when <code>stopOnException</code> is used on the split block.
  */
 public class SplitExceptionHandlingStopOnExceptionSpringTest extends CamelSpringTestSupport {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {

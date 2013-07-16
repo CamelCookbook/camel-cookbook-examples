@@ -1,14 +1,9 @@
 package org.camelcookbook.parallelprocessing.threadsdsl;
 
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.parallelprocessing.endpointConsumers.EndpointConsumersSedaRouteBuilder;
 import org.junit.Test;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Test class that exercises parallel threading using the threads DSL.

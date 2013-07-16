@@ -1,11 +1,10 @@
 package org.camelcookbook.parallelprocessing.threadpools;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.ThreadPoolBuilder;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Route that demonstrates using the Threads DSL to process messages using a custom thread pool defined inline.
@@ -14,15 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CustomThreadPoolInlineRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        ExecutorService executorService = Executors.newCachedThreadPool(new ThreadFactory() {
-            private final AtomicInteger threadCounter = new AtomicInteger();
-            @Override
-            public Thread newThread(Runnable r) {
-                Thread thread = new Thread(r);
-                thread.setName("CustomThreadPool[" + threadCounter.incrementAndGet() + "]");
-                return thread;
-            }
-        });
+        CamelContext context = getContext();
+        ExecutorService executorService = new ThreadPoolBuilder(context).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
 
         from("direct:in")
             .log("Received ${body}:${threadName}")

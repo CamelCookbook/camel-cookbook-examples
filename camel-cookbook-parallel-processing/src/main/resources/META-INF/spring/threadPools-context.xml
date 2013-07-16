@@ -25,7 +25,10 @@
        ">
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <threadPool id="customThreadPool" poolSize="5" threadName="CustomThreadPool"/>
+        <threadPool id="customThreadPool"
+                poolSize="5"
+                threadName="CustomThreadPool"
+                maxQueueSize="1000"/>
 
         <route>
             <from uri="direct:in"/>

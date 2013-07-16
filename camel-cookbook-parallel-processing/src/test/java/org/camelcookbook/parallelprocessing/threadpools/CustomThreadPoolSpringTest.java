@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
+
 /**
  * Test class that exercises a custom thread pool using the threads DSL.
  * @author jkorab
@@ -27,15 +29,14 @@ public class CustomThreadPoolSpringTest extends CamelSpringTestSupport {
         mockOut.setResultWaitTime(6000);
 
         for (int i = 0; i < messageCount; i++) {
-            template.asyncCallbackSendBody("direct:in", "Message[" + i + "]", new SynchronizationAdapter() {
-                @Override
-                public void onComplete(Exchange exchange) {
-                    assertTrue(exchange.getIn().getBody(String.class).endsWith("CustomThreadPool"));
-                }
-            });
+            template.asyncSendBody("direct:in", "Message[" + i + "]");
         }
 
         assertMockEndpointsSatisfied();
+        List<Exchange> receivedExchanges = mockOut.getReceivedExchanges();
+        for (Exchange exchange: receivedExchanges) {
+            assertTrue(exchange.getIn().getBody(String.class).endsWith("CustomThreadPool"));
+        }
     }
 
 }

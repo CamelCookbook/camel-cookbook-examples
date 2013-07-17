@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.monitoring.log;
+package org.camelcookbook.monitoring.logeip;
 
-import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class LogSpringTest extends CamelSpringTestSupport {
+public class LogEipTest extends CamelTestSupport {
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/log-context.xml");
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new LogEipRouteBuilder();
     }
 
     @Test
-    public void testLogEIPSpring() throws InterruptedException {
+    public void testLogEip() throws InterruptedException {
         getMockEndpoint("mock:result").expectedMessageCount(1);
 
         template.sendBody("direct:start", "Hello Camel");
@@ -38,7 +37,7 @@ public class LogSpringTest extends CamelSpringTestSupport {
     }
 
     @Test
-    public void testLogEIPLevelSpring() throws InterruptedException {
+    public void testLogEipLevel() throws InterruptedException {
         getMockEndpoint("mock:result").expectedMessageCount(1);
 
         template.sendBody("direct:startLevel", "Hello Camel");
@@ -47,7 +46,7 @@ public class LogSpringTest extends CamelSpringTestSupport {
     }
 
     @Test
-    public void testLogEIPNameSpring() throws InterruptedException {
+    public void testLogEipName() throws InterruptedException {
         getMockEndpoint("mock:result").expectedMessageCount(1);
 
         template.sendBody("direct:startName", "Hello Camel");

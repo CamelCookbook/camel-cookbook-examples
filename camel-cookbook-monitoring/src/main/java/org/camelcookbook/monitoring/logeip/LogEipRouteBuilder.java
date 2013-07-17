@@ -15,28 +15,28 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.monitoring.log;
+package org.camelcookbook.monitoring.logeip;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 
-public class LogRouteBuilder extends RouteBuilder {
+public class LogEipRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         getContext().setUseMDCLogging(true);
 
         from("direct:start")
-                .routeId("LogEIPRoute")
+                .routeId("LogEipRoute")
             .log("Something interesting happened - ${body}")
             .to("mock:result");
 
         from("direct:startLevel")
-                .routeId("LogEIPInfoLevelRoute")
+                .routeId("LogEipInfoLevelRoute")
             .log(LoggingLevel.INFO, "Something informational happened - ${body}")
             .to("mock:result");
 
         from("direct:startName")
-                .routeId("LogEIPCustomLogNameRoute")
+                .routeId("LogEipCustomLogNameRoute")
             .log(LoggingLevel.INFO, "MyName", "Something myName happened - ${body}")
             .to("mock:result");
     }

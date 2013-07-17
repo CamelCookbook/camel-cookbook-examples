@@ -27,20 +27,20 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/spring"
                 useMDCLogging="true">
-    <route id="LogEIPSpringRoute">
+    <route id="LogEipSpringRoute">
       <from uri="direct:start"/>
       <log message="Something interesting happened - ${body}"/>
       <to uri="mock:result"/>
     </route>
 
-    <route id="LogEIPInfoLevelSpringRoute">
+    <route id="LogEipInfoLevelSpringRoute">
       <from uri="direct:startLevel"/>
       <log loggingLevel="INFO"
            message="Something informational happened - ${body}"/>
       <to uri="mock:result"/>
     </route>
 
-    <route id="LogEIPCustomLogNameSpringRoute">
+    <route id="LogEipCustomLogNameSpringRoute">
       <from uri="direct:startName"/>
       <log loggingLevel="INFO"
            logName="MyName"

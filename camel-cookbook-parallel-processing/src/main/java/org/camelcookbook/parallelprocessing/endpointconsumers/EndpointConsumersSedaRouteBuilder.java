@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.parallelprocessing.endpointConsumers;
+package org.camelcookbook.parallelprocessing.endpointconsumers;
 
 import org.apache.camel.builder.RouteBuilder;
 

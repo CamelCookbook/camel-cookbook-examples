@@ -32,7 +32,7 @@
   <properties>
     <application-name>Camel Cookbook Examples</application-name>
 
-    <camel-version>2.11.0</camel-version>
+    <camel-version>2.11.1</camel-version>
 
     <activemq-version>5.8.0</activemq-version>
     <aries-blueprint-cm-version>1.0.0</aries-blueprint-cm-version>

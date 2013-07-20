@@ -39,7 +39,8 @@ public class CustomThreadPoolSpringTest extends CamelSpringTestSupport {
     @Test
     public void testProcessedByCustomThreadPool() throws InterruptedException {
         final int messageCount = 50;
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
+
+        final MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(messageCount);
         mockOut.setResultWaitTime(6000);
 

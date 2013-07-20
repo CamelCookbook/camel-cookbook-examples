@@ -28,7 +28,7 @@
     <threadPool id="customThreadPool"
                 poolSize="5"
                 threadName="CustomThreadPool"
-                maxQueueSize="1000"/>
+                maxQueueSize="100"/>
 
     <route>
       <from uri="direct:in"/>

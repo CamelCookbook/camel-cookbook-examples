@@ -22,7 +22,6 @@ import org.apache.camel.builder.RouteBuilder;
 /**
  * Route that demonstrates using the Threads DSL to process messages using a custom thread pool defined in the
  * Camel registry.
- * @author jkorab
  */
 public class CustomThreadPoolRefRouteBuilder extends RouteBuilder {
     @Override

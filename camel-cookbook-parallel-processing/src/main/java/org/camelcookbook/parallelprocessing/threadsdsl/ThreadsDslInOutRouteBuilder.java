@@ -19,11 +19,8 @@ package org.camelcookbook.parallelprocessing.threadsdsl;
 
 import org.apache.camel.builder.RouteBuilder;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Route that demonstrates using the Threads DSL to process messages from a single threaded endpoint concurrently.
- * @author jkorab
  */
 public class ThreadsDslInOutRouteBuilder extends RouteBuilder {
     @Override

@@ -21,7 +21,6 @@ import org.apache.camel.builder.RouteBuilder;
 
 /**
  * Route that demonstrates using the Threads DSL to process messages from a single threaded endpoint concurrently.
- * @author jkorab
  */
 public class ThreadsDslRouteBuilder extends RouteBuilder {
     @Override

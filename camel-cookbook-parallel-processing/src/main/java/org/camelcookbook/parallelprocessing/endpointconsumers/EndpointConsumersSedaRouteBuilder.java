@@ -21,7 +21,6 @@ import org.apache.camel.builder.RouteBuilder;
 
 /**
  * Route that demonstrates increasing the number of consumers on a SEDA endpoint.
- * @author jkorab
  */
 public class EndpointConsumersSedaRouteBuilder extends RouteBuilder {
     @Override

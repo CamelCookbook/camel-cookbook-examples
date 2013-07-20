@@ -17,15 +17,14 @@
 
 package org.camelcookbook.parallelprocessing.threadpools;
 
+import java.util.concurrent.ExecutorService;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolBuilder;
 
-import java.util.concurrent.ExecutorService;
-
 /**
  * Route that demonstrates using the Threads DSL to process messages using a custom thread pool defined inline.
- * @author jkorab
  */
 public class CustomThreadPoolInlineRouteBuilder extends RouteBuilder {
     @Override

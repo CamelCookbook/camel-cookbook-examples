@@ -19,9 +19,6 @@ package org.camelcookbook.parallelprocessing.asyncrequest;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * @author jkorab
- */
 public class SlowProcessingRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

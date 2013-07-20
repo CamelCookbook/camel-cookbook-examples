@@ -20,8 +20,11 @@ package org.camelcookbook.parallelprocessing.threadsdsl;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Message;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.spi.Synchronization;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
@@ -45,10 +48,37 @@ public class ThreadsDslInOutTest extends CamelTestSupport {
 
         for (int i = 0; i < messageCount; i++) {
             Future<Object> future = template.asyncRequestBody("direct:in", "Message[" + i + "]");
-            // here we get ask the Future to return to us the response, set by the thread assigned by the
+            // here we ask the Future to return to us the response set by the thread assigned by the
             // threads() DSL
             String response = (String) future.get();
-            assertTrue(response.equals("Processed"));
+            assertEquals("Processed", response);
+        }
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testParallelConsumptionCallback() throws InterruptedException, ExecutionException {
+        final int messageCount = 10;
+
+        final MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.setExpectedMessageCount(messageCount);
+        mockOut.setResultWaitTime(5000);
+
+        for (int i = 0; i < messageCount; i++) {
+            Future<Object> future = template.asyncCallbackRequestBody("direct:in", "Message[" + i + "]",
+                    new Synchronization() {
+                        @Override
+                        public void onComplete(Exchange exchange) {
+                            final Message response = exchange.hasOut() ? exchange.getOut() : exchange.getIn();
+                            assertEquals("Processed", response.getBody(String.class));
+                        }
+
+                        @Override
+                        public void onFailure(Exchange exchange) {
+                            fail();
+                        }
+                    });
         }
 
         assertMockEndpointsSatisfied();

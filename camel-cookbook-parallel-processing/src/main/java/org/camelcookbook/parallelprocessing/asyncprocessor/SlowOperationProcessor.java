@@ -34,13 +34,15 @@ public class SlowOperationProcessor implements AsyncProcessor {
     @Override
     public boolean process(final Exchange exchange, final AsyncCallback asyncCallback) {
         final boolean completesSynchronously = false;
-        final Processor processor = this;
+
         backgroundExecutor.submit(new Runnable() {
             @Override
             public void run() {
                 log.info("Running operation asynchronously");
                 try {
-                    processor.process(exchange);
+                    log.info("Doing something slowly");
+                    Thread.sleep(200); // this runs slowly
+                    log.info("...done");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -49,17 +51,12 @@ public class SlowOperationProcessor implements AsyncProcessor {
                 asyncCallback.done(completesSynchronously);
             }
         });
+
         return completesSynchronously;
     }
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        try {
-            log.info("Doing something slowly");
-            Thread.sleep(200); // this runs slowly
-            log.info("...done");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        throw new IllegalStateException("Should never be called");
     }
 }

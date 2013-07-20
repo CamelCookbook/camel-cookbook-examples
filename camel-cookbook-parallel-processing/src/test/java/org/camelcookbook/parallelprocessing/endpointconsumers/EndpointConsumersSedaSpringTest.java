@@ -25,7 +25,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Test class that exercises parallel threads in Seda.
- * @author jkorab
  */
 public class EndpointConsumersSedaSpringTest extends CamelSpringTestSupport {
 
@@ -47,5 +46,4 @@ public class EndpointConsumersSedaSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

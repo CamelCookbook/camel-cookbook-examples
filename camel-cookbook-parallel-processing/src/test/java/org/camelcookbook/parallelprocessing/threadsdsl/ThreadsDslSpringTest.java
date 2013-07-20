@@ -17,7 +17,6 @@
 
 package org.camelcookbook.parallelprocessing.threadsdsl;
 
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
@@ -26,7 +25,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Test class that exercises parallel threading using the threads DSL.
- * @author jkorab
  */
 public class ThreadsDslSpringTest extends CamelSpringTestSupport {
 
@@ -48,5 +46,4 @@ public class ThreadsDslSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

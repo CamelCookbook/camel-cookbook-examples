@@ -26,7 +26,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Test class that exercises parallel threading using the threads DSL.
- * @author jkorab
  */
 public class AsyncProcessorSpringTest extends CamelSpringTestSupport {
     final int messageCount = 10;

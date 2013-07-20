@@ -17,6 +17,9 @@
 
 package org.camelcookbook.parallelprocessing.asyncrequest;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spi.Synchronization;
@@ -25,12 +28,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-
 /**
  * Test class that exercises parallel threading using the threads DSL.
- * @author jkorab
  */
 public class AsyncRequestTest extends CamelTestSupport {
 
@@ -44,7 +43,7 @@ public class AsyncRequestTest extends CamelTestSupport {
     @Test
     public void testAsyncRequest() throws InterruptedException, ExecutionException {
         Future<Object> future = template.asyncRequestBody("direct:processInOut", "SomePayload");
-        while(!future.isDone()) {
+        while (!future.isDone()) {
             log.info("Doing something else while processing...");
             Thread.sleep(200);
         }
@@ -66,11 +65,10 @@ public class AsyncRequestTest extends CamelTestSupport {
                 fail();
             }
         });
-        while(!future.isDone()) {
+        while (!future.isDone()) {
             log.info("Doing something else while processing...");
             Thread.sleep(200);
         }
         log.info("Received a response");
     }
-
 }

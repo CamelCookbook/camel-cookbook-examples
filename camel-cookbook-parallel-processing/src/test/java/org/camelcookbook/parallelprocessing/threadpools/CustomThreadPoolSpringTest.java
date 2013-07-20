@@ -17,19 +17,17 @@
 
 package org.camelcookbook.parallelprocessing.threadpools;
 
+import java.util.List;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.support.SynchronizationAdapter;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.List;
-
 /**
  * Test class that exercises a custom thread pool using the threads DSL.
- * @author jkorab
  */
 public class CustomThreadPoolSpringTest extends CamelSpringTestSupport {
 
@@ -51,9 +49,8 @@ public class CustomThreadPoolSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
         List<Exchange> receivedExchanges = mockOut.getReceivedExchanges();
-        for (Exchange exchange: receivedExchanges) {
+        for (Exchange exchange : receivedExchanges) {
             assertTrue(exchange.getIn().getBody(String.class).endsWith("CustomThreadPool"));
         }
     }
-
 }

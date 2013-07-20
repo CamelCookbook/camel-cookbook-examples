@@ -17,17 +17,16 @@
 
 package org.camelcookbook.parallelprocessing.threadsdsl;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-
 /**
  * Test class that exercises InOut messaging that uses the threads DSL.
- * @author jkorab
  */
 public class ThreadsDslInOutTest extends CamelTestSupport {
 
@@ -53,6 +52,4 @@ public class ThreadsDslInOutTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
-
 }

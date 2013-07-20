@@ -24,7 +24,6 @@ import org.junit.Test;
 
 /**
  * Test class that exercises parallel threading using the threads DSL.
- * @author jkorab
  */
 public class ThreadsDslTest extends CamelTestSupport {
 
@@ -46,6 +45,4 @@ public class ThreadsDslTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
-
 }

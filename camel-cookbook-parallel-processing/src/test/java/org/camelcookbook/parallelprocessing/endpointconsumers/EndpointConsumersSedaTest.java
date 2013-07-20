@@ -24,7 +24,6 @@ import org.junit.Test;
 
 /**
  * Test class that exercises parallel threads in Seda.
- * @author jkorab
  */
 public class EndpointConsumersSedaTest extends CamelTestSupport {
 
@@ -46,5 +45,4 @@ public class EndpointConsumersSedaTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

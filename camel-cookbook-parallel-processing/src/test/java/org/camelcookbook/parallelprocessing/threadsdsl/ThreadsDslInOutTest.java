@@ -38,7 +38,8 @@ public class ThreadsDslInOutTest extends CamelTestSupport {
     @Test
     public void testParallelConsumption() throws InterruptedException, ExecutionException {
         final int messageCount = 10;
-        MockEndpoint mockOut = getMockEndpoint("mock:out");
+
+        final MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(messageCount);
         mockOut.setResultWaitTime(5000);
 

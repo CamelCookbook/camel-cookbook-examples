@@ -24,20 +24,20 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <threadPoolProfile id="customThreadPoolProfile" poolSize="5"/>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <threadPoolProfile id="customThreadPoolProfile" poolSize="5"/>
 
-        <route id="usesThreadPoolProfile">
-            <from uri="direct:in"/>
-            <log message="Received ${body}:${threadName}"/>
-            <threads executorServiceRef="customThreadPoolProfile">
-                <log message="Processing ${body}:${threadName}"/>
-                <transform>
-                    <simple>${threadName}</simple>
-                </transform>
-                <to uri="mock:out"/>
-            </threads>
-        </route>
-    </camelContext>
+    <route id="usesThreadPoolProfile">
+      <from uri="direct:in"/>
+      <log message="Received ${body}:${threadName}"/>
+      <threads executorServiceRef="customThreadPoolProfile">
+        <log message="Processing ${body}:${threadName}"/>
+        <transform>
+          <simple>${threadName}</simple>
+        </transform>
+        <to uri="mock:out"/>
+      </threads>
+    </route>
+  </camelContext>
 
 </beans>

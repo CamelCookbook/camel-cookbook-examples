@@ -24,15 +24,15 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="seda:in?concurrentConsumers=10"/>
-            <delay>
-                <constant>200</constant>
-            </delay>
-            <log message="Processing ${body}:${threadName}"/>
-            <to uri="mock:out"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="seda:in?concurrentConsumers=10"/>
+      <delay>
+        <constant>200</constant>
+      </delay>
+      <log message="Processing ${body}:${threadName}"/>
+      <to uri="mock:out"/>
+    </route>
+  </camelContext>
 
 </beans>

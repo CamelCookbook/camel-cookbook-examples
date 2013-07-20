@@ -24,35 +24,36 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="mySlowProcessor" class="org.camelcookbook.parallelprocessing.asyncprocessor.SlowOperationProcessor"/>
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="seda:in"/>
-            <to uri="direct:in"/>
-            <log message="Processed by:${threadName}"/>
-        </route>
+  <bean id="mySlowProcessor" class="org.camelcookbook.parallelprocessing.asyncprocessor.SlowOperationProcessor"/>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="seda:in"/>
+      <to uri="direct:in"/>
+      <log message="Processed by:${threadName}"/>
+    </route>
 
-        <route>
-            <from uri="direct:in"/>
-            <threads>
-                <delay>
-                    <constant>200</constant> <!-- simulate slow route -->
-                </delay>
-                <log message="Processing ${body}:${threadName}"/>
-                <process ref="mySlowProcessor"/>
-                <log message="Completed ${body}:${threadName}"/>
-                <to uri="mock:out"/>
-            </threads>
-        </route>
+    <route>
+      <from uri="direct:in"/>
+      <threads>
+        <delay>
+          <constant>200</constant>
+          <!-- simulate slow route -->
+        </delay>
+        <log message="Processing ${body}:${threadName}"/>
+        <process ref="mySlowProcessor"/>
+        <log message="Completed ${body}:${threadName}"/>
+        <to uri="mock:out"/>
+      </threads>
+    </route>
 
-        <route>
-            <from uri="direct:sync"/>
-            <log message="Processing ${body}:${threadName}"/>
-            <process ref="mySlowProcessor"/>
-            <log message="Completed ${body}:${threadName}"/>
-            <to uri="mock:out"/>
-        </route>
+    <route>
+      <from uri="direct:sync"/>
+      <log message="Processing ${body}:${threadName}"/>
+      <process ref="mySlowProcessor"/>
+      <log message="Completed ${body}:${threadName}"/>
+      <to uri="mock:out"/>
+    </route>
 
-    </camelContext>
+  </camelContext>
 
 </beans>

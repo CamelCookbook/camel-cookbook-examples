@@ -24,18 +24,19 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:in"/>
-            <log message="Received ${body}:${threadName}"/>
-            <threads>
-                <log message="Processing ${body}:${threadName}"/>
-                <delay>
-                    <constant>200</constant> <!-- simulate slow route -->
-                </delay>
-                <to uri="mock:out"/>
-            </threads>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:in"/>
+      <log message="Received ${body}:${threadName}"/>
+      <threads>
+        <log message="Processing ${body}:${threadName}"/>
+        <delay>
+          <constant>200</constant>
+          <!-- simulate slow route -->
+        </delay>
+        <to uri="mock:out"/>
+      </threads>
+    </route>
+  </camelContext>
 
 </beans>

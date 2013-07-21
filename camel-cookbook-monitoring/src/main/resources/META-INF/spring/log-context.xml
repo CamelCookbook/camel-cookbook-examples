@@ -28,7 +28,13 @@
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:start"/>
-      <to uri="log:myLog?showAll=true"/>
+      <to uri="log:myLog"/>
+      <to uri="mock:result"/>
+    </route>
+
+    <route>
+      <from uri="direct:startAll"/>
+      <to uri="log:myLog?level=INFO&amp;showAll=true&amp;multiline=true"/>
       <to uri="mock:result"/>
     </route>
   </camelContext>

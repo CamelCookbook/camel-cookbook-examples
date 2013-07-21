@@ -36,4 +36,13 @@ public class LogSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
+
+    @Test
+    public void testLogShowAllSpring() throws InterruptedException {
+        getMockEndpoint("mock:result").expectedMessageCount(1);
+
+        template.sendBody("direct:startAll", "Hello Camel");
+
+        assertMockEndpointsSatisfied();
+    }
 }

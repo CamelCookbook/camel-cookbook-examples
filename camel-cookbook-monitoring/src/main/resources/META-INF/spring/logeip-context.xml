@@ -25,8 +25,7 @@
          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-  <camelContext xmlns="http://camel.apache.org/schema/spring"
-                useMDCLogging="true">
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route id="LogEipSpringRoute">
       <from uri="direct:start"/>
       <log message="Something interesting happened - ${body}"/>

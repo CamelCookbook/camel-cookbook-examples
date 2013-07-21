@@ -23,8 +23,6 @@ import org.apache.camel.builder.RouteBuilder;
 public class LogEipRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        getContext().setUseMDCLogging(true);
-
         from("direct:start")
                 .routeId("LogEipRoute")
             .log("Something interesting happened - ${body}")

@@ -28,7 +28,13 @@
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:start"/>
-      <to uri="log:Throughput?groupSize=10"/>
+      <to uri="log:throughput?groupSize=10"/>
+      <to uri="mock:result"/>
+    </route>
+
+    <route>
+      <from uri="direct:startInterval"/>
+      <to uri="log:throughput?groupInterval=1000&amp;groupDelay=500"/>
       <to uri="mock:result"/>
     </route>
   </camelContext>

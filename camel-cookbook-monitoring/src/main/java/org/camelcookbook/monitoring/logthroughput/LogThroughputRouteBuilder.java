@@ -23,7 +23,11 @@ public class LogThroughputRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("log:Throughput?groupSize=10")
+            .to("log:throughput?groupSize=10")
+            .to("mock:result");
+
+        from("direct:startInterval")
+            .to("log:throughput?groupInterval=1000&groupDelay=500")
             .to("mock:result");
     }
 }

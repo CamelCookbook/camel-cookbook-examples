@@ -30,10 +30,26 @@ public class LogThroughputTest extends CamelTestSupport {
 
     @Test
     public void testLogThroughput() throws InterruptedException {
-        getMockEndpoint("mock:result").expectedMessageCount(20);
+        final int messageCount = 20;
 
-        for (int i = 0; i < 20; i++) {
+        getMockEndpoint("mock:result").expectedMessageCount(messageCount);
+
+        for (int i = 0; i < messageCount; i++) {
             template.sendBody("direct:start", "Hello Camel " + i);
+            Thread.sleep(100);
+        }
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testLogThroughputInterval() throws InterruptedException {
+        final int messageCount = 50;
+
+        getMockEndpoint("mock:result").expectedMessageCount(messageCount);
+
+        for (int i = 0; i < messageCount; i++) {
+            template.sendBody("direct:startInterval", "Hello Camel " + i);
             Thread.sleep(100);
         }
 

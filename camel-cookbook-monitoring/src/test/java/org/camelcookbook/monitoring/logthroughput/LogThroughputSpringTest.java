@@ -29,11 +29,27 @@ public class LogThroughputSpringTest extends CamelSpringTestSupport {
     }
 
     @Test
-    public void testLogSpring() throws InterruptedException {
-        getMockEndpoint("mock:result").expectedMessageCount(20);
+    public void testLogThroughputSpring() throws InterruptedException {
+        final int messageCount = 20;
 
-        for (int i = 0; i < 20; i++) {
+        getMockEndpoint("mock:result").expectedMessageCount(messageCount);
+
+        for (int i = 0; i < messageCount; i++) {
             template.sendBody("direct:start", "Hello Camel " + i);
+            Thread.sleep(100);
+        }
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testLogThroughputIntervalSpring() throws InterruptedException {
+        final int messageCount = 50;
+
+        getMockEndpoint("mock:result").expectedMessageCount(messageCount);
+
+        for (int i = 0; i < messageCount; i++) {
+            template.sendBody("direct:startInterval", "Hello Camel " + i);
             Thread.sleep(100);
         }
 

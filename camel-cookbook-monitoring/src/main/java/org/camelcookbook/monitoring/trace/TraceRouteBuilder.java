@@ -18,11 +18,20 @@
 package org.camelcookbook.monitoring.trace;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.processor.interceptor.Tracer;
 
 public class TraceRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         getContext().setTracing(true);
+
+        Tracer tracer = new Tracer();
+        tracer.setLogName("MyTracerLog");
+
+        tracer.getDefaultTraceFormatter().setShowProperties(true);
+        tracer.getDefaultTraceFormatter().setShowHeaders(false);
+
+        getContext().addInterceptStrategy(tracer);
 
         from("direct:start")
             .setBody(simple("Tracing ${body}"))

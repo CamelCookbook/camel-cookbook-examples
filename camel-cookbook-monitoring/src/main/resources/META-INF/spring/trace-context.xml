@@ -24,6 +24,14 @@
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
+  <bean id="camelTracer" class="org.apache.camel.processor.interceptor.Tracer">
+    <property name="logName" value="MyTracerLog"/>
+  </bean>
+
+  <bean id="traceFormatter" class="org.apache.camel.processor.interceptor.DefaultTraceFormatter">
+    <property name="showHeaders" value="false"/>
+    <property name="showProperties" value="true"/>
+  </bean>
 
   <camelContext trace="true" xmlns="http://camel.apache.org/schema/spring">
     <route>

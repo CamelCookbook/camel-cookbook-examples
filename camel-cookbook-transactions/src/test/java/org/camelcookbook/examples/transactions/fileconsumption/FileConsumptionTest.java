@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 
 /**
- * @author jkorab
+ * Demonstrates the use of a Synchronization to change state depending on whether an Exchange completed or failed.
  */
 public class FileConsumptionTest extends CamelTestSupport {
     private static Logger log = LoggerFactory.getLogger(FileConsumptionTest.class);

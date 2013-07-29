@@ -35,6 +35,15 @@
         </onCompletion>
 
         <route>
+            <from uri="direct:onCompletion"/>
+            <onCompletion>
+                <log message="onCompletion triggered: ${threadName}"/>
+                <to uri="mock:completed"/>
+            </onCompletion>
+            <log message="Processing message: ${threadName}"/>
+        </route>
+
+        <route>
             <from uri="direct:noOnCompletion"/>
             <log message="Original thread: ${threadName}"/>
             <choice>
@@ -46,7 +55,7 @@
         </route>
 
         <route>
-            <from uri="direct:onCompletion"/>
+            <from uri="direct:onCompletionFailure"/>
             <onCompletion onFailureOnly="true">
                 <log message="onFailureOnly thread: ${threadName}"/>
                 <to uri="mock:failed"/>
@@ -66,7 +75,30 @@
                 <log message="onFailureOnly thread: ${threadName}"/>
                 <to uri="mock:completed"/>
             </onCompletion>
-            <to uri="direct:onCompletion"/> <!-- calls out to route with onCompletion set -->
+            <to uri="direct:onCompletionFailure"/> <!-- calls out to route with onCompletion set -->
+        </route>
+
+        <route>
+            <from uri="direct:onCompletionChoice"/>
+            <onCompletion>
+                <log message="onCompletion thread: ${threadName}"/>
+                <choice>
+                    <when>
+                        <simple>${exception} == null</simple>
+                        <to uri="mock:completed"/>
+                    </when>
+                    <otherwise>
+                        <to uri="mock:failed"/>
+                    </otherwise>
+                </choice>
+            </onCompletion>
+            <log message="Original thread: ${threadName}"/>
+            <choice>
+                <when>
+                    <simple>${body} contains 'explode'</simple>
+                    <throwException ref="illegalArgumentException"/>
+                </when>
+            </choice>
         </route>
 
     </camelContext>

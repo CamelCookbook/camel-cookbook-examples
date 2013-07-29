@@ -41,7 +41,18 @@ public class OnCompletionSpringTest extends CamelSpringTestSupport {
     }
 
     @Test
-    public void testOnCompletionNotDefinedAtRouteLevel() throws InterruptedException {
+    public void testOnCompletionFailureConditional() throws InterruptedException {
+        MockEndpoint mockFailed = getMockEndpoint("mock:failed");
+        mockFailed.setExpectedMessageCount(1);
+        mockFailed.message(0).body().isEqualTo("this message should explode");
+
+        template.asyncSendBody("direct:onCompletionFailureConditional", "this message should explode");
+
+        assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testOnCompletionGlobal() throws InterruptedException {
         MockEndpoint mockGlobal = getMockEndpoint("mock:global");
         mockGlobal.setExpectedMessageCount(1);
         mockGlobal.message(0).body().isEqualTo("this message should explode");

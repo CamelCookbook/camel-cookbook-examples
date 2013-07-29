@@ -38,6 +38,19 @@ public class OnCompletionRouteBuilder extends RouteBuilder {
                     .throwException(new IllegalArgumentException("Exchange caused explosion"))
             .endChoice();
 
+        from("direct:onCompletionFailureConditional")
+            .onCompletion()
+                    .onFailureOnly()
+                    .onWhen(simple("${exception.class} == 'java.lang.IllegalArgumentException'"))
+                .log("onFailureOnly thread: ${threadName}: ${exception.class}")
+                .to("mock:failed")
+            .end()
+            .log("Original thread: ${threadName}")
+            .choice()
+                .when(simple("${body} contains 'explode'"))
+                    .throwException(new IllegalArgumentException("Exchange caused explosion"))
+            .endChoice();
+
         from("direct:chained")
             .log("chained")
             .onCompletion().onCompleteOnly()

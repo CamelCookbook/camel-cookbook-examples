@@ -70,6 +70,24 @@
         </route>
 
         <route>
+            <from uri="direct:onCompletionFailureConditional"/>
+            <onCompletion onFailureOnly="true">
+                <onWhen>
+                    <simple>${exception.class} == 'java.lang.IllegalArgumentException'</simple>
+                </onWhen>
+                <log message="onFailureOnly thread: ${threadName}"/>
+                <to uri="mock:failed"/>
+            </onCompletion>
+            <log message="Original thread: ${threadName}"/>
+            <choice>
+                <when>
+                    <simple>${body} contains 'explode'</simple>
+                    <throwException ref="illegalArgumentException"/>
+                </when>
+            </choice>
+        </route>
+
+        <route>
             <from uri="direct:chained"/>
             <onCompletion onCompleteOnly="true">
                 <log message="onFailureOnly thread: ${threadName}"/>

@@ -59,7 +59,7 @@ public class OnCompletionTest extends CamelTestSupport {
 
     @Test
     public void testOnCompletionGlobal() throws InterruptedException {
-        MockEndpoint mockGlobal = getMockEndpoint("mock:globalFailure");
+        MockEndpoint mockGlobal = getMockEndpoint("mock:global");
         mockGlobal.setExpectedMessageCount(1);
         mockGlobal.message(0).body().isEqualTo("this message should explode");
 

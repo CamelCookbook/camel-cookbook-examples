@@ -6,19 +6,22 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 /**
- * Tests that demonstrate the behavior of idempotent consumption.
+ * Tests that demonstrate the behavior of idempotent consumption when processing duplicates.
  */
-public class IdempotentConsumerTest extends CamelTestSupport {
+public class IdempotentConsumerSkipDuplicateTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new IdempotentConsumerRouteBuilder();
+        return new IdempotentConsumerSkipDuplicateRouteBuilder();
     }
 
     @Test
-    public void testReplayOfSameMessageWillNotTriggerCall() throws InterruptedException {
+    public void testReplayOfSameMessageWillTriggerDuplicateEndpoint() throws InterruptedException {
         MockEndpoint mockWs = getMockEndpoint("mock:ws");
         mockWs.setExpectedMessageCount(1);
+
+        MockEndpoint mockDuplicate = getMockEndpoint("mock:duplicate");
+        mockDuplicate.setExpectedMessageCount(1);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(2);

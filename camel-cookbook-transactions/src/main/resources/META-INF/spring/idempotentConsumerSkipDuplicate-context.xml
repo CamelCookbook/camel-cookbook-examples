@@ -30,10 +30,19 @@
         <route>
             <from uri="direct:in"/>
             <log message="Received message ${header[messageId]}"/>
-            <idempotentConsumer messageIdRepositoryRef="wsIdempotentRepository">
+            <idempotentConsumer messageIdRepositoryRef="wsIdempotentRepository" skipDuplicate="false">
                 <header>messageId</header>
-                <log message="Invoking WS"/>
-                <to uri="mock:ws"/>
+                <choice>
+                    <when>
+                        <property>CamelDuplicateMessage</property>
+                        <log message="Duplicate"/>
+                        <to uri="mock:duplicate"/>
+                    </when>
+                    <otherwise>
+                        <log message="Invoking WS"/>
+                        <to uri="mock:ws"/>
+                    </otherwise>
+                </choice>
             </idempotentConsumer>
             <log message="Completing"/>
             <to uri="mock:out"/>

@@ -1,25 +1,28 @@
 package org.camelcookbook.examples.transactions.idempotentconsumer;
 
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
 
 /**
- * Tests that demonstrate the behavior of idempotent consumption.
+ * Tests that demonstrate the behavior of idempotent consumption when processing duplicates.
  */
-public class IdempotentConsumerSpringTest extends CamelSpringTestSupport {
+public class IdempotentConsumerSkipDuplicateSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/idempotentConsumer-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/idempotentConsumerSkipDuplicate-context.xml");
     }
 
     @Test
-    public void testReplayOfSameMessageWillNotTriggerCall() throws InterruptedException {
+    public void testReplayOfSameMessageWillTriggerDuplicateEndpoint() throws InterruptedException {
         MockEndpoint mockWs = getMockEndpoint("mock:ws");
         mockWs.setExpectedMessageCount(1);
+
+        MockEndpoint mockDuplicate = getMockEndpoint("mock:duplicate");
+        mockDuplicate.setExpectedMessageCount(1);
 
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(2);
@@ -29,5 +32,4 @@ public class IdempotentConsumerSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

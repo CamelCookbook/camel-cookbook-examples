@@ -39,6 +39,8 @@
     <commons-lang-version>2.5</commons-lang-version>
     <spring-version>3.1.4.RELEASE</spring-version>
     <xbean.version>3.13</xbean.version>
+    <h2-version>1.3.167</h2-version>
+    <c3p0-version>0.9.1.2</c3p0-version>
 
     <slf4j-version>1.7.5</slf4j-version>
     <log4j-version>1.2.17</log4j-version>
@@ -212,7 +214,30 @@
         <version>${commons-lang-version}</version>
       </dependency>
 
-      <!-- testing dependencies -->
+      <!-- JDBC -->
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-sql</artifactId>
+          <version>${camel-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2-version}</version>
+      </dependency>
+      <dependency>
+          <groupId>c3p0</groupId>
+          <artifactId>c3p0</artifactId>
+          <version>${c3p0-version}</version>
+      </dependency>
+
+
+        <!-- testing dependencies -->
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-test</artifactId>

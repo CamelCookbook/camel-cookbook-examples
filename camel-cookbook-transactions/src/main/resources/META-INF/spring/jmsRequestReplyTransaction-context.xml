@@ -39,6 +39,13 @@
         <constructor-arg value="Exchange caused explosion"/>
     </bean>
 
+    <!-- this must be defined, otherwise a transacted block will pick up the only policy in the context,
+    which is PROPAGATION_NOT_SUPPORTED -->
+    <bean id="PROPAGATION_SUPPORTED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+        <property name="propagationBehaviorName" value="PROPAGATION_NOT_SUPPORTED"/>
+    </bean>
+
     <bean id="PROPAGATION_NOT_SUPPORTED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
         <property name="transactionManager" ref="jmsTransactionManager"/>
         <property name="propagationBehaviorName" value="PROPAGATION_NOT_SUPPORTED"/>
@@ -48,9 +55,9 @@
 
         <route>
             <from uri="jms:instructions"/>
-            <transacted/>
+            <transacted/> <!-- uses PROPAGATION_SUPPORTED -->
             <log message="Processing message: ${body}"/>
-            <enrich uri="jms:backendService"/> <!-- this send is transacted, so the message should not be sent -->
+            <enrich uri="direct:toBackendService"/>
             <choice>
                 <when>
                     <simple>${body} contains 'explode'</simple>

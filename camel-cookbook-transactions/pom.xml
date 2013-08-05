@@ -50,6 +50,10 @@
             <artifactId>camel-sql</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jdbc</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
@@ -58,8 +62,8 @@
             <artifactId>h2</artifactId>
         </dependency>
         <dependency>
-            <groupId>c3p0</groupId>
-            <artifactId>c3p0</artifactId>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions</artifactId>
         </dependency>
 
         <dependency>

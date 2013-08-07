@@ -83,7 +83,7 @@ public class JmxNamingPatternTest {
         template.sendBody("direct:start", "Camel Rocks!");
 
         final String managementName = context.getManagementName();
-        LOG.info("managementName = {}", managementName);
+        LOG.info("managementName = {}; name = {}", managementName, context.getName());
         assertTrue(managementName.startsWith("CustomName"));
 
         // Get the Camel Context MBean

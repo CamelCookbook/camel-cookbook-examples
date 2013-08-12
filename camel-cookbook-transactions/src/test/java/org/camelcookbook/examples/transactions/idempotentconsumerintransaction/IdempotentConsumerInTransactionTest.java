@@ -2,6 +2,8 @@ package org.camelcookbook.examples.transactions.idempotentconsumerintransaction;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.component.sql.SqlComponent;
@@ -84,4 +86,52 @@ public class IdempotentConsumerInTransactionTest extends CamelTestSupport {
         // even though the transaction rolled back, the repository should still contain an entry for this messageId
         assertTrue(idempotentRepository.contains("foo"));
     }
+
+    @Test
+    public void testTransactedExceptionNotThrown() throws InterruptedException {
+        String message = "this message will be OK";
+        assertEquals(0, auditLogDao.getAuditCount(message));
+
+        MockEndpoint mockCompleted = getMockEndpoint("mock:out");
+        mockCompleted.setExpectedMessageCount(1);
+
+        template.sendBodyAndHeader("direct:transacted", message, "messageId", "foo");
+
+        assertMockEndpointsSatisfied();
+        assertEquals(1, auditLogDao.getAuditCount(message)); // the insert was successful
+
+        // even though the transaction rolled back, the repository should still contain an entry for this messageId
+        assertTrue(idempotentRepository.contains("foo"));
+    }
+
+    @Test
+    public void testWebserviceExceptionRollsBackTransactionAndIdempotentRepository() throws InterruptedException {
+        String message = "this message will be OK";
+        assertEquals(0, auditLogDao.getAuditCount(message));
+
+        MockEndpoint mockCompleted = getMockEndpoint("mock:out");
+        mockCompleted.setExpectedMessageCount(0);
+
+        MockEndpoint mockWs = getMockEndpoint("mock:ws");
+        mockWs.whenAnyExchangeReceived(new Processor() {
+            @Override
+            public void process(Exchange exchange) throws Exception {
+                throw new IllegalStateException("ws is down");
+            }
+        });
+
+        try {
+            template.sendBodyAndHeader("direct:transacted", message, "messageId", "foo");
+            fail();
+        } catch (CamelExecutionException cee) {
+            assertEquals("ws is down", ExceptionUtils.getRootCause(cee).getMessage());
+        }
+
+        assertMockEndpointsSatisfied();
+        assertEquals(0, auditLogDao.getAuditCount(message)); // the insert was successful
+
+        // the repository has not seen this messageId
+        assertTrue(!idempotentRepository.contains("foo"));
+    }
+
 }

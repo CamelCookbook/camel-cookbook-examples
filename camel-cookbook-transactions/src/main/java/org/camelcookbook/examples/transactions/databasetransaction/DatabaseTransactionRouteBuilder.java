@@ -16,7 +16,8 @@ public class DatabaseTransactionRouteBuilder extends RouteBuilder {
             .choice()
                 .when(simple("${header[message]} contains 'explode'"))
                     .throwException(new IllegalArgumentException("Exchange caused explosion"))
-            .endChoice()
-            .to("mock:out");
+                .otherwise()
+                    .to("mock:out")
+            .endChoice();
     }
 }

@@ -44,22 +44,22 @@
         <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
     </bean>
 
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+        <!-- do not take part in the outer transaction -->
+        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"/>
+    </bean>
+
     <bean id="jdbcIdempotentRepository" class="org.apache.camel.processor.idempotent.jdbc.JdbcMessageIdRepository">
         <constructor-arg ref="auditDataSource"/>
-        <constructor-arg>
-            <bean class="org.springframework.transaction.support.TransactionTemplate">
-                <property name="transactionManager" ref="transactionManager"/>
-                <!-- do not take part in the outer transaction -->
-                <property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"/>
-            </bean>
-        </constructor-arg>
-        <constructor-arg value="ws"/> <!-- processorName -->
+        <constructor-arg ref="transactionTemplate"/>
+        <constructor-arg value="ws"/> <!-- processor name -->
     </bean>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
             <from uri="direct:transacted"/>
-            <transacted/> <!-- transacted requires a PlatformTransactionManager and a  ref="PROPAGATION_REQUIRED" -->
+            <transacted ref="PROPAGATION_REQUIRED"/>
             <log message="Processing message[${header[messageId]}]: ${body}"/>
             <setHeader headerName="message">
                 <simple>${body}</simple>
@@ -71,8 +71,10 @@
                     <simple>${header[message]} contains 'explode'</simple>
                     <throwException ref="illegalArgumentException"/>
                 </when>
+                <otherwise>
+                    <to uri="mock:out"/>
+                </otherwise>
             </choice>
-            <to uri="mock:out"/>
         </route>
 
         <route>

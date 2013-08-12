@@ -76,8 +76,10 @@
                     <simple>${header[message]} contains 'explode'</simple>
                     <throwException ref="illegalArgumentException"/>
                 </when>
+                <otherwise>
+                    <to uri="mock:out"/>
+                </otherwise>
             </choice>
-            <to uri="mock:out"/>
         </route>
     </camelContext>
 

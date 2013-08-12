@@ -14,6 +14,7 @@ import org.camelcookbook.examples.transactions.dao.AuditLogDao;
 import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.Propagation;
 
 import javax.sql.DataSource;
 
@@ -34,7 +35,7 @@ public class DatabaseTransactionTest extends CamelTestSupport {
     protected CamelContext createCamelContext() throws Exception {
         SimpleRegistry registry = new SimpleRegistry();
         auditDataSource = EmbeddedDataSourceFactory.getDataSource("sql/schema.sql");
-        registry.put("auditDataSource", auditDataSource);
+        //registry.put("auditDataSource", auditDataSource);
 
         DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(auditDataSource);
         registry.put("transactionManager", transactionManager);
@@ -71,4 +72,19 @@ public class DatabaseTransactionTest extends CamelTestSupport {
         assertMockEndpointsSatisfied();
         assertEquals(0, auditLogDao.getAuditCount(message)); // the insert was rolled back
     }
+
+    @Test
+    public void testTransactedExceptionNotThrown() throws InterruptedException {
+        String message = "this message will be OK";
+        assertEquals(0, auditLogDao.getAuditCount(message));
+
+        MockEndpoint mockCompleted = getMockEndpoint("mock:out");
+        mockCompleted.setExpectedMessageCount(1);
+
+        template.sendBody("direct:transacted", message);
+
+        assertMockEndpointsSatisfied();
+        assertEquals(1, auditLogDao.getAuditCount(message));
+    }
+
 }

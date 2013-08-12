@@ -1,5 +1,6 @@
 drop table if exists CAMEL_MESSAGEPROCESSED;
 drop table if exists audit_log;
+drop table if exists messages;
 
 -- required by Camel JdbcMessageIdRepository
 create table CAMEL_MESSAGEPROCESSED (
@@ -9,7 +10,12 @@ create table CAMEL_MESSAGEPROCESSED (
 );
 
 create table audit_log (
-    auditId serial primary key,
+    audit_id serial primary key,
+	  message varchar(255) not null
+);
+
+create table messages (
+    message_id serial primary key,
 	  message varchar(255) not null
 );
 

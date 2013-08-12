@@ -34,4 +34,8 @@
     <bean id="auditLogDao" class="org.camelcookbook.examples.transactions.dao.AuditLogDao">
         <constructor-arg ref="auditDataSource"/>
     </bean>
+    <!-- utility object to check the messages table -->
+    <bean id="messageDao" class="org.camelcookbook.examples.transactions.dao.MessageDao">
+        <constructor-arg ref="auditDataSource"/>
+    </bean>
 </beans>

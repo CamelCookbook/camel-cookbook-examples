@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import javax.sql.DataSource;
 
 /**
- * @author jkorab
+ * Demonstrates the behavior of database transactions.
  */
 public class DatabaseTransactionTest extends CamelTestSupport {
 

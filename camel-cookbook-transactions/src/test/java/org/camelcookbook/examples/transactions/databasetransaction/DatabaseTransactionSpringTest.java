@@ -10,7 +10,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Demonstrates the use of onCompletion blocks.
+ * Demonstrates the behavior of database transactions.
  */
 public class DatabaseTransactionSpringTest extends CamelSpringTestSupport {
 

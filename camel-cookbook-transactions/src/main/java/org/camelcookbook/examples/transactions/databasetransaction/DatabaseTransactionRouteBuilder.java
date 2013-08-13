@@ -13,11 +13,6 @@ public class DatabaseTransactionRouteBuilder extends RouteBuilder {
             .log("Processing message: ${body}")
             .setHeader("message", body())
             .to("sql:insert into audit_log (message) values (:#message)")
-            .choice()
-                .when(simple("${header[message]} contains 'explode'"))
-                    .throwException(new IllegalArgumentException("Exchange caused explosion"))
-                .otherwise()
-                    .to("mock:out")
-            .endChoice();
+            .to("mock:out");
     }
 }

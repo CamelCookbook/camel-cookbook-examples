@@ -18,25 +18,14 @@ public class IdempotentConsumerInTransactionRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:transacted")
             .transacted("PROPAGATION_REQUIRED")
-            .log("Processing message: ${body}")
             .setHeader("message", body())
             .to("sql:insert into audit_log (message) values (:#message)")
             .enrich("direct:invokeWs")
-            .choice()
-                .when(simple("${header[message]} contains 'explode'"))
-                    .throwException(new IllegalArgumentException("Exchange caused explosion"))
-                .otherwise()
-                    .to("mock:out")
-            .endChoice();
+            .to("mock:out");
 
         from("direct:invokeWs")
-            .log("Received message ${header[messageId]}")
             .idempotentConsumer(header("messageId"), idempotentRepository)
-                .to("sql:insert into audit_log (message) values (:#message)")
-                .log("Invoking WS")
                 .to("mock:ws")
-            .end()
-            .log("Completing")
-            .to("mock:calledWs");
+            .end();
     }
 }

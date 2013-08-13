@@ -12,6 +12,7 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.camelcookbook.examples.transactions.dao.AuditLogDao;
 import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
+import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.Propagation;
@@ -60,13 +61,14 @@ public class DatabaseTransactionTest extends CamelTestSupport {
         assertEquals(0, auditLogDao.getAuditCount(message));
 
         MockEndpoint mockCompleted = getMockEndpoint("mock:out");
-        mockCompleted.setExpectedMessageCount(0);
+        mockCompleted.setExpectedMessageCount(1);
+        mockCompleted.whenAnyExchangeReceived(new ExceptionThrowingProcessor());
 
         try {
             template.sendBody("direct:transacted", message);
             fail();
         } catch (CamelExecutionException cee) {
-            assertEquals("Exchange caused explosion", ExceptionUtils.getRootCause(cee).getMessage());
+            assertEquals("boom!", ExceptionUtils.getRootCause(cee).getMessage());
         }
 
         assertMockEndpointsSatisfied();

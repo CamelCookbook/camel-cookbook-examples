@@ -207,6 +207,11 @@
         <artifactId>camel-jms</artifactId>
         <version>${camel-version}</version>
       </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
 
       <dependency>
         <groupId>commons-lang</groupId>

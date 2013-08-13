@@ -1,24 +1,14 @@
 package org.camelcookbook.examples.transactions.transactionpolicy;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.component.sql.SqlComponent;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.SimpleRegistry;
-import org.apache.camel.spring.spi.SpringTransactionPolicy;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.camelcookbook.examples.transactions.dao.AuditLogDao;
 import org.camelcookbook.examples.transactions.dao.MessageDao;
-import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
+import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
-import javax.sql.DataSource;
 
 /**
  * Demonstrates the use of nested transaction policies.

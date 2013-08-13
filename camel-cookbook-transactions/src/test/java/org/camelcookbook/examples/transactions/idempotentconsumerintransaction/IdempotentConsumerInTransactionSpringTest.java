@@ -8,6 +8,7 @@ import org.apache.camel.spi.IdempotentRepository;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.camelcookbook.examples.transactions.dao.AuditLogDao;
+import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -29,13 +30,14 @@ public class IdempotentConsumerInTransactionSpringTest extends CamelSpringTestSu
         assertEquals(0, auditLogDao.getAuditCount(message));
 
         MockEndpoint mockCompleted = getMockEndpoint("mock:out");
-        mockCompleted.setExpectedMessageCount(0);
+        mockCompleted.setExpectedMessageCount(1);
+        mockCompleted.whenAnyExchangeReceived(new ExceptionThrowingProcessor());
 
         try {
             template.sendBodyAndHeader("direct:transacted", message, "messageId", "foo");
             fail();
         } catch (CamelExecutionException cee) {
-            assertEquals("Exchange caused explosion", ExceptionUtils.getRootCause(cee).getMessage());
+            assertEquals("boom!", ExceptionUtils.getRootCause(cee).getMessage());
         }
 
         assertMockEndpointsSatisfied();
@@ -75,12 +77,7 @@ public class IdempotentConsumerInTransactionSpringTest extends CamelSpringTestSu
         mockCompleted.setExpectedMessageCount(0);
 
         MockEndpoint mockWs = getMockEndpoint("mock:ws");
-        mockWs.whenAnyExchangeReceived(new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                throw new IllegalStateException("ws is down");
-            }
-        });
+        mockWs.whenAnyExchangeReceived(new ExceptionThrowingProcessor("ws is down"));
 
         try {
             template.sendBodyAndHeader("direct:transacted", message, "messageId", "foo");

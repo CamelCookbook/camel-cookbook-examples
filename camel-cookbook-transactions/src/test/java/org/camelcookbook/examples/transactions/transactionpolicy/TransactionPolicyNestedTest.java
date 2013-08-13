@@ -12,6 +12,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.camelcookbook.examples.transactions.dao.AuditLogDao;
 import org.camelcookbook.examples.transactions.dao.MessageDao;
 import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
+import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 

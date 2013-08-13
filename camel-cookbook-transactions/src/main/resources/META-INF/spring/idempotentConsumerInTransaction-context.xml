@@ -60,33 +60,20 @@
         <route>
             <from uri="direct:transacted"/>
             <transacted ref="PROPAGATION_REQUIRED"/>
-            <log message="Processing message[${header[messageId]}]: ${body}"/>
             <setHeader headerName="message">
                 <simple>${body}</simple>
             </setHeader>
             <to uri="sql:insert into audit_log (message) values (:#message)"/>
             <enrich uri="direct:invokeWs"/>
-            <choice>
-                <when>
-                    <simple>${header[message]} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-                <otherwise>
-                    <to uri="mock:out"/>
-                </otherwise>
-            </choice>
+            <to uri="mock:out"/>
         </route>
 
         <route>
             <from uri="direct:invokeWs"/>
-            <log message="Received message ${header[messageId]}"/>
             <idempotentConsumer messageIdRepositoryRef="jdbcIdempotentRepository">
                 <header>messageId</header>
-                <log message="Invoking WS"/>
                 <to uri="mock:ws"/>
             </idempotentConsumer>
-            <log message="Completing"/>
-            <to uri="mock:calledWs"/>
         </route>
     </camelContext>
 

@@ -54,12 +54,6 @@
                 <simple>${body}</simple>
             </setHeader>
             <to uri="sql:insert into audit_log (message) values (:#message)"/>
-            <choice>
-                <when>
-                    <simple>${header[message]} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-            </choice>
             <to uri="mock:out"/>
         </route>
 
@@ -71,15 +65,7 @@
                 <simple>${body}</simple>
             </setHeader>
             <to uri="sql:insert into audit_log (message) values (:#message)"/>
-            <choice>
-                <when>
-                    <simple>${header[message]} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-                <otherwise>
-                    <to uri="mock:out"/>
-                </otherwise>
-            </choice>
+            <to uri="mock:out"/>
         </route>
     </camelContext>
 

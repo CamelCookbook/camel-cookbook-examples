@@ -44,8 +44,8 @@ public class TransactionPolicyNestedNewSpringTest extends CamelSpringTestSupport
         }
 
         assertMockEndpointsSatisfied();
-        assertEquals(0, auditLogDao.getAuditCount(message));
-        assertEquals(1, messageDao.getMessageCount(message));
+        assertEquals(1, auditLogDao.getAuditCount(message));
+        assertEquals(0, messageDao.getMessageCount(message));
     }
 
 

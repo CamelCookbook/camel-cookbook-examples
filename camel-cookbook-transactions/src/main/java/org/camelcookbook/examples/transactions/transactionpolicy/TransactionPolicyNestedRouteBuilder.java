@@ -11,14 +11,14 @@ public class TransactionPolicyNestedRouteBuilder extends RouteBuilder {
         from("direct:policies")
             .setHeader("message", simple("${body}"))
             .policy("PROPAGATION_REQUIRED")
-                .to("sql:insert into audit_log (message) values (:#message)")
-                .to("mock:out1")
+                .to("sql:insert into messages (message) values (:#message)")
                 .to("direct:nestedPolicy")
+                .to("mock:out1")
             .end();
 
         from("direct:nestedPolicy")
             .policy("PROPAGATION_NOT_SUPPORTED")
-                .to("sql:insert into messages (message) values (:#message)")
+                .to("sql:insert into audit_log (message) values (:#message)")
                 .to("mock:out2")
             .end();
 

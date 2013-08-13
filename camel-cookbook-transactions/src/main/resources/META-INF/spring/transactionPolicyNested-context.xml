@@ -51,16 +51,16 @@
                 <simple>${body}</simple>
             </setHeader>
             <policy ref="PROPAGATION_REQUIRED">
-                <to uri="sql:insert into audit_log (message) values (:#message)"/>
-                <to uri="mock:out1"/>
+                <to uri="sql:insert into messages (message) values (:#message)"/>
                 <to uri="direct:nestedPolicy"/>
+                <to uri="mock:out1"/>
             </policy>
         </route>
 
         <route>
             <from uri="direct:nestedPolicy"/>
             <policy ref="PROPAGATION_NOT_SUPPORTED">
-                <to uri="sql:insert into messages (message) values (:#message)"/>
+                <to uri="sql:insert into audit_log (message) values (:#message)"/>
                 <to uri="mock:out2"/>
             </policy>
         </route>

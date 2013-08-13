@@ -34,7 +34,7 @@ public class TransactionPolicyNestedSpringTest extends CamelSpringTestSupport {
         mockOut1.message(0).body().isEqualTo(message);
 
         MockEndpoint mockOut2 = getMockEndpoint("mock:out2");
-        mockOut2.setExpectedMessageCount(0);
+        mockOut2.setExpectedMessageCount(1);
 
         try {
             template.sendBody("direct:policies", message);
@@ -44,7 +44,7 @@ public class TransactionPolicyNestedSpringTest extends CamelSpringTestSupport {
         }
 
         assertMockEndpointsSatisfied();
-        assertEquals(0, auditLogDao.getAuditCount(message));
+        assertEquals(1, auditLogDao.getAuditCount(message));
         assertEquals(0, messageDao.getMessageCount(message));
     }
 
@@ -57,8 +57,7 @@ public class TransactionPolicyNestedSpringTest extends CamelSpringTestSupport {
         assertEquals(0, auditLogDao.getAuditCount(message));
 
         MockEndpoint mockOut1 = getMockEndpoint("mock:out1");
-        mockOut1.setExpectedMessageCount(1);
-        mockOut1.message(0).body().isEqualTo(message);
+        mockOut1.setExpectedMessageCount(0);
 
         MockEndpoint mockOut2 = getMockEndpoint("mock:out2");
         mockOut2.whenAnyExchangeReceived(new ExceptionThrowingProcessor());
@@ -71,8 +70,8 @@ public class TransactionPolicyNestedSpringTest extends CamelSpringTestSupport {
         }
 
         assertMockEndpointsSatisfied();
-        assertEquals(0, auditLogDao.getAuditCount(message));
-        assertEquals(1, messageDao.getMessageCount(message));
+        assertEquals(1, auditLogDao.getAuditCount(message));
+        assertEquals(0, messageDao.getMessageCount(message));
     }
 
     @Test

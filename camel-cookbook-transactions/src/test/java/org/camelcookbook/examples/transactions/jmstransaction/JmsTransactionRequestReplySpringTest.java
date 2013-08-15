@@ -1,7 +1,8 @@
-package org.camelcookbook.examples.transactions.jmsrequestreplytransaction;
+package org.camelcookbook.examples.transactions.jmstransaction;
 
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -9,13 +10,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Demonstrates the correct use of transactions with JMS when you need to perform a request-reply.
  */
-public class JmsRequestReplyTransactionSpringTest extends CamelSpringTestSupport {
+public class JmsTransactionRequestReplySpringTest extends CamelSpringTestSupport {
 
     public static final int MAX_WAIT_TIME = 1000;
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/jmsRequestReplyTransaction-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/jmsTransactionRequestReply-context.xml");
     }
 
     @Test
@@ -29,11 +30,17 @@ public class JmsRequestReplyTransactionSpringTest extends CamelSpringTestSupport
         String backendReply = "Backend processed: this message is OK";
         mockBackEndReply.message(0).body().isEqualTo(backendReply);
 
-        template.sendBody("jms:instructions", message);
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().isEqualTo(backendReply);
+
+        template.sendBody("jms:inbound", message);
 
         assertMockEndpointsSatisfied();
 
-        assertEquals(backendReply, consumer.receiveBody("jms:afterException", MAX_WAIT_TIME, String.class));
+        assertNull(consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class));
+        assertEquals(message, consumer.receiveBody("jms:auditQueue", MAX_WAIT_TIME, String.class));
+
     }
 
     @Test
@@ -47,14 +54,16 @@ public class JmsRequestReplyTransactionSpringTest extends CamelSpringTestSupport
         String backendReply = "Backend processed: this message will explode";
         mockBackEndReply.message(0).body().isEqualTo(backendReply);
 
-        template.sendBody("jms:instructions", message);
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.setExpectedMessageCount(1);
+        mockOut.whenAnyExchangeReceived(new ExceptionThrowingProcessor());
+
+        template.sendBody("jms:inbound", message);
 
         // when transacted, ActiveMQ receives a failed signal when the exception is thrown
         // the message is placed into a dead letter queue
         assertEquals(message, consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class));
-
-        // no message is sent after the exception is thrown
-        assertNull(consumer.receiveBody("jms:afterException", MAX_WAIT_TIME, String.class));
+        assertNull(consumer.receiveBody("jms:auditQueue", MAX_WAIT_TIME, String.class));
     }
 
 }

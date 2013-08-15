@@ -35,6 +35,10 @@
         <property name="transactionManager" ref="jmsTransactionManager"/>
     </bean>
 
+    <bean id="illegalArgumentException" class="java.lang.IllegalArgumentException">
+        <constructor-arg value="Exchange caused explosion"/>
+    </bean>
+
     <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
         <property name="transactionManager" ref="jmsTransactionManager"/>
         <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
@@ -43,10 +47,14 @@
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
             <from uri="jms:inbound"/>
-            <transacted/>
-            <log message="Processing message: ${body}"/>
-            <to uri="jms:outbound"/> <!-- this send is transacted, so the message should not be sent -->
-            <to uri="mock:out"/>
+            <!-- because a transaction policy wraps a send to the jms component, consumption from the inbound queue
+            is also transacted -->
+            <policy ref="PROPAGATION_REQUIRED">
+                <log message="Processing message: ${body}"/>
+                <!-- this send is transacted, so the message should not be sent if an exception is thrown -->
+                <to uri="jms:outbound"/>
+                <to uri="mock:out"/>
+            </policy>
         </route>
     </camelContext>
 

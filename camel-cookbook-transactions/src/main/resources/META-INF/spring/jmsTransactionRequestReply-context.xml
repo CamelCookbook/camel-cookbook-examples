@@ -41,9 +41,9 @@
 
     <!-- this must be defined, otherwise a transacted block will pick up the only policy in the context,
     which is PROPAGATION_NOT_SUPPORTED -->
-    <bean id="PROPAGATION_SUPPORTED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
         <property name="transactionManager" ref="jmsTransactionManager"/>
-        <property name="propagationBehaviorName" value="PROPAGATION_NOT_SUPPORTED"/>
+        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
     </bean>
 
     <bean id="PROPAGATION_NOT_SUPPORTED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
@@ -54,24 +54,18 @@
     <camelContext xmlns="http://camel.apache.org/schema/spring">
 
         <route>
-            <from uri="jms:instructions"/>
-            <transacted/> <!-- uses PROPAGATION_SUPPORTED -->
+            <from uri="jms:inbound"/>
+            <transacted ref="PROPAGATION_REQUIRED"/>
             <log message="Processing message: ${body}"/>
-            <enrich uri="direct:toBackendService"/>
-            <choice>
-                <when>
-                    <simple>${body} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-            </choice>
-            <to uri="jms:afterException"/>
+            <to uri="jms:auditQueue"/> <!-- this send is transacted -->
+            <inOut uri="direct:invokeBackendService"/>
+            <to uri="mock:out"/>
         </route>
 
         <route>
-            <from uri="direct:toBackendService"/>
-            <transacted ref="PROPAGATION_NOT_SUPPORTED"/> <!-- the rest of the route is outside a transaction -->
-            <!-- since this route is called from an enricher, the MEP is InOut -->
-            <to uri="jms:backendService"/> <!-- will give us a result from the backend service -->
+            <from uri="direct:invokeBackendService"/>
+            <transacted ref="PROPAGATION_NOT_SUPPORTED"/>
+            <to uri="jms:backendService"/> <!-- this send is not -->
         </route>
 
         <route>

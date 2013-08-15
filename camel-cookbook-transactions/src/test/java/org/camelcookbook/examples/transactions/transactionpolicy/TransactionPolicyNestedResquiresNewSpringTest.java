@@ -13,11 +13,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Demonstrates the use of nested transaction policies.
  */
-public class TransactionPolicyNestedNewSpringTest extends CamelSpringTestSupport {
+public class TransactionPolicyNestedResquiresNewSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/transactionPolicyNestedNew-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/transactionPolicyNestedRequiresNew-context.xml");
     }
 
 

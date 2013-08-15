@@ -36,16 +36,10 @@
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
-            <from uri="jms:instructions"/>
+            <from uri="jms:inbound"/>
             <log message="Processing message: ${body}"/>
-            <to uri="jms:beforeException"/> <!-- this send is not transacted, so the message should be sent -->
-            <choice>
-                <when>
-                    <simple>${body} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-            </choice>
-            <to uri="jms:afterException"/>
+            <to uri="jms:outbound"/> <!-- this send is not transacted, so the message should be sent -->
+            <to uri="mock:out"/>
         </route>
     </camelContext>
 

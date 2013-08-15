@@ -1,23 +1,43 @@
 package org.camelcookbook.examples.transactions.jmstransaction;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.camel.component.ActiveMQComponent;
+import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.processor.ThrowExceptionProcessor;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.impl.SimpleRegistry;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jms.connection.JmsTransactionManager;
+
+import javax.jms.ConnectionFactory;
 
 /**
  * Demonstrates the use of local transacted behavior defined on a JMS endpoint.
  */
-public class JmsTransactionEndpointSpringTest extends CamelSpringTestSupport {
+public class JmsTransactionEndpointTest extends CamelTestSupport {
 
     public static final int MAX_WAIT_TIME = 1000;
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/jmsTransactionEndpoint-context.xml");
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new JmsTransactionEndpointRouteBuilder();
+    }
+
+    @Override
+    protected CamelContext createCamelContext() throws Exception {
+        SimpleRegistry registry = new SimpleRegistry();
+
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://embedded?broker.persistent=false");
+        registry.put("connectionFactory", connectionFactory);
+
+        CamelContext camelContext = new DefaultCamelContext(registry);
+        ActiveMQComponent activeMQComponent = new ActiveMQComponent();
+        activeMQComponent.setConnectionFactory(connectionFactory);
+        camelContext.addComponent("jms", activeMQComponent);
+        return camelContext;
     }
 
     @Test

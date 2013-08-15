@@ -40,8 +40,7 @@ public class ManagedTest extends CamelTestSupport {
 
     @Override
     protected CamelContext createCamelContext() throws Exception {
-        // Ensure JVM platform MBean Server will run
-        System.setProperty(JmxSystemPropertyKeys.DISABLED, "false");
+        enableJMX();
 
         CamelContext context = super.createCamelContext();
 

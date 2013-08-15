@@ -36,6 +36,8 @@ public class JmxNamingPatternSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected CamelContext createCamelContext() throws Exception {
+        enableJMX();
+
         CamelContext camelContext = super.createCamelContext();
 
         // Force hostname to be "localhost" for testing purposes

@@ -19,7 +19,6 @@ package org.camelcookbook.monitoring.log;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.monitoring.logeip.LogEipRouteBuilder;
 import org.junit.Test;
 
 public class LogTest extends CamelTestSupport {

@@ -19,7 +19,6 @@ package org.camelcookbook.monitoring.trace;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.monitoring.log.LogRouteBuilder;
 import org.junit.Test;
 
 public class TraceTest extends CamelTestSupport {

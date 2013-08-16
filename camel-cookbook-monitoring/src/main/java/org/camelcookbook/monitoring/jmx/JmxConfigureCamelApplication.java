@@ -45,8 +45,8 @@ public class JmxConfigureCamelApplication {
             @Override
             public void configure() throws Exception {
                 from("direct:start")
-                        .log("${body}")
-                        .to("mock:result");
+                    .log("${body}")
+                    .to("mock:result");
             }
         });
 

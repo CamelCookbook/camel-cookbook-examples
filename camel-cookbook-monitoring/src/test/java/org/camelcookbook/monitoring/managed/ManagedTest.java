@@ -23,7 +23,6 @@ import javax.management.ObjectName;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.management.DefaultManagementNamingStrategy;
-import org.apache.camel.management.JmxSystemPropertyKeys;
 import org.apache.camel.spi.ManagementAgent;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;

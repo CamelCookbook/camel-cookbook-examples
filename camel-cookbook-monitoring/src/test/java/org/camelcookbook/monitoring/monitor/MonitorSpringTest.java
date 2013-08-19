@@ -20,10 +20,8 @@ package org.camelcookbook.monitoring.monitor;
 import javax.management.MBeanServer;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.management.DefaultManagementNamingStrategy;
 import org.apache.camel.spi.ManagementAgent;
-import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;

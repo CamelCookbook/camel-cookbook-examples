@@ -25,8 +25,6 @@ import org.apache.camel.management.DefaultManagementNamingStrategy;
 import org.apache.camel.spi.ManagementAgent;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MonitorTest extends CamelTestSupport {
     @Override

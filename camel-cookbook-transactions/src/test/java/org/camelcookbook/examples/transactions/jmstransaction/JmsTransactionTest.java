@@ -10,6 +10,7 @@ import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.spring.spi.SpringTransactionPolicy;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jms.connection.JmsTransactionManager;
 
@@ -51,6 +52,7 @@ public class JmsTransactionTest extends CamelTestSupport {
     }
 
     @Test
+    @Ignore
     public void testTransactedExceptionThrown() throws InterruptedException {
         String message = "this message will explode";
 

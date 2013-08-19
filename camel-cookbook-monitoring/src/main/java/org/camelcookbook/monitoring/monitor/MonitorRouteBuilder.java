@@ -42,7 +42,7 @@ public class MonitorRouteBuilder extends RouteBuilder {
         map.put("type", "routes");
         map.put("name", "\"monitorRoute\"");
 
-        JMXUriBuilder jmxUriBuilder = new JMXUriBuilder()
+        JMXUriBuilder jmxUriBuilder = new JMXUriBuilder("platform")
                 .withObjectDomain("org.apache.camel")
                 .withObjectProperties(map)
                 .withMonitorType("counter")

@@ -9,8 +9,9 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.spring.spi.SpringTransactionPolicy;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.camelcookbook.examples.transactions.utils.EmbeddedActiveMQBroker;
 import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.jms.connection.JmsTransactionManager;
 
@@ -22,6 +23,9 @@ public class JmsTransactionTest extends CamelTestSupport {
 
     public static final int MAX_WAIT_TIME = 1000;
 
+    @Rule
+    public EmbeddedActiveMQBroker broker = new EmbeddedActiveMQBroker("embeddedBroker");
+
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new JmsTransactionRouteBuilder();
@@ -31,7 +35,8 @@ public class JmsTransactionTest extends CamelTestSupport {
     protected CamelContext createCamelContext() throws Exception {
         SimpleRegistry registry = new SimpleRegistry();
         ActiveMQConnectionFactory connectionFactory =
-                new ActiveMQConnectionFactory("vm://embedded?broker.persistent=false");
+                new ActiveMQConnectionFactory();
+        connectionFactory.setBrokerURL(broker.getTcpConnectorUri());
         registry.put("connectionFactory", connectionFactory);
 
         JmsTransactionManager jmsTransactionManager = new JmsTransactionManager();
@@ -52,7 +57,6 @@ public class JmsTransactionTest extends CamelTestSupport {
     }
 
     @Test
-    @Ignore
     public void testTransactedExceptionThrown() throws InterruptedException {
         String message = "this message will explode";
 

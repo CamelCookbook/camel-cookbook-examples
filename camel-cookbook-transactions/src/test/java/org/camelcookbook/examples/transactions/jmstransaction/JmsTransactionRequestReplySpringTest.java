@@ -23,7 +23,7 @@ public class JmsTransactionRequestReplySpringTest extends CamelSpringTestSupport
     public void testTransactedNoExceptionThrown() throws InterruptedException {
         String message = "this message is OK";
 
-        // the request should be received by the
+        // the request should be received by the backend
         MockEndpoint mockBackEndReply = getMockEndpoint("mock:backEndReply");
         mockBackEndReply.setExpectedMessageCount(1);
 

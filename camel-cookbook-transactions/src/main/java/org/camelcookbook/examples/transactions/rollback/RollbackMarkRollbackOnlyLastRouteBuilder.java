@@ -3,7 +3,7 @@ package org.camelcookbook.examples.transactions.rollback;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * @author jkorab
+ * Demonstrates the behavior of marking the last transaction for rollback.
  */
 public class RollbackMarkRollbackOnlyLastRouteBuilder extends RouteBuilder {
 

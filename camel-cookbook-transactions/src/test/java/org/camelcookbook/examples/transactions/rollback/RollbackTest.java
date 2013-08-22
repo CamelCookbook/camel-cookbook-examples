@@ -1,0 +1,78 @@
+package org.camelcookbook.examples.transactions.rollback;
+
+import org.apache.camel.CamelContext;
+import org.apache.camel.CamelExecutionException;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.component.sql.SqlComponent;
+import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.impl.SimpleRegistry;
+import org.apache.camel.spring.spi.SpringTransactionPolicy;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.camelcookbook.examples.transactions.dao.AuditLogDao;
+import org.camelcookbook.examples.transactions.databasetransaction.DatabaseTransactionRouteBuilder;
+import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
+import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import javax.sql.DataSource;
+import org.apache.camel.test.junit4.CamelTestSupport;
+
+/**
+ * Demonstrates the behavior of rolling back transactions manually.
+ */
+public class RollbackTest extends CamelTestSupport {
+
+    private AuditLogDao auditLogDao;
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RollbackRouteBuilder();
+    }
+
+    @Override
+    protected CamelContext createCamelContext() throws Exception {
+        SimpleRegistry registry = new SimpleRegistry();
+        DataSource auditDataSource = EmbeddedDataSourceFactory.getDataSource("sql/schema.sql");
+
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(auditDataSource);
+        registry.put("transactionManager", transactionManager);
+
+        SpringTransactionPolicy propagationRequired = new SpringTransactionPolicy();
+        propagationRequired.setTransactionManager(transactionManager);
+        propagationRequired.setPropagationBehaviorName("PROPAGATION_REQUIRED");
+        registry.put("PROPAGATION_REQUIRED", propagationRequired);
+
+        auditLogDao = new AuditLogDao(auditDataSource);
+
+        CamelContext camelContext = new DefaultCamelContext(registry);
+        SqlComponent sqlComponent = new SqlComponent();
+        sqlComponent.setDataSource(auditDataSource);
+        camelContext.addComponent("sql", sqlComponent);
+        return camelContext;
+    }
+
+    @Test
+    public void testTransactedRollback() throws InterruptedException {
+        String message = "this message will explode";
+        assertEquals(0, auditLogDao.getAuditCount(message));
+
+        MockEndpoint mockCompleted = getMockEndpoint("mock:out");
+        mockCompleted.setExpectedMessageCount(0);
+
+        try {
+            template.sendBody("direct:transacted", message);
+            fail();
+        } catch (CamelExecutionException cee) {
+            Throwable rootCause = ExceptionUtils.getRootCause(cee);
+            assertTrue(rootCause instanceof org.apache.camel.RollbackExchangeException);
+            assertTrue(rootCause.getMessage().startsWith("Intended rollback."));
+        }
+
+        assertMockEndpointsSatisfied();
+        assertEquals(0, auditLogDao.getAuditCount(message)); // the insert was rolled back
+    }
+}

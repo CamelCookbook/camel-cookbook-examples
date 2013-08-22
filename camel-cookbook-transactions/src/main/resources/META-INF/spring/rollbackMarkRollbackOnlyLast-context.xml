@@ -59,12 +59,18 @@
 
         <route>
             <from uri="direct:nestedPolicy"/>
-            <onException>
-                <exception>java.lang.Exception</exception>
-
-            </onException>
             <policy ref="PROPAGATION_REQUIRES_NEW-2">
                 <to uri="sql:insert into audit_log (message) values (:#message)"/>
+                <choice>
+                    <when>
+                        <simple>${body} contains 'explode'</simple>
+                        <log message="Marking this operation for rollback"/>
+                        <rollback markRollbackOnlyLast="true"/> <!-- no exception thrown -->
+                    </when>
+                    <otherwise>
+                        <log message="Message processed successfully"/>
+                    </otherwise>
+                </choice>
                 <to uri="mock:out2"/>
             </policy>
         </route>

@@ -43,6 +43,8 @@ public class ManagedSpringTest extends CamelSpringTestSupport {
         enableJMX();
 
         CamelContext camelContext = super.createCamelContext();
+        LOG.info("is Started {}", camelContext.getStatus().isStarted());
+        assertFalse("CamelContext must not be started", camelContext.getStatus().isStarted());
 
         // Force hostname to be "localhost" for testing purposes
         final DefaultManagementNamingStrategy naming = (DefaultManagementNamingStrategy) camelContext.getManagementStrategy().getManagementNamingStrategy();

@@ -25,10 +25,14 @@ import org.apache.camel.management.DefaultManagementNamingStrategy;
 import org.apache.camel.spi.ManagementAgent;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class JmxNamingContextSpringTest extends CamelSpringTestSupport {
+    private static Logger LOG = LoggerFactory.getLogger(JmxNamingContextSpringTest.class);
+
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext("META-INF/spring/naming-context.xml");
@@ -43,6 +47,7 @@ public class JmxNamingContextSpringTest extends CamelSpringTestSupport {
         // Force hostname to be "localhost" for testing purposes
         final DefaultManagementNamingStrategy naming = (DefaultManagementNamingStrategy) camelContext.getManagementStrategy().getManagementNamingStrategy();
         naming.setHostName("localhost");
+        naming.setDomainName("org.apache.camel");
 
         return camelContext;
     }
@@ -50,18 +55,17 @@ public class JmxNamingContextSpringTest extends CamelSpringTestSupport {
     @Test
     public void testNamingContextSpring() throws Exception {
         final ManagementAgent managementAgent = context.getManagementStrategy().getManagementAgent();
-
         assertNotNull(managementAgent);
 
         final MBeanServer mBeanServer = managementAgent.getMBeanServer();
-        final String mBeanServerDefaultDomain = managementAgent.getMBeanServerDefaultDomain();
+        assertNotNull(mBeanServer);
 
-        // Send a couple of messages to get some route statistics
-        template.sendBody("direct:start", "Hello Camel");
-        template.sendBody("direct:start", "Camel Rocks!");
+        final String mBeanServerDefaultDomain = managementAgent.getMBeanServerDefaultDomain();
+        assertEquals("org.apache.camel", mBeanServerDefaultDomain);
 
         final String managementName = context.getManagementName();
-        log.info("managementName = {}", managementName);
+        assertNotNull("CamelContext should have a management name if JMX is enabled", managementName);
+        LOG.info("managementName = {}", managementName);
 
         // Get the Camel Context MBean
         ObjectName onContext = ObjectName.getInstance(mBeanServerDefaultDomain + ":context=localhost/" + managementName + ",type=context,name=\"" + context.getName() + "\"");
@@ -69,7 +73,12 @@ public class JmxNamingContextSpringTest extends CamelSpringTestSupport {
 
         // Get the first Route MBean by id
         ObjectName onRoute1 = ObjectName.getInstance(mBeanServerDefaultDomain + ":context=localhost/" + managementName + ",type=routes,name=\"first-route\"");
+        LOG.info("Canonical Name = {}", onRoute1.getCanonicalName());
         assertTrue("Should be registered", mBeanServer.isRegistered(onRoute1));
+
+        // Send a couple of messages to get some route statistics
+        template.sendBody("direct:start", "Hello Camel");
+        template.sendBody("direct:start", "Camel Rocks!");
 
         // Get an MBean attribute for the number of messages processed
         assertEquals(2L, mBeanServer.getAttribute(onRoute1, "ExchangesCompleted"));

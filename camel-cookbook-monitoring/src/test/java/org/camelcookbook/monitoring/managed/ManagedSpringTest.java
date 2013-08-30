@@ -42,13 +42,14 @@ public class ManagedSpringTest extends CamelSpringTestSupport {
     protected CamelContext createCamelContext() throws Exception {
         enableJMX();
 
-        CamelContext context = super.createCamelContext();
+        CamelContext camelContext = super.createCamelContext();
 
-        DefaultManagementNamingStrategy naming = (DefaultManagementNamingStrategy) context.getManagementStrategy().getManagementNamingStrategy();
+        // Force hostname to be "localhost" for testing purposes
+        final DefaultManagementNamingStrategy naming = (DefaultManagementNamingStrategy) camelContext.getManagementStrategy().getManagementNamingStrategy();
         naming.setHostName("localhost");
         naming.setDomainName("org.apache.camel");
 
-        return context;
+        return camelContext;
     }
 
     @Test
@@ -63,15 +64,21 @@ public class ManagedSpringTest extends CamelSpringTestSupport {
         assertEquals("org.apache.camel", mBeanServerDefaultDomain);
 
         final String managementName = context.getManagementName();
+        assertNotNull("CamelContext should have a management name if JMX is enabled", managementName);
         LOG.info("managementName = {}", managementName);
+
+        // Get the Camel Context MBean
+        ObjectName onContext = ObjectName.getInstance(mBeanServerDefaultDomain + ":context=localhost/" + managementName + ",type=context,name=\"" + context.getName() + "\"");
+        assertTrue("Should be registered", mBeanServer.isRegistered(onContext));
+
+        // Get myManagedBean
+        ObjectName onManagedBean = ObjectName.getInstance(mBeanServerDefaultDomain + ":context=localhost/" + managementName + ",type=processors,name=\"myManagedBean\"");
+        LOG.info("Canonical Name = {}", onManagedBean.getCanonicalName());
+        assertTrue("Should be registered", mBeanServer.isRegistered(onManagedBean));
 
         // Send a couple of messages to get some route statistics
         template.sendBody("direct:start", "Hello Camel");
         template.sendBody("direct:start", "Camel Rocks!");
-
-        // Get myManagedBean
-        ObjectName onManagedBean = ObjectName.getInstance(mBeanServerDefaultDomain + ":context=localhost/" + managementName + ",type=processors,name=\"myManagedBean\"");
-        assertTrue("Should be registered", mBeanServer.isRegistered(onManagedBean));
 
         // Get MBean attribute
         int camelsSeenCount = (Integer) mBeanServer.getAttribute(onManagedBean, "CamelsSeenCount");

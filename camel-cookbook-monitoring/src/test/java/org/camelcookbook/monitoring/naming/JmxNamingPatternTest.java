@@ -55,6 +55,7 @@ public class JmxNamingPatternTest {
         // Force hostname to be "localhost" for testing purposes
         final DefaultManagementNamingStrategy naming = (DefaultManagementNamingStrategy) context.getManagementStrategy().getManagementNamingStrategy();
         naming.setHostName("localhost");
+        naming.setDomainName("org.apache.camel");
 
         camelApp.start();
     }
@@ -76,13 +77,13 @@ public class JmxNamingPatternTest {
         assertNotNull(managementAgent);
 
         final MBeanServer mBeanServer = managementAgent.getMBeanServer();
-        final String mBeanServerDefaultDomain = managementAgent.getMBeanServerDefaultDomain();
+        assertNotNull(mBeanServer);
 
-        // Send a couple of messages to get some route statistics
-        template.sendBody("direct:start", "Hello Camel");
-        template.sendBody("direct:start", "Camel Rocks!");
+        final String mBeanServerDefaultDomain = managementAgent.getMBeanServerDefaultDomain();
+        assertEquals("org.apache.camel", mBeanServerDefaultDomain);
 
         final String managementName = context.getManagementName();
+        assertNotNull("CamelContext should have a management name if JMX is enabled", managementName);
         LOG.info("managementName = {}; name = {}", managementName, context.getName());
         assertTrue(managementName.startsWith("CustomName"));
 
@@ -92,7 +93,12 @@ public class JmxNamingPatternTest {
 
         // Get the first Route MBean by id
         ObjectName onRoute1 = ObjectName.getInstance(mBeanServerDefaultDomain + ":context=localhost/" + managementName + ",type=routes,name=\"first-route\"");
+        LOG.info("Canonical Name = {}", onRoute1.getCanonicalName());
         assertTrue("Should be registered", mBeanServer.isRegistered(onRoute1));
+
+        // Send a couple of messages to get some route statistics
+        template.sendBody("direct:start", "Hello Camel");
+        template.sendBody("direct:start", "Camel Rocks!");
 
         // Get an MBean attribute for the number of messages processed
         assertEquals(2L, mBeanServer.getAttribute(onRoute1, "ExchangesCompleted"));

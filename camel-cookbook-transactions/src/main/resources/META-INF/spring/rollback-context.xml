@@ -49,6 +49,10 @@
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <route>
             <from uri="direct:transacted"/>
+            <onException>
+                <exception>org.apache.camel.RollbackExchangeException</exception>
+                <log message="Caught rollback :P"/>
+            </onException>
             <transacted/>
             <log message="Processing message: ${body}"/>
             <setHeader headerName="message">
@@ -59,7 +63,7 @@
                 <when>
                     <simple>${body} contains 'explode'</simple>
                     <log message="Message cannot be processed further - rolling back insert"/>
-                    <rollback/> <!-- exception thrown -->
+                    <rollback message="Message contained word 'explode'"/> <!-- exception thrown -->
                 </when>
                 <otherwise>
                     <log message="Message processed successfully"/>

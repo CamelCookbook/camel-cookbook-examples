@@ -3,7 +3,7 @@ package org.camelcookbook.examples.transactions.rollback;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Demostrates the use of the markRollbackOnly statement roll back the transaction without throwing a transaction.
+ * Demonstrates the use of the markRollbackOnly statement roll back the transaction without throwing a transaction.
  */
 public class RollbackMarkRollbackOnlyRouteBuilder extends RouteBuilder {
     @Override

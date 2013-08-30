@@ -37,7 +37,7 @@ public class RollbackMarkRollbackOnlyLastSpringTest extends CamelSpringTestSuppo
         MockEndpoint mockOut2 = getMockEndpoint("mock:out2");
         mockOut2.setExpectedMessageCount(0);
 
-        template.sendBody("direct:policies", message);
+        template.sendBody("direct:route1", message);
 
         assertMockEndpointsSatisfied();
         assertEquals(0, auditLogDao.getAuditCount(message));

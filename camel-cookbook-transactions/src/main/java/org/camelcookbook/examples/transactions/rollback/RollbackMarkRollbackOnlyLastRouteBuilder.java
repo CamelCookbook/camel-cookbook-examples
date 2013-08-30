@@ -9,16 +9,16 @@ public class RollbackMarkRollbackOnlyLastRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() {
-        from("direct:policies")
+        from("direct:route1").id("route1")
             .setHeader("message", simple("${body}"))
-            .policy("PROPAGATION_REQUIRES_NEW")
+            .policy("PROPAGATION_REQUIRES_NEW").id("tx1")
                 .to("sql:insert into messages (message) values (:#message)")
-                .to("direct:nestedPolicy")
+                .to("direct:route2")
                 .to("mock:out1")
             .end();
 
-        from("direct:nestedPolicy")
-            .policy("PROPAGATION_REQUIRES_NEW-2")
+        from("direct:route2").id("route2")
+            .policy("PROPAGATION_REQUIRES_NEW-2").id("tx2")
                 .to("sql:insert into audit_log (message) values (:#message)")
                 .choice()
                     .when(simple("${body} contains 'explode'"))

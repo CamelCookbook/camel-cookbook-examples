@@ -35,7 +35,7 @@ public class RollbackSpringTest extends CamelSpringTestSupport {
         } catch (CamelExecutionException cee) {
             Throwable rootCause = ExceptionUtils.getRootCause(cee);
             assertTrue(rootCause instanceof org.apache.camel.RollbackExchangeException);
-            assertTrue(rootCause.getMessage().startsWith("Intended rollback."));
+            assertTrue(rootCause.getMessage().startsWith("Message contained word 'explode'"));
         }
 
         assertMockEndpointsSatisfied();

@@ -19,32 +19,28 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-           http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
        ">
 
-    <broker xmlns="http://activemq.apache.org/schema/core"
-            useJmx="false"
-            brokerName="myEmbeddedBroker"
-            persistent="false">
-        <systemUsage>
-            <systemUsage>
-                <memoryUsage>
-                    <memoryUsage limit="32 mb"/>
-                </memoryUsage>
-                <tempUsage>
-                    <tempUsage limit="32 mb"/>
-                </tempUsage>
-            </systemUsage>
-        </systemUsage>
-        <transportConnectors>
-            <transportConnector uri="vm://myEmbeddedBroker"/>
-        </transportConnectors>
-    </broker>
+    <!-- this class implements javax.sql.XADataSource and javax.sql.DataSource-->
+    <bean id="h2.dataSource" class="org.h2.jdbcx.JdbcDataSource">
+        <property name="URL" value="jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1"/>
+        <property name="user" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
 
-    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="vm://myEmbeddedBroker"/>
+    <bean id="auditDataSource" class="org.camelcookbook.examples.transactions.util.DataSourceInitializer"
+          factory-method="initializeDataSource">
+        <constructor-arg ref="h2.dataSource"/>
+        <constructor-arg value="classpath:sql/schema.sql"/>
+    </bean>
+
+    <!-- utility object to check the audit_log table -->
+    <bean id="auditLogDao" class="org.camelcookbook.examples.transactions.dao.AuditLogDao">
+        <constructor-arg ref="auditDataSource"/>
     </bean>
 
 </beans>

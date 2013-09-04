@@ -40,7 +40,7 @@
     <spring-version>3.1.4.RELEASE</spring-version>
     <xbean.version>3.13</xbean.version>
     <h2-version>1.3.167</h2-version>
-    <atomikos-version>3.8.0</atomikos-version>
+    <atomikos-version>3.9.0.M1</atomikos-version>
 
     <slf4j-version>1.7.5</slf4j-version>
     <log4j-version>1.2.17</log4j-version>
@@ -245,9 +245,26 @@
         <artifactId>h2</artifactId>
         <version>${h2-version}</version>
       </dependency>
+
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions</artifactId>
+            <version>${atomikos-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-api</artifactId>
+            <version>${atomikos-version}</version>
+        </dependency>
+
+      <dependency>
+          <groupId>com.atomikos</groupId>
+          <artifactId>transactions-jdbc</artifactId>
+          <version>${atomikos-version}</version>
+      </dependency>
       <dependency>
         <groupId>com.atomikos</groupId>
-        <artifactId>transactions</artifactId>
+        <artifactId>transactions-jms</artifactId>
         <version>${atomikos-version}</version>
       </dependency>
 

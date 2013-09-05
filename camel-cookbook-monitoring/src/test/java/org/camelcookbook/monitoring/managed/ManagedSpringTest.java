@@ -31,7 +31,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ManagedSpringTest extends CamelSpringTestSupport {
-    private static Logger LOG = LoggerFactory.getLogger(ManagedSpringTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ManagedSpringTest.class);
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {

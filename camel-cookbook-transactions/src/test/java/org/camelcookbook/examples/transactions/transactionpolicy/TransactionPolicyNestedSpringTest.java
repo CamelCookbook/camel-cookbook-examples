@@ -37,7 +37,6 @@ public class TransactionPolicyNestedSpringTest extends CamelSpringTestSupport {
         return new ClassPathXmlApplicationContext("META-INF/spring/transactionPolicyNested-context.xml");
     }
 
-
     @Test
     public void testFailureMock1() throws InterruptedException {
         AuditLogDao auditLogDao = getMandatoryBean(AuditLogDao.class, "auditLogDao");
@@ -64,7 +63,6 @@ public class TransactionPolicyNestedSpringTest extends CamelSpringTestSupport {
         assertEquals(1, auditLogDao.getAuditCount(message));
         assertEquals(0, messageDao.getMessageCount(message));
     }
-
 
     @Test
     public void testFailureMock2() throws InterruptedException {
@@ -113,5 +111,4 @@ public class TransactionPolicyNestedSpringTest extends CamelSpringTestSupport {
         assertEquals(1, auditLogDao.getAuditCount(message));
         assertEquals(1, messageDao.getMessageCount(message));
     }
-
 }

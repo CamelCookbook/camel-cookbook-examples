@@ -62,9 +62,11 @@ public class RollbackTest extends CamelTestSupport {
         auditLogDao = new AuditLogDao(auditDataSource);
 
         CamelContext camelContext = new DefaultCamelContext(registry);
+
         SqlComponent sqlComponent = new SqlComponent();
         sqlComponent.setDataSource(auditDataSource);
         camelContext.addComponent("sql", sqlComponent);
+
         return camelContext;
     }
 

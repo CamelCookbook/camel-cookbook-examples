@@ -62,7 +62,6 @@ public class DatabaseTransactionSpringTest extends CamelSpringTestSupport {
         mockCompleted.setExpectedMessageCount(1);
         mockCompleted.whenAnyExchangeReceived(new ExceptionThrowingProcessor());
 
-
         try {
             template.sendBody("direct:nonTransacted", message);
             fail();
@@ -83,7 +82,6 @@ public class DatabaseTransactionSpringTest extends CamelSpringTestSupport {
         MockEndpoint mockCompleted = getMockEndpoint("mock:out");
         mockCompleted.setExpectedMessageCount(1);
         mockCompleted.whenAnyExchangeReceived(new ExceptionThrowingProcessor());
-
 
         try {
             template.sendBody("direct:transacted", message);

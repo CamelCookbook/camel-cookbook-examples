@@ -65,9 +65,11 @@ public class DatabaseTransactionTest extends CamelTestSupport {
         auditLogDao = new AuditLogDao(auditDataSource);
 
         CamelContext camelContext = new DefaultCamelContext(registry);
+
         SqlComponent sqlComponent = new SqlComponent();
         sqlComponent.setDataSource(auditDataSource);
         camelContext.addComponent("sql", sqlComponent);
+
         return camelContext;
     }
 
@@ -104,5 +106,4 @@ public class DatabaseTransactionTest extends CamelTestSupport {
         assertMockEndpointsSatisfied();
         assertEquals(1, auditLogDao.getAuditCount(message));
     }
-
 }

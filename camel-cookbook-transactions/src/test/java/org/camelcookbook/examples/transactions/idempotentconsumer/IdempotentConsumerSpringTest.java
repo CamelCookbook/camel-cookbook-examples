@@ -46,5 +46,4 @@ public class IdempotentConsumerSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

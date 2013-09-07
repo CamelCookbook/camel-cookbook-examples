@@ -40,7 +40,6 @@ public class ConfirmCancelProcessor implements Processor {
         producerTemplate.send("mock:start", exchange);
 
         exchange.addOnCompletion(new Synchronization() {
-
             @Override
             public void onComplete(Exchange exchange) {
                 log.info("Completed - confirming");
@@ -54,5 +53,4 @@ public class ConfirmCancelProcessor implements Processor {
             }
         });
     }
-
 }

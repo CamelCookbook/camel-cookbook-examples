@@ -76,7 +76,6 @@ public class OnCompletionRouteBuilder extends RouteBuilder {
             .end()
             .to("direct:onCompletionFailure"); // calls out to route with onCompletion set
 
-
         from("direct:onCompletionChoice")
             .onCompletion()
                 .to("direct:processCompletion")
@@ -95,7 +94,5 @@ public class OnCompletionRouteBuilder extends RouteBuilder {
                 .otherwise()
                     .to("mock:failed")
             .endChoice();
-
     }
-
 }

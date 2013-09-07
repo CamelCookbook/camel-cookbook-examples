@@ -64,10 +64,12 @@ public class JmsTransactionRequestReplyTest extends CamelTestSupport {
         registry.put("PROPAGATION_NOT_SUPPORTED", propagationNotSupported);
 
         CamelContext camelContext = new DefaultCamelContext(registry);
+
         ActiveMQComponent activeMQComponent = new ActiveMQComponent();
         activeMQComponent.setConnectionFactory(connectionFactory);
         activeMQComponent.setTransactionManager(jmsTransactionManager);
         camelContext.addComponent("jms", activeMQComponent);
+
         return camelContext;
     }
 
@@ -92,7 +94,6 @@ public class JmsTransactionRequestReplyTest extends CamelTestSupport {
 
         assertNull(consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class));
         assertEquals(message, consumer.receiveBody("jms:auditQueue", MAX_WAIT_TIME, String.class));
-
     }
 
     @Test
@@ -117,5 +118,4 @@ public class JmsTransactionRequestReplyTest extends CamelTestSupport {
         assertEquals(message, consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class));
         assertNull(consumer.receiveBody("jms:auditQueue", MAX_WAIT_TIME, String.class));
     }
-
 }

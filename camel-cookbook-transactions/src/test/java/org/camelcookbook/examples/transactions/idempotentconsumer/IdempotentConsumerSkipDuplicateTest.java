@@ -48,5 +48,4 @@ public class IdempotentConsumerSkipDuplicateTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

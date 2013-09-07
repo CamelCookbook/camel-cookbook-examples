@@ -24,7 +24,7 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 /**
- * Uitility class for initializing a DataSource with a SQL script.
+ * Utility class for initializing a DataSource with a SQL script.
  */
 public class DataSourceInitializer {
     public static DataSource initializeDataSource(DataSource dataSource, Resource script) {

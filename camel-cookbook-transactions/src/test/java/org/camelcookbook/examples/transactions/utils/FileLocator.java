@@ -47,14 +47,17 @@ public class FileLocator {
     public File find() {
         used = true; // this builder can't be used again
         File foundFile = null;
+
         for (String location : locations) {
             File file = new File(location);
             String path;
+
             try {
                 path = file.getCanonicalPath();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             if (file.exists()) {
                 foundFile = file;
                 break;
@@ -64,9 +67,11 @@ public class FileLocator {
                 } else {
                     errorMessage.append(" or in ");
                 }
-                errorMessage.append("'" + path + "'");
+
+                errorMessage.append("'").append(path).append("'");
             }
         }
+
         return foundFile;
     }
 

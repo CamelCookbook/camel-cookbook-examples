@@ -72,9 +72,11 @@ public class RollbackMarkRollbackOnlyLastTest extends CamelTestSupport {
         messageDao = new MessageDao(dataSource);
 
         CamelContext camelContext = new DefaultCamelContext(registry);
+
         SqlComponent sqlComponent = new SqlComponent();
         sqlComponent.setDataSource(dataSource);
         camelContext.addComponent("sql", sqlComponent);
+
         return camelContext;
     }
 
@@ -98,5 +100,4 @@ public class RollbackMarkRollbackOnlyLastTest extends CamelTestSupport {
         assertEquals(0, auditLogDao.getAuditCount(message));
         assertEquals(1, messageDao.getMessageCount(message));
     }
-
 }

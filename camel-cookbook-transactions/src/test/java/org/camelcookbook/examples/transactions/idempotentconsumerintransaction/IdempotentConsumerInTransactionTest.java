@@ -145,5 +145,4 @@ public class IdempotentConsumerInTransactionTest extends CamelTestSupport {
         // the repository has not seen this messageId
         assertTrue(!idempotentRepository.contains("foo"));
     }
-
 }

@@ -25,13 +25,13 @@ public class IdempotentConsumerMultipleEndpointsRouteBuilder extends RouteBuilde
     @Override
     public void configure() throws Exception {
         from("direct:in")
-                .log("Received message ${header[messageId]}")
-                .enrich("direct:invokeWs")
-                .log("Completing")
-                .to("mock:out");
+            .log("Received message ${header[messageId]}")
+            .enrich("direct:invokeWs")
+            .log("Completing")
+            .to("mock:out");
 
         from("direct:invokeWs")
-                .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository())
+            .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository())
                 .log("Invoking WS")
                 .to("mock:ws");
     }

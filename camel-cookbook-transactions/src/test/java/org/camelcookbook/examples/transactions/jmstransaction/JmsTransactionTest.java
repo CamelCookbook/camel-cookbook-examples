@@ -66,10 +66,12 @@ public class JmsTransactionTest extends CamelTestSupport {
         registry.put("PROPAGATION_REQUIRED", policy);
 
         CamelContext camelContext = new DefaultCamelContext(registry);
+
         ActiveMQComponent activeMQComponent = new ActiveMQComponent();
         activeMQComponent.setConnectionFactory(connectionFactory);
         activeMQComponent.setTransactionManager(jmsTransactionManager);
         camelContext.addComponent("jms", activeMQComponent);
+
         return camelContext;
     }
 

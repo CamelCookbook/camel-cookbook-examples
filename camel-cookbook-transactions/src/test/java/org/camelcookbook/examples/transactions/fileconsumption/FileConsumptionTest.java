@@ -46,7 +46,6 @@ public class FileConsumptionTest extends CamelTestSupport {
         return new FileConsumptionRouteBuilder(TARGET_IN, TARGET_OUT, TARGET_ERRORS);
     }
 
-
     @Test
     public void testFileLocationOnError() throws IOException, InterruptedException {
         String text = "This message will explode";
@@ -110,6 +109,7 @@ public class FileConsumptionTest extends CamelTestSupport {
                 delete(child);
             }
         }
+
         if (!file.delete()) {
             throw new IllegalStateException("Failed to delete file: " + file);
         }
@@ -128,5 +128,4 @@ public class FileConsumptionTest extends CamelTestSupport {
         log.info("Moving temporary file to: {}", destination.getAbsolutePath());
         outputFile.renameTo(destination);
     }
-
 }

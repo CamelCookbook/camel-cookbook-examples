@@ -58,5 +58,4 @@ public class RollbackMarkRollbackOnlyLastSpringTest extends CamelSpringTestSuppo
         assertEquals(0, auditLogDao.getAuditCount(message));
         assertEquals(1, messageDao.getMessageCount(message));
     }
-
 }

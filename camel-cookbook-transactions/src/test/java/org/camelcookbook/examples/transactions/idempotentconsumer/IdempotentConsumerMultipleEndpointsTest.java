@@ -74,5 +74,4 @@ public class IdempotentConsumerMultipleEndpointsTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

@@ -57,7 +57,6 @@ public class JmsTransactionRequestReplySpringTest extends CamelSpringTestSupport
 
         assertNull(consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class));
         assertEquals(message, consumer.receiveBody("jms:auditQueue", MAX_WAIT_TIME, String.class));
-
     }
 
     @Test
@@ -82,5 +81,4 @@ public class JmsTransactionRequestReplySpringTest extends CamelSpringTestSupport
         assertEquals(message, consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class));
         assertNull(consumer.receiveBody("jms:auditQueue", MAX_WAIT_TIME, String.class));
     }
-
 }

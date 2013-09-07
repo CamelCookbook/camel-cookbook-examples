@@ -27,7 +27,6 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-
 /**
  * Demonstrates the use of policies to scope transactions.
  */
@@ -64,7 +63,6 @@ public class TransactionPolicySpringTest extends CamelSpringTestSupport {
         assertEquals(0, auditLogDao.getAuditCount(message));
         assertEquals(0, messageDao.getMessageCount(message));
     }
-
 
     @Test
     public void testFailureMock2() throws InterruptedException {
@@ -115,5 +113,4 @@ public class TransactionPolicySpringTest extends CamelSpringTestSupport {
         assertEquals(1, auditLogDao.getAuditCount(message));
         assertEquals(1, messageDao.getMessageCount(message));
     }
-
 }

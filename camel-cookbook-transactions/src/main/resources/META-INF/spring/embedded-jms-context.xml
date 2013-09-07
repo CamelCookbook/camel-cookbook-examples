@@ -24,27 +24,27 @@
            http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
        ">
 
-    <broker xmlns="http://activemq.apache.org/schema/core"
-            useJmx="false"
-            brokerName="myEmbeddedBroker"
-            persistent="false">
-        <systemUsage>
-            <systemUsage>
-                <memoryUsage>
-                    <memoryUsage limit="32 mb"/>
-                </memoryUsage>
-                <tempUsage>
-                    <tempUsage limit="32 mb"/>
-                </tempUsage>
-            </systemUsage>
-        </systemUsage>
-        <transportConnectors>
-            <transportConnector uri="vm://myEmbeddedBroker"/>
-        </transportConnectors>
-    </broker>
+  <broker xmlns="http://activemq.apache.org/schema/core"
+          useJmx="false"
+          brokerName="myEmbeddedBroker"
+          persistent="false">
+    <systemUsage>
+      <systemUsage>
+        <memoryUsage>
+          <memoryUsage limit="32 mb"/>
+        </memoryUsage>
+        <tempUsage>
+          <tempUsage limit="32 mb"/>
+        </tempUsage>
+      </systemUsage>
+    </systemUsage>
+    <transportConnectors>
+      <transportConnector uri="vm://myEmbeddedBroker"/>
+    </transportConnectors>
+  </broker>
 
-    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <property name="brokerURL" value="vm://myEmbeddedBroker"/>
-    </bean>
+  <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="vm://myEmbeddedBroker"/>
+  </bean>
 
 </beans>

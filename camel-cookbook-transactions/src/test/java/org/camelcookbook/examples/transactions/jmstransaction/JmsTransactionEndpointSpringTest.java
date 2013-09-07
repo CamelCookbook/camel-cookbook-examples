@@ -18,7 +18,6 @@
 package org.camelcookbook.examples.transactions.jmstransaction;
 
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.processor.ThrowExceptionProcessor;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;

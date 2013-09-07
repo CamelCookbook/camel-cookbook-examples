@@ -18,8 +18,6 @@
 package org.camelcookbook.examples.transactions.idempotentconsumerintransaction;
 
 import org.apache.camel.CamelExecutionException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.spi.IdempotentRepository;
 import org.apache.camel.test.spring.CamelSpringTestSupport;

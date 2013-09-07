@@ -17,10 +17,10 @@
 
 package org.camelcookbook.examples.transactions.idempotentconsumerintransaction;
 
+import javax.sql.DataSource;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.component.sql.SqlComponent;
@@ -37,8 +37,6 @@ import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import javax.sql.DataSource;
 
 /**
  * Demonstrates the use of onCompletion blocks.

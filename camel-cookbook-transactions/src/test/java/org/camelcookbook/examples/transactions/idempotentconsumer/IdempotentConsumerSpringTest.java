@@ -18,10 +18,10 @@
 package org.camelcookbook.examples.transactions.idempotentconsumer;
 
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
 
 /**
  * Tests that demonstrate the behavior of idempotent consumption.

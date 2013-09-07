@@ -24,38 +24,38 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <import resource="embedded-db-context.xml"/>
+  <import resource="embedded-db-context.xml"/>
 
-    <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
-        <property name="dataSource" ref="auditDataSource"/>
-    </bean>
+  <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
+    <property name="dataSource" ref="auditDataSource"/>
+  </bean>
 
-    <!-- this is an implementation of PlatformTransactionManager, Camel will look it up when a route is marked as transacted -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="auditDataSource"/>
-    </bean>
+  <!-- this is an implementation of PlatformTransactionManager, Camel will look it up when a route is marked as transacted -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="auditDataSource"/>
+  </bean>
 
-    <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
-    </bean>
+  <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <property name="transactionManager" ref="transactionManager"/>
+    <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+  </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
 
-        <route>
-            <from uri="direct:policies"/>
-            <setHeader headerName="message">
-                <simple>${body}</simple>
-            </setHeader>
-            <policy ref="PROPAGATION_REQUIRED">
-                <to uri="sql:insert into audit_log (message) values (:#message)"/>
-                <to uri="mock:out1"/>
-            </policy>
-            <policy ref="PROPAGATION_REQUIRED">
-                <to uri="sql:insert into messages (message) values (:#message)"/>
-                <to uri="mock:out2"/>
-            </policy>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:policies"/>
+      <setHeader headerName="message">
+        <simple>${body}</simple>
+      </setHeader>
+      <policy ref="PROPAGATION_REQUIRED">
+        <to uri="sql:insert into audit_log (message) values (:#message)"/>
+        <to uri="mock:out1"/>
+      </policy>
+      <policy ref="PROPAGATION_REQUIRED">
+        <to uri="sql:insert into messages (message) values (:#message)"/>
+        <to uri="mock:out2"/>
+      </policy>
+    </route>
+  </camelContext>
 
 </beans>

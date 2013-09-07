@@ -25,22 +25,22 @@
            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
        ">
 
-    <!-- this class implements javax.sql.XADataSource and javax.sql.DataSource-->
-    <bean id="h2.dataSource" class="org.h2.jdbcx.JdbcDataSource">
-        <property name="URL" value="jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1"/>
-        <property name="user" value="sa"/>
-        <property name="password" value=""/>
-    </bean>
+  <!-- this class implements javax.sql.XADataSource and javax.sql.DataSource-->
+  <bean id="h2.dataSource" class="org.h2.jdbcx.JdbcDataSource">
+    <property name="URL" value="jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1"/>
+    <property name="user" value="sa"/>
+    <property name="password" value=""/>
+  </bean>
 
-    <bean id="auditDataSource" class="org.camelcookbook.examples.transactions.util.DataSourceInitializer"
-          factory-method="initializeDataSource">
-        <constructor-arg ref="h2.dataSource"/>
-        <constructor-arg value="classpath:sql/schema.sql"/>
-    </bean>
+  <bean id="auditDataSource" class="org.camelcookbook.examples.transactions.util.DataSourceInitializer"
+        factory-method="initializeDataSource">
+    <constructor-arg ref="h2.dataSource"/>
+    <constructor-arg value="classpath:sql/schema.sql"/>
+  </bean>
 
-    <!-- utility object to check the audit_log table -->
-    <bean id="auditLogDao" class="org.camelcookbook.examples.transactions.dao.AuditLogDao">
-        <constructor-arg ref="auditDataSource"/>
-    </bean>
+  <!-- utility object to check the audit_log table -->
+  <bean id="auditLogDao" class="org.camelcookbook.examples.transactions.dao.AuditLogDao">
+    <constructor-arg ref="auditDataSource"/>
+  </bean>
 
 </beans>

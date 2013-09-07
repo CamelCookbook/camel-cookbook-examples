@@ -20,9 +20,6 @@ package org.camelcookbook.examples.transactions.idempotentconsumerintransaction;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spi.IdempotentRepository;
 
-/**
- * @author jkorab
- */
 public class IdempotentConsumerInTransactionRouteBuilder extends RouteBuilder {
 
     private final IdempotentRepository idempotentRepository;

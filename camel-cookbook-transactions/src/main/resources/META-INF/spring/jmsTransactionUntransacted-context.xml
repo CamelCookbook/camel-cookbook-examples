@@ -24,23 +24,24 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <import resource="embedded-jms-context.xml"/>
+  <import resource="embedded-jms-context.xml"/>
 
-    <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="connectionFactory" ref="connectionFactory"/>
-    </bean>
+  <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="connectionFactory" ref="connectionFactory"/>
+  </bean>
 
-    <bean id="illegalArgumentException" class="java.lang.IllegalArgumentException">
-        <constructor-arg value="Exchange caused explosion"/>
-    </bean>
+  <bean id="illegalArgumentException" class="java.lang.IllegalArgumentException">
+    <constructor-arg value="Exchange caused explosion"/>
+  </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="jms:inbound"/>
-            <log message="Processing message: ${body}"/>
-            <to uri="jms:outbound"/> <!-- this send is not transacted, so the message should be sent -->
-            <to uri="mock:out"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="jms:inbound"/>
+      <log message="Processing message: ${body}"/>
+      <to uri="jms:outbound"/>
+      <!-- this send is not transacted, so the message should be sent -->
+      <to uri="mock:out"/>
+    </route>
+  </camelContext>
 
 </beans>

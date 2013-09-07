@@ -17,9 +17,9 @@
 
 package org.camelcookbook.examples.transactions.dao;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Utility class for accessing the messages table used in the database examples.

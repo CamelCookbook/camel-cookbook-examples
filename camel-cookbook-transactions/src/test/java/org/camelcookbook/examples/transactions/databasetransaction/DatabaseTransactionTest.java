@@ -17,6 +17,8 @@
 
 package org.camelcookbook.examples.transactions.databasetransaction;
 
+import javax.sql.DataSource;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.builder.RouteBuilder;
@@ -32,9 +34,6 @@ import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
 import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.annotation.Propagation;
-
-import javax.sql.DataSource;
 
 /**
  * Demonstrates the behavior of database transactions.

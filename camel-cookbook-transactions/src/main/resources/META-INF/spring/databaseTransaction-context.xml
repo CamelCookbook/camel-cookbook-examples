@@ -26,47 +26,48 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <import resource="embedded-db-context.xml"/>
+  <import resource="embedded-db-context.xml"/>
 
-    <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
-        <property name="dataSource" ref="auditDataSource"/>
-    </bean>
+  <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
+    <property name="dataSource" ref="auditDataSource"/>
+  </bean>
 
-    <!-- this is an implementation of PlatformTransactionManager, Camel will look it up when a route is marked as transacted -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="auditDataSource"/>
-    </bean>
+  <!-- this is an implementation of PlatformTransactionManager, Camel will look it up when a route is marked as transacted -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="auditDataSource"/>
+  </bean>
 
-    <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
-    </bean>
+  <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <property name="transactionManager" ref="transactionManager"/>
+    <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+  </bean>
 
-    <bean id="illegalArgumentException" class="java.lang.IllegalArgumentException">
-        <constructor-arg value="Exchange caused explosion"/>
-    </bean>
+  <bean id="illegalArgumentException" class="java.lang.IllegalArgumentException">
+    <constructor-arg value="Exchange caused explosion"/>
+  </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:nonTransacted"/>
-            <log message="Processing message: ${body}"/>
-            <setHeader headerName="message">
-                <simple>${body}</simple>
-            </setHeader>
-            <to uri="sql:insert into audit_log (message) values (:#message)"/>
-            <to uri="mock:out"/>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:nonTransacted"/>
+      <log message="Processing message: ${body}"/>
+      <setHeader headerName="message">
+        <simple>${body}</simple>
+      </setHeader>
+      <to uri="sql:insert into audit_log (message) values (:#message)"/>
+      <to uri="mock:out"/>
+    </route>
 
-        <route>
-            <from uri="direct:transacted"/>
-            <transacted/> <!-- transacted requires a PlatformTransactionManager and a  ref="PROPAGATION_REQUIRED" -->
-            <log message="Processing message: ${body}"/>
-            <setHeader headerName="message">
-                <simple>${body}</simple>
-            </setHeader>
-            <to uri="sql:insert into audit_log (message) values (:#message)"/>
-            <to uri="mock:out"/>
-        </route>
-    </camelContext>
+    <route>
+      <from uri="direct:transacted"/>
+      <transacted/>
+      <!-- transacted requires a PlatformTransactionManager and a  ref="PROPAGATION_REQUIRED" -->
+      <log message="Processing message: ${body}"/>
+      <setHeader headerName="message">
+        <simple>${body}</simple>
+      </setHeader>
+      <to uri="sql:insert into audit_log (message) values (:#message)"/>
+      <to uri="mock:out"/>
+    </route>
+  </camelContext>
 
 </beans>

@@ -40,7 +40,6 @@ public class RollbackRouteBuilder extends RouteBuilder {
                     .rollback("Message contained word 'explode'")
                 .otherwise()
                     .log("Message processed successfully")
-            .to("mock:out");
-
+                    .to("mock:out");
     }
 }

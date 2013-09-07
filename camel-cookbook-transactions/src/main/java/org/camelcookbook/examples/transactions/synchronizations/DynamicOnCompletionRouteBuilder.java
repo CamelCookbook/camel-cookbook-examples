@@ -35,5 +35,4 @@ public class DynamicOnCompletionRouteBuilder extends RouteBuilder {
             .endChoice()
             .log("Processed message");
     }
-
 }

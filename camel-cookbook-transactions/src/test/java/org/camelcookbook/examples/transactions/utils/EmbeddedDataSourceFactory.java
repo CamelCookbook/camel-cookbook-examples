@@ -17,13 +17,13 @@
 
 package org.camelcookbook.examples.transactions.utils;
 
+import java.io.File;
 import javax.sql.DataSource;
+
 import org.apache.commons.lang.Validate;
 import org.camelcookbook.examples.transactions.util.DataSourceInitializer;
 import org.h2.jdbcx.JdbcDataSource;
 import org.springframework.core.io.FileSystemResource;
-
-import java.io.File;
 
 /**
  * Utility class that centralises the wiring of a DataSource to the embedded database.
@@ -50,5 +50,6 @@ public class EmbeddedDataSourceFactory {
         return DataSourceInitializer.initializeDataSource(dataSource, script);
     }
 
-    private EmbeddedDataSourceFactory() {}
+    private EmbeddedDataSourceFactory() {
+    }
 }

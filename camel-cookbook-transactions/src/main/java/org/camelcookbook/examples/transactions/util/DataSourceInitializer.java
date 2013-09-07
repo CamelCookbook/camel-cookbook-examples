@@ -17,11 +17,11 @@
 
 package org.camelcookbook.examples.transactions.util;
 
+import javax.sql.DataSource;
+
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import javax.sql.DataSource;
 
 /**
  * Uitility class for initializing a DataSource with a SQL script.

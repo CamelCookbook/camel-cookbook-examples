@@ -24,101 +24,102 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="illegalArgumentException" class="java.lang.IllegalArgumentException">
-        <constructor-arg value="Exchange caused explosion"/>
-    </bean>
+  <bean id="illegalArgumentException" class="java.lang.IllegalArgumentException">
+    <constructor-arg value="Exchange caused explosion"/>
+  </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <onCompletion>
-            <log message="global onCompletion thread: ${threadName}"/>
-            <to uri="mock:global"/>
-        </onCompletion>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <onCompletion>
+      <log message="global onCompletion thread: ${threadName}"/>
+      <to uri="mock:global"/>
+    </onCompletion>
 
-        <route>
-            <from uri="direct:onCompletion"/>
-            <onCompletion>
-                <log message="onCompletion triggered: ${threadName}"/>
-                <to uri="mock:completed"/>
-            </onCompletion>
-            <log message="Processing message: ${threadName}"/>
-        </route>
+    <route>
+      <from uri="direct:onCompletion"/>
+      <onCompletion>
+        <log message="onCompletion triggered: ${threadName}"/>
+        <to uri="mock:completed"/>
+      </onCompletion>
+      <log message="Processing message: ${threadName}"/>
+    </route>
 
-        <route>
-            <from uri="direct:noOnCompletion"/>
-            <log message="Original thread: ${threadName}"/>
-            <choice>
-                <when>
-                    <simple>${body} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-            </choice>
-        </route>
+    <route>
+      <from uri="direct:noOnCompletion"/>
+      <log message="Original thread: ${threadName}"/>
+      <choice>
+        <when>
+          <simple>${body} contains 'explode'</simple>
+          <throwException ref="illegalArgumentException"/>
+        </when>
+      </choice>
+    </route>
 
-        <route>
-            <from uri="direct:onCompletionFailure"/>
-            <onCompletion onFailureOnly="true">
-                <log message="onFailureOnly thread: ${threadName}"/>
-                <to uri="mock:failed"/>
-            </onCompletion>
-            <log message="Original thread: ${threadName}"/>
-            <choice>
-                <when>
-                    <simple>${body} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-            </choice>
-        </route>
+    <route>
+      <from uri="direct:onCompletionFailure"/>
+      <onCompletion onFailureOnly="true">
+        <log message="onFailureOnly thread: ${threadName}"/>
+        <to uri="mock:failed"/>
+      </onCompletion>
+      <log message="Original thread: ${threadName}"/>
+      <choice>
+        <when>
+          <simple>${body} contains 'explode'</simple>
+          <throwException ref="illegalArgumentException"/>
+        </when>
+      </choice>
+    </route>
 
-        <route>
-            <from uri="direct:onCompletionFailureConditional"/>
-            <onCompletion onFailureOnly="true">
-                <onWhen>
-                    <simple>${exception.class} == 'java.lang.IllegalArgumentException'</simple>
-                </onWhen>
-                <log message="onFailureOnly thread: ${threadName}"/>
-                <to uri="mock:failed"/>
-            </onCompletion>
-            <log message="Original thread: ${threadName}"/>
-            <choice>
-                <when>
-                    <simple>${body} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-            </choice>
-        </route>
+    <route>
+      <from uri="direct:onCompletionFailureConditional"/>
+      <onCompletion onFailureOnly="true">
+        <onWhen>
+          <simple>${exception.class} == 'java.lang.IllegalArgumentException'</simple>
+        </onWhen>
+        <log message="onFailureOnly thread: ${threadName}"/>
+        <to uri="mock:failed"/>
+      </onCompletion>
+      <log message="Original thread: ${threadName}"/>
+      <choice>
+        <when>
+          <simple>${body} contains 'explode'</simple>
+          <throwException ref="illegalArgumentException"/>
+        </when>
+      </choice>
+    </route>
 
-        <route>
-            <from uri="direct:chained"/>
-            <onCompletion onCompleteOnly="true">
-                <log message="onFailureOnly thread: ${threadName}"/>
-                <to uri="mock:completed"/>
-            </onCompletion>
-            <to uri="direct:onCompletionFailure"/> <!-- calls out to route with onCompletion set -->
-        </route>
+    <route>
+      <from uri="direct:chained"/>
+      <onCompletion onCompleteOnly="true">
+        <log message="onFailureOnly thread: ${threadName}"/>
+        <to uri="mock:completed"/>
+      </onCompletion>
+      <to uri="direct:onCompletionFailure"/>
+      <!-- calls out to route with onCompletion set -->
+    </route>
 
-        <route>
-            <from uri="direct:onCompletionChoice"/>
-            <onCompletion>
-                <log message="onCompletion thread: ${threadName}"/>
-                <choice>
-                    <when>
-                        <simple>${exception} == null</simple>
-                        <to uri="mock:completed"/>
-                    </when>
-                    <otherwise>
-                        <to uri="mock:failed"/>
-                    </otherwise>
-                </choice>
-            </onCompletion>
-            <log message="Original thread: ${threadName}"/>
-            <choice>
-                <when>
-                    <simple>${body} contains 'explode'</simple>
-                    <throwException ref="illegalArgumentException"/>
-                </when>
-            </choice>
-        </route>
+    <route>
+      <from uri="direct:onCompletionChoice"/>
+      <onCompletion>
+        <log message="onCompletion thread: ${threadName}"/>
+        <choice>
+          <when>
+            <simple>${exception} == null</simple>
+            <to uri="mock:completed"/>
+          </when>
+          <otherwise>
+            <to uri="mock:failed"/>
+          </otherwise>
+        </choice>
+      </onCompletion>
+      <log message="Original thread: ${threadName}"/>
+      <choice>
+        <when>
+          <simple>${body} contains 'explode'</simple>
+          <throwException ref="illegalArgumentException"/>
+        </when>
+      </choice>
+    </route>
 
-    </camelContext>
+  </camelContext>
 
 </beans>

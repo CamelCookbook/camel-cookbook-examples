@@ -82,7 +82,7 @@ public class TransactionPolicySpringTest extends CamelSpringTestSupport {
         mockOut2.whenAnyExchangeReceived(new ExceptionThrowingProcessor());
 
         try {
-        template.sendBody("direct:policies", message);
+            template.sendBody("direct:policies", message);
             fail();
         } catch (Exception e) {
             assertEquals("boom!", ExceptionUtils.getRootCause(e).getMessage());

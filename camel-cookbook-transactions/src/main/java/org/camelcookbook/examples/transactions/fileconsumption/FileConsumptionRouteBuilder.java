@@ -17,14 +17,11 @@
 
 package org.camelcookbook.examples.transactions.fileconsumption;
 
+import java.io.File;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.Validate;
 
-import java.io.File;
-
-/**
- * @author jkorab
- */
 public class FileConsumptionRouteBuilder extends RouteBuilder {
     private final String inputDirectory;
     private final String outputDirectory;

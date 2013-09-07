@@ -17,6 +17,8 @@
 
 package org.camelcookbook.examples.transactions.rollback;
 
+import javax.sql.DataSource;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -25,22 +27,16 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.spring.spi.SpringTransactionPolicy;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.examples.transactions.dao.AuditLogDao;
 import org.camelcookbook.examples.transactions.dao.MessageDao;
-import org.camelcookbook.examples.transactions.transactionpolicy.TransactionPolicyNestedRouteBuilder;
 import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
-import javax.sql.DataSource;
 
 /**
  * Demonstrates the behavior of marking the last transaction for rollback.
  */
-public class RollbackMarkRollbackOnlyLastTest  extends CamelTestSupport {
+public class RollbackMarkRollbackOnlyLastTest extends CamelTestSupport {
 
     private AuditLogDao auditLogDao;
     private MessageDao messageDao;

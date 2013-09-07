@@ -25,17 +25,17 @@
            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
        ">
 
-    <!-- shared database setup, here we use an embedded H2 datasource -->
-    <jdbc:embedded-database id="auditDataSource" type="H2">
-        <jdbc:script location="classpath:/sql/schema.sql"/>
-    </jdbc:embedded-database>
+  <!-- shared database setup, here we use an embedded H2 datasource -->
+  <jdbc:embedded-database id="auditDataSource" type="H2">
+    <jdbc:script location="classpath:/sql/schema.sql"/>
+  </jdbc:embedded-database>
 
-    <!-- utility object to check the audit_log table -->
-    <bean id="auditLogDao" class="org.camelcookbook.examples.transactions.dao.AuditLogDao">
-        <constructor-arg ref="auditDataSource"/>
-    </bean>
-    <!-- utility object to check the messages table -->
-    <bean id="messageDao" class="org.camelcookbook.examples.transactions.dao.MessageDao">
-        <constructor-arg ref="auditDataSource"/>
-    </bean>
+  <!-- utility object to check the audit_log table -->
+  <bean id="auditLogDao" class="org.camelcookbook.examples.transactions.dao.AuditLogDao">
+    <constructor-arg ref="auditDataSource"/>
+  </bean>
+  <!-- utility object to check the messages table -->
+  <bean id="messageDao" class="org.camelcookbook.examples.transactions.dao.MessageDao">
+    <constructor-arg ref="auditDataSource"/>
+  </bean>
 </beans>

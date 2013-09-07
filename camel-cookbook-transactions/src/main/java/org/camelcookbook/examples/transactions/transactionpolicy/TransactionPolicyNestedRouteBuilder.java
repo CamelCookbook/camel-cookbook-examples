@@ -38,6 +38,5 @@ public class TransactionPolicyNestedRouteBuilder extends RouteBuilder {
                 .to("sql:insert into audit_log (message) values (:#message)")
                 .to("mock:out2")
             .end();
-
     }
 }

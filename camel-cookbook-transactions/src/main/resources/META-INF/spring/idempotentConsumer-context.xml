@@ -24,20 +24,20 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <bean id="wsIdempotentRepository" class="org.apache.camel.processor.idempotent.MemoryIdempotentRepository"/>
+  <bean id="wsIdempotentRepository" class="org.apache.camel.processor.idempotent.MemoryIdempotentRepository"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:in"/>
-            <log message="Received message ${header[messageId]}"/>
-            <idempotentConsumer messageIdRepositoryRef="wsIdempotentRepository">
-                <header>messageId</header>
-                <log message="Invoking WS"/>
-                <to uri="mock:ws"/>
-            </idempotentConsumer>
-            <log message="Completing"/>
-            <to uri="mock:out"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:in"/>
+      <log message="Received message ${header[messageId]}"/>
+      <idempotentConsumer messageIdRepositoryRef="wsIdempotentRepository">
+        <header>messageId</header>
+        <log message="Invoking WS"/>
+        <to uri="mock:ws"/>
+      </idempotentConsumer>
+      <log message="Completing"/>
+      <to uri="mock:out"/>
+    </route>
+  </camelContext>
 
 </beans>

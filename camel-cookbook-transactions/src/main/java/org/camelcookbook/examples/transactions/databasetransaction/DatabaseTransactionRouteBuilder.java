@@ -19,9 +19,6 @@ package org.camelcookbook.examples.transactions.databasetransaction;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * @author jkorab
- */
 public class DatabaseTransactionRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {

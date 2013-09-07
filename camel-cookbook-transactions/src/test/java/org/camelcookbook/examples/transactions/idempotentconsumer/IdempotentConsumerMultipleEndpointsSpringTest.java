@@ -37,7 +37,7 @@ public class IdempotentConsumerMultipleEndpointsSpringTest extends CamelSpringTe
     }
 
     @Test
-    public void testErrorWithinBlockWillEnableBlockReentry()  throws InterruptedException  {
+    public void testErrorWithinBlockWillEnableBlockReentry() throws InterruptedException {
         MockEndpoint mockWs = getMockEndpoint("mock:ws");
         mockWs.whenExchangeReceived(1, new Processor() {
             @Override
@@ -64,7 +64,7 @@ public class IdempotentConsumerMultipleEndpointsSpringTest extends CamelSpringTe
     }
 
     @Test
-    public void testErrorAfterBlockWillMeanBlockNotReentered()  throws InterruptedException {
+    public void testErrorAfterBlockWillMeanBlockNotReentered() throws InterruptedException {
         MockEndpoint mockWs = getMockEndpoint("mock:ws");
         // the web service should be invoked once only
         mockWs.setExpectedMessageCount(1);

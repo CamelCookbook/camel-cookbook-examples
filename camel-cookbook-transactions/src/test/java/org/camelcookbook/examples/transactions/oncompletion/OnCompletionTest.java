@@ -32,13 +32,14 @@ public class OnCompletionTest extends CamelTestSupport {
         return new RouteBuilder[] {
                 new OnCompletionRouteBuilder(),
                 new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:inAnotherRouteBuilder")
-                    .log("No global onCompletion should apply")
-                    .to("mock:outAnotherRouteBuilder");
-            }
-        }};
+                    @Override
+                    public void configure() throws Exception {
+                        from("direct:inAnotherRouteBuilder")
+                            .log("No global onCompletion should apply")
+                            .to("mock:outAnotherRouteBuilder");
+                    }
+                }
+        };
     }
 
     @Test
@@ -135,5 +136,4 @@ public class OnCompletionTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

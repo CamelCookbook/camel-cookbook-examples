@@ -22,7 +22,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
@@ -51,7 +50,7 @@ public class IdempotentConsumerMultipleEndpointsTest extends CamelTestSupport {
     }
 
     @Test
-    public void testErrorAfterBlockWillMeanBlockNotReentered()  throws InterruptedException {
+    public void testErrorAfterBlockWillMeanBlockNotReentered() throws InterruptedException {
         MockEndpoint mockWs = getMockEndpoint("mock:ws");
         // the web service should be invoked once only
         mockWs.setExpectedMessageCount(1);

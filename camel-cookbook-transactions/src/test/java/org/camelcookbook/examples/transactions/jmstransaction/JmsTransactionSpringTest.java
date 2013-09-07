@@ -17,12 +17,8 @@
 
 package org.camelcookbook.examples.transactions.jmstransaction;
 
-import org.apache.camel.CamelExecutionException;
-import org.apache.camel.ConsumerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.camelcookbook.examples.transactions.dao.AuditLogDao;
 import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;

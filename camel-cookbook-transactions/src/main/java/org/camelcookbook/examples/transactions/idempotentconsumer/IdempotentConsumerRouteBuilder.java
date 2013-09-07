@@ -20,9 +20,6 @@ package org.camelcookbook.examples.transactions.idempotentconsumer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-/**
-* @author jkorab
-*/
 class IdempotentConsumerRouteBuilder extends RouteBuilder {
 
     @Override

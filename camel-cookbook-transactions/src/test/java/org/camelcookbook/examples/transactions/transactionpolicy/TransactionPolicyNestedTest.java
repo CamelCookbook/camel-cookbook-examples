@@ -17,6 +17,8 @@
 
 package org.camelcookbook.examples.transactions.transactionpolicy;
 
+import javax.sql.DataSource;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -32,8 +34,6 @@ import org.camelcookbook.examples.transactions.utils.EmbeddedDataSourceFactory;
 import org.camelcookbook.examples.transactions.utils.ExceptionThrowingProcessor;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
-import javax.sql.DataSource;
 
 /**
  * Demonstrates the use of nested transaction policies.

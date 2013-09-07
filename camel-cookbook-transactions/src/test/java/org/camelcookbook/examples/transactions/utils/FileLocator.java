@@ -17,25 +17,26 @@
 
 package org.camelcookbook.examples.transactions.utils;
 
-import org.apache.commons.lang.Validate;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.commons.lang.Validate;
 
 /**
  * Utility builder used to locate a file given a number of options as to where it might be.
  * Usage: <code>new FileLocator().with(location1).with(location2).find()</code>
  * If #find() returns null, #getErrorMessage() will format a nice human-readable error message
  * with the locations that were looked up.
-*/
+ */
 public class FileLocator {
     private List<String> locations = new LinkedList<String>();
     private boolean used = false;
     private StringBuilder errorMessage = new StringBuilder();
 
-    public FileLocator() {}
+    public FileLocator() {
+    }
 
     public FileLocator with(String location) {
         Validate.isTrue(!used);

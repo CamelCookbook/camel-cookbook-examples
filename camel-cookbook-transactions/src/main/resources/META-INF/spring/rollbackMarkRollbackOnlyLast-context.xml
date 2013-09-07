@@ -24,56 +24,57 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <import resource="embedded-db-context.xml"/>
+  <import resource="embedded-db-context.xml"/>
 
-    <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
-        <property name="dataSource" ref="auditDataSource"/>
-    </bean>
+  <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
+    <property name="dataSource" ref="auditDataSource"/>
+  </bean>
 
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="auditDataSource"/>
-    </bean>
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="auditDataSource"/>
+  </bean>
 
-    <bean id="PROPAGATION_REQUIRES_NEW" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"/>
-    </bean>
+  <bean id="PROPAGATION_REQUIRES_NEW" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <property name="transactionManager" ref="transactionManager"/>
+    <property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"/>
+  </bean>
 
-    <bean id="PROPAGATION_REQUIRES_NEW-2" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
-        <property name="transactionManager" ref="transactionManager"/>
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"/>
-    </bean>
+  <bean id="PROPAGATION_REQUIRES_NEW-2" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <property name="transactionManager" ref="transactionManager"/>
+    <property name="propagationBehaviorName" value="PROPAGATION_REQUIRES_NEW"/>
+  </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route id="route1">
-            <from uri="direct:route1"/>
-            <setHeader headerName="message">
-                <simple>${body}</simple>
-            </setHeader>
-            <policy ref="PROPAGATION_REQUIRES_NEW" id="tx1">
-                <to uri="sql:insert into messages (message) values (:#message)"/>
-                <to uri="direct:route2"/>
-                <to uri="mock:out1"/>
-            </policy>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route id="route1">
+      <from uri="direct:route1"/>
+      <setHeader headerName="message">
+        <simple>${body}</simple>
+      </setHeader>
+      <policy ref="PROPAGATION_REQUIRES_NEW" id="tx1">
+        <to uri="sql:insert into messages (message) values (:#message)"/>
+        <to uri="direct:route2"/>
+        <to uri="mock:out1"/>
+      </policy>
+    </route>
 
-        <route id="route2">
-            <from uri="direct:route2"/>
-            <policy ref="PROPAGATION_REQUIRES_NEW-2" id="tx2">
-                <to uri="sql:insert into audit_log (message) values (:#message)"/>
-                <choice>
-                    <when>
-                        <simple>${body} contains 'explode'</simple>
-                        <log message="Marking this operation for rollback"/>
-                        <rollback markRollbackOnlyLast="true"/> <!-- no exception thrown -->
-                    </when>
-                    <otherwise>
-                        <log message="Message processed successfully"/>
-                    </otherwise>
-                </choice>
-                <to uri="mock:out2"/>
-            </policy>
-        </route>
-    </camelContext>
+    <route id="route2">
+      <from uri="direct:route2"/>
+      <policy ref="PROPAGATION_REQUIRES_NEW-2" id="tx2">
+        <to uri="sql:insert into audit_log (message) values (:#message)"/>
+        <choice>
+          <when>
+            <simple>${body} contains 'explode'</simple>
+            <log message="Marking this operation for rollback"/>
+            <rollback markRollbackOnlyLast="true"/>
+            <!-- no exception thrown -->
+          </when>
+          <otherwise>
+            <log message="Message processed successfully"/>
+          </otherwise>
+        </choice>
+        <to uri="mock:out2"/>
+      </policy>
+    </route>
+  </camelContext>
 
 </beans>

@@ -21,9 +21,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-/**
-* @author jkorab
-*/
 class IdempotentConsumerSkipDuplicateRouteBuilder extends RouteBuilder {
 
     @Override

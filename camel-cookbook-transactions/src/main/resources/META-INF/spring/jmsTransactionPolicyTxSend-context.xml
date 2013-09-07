@@ -24,43 +24,44 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-    <import resource="embedded-jms-context.xml"/>
+  <import resource="embedded-jms-context.xml"/>
 
-    <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
-        <property name="connectionFactory" ref="connectionFactory"/>
-    </bean>
+  <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+    <property name="connectionFactory" ref="connectionFactory"/>
+  </bean>
 
-    <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
-        <property name="transactionManager" ref="jmsTransactionManager"/>
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
-    </bean>
+  <bean id="PROPAGATION_REQUIRED" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <property name="transactionManager" ref="jmsTransactionManager"/>
+    <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"/>
+  </bean>
 
-    <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="connectionFactory" ref="connectionFactory"/>
-        <property name="transactionManager" ref="jmsTransactionManager"/>
-    </bean>
+  <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="connectionFactory" ref="connectionFactory"/>
+    <property name="transactionManager" ref="jmsTransactionManager"/>
+  </bean>
 
-    <!-- it is not enough that the component does not mention a transaction manager, if it uses a
-    ConnectionFactory that is managed by a transaction manager, it will engage in a transaction -->
-    <bean id="nonTxConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-        <!-- this is the same URL as the regular ConnectionFactory -->
-        <property name="brokerURL" value="vm://myEmbeddedBroker"/>
-    </bean>
+  <!-- it is not enough that the component does not mention a transaction manager, if it uses a
+  ConnectionFactory that is managed by a transaction manager, it will engage in a transaction -->
+  <bean id="nonTxConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <!-- this is the same URL as the regular ConnectionFactory -->
+    <property name="brokerURL" value="vm://myEmbeddedBroker"/>
+  </bean>
 
-    <bean id="jmsNonTx" class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="connectionFactory" ref="nonTxConnectionFactory"/>
-    </bean>
+  <bean id="jmsNonTx" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="connectionFactory" ref="nonTxConnectionFactory"/>
+  </bean>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="jmsNonTx:inbound"/>
-            <policy ref="PROPAGATION_REQUIRED">
-                <log message="Processing message: ${body}"/>
-                <to uri="jms:outbound"/> <!-- this send is transacted, so the message should not be sent -->
-                <to uri="mock:out"/>
-            </policy>
-        </route>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="jmsNonTx:inbound"/>
+      <policy ref="PROPAGATION_REQUIRED">
+        <log message="Processing message: ${body}"/>
+        <to uri="jms:outbound"/>
+        <!-- this send is transacted, so the message should not be sent -->
+        <to uri="mock:out"/>
+      </policy>
+    </route>
 
-    </camelContext>
+  </camelContext>
 
 </beans>

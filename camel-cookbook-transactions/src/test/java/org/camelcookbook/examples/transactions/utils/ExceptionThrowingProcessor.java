@@ -21,8 +21,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
 /**
-* Processor that throws an exception whenever called.
-*/
+ * Processor that throws an exception whenever called.
+ */
 public class ExceptionThrowingProcessor implements Processor {
     private final String message;
 

@@ -19,6 +19,7 @@ package org.camelcookbook.examples.transactions.utils;
 
 import java.io.File;
 import javax.sql.DataSource;
+import javax.sql.XADataSource;
 
 import org.apache.commons.lang.Validate;
 import org.camelcookbook.examples.transactions.util.DataSourceInitializer;
@@ -31,6 +32,10 @@ import org.springframework.core.io.FileSystemResource;
 public class EmbeddedDataSourceFactory {
 
     public static DataSource getDataSource(String initScriptLocation) {
+        return getJdbcDataSource(initScriptLocation);
+    }
+
+    public static JdbcDataSource getJdbcDataSource(String initScriptLocation) {
         Validate.notEmpty(initScriptLocation, "initScriptLocation is empty");
 
         String mavenRelativePath = "src/main/resources/" + initScriptLocation;
@@ -47,7 +52,9 @@ public class EmbeddedDataSourceFactory {
         dataSource.setUser("sa");
         dataSource.setPassword("");
 
-        return DataSourceInitializer.initializeDataSource(dataSource, script);
+        DataSourceInitializer.initializeDataSource(dataSource, script);
+
+        return dataSource;
     }
 
     private EmbeddedDataSourceFactory() {

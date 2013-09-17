@@ -12,6 +12,7 @@ public class SignaturesRouteBuilder extends RouteBuilder {
         from("direct:sign")
             .log("Signing message")
             .to("crypto:sign://usingKeystore?keystore=#keyStore&alias=system_a&password=keyPasswordA")
+            .to("log:out?showHeaders=true")
             .log("Message signed")
             .to("mock:signed")
             .to("direct:verify");

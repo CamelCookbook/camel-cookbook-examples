@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
 import java.security.KeyStore;
 
 /**
- * @author jkorab
+ * Demonstrates the use of public and private keys to digitally sign a message payload.
  */
 public class SignaturesTest extends CamelTestSupport {
 
-    private Logger log = LoggerFactory.getLogger(SignaturesTest.class);
+    private final Logger log = LoggerFactory.getLogger(SignaturesTest.class);
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
@@ -27,8 +27,8 @@ public class SignaturesTest extends CamelTestSupport {
 
     @Override
     protected CamelContext createCamelContext() throws Exception {
-        String keyStorePassword = "camelstorepass";
-        String trustStorePassword = "camelstorepass";
+        final String keyStorePassword = "keystorePassword";
+        final String trustStorePassword = "truststorePassword";
 
 
         SimpleRegistry registry = new SimpleRegistry();

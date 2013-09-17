@@ -11,13 +11,15 @@ public class SignaturesRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:sign")
             .log("Signing message")
-            .to("crypto:sign://usingKeystore?keystore=#keyStore&alias=scott&password=camelkeypass&algorithm=SHA1withRSA")
+            .to("crypto:sign://usingKeystore?keystore=#keyStore&alias=system_a&password=keyPasswordA")
             .log("Message signed")
             .to("mock:signed")
             .to("direct:verify");
 
         from("direct:verify")
-            .to("crypto:verify//usingKeystore?keystore=#trustStore&alias=scott&algorithm=SHA1withRSA")
+            .log("Verifying message")
+            .to("crypto:verify//usingKeystore?keystore=#trustStore&alias=system_a")
+            .log("Message verified")
             .to("mock:verified");
     }
 

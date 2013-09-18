@@ -1,20 +1,14 @@
 package org.camelcookbook.security.encryption;
 
-import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.camelcookbook.security.signatures.SignaturesRouteBuilder;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.Key;
 import java.security.KeyStore;
-import java.security.SignatureException;
 
 /**
  * Demonstrates the use of a shared secret key to encrypt and decrypt a message.

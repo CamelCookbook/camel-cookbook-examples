@@ -47,10 +47,6 @@ public class SignaturesDynamicTest extends CamelTestSupport {
         registry.put("trustStore", trustStore);
 
         CamelContext camelContext = new DefaultCamelContext(registry);
-
-        DigitalSignatureComponent digitalSignatureComponent = new DigitalSignatureComponent();
-        camelContext.addComponent("crypto", digitalSignatureComponent);
-
         return camelContext;
     }
 

@@ -25,26 +25,30 @@
            http://springcryptoutils.com/schema/crypt
            http://springcryptoutils.com/schema/crypt.xsd">
 
-    <crypt:keystore id="keyStore" location="classpath:keystore.jks"
-                    password="keystorePassword"/>
-    <crypt:keystore id="trustStore" location="classpath:truststore.jks"
-                    password="truststorePassword"/>
+    <crypt:keystore id="keyStore" location="classpath:shared.jceks"
+                    password="sharedKeystorePassword"
+                    type="JCEKS"/>
+
+    <crypt:secretKey id="secretKey" keystore-ref="keyStore" alias="shared"
+                     password="sharedKeyPassword"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <dataFormats>
+            <crypto id="sharedKeyCrypto" algorithm="DES" keyRef="secretKey"/>
+        </dataFormats>
         <route>
-            <from uri="direct:sign"/>
-            <log message="Signing message"/>
-            <to uri="crypto:sign://usingKeystore?keystore=#keyStore&amp;alias=system_a&amp;password=keyPasswordA"/>
-            <log message="Message signed"/>
-            <to uri="mock:signed"/>
-            <to uri="direct:verify"/>
+            <from uri="direct:encrypt"/>
+            <log message="Encrypting message"/>
+            <marshal ref="sharedKeyCrypto"/>
+            <log message="Message encrypted: ${body}"/>
+            <to uri="direct:decrypt"/>
         </route>
         <route>
-            <from uri="direct:verify"/>
-            <log message="Verifying message"/>
-            <to uri="crypto:verify//usingKeystore?keystore=#trustStore&amp;alias=system_a"/>
-            <log message="Message verified"/>
-            <to uri="mock:verified"/>
+            <from uri="direct:decrypt"/>
+            <log message="Decrypting message"/>
+            <unmarshal ref="sharedKeyCrypto"/>
+            <log message="Message decrypted"/>
+            <to uri="mock:decrypted"/>
         </route>
     </camelContext>
 </beans>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
 <!--
   ~ Copyright (C) Scott Cranton and Jakub Korab
   ~ https://github.com/CamelCookbook
@@ -26,20 +27,14 @@
        ">
 
   <cxf:cxfEndpoint id="paymentServiceEndpoint"
-                   address="http://localhost:9090/paymentService"
+                   address="http://localhost:9091/paymentService"
                    serviceClass="org.camelcookbook.ws.payment_service.Payment"/>
 
-  <bean id="paymentServiceImpl" class="org.camelcookbook.ws.provide.PaymentServiceImpl"/>
-
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <route id="wsRoute">
-      <from uri="cxf:bean:paymentServiceEndpoint"/>
-      <transform>
-        <simple>${in.body[0]}</simple>
-      </transform>
-      <log logName="payment-service-ws" message="request = ${body}"/>
-      <bean ref="paymentServiceImpl"/>
-      <log logName="payment-service-ws" message="response = ${body}"/>
+    <route id="wsClient">
+      <from uri="direct:start"/>
+      <log message="${body}"/>
+      <to uri="cxf:bean:paymentServiceEndpoint"/>
     </route>
   </camelContext>
 

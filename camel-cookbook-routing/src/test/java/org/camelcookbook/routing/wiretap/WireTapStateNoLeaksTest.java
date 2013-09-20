@@ -53,10 +53,10 @@ public class WireTapStateNoLeaksTest extends CamelTestSupport {
         cheese.setAge(1);
 
         // should receive same object that was sent
-        //out.expectedBodiesReceived(cheese); // bug in Wire Tap?
+        out.expectedBodiesReceived(cheese);
         out.setExpectedMessageCount(1);
         // since copy was sent to wire tap, age should remain unchanged
-        //out.message(0).body().isEqualTo(cheese); // bug in Wire Tap?
+        out.message(0).body().isEqualTo(cheese);
         out.message(0).expression(simple("${body.age} == 1"));
 
         tapped.setExpectedMessageCount(1);
@@ -70,15 +70,13 @@ public class WireTapStateNoLeaksTest extends CamelTestSupport {
         final Cheese outCheese = out.getReceivedExchanges().get(0).getIn().getBody(Cheese.class);
         final Cheese tappedCheese = tapped.getReceivedExchanges().get(0).getIn().getBody(Cheese.class);
 
-        LOG.info("cheese = {}; out = {}; tapped = {}", new Cheese[]{cheese, outCheese, tappedCheese});
+        LOG.info("cheese = {}; out = {}; tapped = {}", cheese, outCheese, tappedCheese);
 
         LOG.info("cheese == out = {}", (cheese == outCheese));
         LOG.info("cheese == tapped = {}", (cheese == tappedCheese));
         LOG.info("out == tapped = {}", (outCheese == tappedCheese));
 
         assertNotSame(outCheese, tappedCheese);
-
-        // bug in Camel - CAMEL-6064 - copy should go to tapped
-        //assertSame(outCheese, cheese);
+        assertSame(outCheese, cheese);
     }
 }

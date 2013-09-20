@@ -21,7 +21,6 @@
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xmlns:tns="http://ws.camelcookbook.org/payment-service"
                   xmlns:typens="http://ws.camelcookbook.org/payment-service/types"
                   targetNamespace="http://ws.camelcookbook.org/payment-service">
@@ -46,6 +45,13 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
+      <xsd:element name="fault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="reason" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
     </xsd:schema>
   </wsdl:types>
 
@@ -57,10 +63,15 @@
     <wsdl:part name="response" element="typens:transferResponse"/>
   </wsdl:message>
 
+  <wsdl:message name="FaultMessage">
+    <wsdl:part name="fault" element="typens:fault"/>
+  </wsdl:message>
+
   <wsdl:portType name="Payment">
     <wsdl:operation name="transferFunds">
       <wsdl:input message="tns:TransferRequest"/>
       <wsdl:output message="tns:TransferResponse"/>
+      <wsdl:fault name="fault" message="tns:FaultMessage"/>
     </wsdl:operation>
   </wsdl:portType>
 
@@ -74,6 +85,9 @@
       <wsdl:output>
         <soap:body use="literal"/>
       </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
 

@@ -59,7 +59,7 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
-      <from uri="direct:transacted"/>
+      <from uri="direct:transacted" id="main"/>
       <transacted ref="PROPAGATION_REQUIRED"/>
       <setHeader headerName="message">
         <simple>${body}</simple>
@@ -70,7 +70,7 @@
     </route>
 
     <route>
-      <from uri="direct:invokeWs"/>
+      <from uri="direct:invokeWs" id="idempotentWs"/>
       <idempotentConsumer messageIdRepositoryRef="jdbcIdempotentRepository">
         <header>messageId</header>
         <to uri="mock:ws"/>

@@ -30,14 +30,14 @@ public class IdempotentConsumerInTransactionRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:transacted")
+        from("direct:transacted").id("main")
             .transacted("PROPAGATION_REQUIRED")
             .setHeader("message", body())
             .to("sql:insert into audit_log (message) values (:#message)")
             .enrich("direct:invokeWs")
             .to("mock:out");
 
-        from("direct:invokeWs")
+        from("direct:invokeWs").id("idempotentWs")
             .idempotentConsumer(header("messageId"), idempotentRepository)
                 .to("mock:ws")
             .end();

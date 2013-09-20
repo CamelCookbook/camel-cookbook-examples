@@ -84,10 +84,6 @@
     </dependency>
     <dependency>
       <groupId>com.atomikos</groupId>
-      <artifactId>transactions-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.atomikos</groupId>
       <artifactId>transactions-jdbc</artifactId>
     </dependency>
     <dependency>

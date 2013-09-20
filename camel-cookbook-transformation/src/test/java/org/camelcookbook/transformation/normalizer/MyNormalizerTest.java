@@ -30,7 +30,7 @@ import org.camelcookbook.transformation.myschema.Book;
 import org.camelcookbook.transformation.myschema.Bookstore;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class MyNormalizerTest {
     @Test

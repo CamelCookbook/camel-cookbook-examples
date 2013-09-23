@@ -43,17 +43,15 @@ public class EncryptedPropertiesTest extends CamelTestSupport {
 
     @Override
     public CamelContext createCamelContext() {
-        SimpleRegistry registry = new SimpleRegistry();
+        JasyptPropertiesParser propParser = new JasyptPropertiesParser();
+        propParser.setPassword("encryptionPassword");
 
-        JasyptPropertiesParser propertiesParser = new JasyptPropertiesParser();
-        propertiesParser.setPassword("encryptionPassword");
+        PropertiesComponent propComponent = new PropertiesComponent();
+        propComponent.setLocation("classpath:placeholder.properties");
+        propComponent.setPropertiesParser(propParser);
 
-        PropertiesComponent propertiesComponent = new PropertiesComponent();
-        propertiesComponent.setLocation("classpath:placeholder.properties");
-        propertiesComponent.setPropertiesParser(propertiesParser);
-
-        DefaultCamelContext camelContext = new DefaultCamelContext(registry);
-        camelContext.addComponent("properties", propertiesComponent);
+        CamelContext camelContext = new DefaultCamelContext();
+        camelContext.addComponent("properties", propComponent);
         return camelContext;
     }
 

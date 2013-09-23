@@ -44,17 +44,15 @@ public class EncryptedPropertiesPasswordInSystemPropertyTest extends CamelTestSu
         // in a place appropriate to the runtime
         System.setProperty("jasyptMasterPassword", "encryptionPassword");
 
-        SimpleRegistry registry = new SimpleRegistry();
+        JasyptPropertiesParser propParser = new JasyptPropertiesParser();
+        propParser.setPassword("sys:jasyptMasterPassword");
 
-        JasyptPropertiesParser propertiesParser = new JasyptPropertiesParser();
-        propertiesParser.setPassword("sys:jasyptMasterPassword");
+        PropertiesComponent propComponent = new PropertiesComponent();
+        propComponent.setLocation("classpath:placeholder.properties");
+        propComponent.setPropertiesParser(propParser);
 
-        PropertiesComponent propertiesComponent = new PropertiesComponent();
-        propertiesComponent.setLocation("classpath:placeholder.properties");
-        propertiesComponent.setPropertiesParser(propertiesParser);
-
-        DefaultCamelContext camelContext = new DefaultCamelContext(registry);
-        camelContext.addComponent("properties", propertiesComponent);
+        DefaultCamelContext camelContext = new DefaultCamelContext();
+        camelContext.addComponent("properties", propComponent);
         return camelContext;
     }
 

@@ -15,35 +15,32 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes;
+package org.camelcookbook.security.encryptedproperties;
 
-import org.apache.camel.EndpointInject;
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class PropertyPlaceholderSpringTest extends CamelSpringTestSupport {
-    @EndpointInject(uri = "mock:out")
-    private MockEndpoint out;
+/**
+ * Demonstrates the use of encrypted properties in Camel routes.
+ */
+public class EncryptedPropertiesSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/propertyPlaceholder-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/encryptedProperties-context.xml");
     }
 
     @Test
     public void testPropertiesLoaded() throws InterruptedException {
-        final String messageBody = "Camel Rocks";
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).header("dbPassword").isEqualTo("myDatabasePassword");
 
-        out.setExpectedMessageCount(1);
-        out.message(0).body().isEqualTo("I hear you: Camel Rocks");
-
-        template.sendBody("direct:in", messageBody);
+        template.sendBody("direct:in", "Foo");
 
         assertMockEndpointsSatisfied();
     }
-
 }

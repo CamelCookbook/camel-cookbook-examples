@@ -16,11 +16,11 @@ import java.util.Map;
 /**
  * Demonstrates the Spring Security to apply authentication and authorization to a route.
  */
-public class SpringSecuritySpringTest extends CamelSpringTestSupport {
+public class SpringSecurityHeadersSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/springSecurity-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/springSecurityHeaders-context.xml");
     }
 
     @Test

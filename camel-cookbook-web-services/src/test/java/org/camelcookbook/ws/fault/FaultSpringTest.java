@@ -18,6 +18,7 @@
 package org.camelcookbook.ws.fault;
 
 import org.apache.camel.CamelExecutionException;
+import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.ws.payment_service.FaultMessage;
 import org.camelcookbook.ws.payment_service.types.TransferRequest;
@@ -27,8 +28,12 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class FaultSpringTest extends CamelSpringTestSupport {
+    private final int port1 = AvailablePortFinder.getNextAvailable();
+
     @Override
     protected AbstractApplicationContext createApplicationContext() {
+        System.setProperty("port1", String.valueOf(port1));
+
         return new ClassPathXmlApplicationContext("META-INF/spring/ws-fault.xml");
     }
 
@@ -40,7 +45,7 @@ public class FaultSpringTest extends CamelSpringTestSupport {
         request.setTo("Scott");
         request.setAmount("1");
 
-        TransferResponse response = template.requestBody("cxf:http://localhost:9092/paymentFaultService?serviceClass=org.camelcookbook.ws.payment_service.Payment", request, TransferResponse.class);
+        TransferResponse response = template.requestBody(String.format("cxf:http://localhost:%d/paymentFaultService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port1), request, TransferResponse.class);
 
         assertNotNull(response);
         assertEquals("OK", response.getReply());
@@ -48,7 +53,7 @@ public class FaultSpringTest extends CamelSpringTestSupport {
         request.setAmount("10000");
 
         try {
-            response = template.requestBody("cxf:http://localhost:9092/paymentFaultService?serviceClass=org.camelcookbook.ws.payment_service.Payment", request, TransferResponse.class);
+            response = template.requestBody(String.format("cxf:http://localhost:%d/paymentFaultService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port1), request, TransferResponse.class);
             fail("Request should have failed");
         } catch (CamelExecutionException e) {
             FaultMessage fault = assertIsInstanceOf(FaultMessage.class, e.getCause());

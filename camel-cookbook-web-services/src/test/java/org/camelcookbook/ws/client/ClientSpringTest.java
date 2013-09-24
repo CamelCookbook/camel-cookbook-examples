@@ -18,6 +18,7 @@
 package org.camelcookbook.ws.client;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.ws.payment_service.types.TransferRequest;
 import org.camelcookbook.ws.payment_service.types.TransferResponse;
@@ -27,8 +28,12 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ClientSpringTest extends CamelSpringTestSupport {
+    private final int port1 = AvailablePortFinder.getNextAvailable();
+
     @Override
     protected AbstractApplicationContext createApplicationContext() {
+        System.setProperty("port1", String.valueOf(port1));
+
         return new ClassPathXmlApplicationContext("META-INF/spring/ws-client.xml");
     }
 

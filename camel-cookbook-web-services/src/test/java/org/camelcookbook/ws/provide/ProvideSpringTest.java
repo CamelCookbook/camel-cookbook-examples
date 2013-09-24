@@ -17,6 +17,7 @@
 
 package org.camelcookbook.ws.provide;
 
+import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.ws.payment_service.types.TransferRequest;
 import org.camelcookbook.ws.payment_service.types.TransferResponse;
@@ -25,8 +26,12 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ProvideSpringTest extends CamelSpringTestSupport {
+    private final int port1 = AvailablePortFinder.getNextAvailable();
+
     @Override
     protected AbstractApplicationContext createApplicationContext() {
+        System.setProperty("port1", String.valueOf(port1));
+
         return new ClassPathXmlApplicationContext("META-INF/spring/ws-provide.xml");
     }
 
@@ -38,7 +43,7 @@ public class ProvideSpringTest extends CamelSpringTestSupport {
         request.setTo("Scott");
         request.setAmount("1");
 
-        TransferResponse response = template.requestBody("cxf:http://localhost:9090/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment", request, TransferResponse.class);
+        TransferResponse response = template.requestBody(String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port1), request, TransferResponse.class);
 
         assertNotNull(response);
         assertEquals("OK", response.getReply());

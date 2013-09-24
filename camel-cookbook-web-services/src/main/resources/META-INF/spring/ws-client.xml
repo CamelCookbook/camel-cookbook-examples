@@ -26,8 +26,10 @@
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
+
   <cxf:cxfEndpoint id="paymentServiceEndpoint"
-                   address="http://localhost:9091/paymentService"
+                   address="http://localhost:${port1}/paymentService"
                    serviceClass="org.camelcookbook.ws.payment_service.Payment"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">

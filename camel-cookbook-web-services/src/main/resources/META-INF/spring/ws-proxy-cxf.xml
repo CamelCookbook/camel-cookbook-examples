@@ -41,7 +41,7 @@
       <redeliveryPolicy maximumRedeliveries="2"/>
     </errorHandler>
 
-    <route id="wsProxy">
+    <route id="wsProxy" errorHandlerRef="myErrorHandler">
       <from uri="cxf:bean:paymentServiceProxy?dataFormat=PAYLOAD"/>
       <log logName="wsProxy" message="request = ${body}"/>
       <to uri="cxf:bean:paymentServiceBackend?dataFormat=PAYLOAD"/>

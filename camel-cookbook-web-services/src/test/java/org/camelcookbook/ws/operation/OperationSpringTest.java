@@ -17,14 +17,8 @@
 
 package org.camelcookbook.ws.operation;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
-import org.camelcookbook.ws.payment_service_v2.FaultMessage;
-import org.camelcookbook.ws.payment_service_v2.Payment;
-import org.camelcookbook.ws.payment_service_v2.PaymentService;
 import org.camelcookbook.ws.payment_service_v2.types.CheckStatusRequest;
 import org.camelcookbook.ws.payment_service_v2.types.CheckStatusResponse;
 import org.camelcookbook.ws.payment_service_v2.types.TransferRequest;
@@ -44,18 +38,14 @@ public class OperationSpringTest extends CamelSpringTestSupport {
     }
 
     @Test
-    public void testOperationSpring() throws MalformedURLException, FaultMessage {
-        final String wsdlUrl = String.format("http://localhost:%d/paymentServicev2?WSDL", port1);
-
-        final Payment paymentService = new PaymentService(new URL(wsdlUrl)).getPaymentPort();
-
+    public void testOperationSpring() {
         TransferRequest transferRequest = new TransferRequest();
         transferRequest.setBank("Bank of Camel");
         transferRequest.setFrom("Jakub");
         transferRequest.setTo("Scott");
         transferRequest.setAmount("1");
 
-        TransferResponse transferResponse = paymentService.transferFunds(transferRequest);
+        TransferResponse transferResponse = template.requestBodyAndHeader(String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=org.camelcookbook.ws.payment_service_v2.Payment", port1), transferRequest, "operationName", "transferFunds", TransferResponse.class);
 
         assertNotNull(transferResponse);
         assertEquals("OK", transferResponse.getReply());
@@ -65,7 +55,7 @@ public class OperationSpringTest extends CamelSpringTestSupport {
         checkStatusRequest.setBank("Bank of Camel");
         checkStatusRequest.setFrom("Jakub");
 
-        CheckStatusResponse checkStatusResponse = paymentService.checkStatus(checkStatusRequest);
+        CheckStatusResponse checkStatusResponse = template.requestBodyAndHeader(String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=org.camelcookbook.ws.payment_service_v2.Payment", port1), checkStatusRequest, "operationName", "checkStatus", CheckStatusResponse.class);
 
         assertNotNull(checkStatusResponse);
         assertEquals("Complete", checkStatusResponse.getStatus());

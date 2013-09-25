@@ -45,7 +45,7 @@ public class ClientTest extends CamelTestSupport {
     }
 
     @Test
-    public void testClientSpring() {
+    public void testClient() {
         TransferRequest request = new TransferRequest();
         request.setBank("Bank of Camel");
         request.setFrom("Jakub");

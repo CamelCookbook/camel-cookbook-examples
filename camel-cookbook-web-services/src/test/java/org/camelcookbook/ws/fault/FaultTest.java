@@ -21,13 +21,10 @@ import org.apache.camel.CamelExecutionException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.ws.payment_service.FaultMessage;
 import org.camelcookbook.ws.payment_service.types.TransferRequest;
 import org.camelcookbook.ws.payment_service.types.TransferResponse;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class FaultTest extends CamelTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();
@@ -38,7 +35,7 @@ public class FaultTest extends CamelTestSupport {
     }
 
     @Test
-    public void testFaultSpring() {
+    public void testFault() {
         TransferRequest request = new TransferRequest();
         request.setBank("Bank of Camel");
         request.setFrom("Jakub");

@@ -33,7 +33,7 @@ public class ProvideTest extends CamelTestSupport {
     }
 
     @Test
-    public void testProvideSpring() {
+    public void testProvide() {
         TransferRequest request = new TransferRequest();
         request.setBank("Bank of Camel");
         request.setFrom("Jakub");

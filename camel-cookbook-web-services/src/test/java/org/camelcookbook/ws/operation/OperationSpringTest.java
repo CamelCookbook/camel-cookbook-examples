@@ -17,6 +17,7 @@
 
 package org.camelcookbook.ws.operation;
 
+import org.apache.camel.CamelExecutionException;
 import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.ws.payment_service_v2.types.CheckStatusRequest;
@@ -59,5 +60,17 @@ public class OperationSpringTest extends CamelSpringTestSupport {
 
         assertNotNull(checkStatusResponse);
         assertEquals("Complete", checkStatusResponse.getStatus());
+    }
+
+    @Test
+    public void testOperationInvalidOperationNameSpring() {
+        try {
+            Object response = template.requestBodyAndHeader(String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=org.camelcookbook.ws.payment_service_v2.Payment", port1), "bogus", "operationName", "invalid");
+            fail("Should fail");
+        } catch (CamelExecutionException e) {
+            IllegalArgumentException fault = assertIsInstanceOf(IllegalArgumentException.class, e.getCause());
+
+            log.info("reason = {}", fault.getMessage());
+        }
     }
 }

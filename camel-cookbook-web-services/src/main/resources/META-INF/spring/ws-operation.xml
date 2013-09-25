@@ -34,6 +34,7 @@
 
   <bean id="paymentServiceImpl" class="org.camelcookbook.ws.operation.PaymentServiceV2Impl"/>
   <bean id="checkStatusServiceImpl" class="org.camelcookbook.ws.operation.CheckStatusServiceV2Impl"/>
+  <bean id="faultHandler" class="org.camelcookbook.ws.operation.FaultHandler"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route id="wsRoute">
@@ -51,6 +52,11 @@
           <simple>${in.header.operationName} == 'checkStatus'</simple>
           <bean ref="checkStatusServiceImpl"/>
         </when>
+        <otherwise>
+          <setFaultBody>
+            <method ref="faultHandler" method="createInvalidOperation"/>
+          </setFaultBody>
+        </otherwise>
       </choice>
       <log logName="payment-service-ws" message="response = ${body}"/>
     </route>

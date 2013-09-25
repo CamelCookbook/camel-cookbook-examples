@@ -47,6 +47,8 @@ public class OperationRouteBuilder extends RouteBuilder {
                     .bean(PaymentServiceV2Impl.class)
                 .when(simple("${in.header.operationName} == 'checkStatus'"))
                     .bean(CheckStatusServiceV2Impl.class)
+                .otherwise()
+                    .setFaultBody(method(FaultHandler.class, "createInvalidOperation"))
             .end()
             .log(LoggingLevel.INFO, "payment-service-ws", "response = ${body}");
     }

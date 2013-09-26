@@ -41,7 +41,7 @@ public class ProxyCxfSpringTest extends CamelSpringTestSupport {
         System.setProperty("port1", String.valueOf(port1));
         System.setProperty("port2", String.valueOf(port2));
 
-        return new ClassPathXmlApplicationContext("META-INF/spring/ws-proxy-cxf.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/proxy-context.xml");
     }
 
     @Override

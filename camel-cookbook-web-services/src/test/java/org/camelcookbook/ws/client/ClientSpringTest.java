@@ -34,7 +34,7 @@ public class ClientSpringTest extends CamelSpringTestSupport {
     protected AbstractApplicationContext createApplicationContext() {
         System.setProperty("port1", String.valueOf(port1));
 
-        return new ClassPathXmlApplicationContext("META-INF/spring/ws-client.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/client-context.xml");
     }
 
     @Override

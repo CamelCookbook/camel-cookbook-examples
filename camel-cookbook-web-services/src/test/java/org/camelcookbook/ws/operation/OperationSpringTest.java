@@ -35,7 +35,7 @@ public class OperationSpringTest extends CamelSpringTestSupport {
     protected AbstractApplicationContext createApplicationContext() {
         System.setProperty("port1", String.valueOf(port1));
 
-        return new ClassPathXmlApplicationContext("META-INF/spring/ws-operation.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/operation-context.xml");
     }
 
     @Test

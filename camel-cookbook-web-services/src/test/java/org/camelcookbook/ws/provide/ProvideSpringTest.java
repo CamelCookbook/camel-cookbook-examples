@@ -32,7 +32,7 @@ public class ProvideSpringTest extends CamelSpringTestSupport {
     protected AbstractApplicationContext createApplicationContext() {
         System.setProperty("port1", String.valueOf(port1));
 
-        return new ClassPathXmlApplicationContext("META-INF/spring/ws-provide.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/provide-context.xml");
     }
 
     @Test

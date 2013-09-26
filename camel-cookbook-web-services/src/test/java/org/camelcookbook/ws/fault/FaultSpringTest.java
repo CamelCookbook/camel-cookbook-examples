@@ -34,7 +34,7 @@ public class FaultSpringTest extends CamelSpringTestSupport {
     protected AbstractApplicationContext createApplicationContext() {
         System.setProperty("port1", String.valueOf(port1));
 
-        return new ClassPathXmlApplicationContext("META-INF/spring/ws-fault.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/fault-context.xml");
     }
 
     @Test

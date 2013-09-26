@@ -99,7 +99,6 @@
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-codegen-plugin</artifactId>
-        <extensions>true</extensions>
         <executions>
           <execution>
             <phase>generate-sources</phase>
@@ -107,6 +106,7 @@
               <goal>wsdl2java</goal>
             </goals>
             <configuration>
+              <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
               <wsdlRoot>${project.basedir}/src/main/resources/wsdl</wsdlRoot>
               <includes>
                 <include>*.wsdl</include>

@@ -19,6 +19,7 @@ package org.camelcookbook.ws.provide;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.ws.payment_service.Payment;
 
 public class ProvideRouteBuilder extends RouteBuilder {
     private int port1;
@@ -36,13 +37,15 @@ public class ProvideRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        final String cxfUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port1);
+        final String cxfUri =
+                String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+                        port1, Payment.class.getCanonicalName());
 
         from(cxfUri)
                 .id("wsRoute")
             .transform(simple("${in.body[0]}"))
-            .log(LoggingLevel.INFO, "payment-service-ws", "request = ${body}")
+            .log("request = ${body}")
             .bean(PaymentServiceImpl.class)
-            .log(LoggingLevel.INFO, "payment-service-ws", "response = ${body}");
+            .log("response = ${body}");
     }
 }

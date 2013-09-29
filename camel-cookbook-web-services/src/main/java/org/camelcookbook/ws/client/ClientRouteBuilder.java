@@ -18,6 +18,7 @@
 package org.camelcookbook.ws.client;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.ws.payment_service.Payment;
 
 public class ClientRouteBuilder extends RouteBuilder {
     private int port1;
@@ -35,11 +36,13 @@ public class ClientRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        final String cxfUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port1);
+        final String cxfUri =
+                String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+                        port1, Payment.class.getCanonicalName());
 
         from("direct:start")
                 .id("wsClient")
             .log("${body}")
-            .to(cxfUri);
+            .to(cxfUri + "&defaultOperationName=transferFunds");
     }
 }

@@ -36,7 +36,7 @@
     <route id="wsClient">
       <from uri="direct:start"/>
       <log message="${body}"/>
-      <to uri="cxf:bean:paymentServiceEndpoint"/>
+      <to uri="cxf:bean:paymentServiceEndpoint?defaultOperationName=transferFunds"/>
     </route>
   </camelContext>
 

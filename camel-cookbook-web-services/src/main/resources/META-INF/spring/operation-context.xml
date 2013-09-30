@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-
 <!--
   ~ Copyright (C) Scott Cranton and Jakub Korab
   ~ https://github.com/CamelCookbook
@@ -42,7 +41,7 @@
       <transform>
         <simple>${in.body[0]}</simple>
       </transform>
-      <log logName="payment-service-ws" message="request = ${body}"/>
+      <log message="request = ${body}"/>
       <choice>
         <when>
           <simple>${in.header.operationName} == 'transferFunds'</simple>
@@ -58,7 +57,7 @@
           </setFaultBody>
         </otherwise>
       </choice>
-      <log logName="payment-service-ws" message="response = ${body}"/>
+      <log message="response = ${body}"/>
     </route>
   </camelContext>
 

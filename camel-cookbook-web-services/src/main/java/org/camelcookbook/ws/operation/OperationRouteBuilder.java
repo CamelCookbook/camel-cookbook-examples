@@ -17,8 +17,8 @@
 
 package org.camelcookbook.ws.operation;
 
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.ws.payment_service_v2.Payment;
 
 public class OperationRouteBuilder extends RouteBuilder {
     private int port1;
@@ -36,12 +36,14 @@ public class OperationRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        final String cxfUri = String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=org.camelcookbook.ws.payment_service_v2.Payment", port1);
+        final String cxfUri =
+                String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=%s",
+                        port1, Payment.class.getCanonicalName());
 
         from(cxfUri)
                 .id("wsRoute")
             .transform(simple("${in.body[0]}"))
-            .log(LoggingLevel.INFO, "payment-service-ws", "request = ${body}")
+            .log("request = ${body}")
             .choice()
                 .when(simple("${in.header.operationName} == 'transferFunds'"))
                     .bean(PaymentServiceV2Impl.class)
@@ -50,6 +52,6 @@ public class OperationRouteBuilder extends RouteBuilder {
                 .otherwise()
                     .setFaultBody(method(FaultHandler.class, "createInvalidOperation"))
             .end()
-            .log(LoggingLevel.INFO, "payment-service-ws", "response = ${body}");
+            .log("response = ${body}");
     }
 }

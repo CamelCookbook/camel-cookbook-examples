@@ -17,7 +17,6 @@
 
 package org.camelcookbook.ws.provide;
 
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.ws.payment_service.Payment;
 

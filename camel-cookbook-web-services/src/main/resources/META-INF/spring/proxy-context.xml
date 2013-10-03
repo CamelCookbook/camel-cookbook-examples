@@ -43,9 +43,9 @@
 
     <route id="wsProxy" errorHandlerRef="myErrorHandler">
       <from uri="cxf:bean:paymentServiceProxy?dataFormat=PAYLOAD"/>
-      <log logName="wsProxy" message="request = ${body}"/>
+      <to uri="log:wsProxyRequest?showAll=true&amp;multiline=true"/>
       <to uri="cxf:bean:paymentServiceBackend?dataFormat=PAYLOAD"/>
-      <log logName="wsProxy" message="response = ${body}"/>
+      <to uri="log:wsProxyResponse?showAll=true&amp;multiline=true"/>
     </route>
   </camelContext>
 

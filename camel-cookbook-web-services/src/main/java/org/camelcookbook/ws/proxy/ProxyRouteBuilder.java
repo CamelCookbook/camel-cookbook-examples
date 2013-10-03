@@ -17,8 +17,8 @@
 
 package org.camelcookbook.ws.proxy;
 
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.ws.payment_service.Payment;
 
 public class ProxyRouteBuilder extends RouteBuilder {
     private int port1;
@@ -42,14 +42,17 @@ public class ProxyRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        final String cxfProxyUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment&dataFormat=PAYLOAD", port1);
-        final String cxfBackendUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment&dataFormat=PAYLOAD", port2);
+        final String cxfProxyUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+                port1, Payment.class.getCanonicalName());
+        final String cxfBackendUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+                port2, Payment.class.getCanonicalName());
 
-        from(cxfProxyUri)
+        from(cxfProxyUri + "&dataFormat=PAYLOAD")
                 .id("wsProxy")
                 .errorHandler(defaultErrorHandler().maximumRedeliveries(2))
-            .log(LoggingLevel.INFO, "wsProxy", "request = ${body}")
-            .to(cxfBackendUri)
-            .log(LoggingLevel.INFO, "wsProxy", "response = ${body}");
+            .to("log:wsProxyRequest?showAll=true&multiline=true")
+            .to(cxfBackendUri + "&dataFormat=PAYLOAD")
+            .to("log:wsProxyRequest?showAll=true&multiline=true")
+        ;
     }
 }

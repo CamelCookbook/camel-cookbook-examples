@@ -26,6 +26,7 @@ import org.camelcookbook.ws.fault.FaultHandler;
 import org.camelcookbook.ws.fault.PaymentServiceImpl;
 import org.camelcookbook.ws.fault.TransferException;
 import org.camelcookbook.ws.payment_service.FaultMessage;
+import org.camelcookbook.ws.payment_service.Payment;
 import org.camelcookbook.ws.payment_service.types.TransferRequest;
 import org.camelcookbook.ws.payment_service.types.TransferResponse;
 import org.junit.Test;
@@ -42,7 +43,7 @@ public class ProxyCxfTest extends CamelTestSupport {
                     @Override
                     public void configure() throws Exception {
                         // Create a WS Consuming route for testing purposes
-                        from(String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port2))
+                        from(String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s", port2, Payment.class.getCanonicalName()))
                                 .id("wsBackend")
                             .onException(TransferException.class)
                                 .handled(true)

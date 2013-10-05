@@ -34,7 +34,7 @@ public class EncryptedPropertiesPasswordInSystemPropertySpringTest extends Camel
         // normally this would be set along the lines of -DjasyptMasterPassword=encryptionPassword
         // in a place appropriate to the runtime
         System.setProperty("jasyptMasterPassword", "encryptionPassword");
-        return new ClassPathXmlApplicationContext("META-INF/spring/encryptedProperties-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/encryptedProperties-PasswordInSystemProperty-context.xml");
     }
 
     @Test

@@ -40,5 +40,4 @@ public class SignaturesRouteBuilder extends RouteBuilder {
             .log("Message verified")
             .to("mock:verified");
     }
-
 }

@@ -45,5 +45,4 @@ public class SignaturesDynamicRouteBuilder extends RouteBuilder {
             .log("Message verified")
             .to("mock:verified");
     }
-
 }

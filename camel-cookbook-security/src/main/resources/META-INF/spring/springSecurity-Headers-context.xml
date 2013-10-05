@@ -53,13 +53,18 @@
                                  accessDecisionManager="accessDecisionManager"
                                  useThreadSecurityContext="true"/>
 
-  <bean id="securityContextLoader"
-        class="org.camelcookbook.security.springsecurity.SecurityContextLoader"/>
+  <bean id="securitySubjectLoader"
+        class="org.camelcookbook.security.springsecurity.SecuritySubjectLoader"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:in"/>
-      <process ref="securityContextLoader"/>
+      <process ref="securitySubjectLoader"/>
+      <!-- crossing a thread boundary here, not possible with a SecurityContextHolder -->
+      <inOut uri="seda:secured"/>
+    </route>
+    <route>
+      <from uri="seda:secured"/>
       <policy ref="adminAuthPolicy">
         <to uri="mock:secure"/>
       </policy>

@@ -18,38 +18,42 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:crypt="http://springcryptoutils.com/schema/crypt"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
-           http://springcryptoutils.com/schema/crypt
-           http://springcryptoutils.com/schema/crypt.xsd">
+           http://springcryptoutils.com/schema/crypt http://springcryptoutils.com/schema/crypt.xsd
+       ">
 
-    <crypt:keystore id="keyStore" location="classpath:shared.jceks"
-                    password="sharedKeystorePassword"
-                    type="JCEKS"/>
+  <crypt:keystore id="keyStore"
+                  location="classpath:shared.jceks"
+                  password="sharedKeystorePassword"
+                  type="JCEKS"/>
 
-    <crypt:secretKey id="secretKey" keystore-ref="keyStore" alias="shared"
-                     password="sharedKeyPassword"/>
+  <crypt:secretKey id="secretKey"
+                   keystore-ref="keyStore"
+                   alias="shared"
+                   password="sharedKeyPassword"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <dataFormats>
-            <crypto id="sharedKeyCrypto" algorithm="DES" keyRef="secretKey"/>
-        </dataFormats>
-        <route>
-            <from uri="direct:encrypt"/>
-            <log message="Encrypting message"/>
-            <marshal ref="sharedKeyCrypto"/>
-            <log message="Message encrypted: ${body}"/>
-            <to uri="direct:decrypt"/>
-        </route>
-        <route>
-            <from uri="direct:decrypt"/>
-            <log message="Decrypting message"/>
-            <unmarshal ref="sharedKeyCrypto"/>
-            <log message="Message decrypted"/>
-            <to uri="mock:decrypted"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <dataFormats>
+      <crypto id="sharedKeyCrypto" algorithm="DES" keyRef="secretKey"/>
+    </dataFormats>
+    <route>
+      <from uri="direct:encrypt"/>
+      <log message="Encrypting message"/>
+      <marshal ref="sharedKeyCrypto"/>
+      <log message="Message encrypted: ${body}"/>
+      <to uri="direct:decrypt"/>
+    </route>
+    <route>
+      <from uri="direct:decrypt"/>
+      <log message="Decrypting message"/>
+      <unmarshal ref="sharedKeyCrypto"/>
+      <log message="Message decrypted"/>
+      <to uri="mock:decrypted"/>
+    </route>
+  </camelContext>
 </beans>

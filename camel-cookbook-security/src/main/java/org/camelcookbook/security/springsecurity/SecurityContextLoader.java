@@ -28,7 +28,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * Processor that fetches the user credentials from the Exchange and sets up the
  * {@link Authentication} object on Spring Security's
  * {@link SecurityContextHolder}.
- */public class SecurityContextLoader implements Processor {
+ */
+public class SecurityContextLoader implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         Message in = exchange.getIn();

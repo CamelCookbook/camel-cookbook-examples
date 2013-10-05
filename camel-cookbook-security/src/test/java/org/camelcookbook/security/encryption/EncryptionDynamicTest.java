@@ -17,21 +17,22 @@
 
 package org.camelcookbook.security.encryption;
 
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.jasypt.JasyptPropertiesParser;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.security.*;
-import java.security.cert.CertificateException;
 
 /**
  * Demonstrates the use of a shared secret key to encrypt and decrypt a message.
@@ -52,8 +53,7 @@ public class EncryptionDynamicTest extends CamelTestSupport {
         registry.put("shared_a", keyStore.getKey("shared_a", "sharedKeyPasswordA".toCharArray()));
         registry.put("shared_b", keyStore.getKey("shared_b", "sharedKeyPasswordB".toCharArray()));
 
-        CamelContext camelContext = new DefaultCamelContext(registry);
-        return camelContext;
+        return new DefaultCamelContext(registry);
     }
 
     @Override
@@ -73,5 +73,4 @@ public class EncryptionDynamicTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

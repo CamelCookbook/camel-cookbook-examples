@@ -17,20 +17,19 @@
 
 package org.camelcookbook.security.signatures;
 
+import java.security.KeyStore;
+import java.security.SignatureException;
+
 import org.apache.camel.*;
-import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.junit.Test;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.crypto.DigitalSignatureComponent;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.security.KeyStore;
-import java.security.SignatureException;
 
 /**
  * Demonstrates the use of public and private keys to digitally sign a message payload.
@@ -49,7 +48,6 @@ public class SignaturesTest extends CamelTestSupport {
         final String keyStorePassword = "keystorePassword";
         final String trustStorePassword = "truststorePassword";
 
-
         SimpleRegistry registry = new SimpleRegistry();
 
         KeyStore keyStore = KeyStore.getInstance("JKS"); // Java keystore
@@ -63,8 +61,7 @@ public class SignaturesTest extends CamelTestSupport {
         trustStore.load(classLoader.getResourceAsStream("truststore.jks"), trustStorePassword.toCharArray());
         registry.put("trustStore", trustStore);
 
-        CamelContext camelContext = new DefaultCamelContext(registry);
-        return camelContext;
+        return new DefaultCamelContext(registry);
     }
 
     @Test
@@ -102,5 +99,4 @@ public class SignaturesTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

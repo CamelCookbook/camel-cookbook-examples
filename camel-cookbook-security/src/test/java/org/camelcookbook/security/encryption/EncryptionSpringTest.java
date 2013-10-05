@@ -43,6 +43,4 @@ public class EncryptionSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
-
 }

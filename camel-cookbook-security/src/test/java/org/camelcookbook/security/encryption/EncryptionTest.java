@@ -17,6 +17,9 @@
 
 package org.camelcookbook.security.encryption;
 
+import java.security.Key;
+import java.security.KeyStore;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
@@ -24,14 +27,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.security.Key;
-import java.security.KeyStore;
-
 /**
  * Demonstrates the use of a shared secret key to encrypt and decrypt a message.
  */
 public class EncryptionTest extends CamelTestSupport {
-
     private final Logger log = LoggerFactory.getLogger(EncryptionTest.class);
 
     @Override
@@ -56,5 +55,4 @@ public class EncryptionTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
     }
-
 }

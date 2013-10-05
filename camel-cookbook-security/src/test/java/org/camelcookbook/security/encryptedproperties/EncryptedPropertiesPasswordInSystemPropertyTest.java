@@ -23,7 +23,6 @@ import org.apache.camel.component.jasypt.JasyptPropertiesParser;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
@@ -51,7 +50,7 @@ public class EncryptedPropertiesPasswordInSystemPropertyTest extends CamelTestSu
         propComponent.setLocation("classpath:placeholder.properties");
         propComponent.setPropertiesParser(propParser);
 
-        DefaultCamelContext camelContext = new DefaultCamelContext();
+        CamelContext camelContext = new DefaultCamelContext();
         camelContext.addComponent("properties", propComponent);
         return camelContext;
     }

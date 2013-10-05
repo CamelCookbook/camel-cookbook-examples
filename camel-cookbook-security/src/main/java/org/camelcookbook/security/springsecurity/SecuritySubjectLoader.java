@@ -17,14 +17,13 @@
 
 package org.camelcookbook.security.springsecurity;
 
+import javax.security.auth.Subject;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.security.auth.Subject;
 
 /**
  * Processor that fetches the user credentials from the Exchange and sets up the

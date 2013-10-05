@@ -18,34 +18,37 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:crypt="http://springcryptoutils.com/schema/crypt"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
-           http://springcryptoutils.com/schema/crypt
-           http://springcryptoutils.com/schema/crypt.xsd">
+           http://springcryptoutils.com/schema/crypt http://springcryptoutils.com/schema/crypt.xsd
+       ">
 
-    <crypt:keystore id="keyStore" location="classpath:keystore.jks"
-                    password="keystorePassword"/>
-    <crypt:keystore id="trustStore" location="classpath:truststore.jks"
-                    password="truststorePassword"/>
+  <crypt:keystore id="keyStore"
+                  location="classpath:keystore.jks"
+                  password="keystorePassword"/>
+  <crypt:keystore id="trustStore"
+                  location="classpath:truststore.jks"
+                  password="truststorePassword"/>
 
-    <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route>
-            <from uri="direct:sign"/>
-            <log message="Signing message"/>
-            <to uri="crypto:sign://usingKeystore?keystore=#keyStore&amp;alias=system_a&amp;password=keyPasswordA"/>
-            <log message="Message signed"/>
-            <to uri="mock:signed"/>
-            <to uri="direct:verify"/>
-        </route>
-        <route>
-            <from uri="direct:verify"/>
-            <log message="Verifying message"/>
-            <to uri="crypto:verify//usingKeystore?keystore=#trustStore&amp;alias=system_a"/>
-            <log message="Message verified"/>
-            <to uri="mock:verified"/>
-        </route>
-    </camelContext>
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route>
+      <from uri="direct:sign"/>
+      <log message="Signing message"/>
+      <to uri="crypto:sign://usingKeystore?keystore=#keyStore&amp;alias=system_a&amp;password=keyPasswordA"/>
+      <log message="Message signed"/>
+      <to uri="mock:signed"/>
+      <to uri="direct:verify"/>
+    </route>
+    <route>
+      <from uri="direct:verify"/>
+      <log message="Verifying message"/>
+      <to uri="crypto:verify//usingKeystore?keystore=#trustStore&amp;alias=system_a"/>
+      <log message="Message verified"/>
+      <to uri="mock:verified"/>
+    </route>
+  </camelContext>
 </beans>

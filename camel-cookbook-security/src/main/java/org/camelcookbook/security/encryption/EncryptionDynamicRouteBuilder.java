@@ -17,15 +17,14 @@
 
 package org.camelcookbook.security.encryption;
 
+import java.security.Key;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.crypto.CryptoDataFormat;
 import org.apache.camel.spi.Registry;
-
-
-import java.security.Key;
 
 /**
  * Demonstrates the use of a shared secret key to encrypt and decrypt a message.

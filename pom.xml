@@ -77,16 +77,6 @@
   <repositories>
 <!--
     <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>http://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
--->
-<!--
-    <repository>
       <id>release.fusesource.org</id>
       <name>FuseSource Release Repository</name>
       <url>${fusesource-repo}</url>

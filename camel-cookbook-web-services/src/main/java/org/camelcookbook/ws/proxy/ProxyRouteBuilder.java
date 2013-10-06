@@ -42,16 +42,16 @@ public class ProxyRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        final String cxfProxyUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+        final String paymentServiceProxyUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
                 port1, Payment.class.getCanonicalName());
-        final String cxfBackendUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+        final String paymentServiceBackendUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
                 port2, Payment.class.getCanonicalName());
 
-        from(cxfProxyUri + "&dataFormat=PAYLOAD")
+        from(paymentServiceProxyUri + "&dataFormat=PAYLOAD")
                 .id("wsProxy")
                 .errorHandler(defaultErrorHandler().maximumRedeliveries(2))
             .to("log:wsProxyRequest?showAll=true&multiline=true")
-            .to(cxfBackendUri + "&dataFormat=PAYLOAD")
+            .to(paymentServiceBackendUri + "&dataFormat=PAYLOAD")
             .to("log:wsProxyRequest?showAll=true&multiline=true")
         ;
     }

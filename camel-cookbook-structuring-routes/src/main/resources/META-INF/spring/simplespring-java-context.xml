@@ -27,7 +27,7 @@
 
   <bean id="mylogger" class="org.apache.camel.component.log.LogComponent"/>
   <bean id="logMessageOnTimerEvent"
-        class="org.camelcookbook.structuringroutes.LogMessageOnTimerEventRouteBuilder"/>
+        class="org.camelcookbook.structuringroutes.simple.LogMessageOnTimerEventRouteBuilder"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <routeBuilder ref="logMessageOnTimerEvent"/>

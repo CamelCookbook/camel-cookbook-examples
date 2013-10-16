@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes;
+package org.camelcookbook.structuringroutes.propertyplaceholder;
 
+import org.apache.camel.builder.RouteBuilder;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+/**
+ * Route that demonstrates the use of properties in Java.
+ */
+public class PropertyConsumingRouteBuilder extends RouteBuilder {
 
-public class SpringCamelApplication {
-    public static void main(String[] args) throws InterruptedException {
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("/SpringCamelApplication-context.xml");
-        applicationContext.start();
-
-        // let the Camel runtime do its job for 5 seconds
-        Thread.sleep(5000);
-
-        // shutdown
-        applicationContext.stop();
+    @Override
+    public void configure() throws Exception {
+        from("{{start.endpoint}}")
+            .transform().simple("{{transform.message}}: ${body}")
+            .log("Set message to ${body}")
+            .to("{{end.endpoint}}");
     }
 }

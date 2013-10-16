@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes;
+package org.camelcookbook.structuringroutes.simple;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.log.LogComponent;
@@ -28,10 +28,13 @@ import org.apache.camel.impl.SimpleRegistry;
 public class SimpleCamelApplication {
     public static void main(String[] args) throws Exception {
         SimpleRegistry registry = new SimpleRegistry();
-        registry.put("mylogger", new LogComponent());
+        // add POJOs to the registry here using registry.put("name", <object reference>)
 
         CamelContext context = new DefaultCamelContext(registry);
+
+        context.addComponent("mylogger", new LogComponent());
         context.addRoutes(new LogMessageOnTimerEventRouteBuilder());
+
         context.start();
 
         // let the Camel runtime do its job for 5 seconds
@@ -40,5 +43,4 @@ public class SimpleCamelApplication {
         // shutdown
         context.stop();
     }
-
 }

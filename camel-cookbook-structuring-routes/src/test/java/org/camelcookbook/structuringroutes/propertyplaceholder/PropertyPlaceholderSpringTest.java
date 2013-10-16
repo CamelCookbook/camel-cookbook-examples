@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes;
+package org.camelcookbook.structuringroutes.propertyplaceholder;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.ExchangePattern;
@@ -25,24 +25,22 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class PropertyPlaceholderWithRouteBuilderSpringTest extends CamelSpringTestSupport {
+public class PropertyPlaceholderSpringTest extends CamelSpringTestSupport {
     @EndpointInject(uri = "mock:out")
     private MockEndpoint out;
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/propertyPlaceholder-routeBuilder-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/propertyPlaceholder-context.xml");
     }
 
     @Test
     public void testPropertiesLoaded() throws InterruptedException {
         final String messageBody = "Camel Rocks";
-        final ExchangePattern callingMEP = ExchangePattern.InOnly;
 
         out.setExpectedMessageCount(1);
         out.message(0).body().isEqualTo("I hear you: Camel Rocks");
 
-        // Explicitly set the Exchange Pattern
         template.sendBody("direct:in", messageBody);
 
         assertMockEndpointsSatisfied();

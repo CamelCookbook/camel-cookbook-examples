@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes;
+package org.camelcookbook.structuringroutes.simplespring;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Component;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * Route that logs a message every second.
- */
-@Component
-public class LogMessageOnTimerEventRouteBuilder extends RouteBuilder {
-    @Override
-    public void configure() throws Exception {
-        from("timer:logMessageTimer?period=1s")
-            .to("mylogger:insideTheRoute?showHeaders=true")
-            .log("Event triggered by ${property.CamelTimerName} at ${header.CamelTimerFiredTime}");
+public class SpringJavaDslApplication {
+    public static void main(String[] args) throws InterruptedException {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/spring/simplespring-java-context.xml");
+        applicationContext.start();
+
+        // let the Camel runtime do its job for 5 seconds
+        Thread.sleep(5000);
+
+        // shutdown
+        applicationContext.stop();
     }
 }

@@ -17,29 +17,27 @@
 
 package org.camelcookbook.structuringroutes.routecontrol;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
+import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
 /**
- * Processor class that turns off a named route after a predefined number of messages has flown through it.
- * TODO write test
+ * Processor class that turns off a named route.
  */
 public class RouteStoppingProcessor implements Processor {
-    private final static int MAX_MESSAGES = 10;
-    private final AtomicInteger messageCount = new AtomicInteger();
-    private String routeName;
-
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
-    }
-
     @Override
     public void process(Exchange exchange) throws Exception {
-        int count = messageCount.getAndIncrement();
-        if (count == MAX_MESSAGES) {
-            exchange.getContext().stopRoute(routeName);
-        }
+        final String routeName = exchange.getIn().getBody(String.class);
+        final CamelContext context = exchange.getContext();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    context.stopRoute(routeName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
     }
 }

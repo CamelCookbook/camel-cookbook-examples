@@ -22,7 +22,7 @@ import org.apache.camel.builder.RouteBuilder;
 public class EbcdicDataFormatRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        EbcdicDataFormat dataFormat = new EbcdicDataFormat();
+        EbcdicDataFormat dataFormat = new EbcdicDataFormat("CP037");
 
         from("direct:marshal").marshal(dataFormat);
 

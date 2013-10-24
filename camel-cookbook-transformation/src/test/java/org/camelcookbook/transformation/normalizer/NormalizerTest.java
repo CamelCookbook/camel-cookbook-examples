@@ -154,7 +154,7 @@ public class NormalizerTest extends CamelTestSupport {
         book.setCategory("PROGRAMMING");
 
         title = new Book.Title();
-        title.setValue("Camel Cookbook");
+        title.setValue("Apache Camel Developer's Cookbook");
         title.setLang("en");
 
         book.setTitle(title);

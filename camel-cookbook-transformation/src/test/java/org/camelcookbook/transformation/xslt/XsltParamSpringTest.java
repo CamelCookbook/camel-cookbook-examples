@@ -39,11 +39,11 @@ public class XsltParamSpringTest extends CamelSpringTestSupport {
         String response = template.requestBodyAndHeader("direct:start", request, "myParamValue", 30, String.class);
 
         log.info("Response > 30 = {}", response);
-        assertEquals("<books value=\"30\"><title lang=\"en\">Camel Cookbook</title><title lang=\"en\">Learning XML</title></books>", response);
+        assertEquals("<books value=\"30\"><title lang=\"en\">Apache Camel Developer's Cookbook</title><title lang=\"en\">Learning XML</title></books>", response);
 
         response = template.requestBodyAndHeader("direct:start", request, "myParamValue", 40, String.class);
 
         log.info("Response > 40 = {}", response);
-        assertEquals("<books value=\"40\"><title lang=\"en\">Camel Cookbook</title></books>", response);
+        assertEquals("<books value=\"40\"><title lang=\"en\">Apache Camel Developer's Cookbook</title></books>", response);
     }
 }

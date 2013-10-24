@@ -38,6 +38,6 @@ public class EnrichXsltTest extends CamelTestSupport {
         String response = template.requestBody("direct:start", request, String.class);
 
         log.info("Response = {}", response);
-        assertEquals("<books><title lang=\"en\">Camel Cookbook</title><title lang=\"en\">Learning XML</title></books>", response);
+        assertEquals("<books><title lang=\"en\">Apache Camel Developer's Cookbook</title><title lang=\"en\">Learning XML</title></books>", response);
     }
 }

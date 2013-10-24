@@ -37,7 +37,7 @@ public class JaxbTest extends CamelTestSupport {
         Book book = new Book();
 
         Book.Title title = new Book.Title();
-        title.setValue("Camel Cookbook");
+        title.setValue("Apache Camel Developer's Cookbook");
 
         book.setTitle(title);
         book.setYear(2013);
@@ -53,7 +53,7 @@ public class JaxbTest extends CamelTestSupport {
         assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<bookstore>\n" +
                 "    <book>\n" +
-                "        <title>Camel Cookbook</title>\n" +
+                "        <title>Apache Camel Developer's Cookbook</title>\n" +
                 "        <author>Scott Cranton</author>\n" +
                 "        <author>Jakub Korab</author>\n" +
                 "        <year>2013</year>\n" +
@@ -67,7 +67,7 @@ public class JaxbTest extends CamelTestSupport {
         final String request = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<bookstore>\n" +
                 "    <book>\n" +
-                "        <title>Camel Cookbook</title>\n" +
+                "        <title>Apache Camel Developer's Cookbook</title>\n" +
                 "        <author>Scott Cranton</author>\n" +
                 "        <author>Jakub Korab</author>\n" +
                 "        <year>2013</year>\n" +
@@ -82,7 +82,7 @@ public class JaxbTest extends CamelTestSupport {
         Book book = new Book();
 
         Book.Title title = new Book.Title();
-        title.setValue("Camel Cookbook");
+        title.setValue("Apache Camel Developer's Cookbook");
 
         book.setTitle(title);
         book.setYear(2013);

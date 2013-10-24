@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <books>
-  <book category="Tech" title="Camel Enterprise Integration Cookbook">
+  <book category="Tech" title="Apache Camel Developer's Cookbook">
     <authors>
       <author>Scott Cranton</author>
       <author>Jakub Korab</author>

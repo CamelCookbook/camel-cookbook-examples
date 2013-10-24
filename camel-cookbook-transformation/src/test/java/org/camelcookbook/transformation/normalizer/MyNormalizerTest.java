@@ -51,7 +51,7 @@ public class MyNormalizerTest {
 
         BookModel book = new BookModel();
         book.setCategory("PROGRAMMING");
-        book.setTitle("Camel Cookbook");
+        book.setTitle("Apache Camel Developer's Cookbook");
         book.setTitleLanguage("en");
         book.setAuthor1("Scott Cranton");
         book.setAuthor2("Jakub Korab");
@@ -73,7 +73,7 @@ public class MyNormalizerTest {
         book.setCategory("PROGRAMMING");
 
         Book.Title title = new Book.Title();
-        title.setValue("Camel Cookbook");
+        title.setValue("Apache Camel Developer's Cookbook");
         title.setLang("en");
 
         book.setTitle(title);

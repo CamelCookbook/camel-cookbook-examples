@@ -33,7 +33,7 @@
         "@category": "PROGRAMMING",
         "title": {
             "@lang": "en",
-            "#text": "Camel Cookbook"
+            "#text": "Apache Camel Developer's Cookbook"
         },
         "author": ["Scott Cranton", "Jakub Korab"],
         "year": "2013",

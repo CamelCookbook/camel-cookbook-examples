@@ -25,12 +25,17 @@ import org.junit.Test;
 public class EnrichWithAggregatorTest extends CamelTestSupport {
 
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
+    protected RouteBuilder[] createRouteBuilders() throws Exception {
         EnrichWithAggregatorRouteBuilder routeBuilder = new EnrichWithAggregatorRouteBuilder();
-
         routeBuilder.setMyMerger(context().getRegistry().lookupByNameAndType("myMerger", MergeInReplacementText.class));
 
-        return routeBuilder;
+        return new RouteBuilder[]{routeBuilder, new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                from("direct:expander")
+                    .bean(AbbreviationExpander.class, "expand");
+            }
+        }};
     }
 
     @Override
@@ -40,7 +45,6 @@ public class EnrichWithAggregatorTest extends CamelTestSupport {
         // register beanId for use by EnrichRouteBuilder
         // you could also use Spring or Blueprint 'bean' to create and configure
         // these references where the '<bean id="<ref id>">'
-        jndiRegistry.bind("myExpander", new AbbreviationExpander());
         jndiRegistry.bind("myMerger", new MergeInReplacementText());
 
         return jndiRegistry;

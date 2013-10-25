@@ -26,7 +26,7 @@ public class EnrichWithAggregatorRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:start")
             .bean(myMerger, "setup")
-            .enrich("bean:myExpander?method=expand", myMerger);
+            .enrich("direct:expander", myMerger);
     }
 
     public MergeInReplacementText getMyMerger() {

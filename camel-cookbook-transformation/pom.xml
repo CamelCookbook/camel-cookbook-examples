@@ -76,6 +76,11 @@
       <artifactId>camel-xmlsecurity</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+    </dependency>
+
     <!-- maven-jaxb2-plugin generated methods (e.g. equals) depend on this -->
     <dependency>
       <groupId>org.jvnet.jaxb2_commons</groupId>

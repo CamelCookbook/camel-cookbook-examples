@@ -24,14 +24,15 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-  <bean id="myExpander" class="org.camelcookbook.transformation.enrich.AbbreviationExpander"/>
-  <bean id="myMerger" class="org.camelcookbook.transformation.enrich.MergeInReplacementText"/>
+  <bean id="myMerger"
+        class="org.camelcookbook.transformation.enrich.MergeInReplacementText"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:start"/>
       <bean ref="myMerger" method="setup"/>
-      <enrich uri="bean:myExpander?method=expand" strategyRef="myMerger"/>
+      <enrich uri="direct:expander"
+              strategyRef="myMerger"/>
     </route>
   </camelContext>
 

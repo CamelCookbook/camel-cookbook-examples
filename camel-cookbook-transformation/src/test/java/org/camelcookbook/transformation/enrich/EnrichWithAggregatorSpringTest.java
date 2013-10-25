@@ -17,6 +17,7 @@
 
 package org.camelcookbook.transformation.enrich;
 
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -27,6 +28,17 @@ public class EnrichWithAggregatorSpringTest extends CamelSpringTestSupport {
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext("META-INF/spring/enrich-aggregator-context.xml");
+    }
+
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                from("direct:expander")
+                    .bean(AbbreviationExpander.class, "expand");
+            }
+        };
     }
 
     @Test

@@ -18,21 +18,21 @@
 package org.camelcookbook.parallelprocessing.asyncprocessor;
 
 import org.apache.camel.ExchangePattern;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Test class that demonstrates the behavior of an {@link org.apache.camel.AsyncProcessor}.
  */
-public class AsyncProcessorSpringTest extends CamelSpringTestSupport {
+public class AsyncProcessorTest extends CamelTestSupport {
+
     final int messageCount = 10;
 
     @Override
-    protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/asyncProcessor-context.xml");
+    public RouteBuilder createRouteBuilder() {
+        return new AsyncProcessorRouteBuilder();
     }
 
     @Test

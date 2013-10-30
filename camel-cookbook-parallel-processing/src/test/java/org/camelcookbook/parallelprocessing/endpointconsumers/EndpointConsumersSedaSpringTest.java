@@ -30,7 +30,7 @@ public class EndpointConsumersSedaSpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/endpointConsumersSeda-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/endpointConsumers-context.xml");
     }
 
     @Test

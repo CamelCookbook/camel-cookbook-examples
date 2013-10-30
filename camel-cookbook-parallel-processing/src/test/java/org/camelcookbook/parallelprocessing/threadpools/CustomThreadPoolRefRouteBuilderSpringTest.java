@@ -34,7 +34,7 @@ public class CustomThreadPoolRefRouteBuilderSpringTest extends CamelSpringTestSu
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/threadPoolsRouteBuilder-context.xml");
+        return new ClassPathXmlApplicationContext("/META-INF/spring/threadPools-RouteBuilder-context.xml");
     }
 
     @Test

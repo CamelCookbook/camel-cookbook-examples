@@ -20,7 +20,7 @@ package org.camelcookbook.examples.transactions.oncompletion;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Route that demonstrates the use of
+ * Route that demonstrates the use of the onCompletion DSL statement
  */
 public class OnCompletionRouteBuilder extends RouteBuilder {
 

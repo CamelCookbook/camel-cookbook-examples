@@ -32,14 +32,14 @@
     <property name="password" value=""/>
   </bean>
 
-  <bean id="auditDataSource" class="org.camelcookbook.examples.transactions.util.DataSourceInitializer"
+  <bean id="auditDataSource" class="org.camelcookbook.transactions.util.DataSourceInitializer"
         factory-method="initializeDataSource">
     <constructor-arg ref="h2.dataSource"/>
     <constructor-arg value="classpath:sql/schema.sql"/>
   </bean>
 
   <!-- utility object to check the audit_log table -->
-  <bean id="auditLogDao" class="org.camelcookbook.examples.transactions.dao.AuditLogDao">
+  <bean id="auditLogDao" class="org.camelcookbook.transactions.dao.AuditLogDao">
     <constructor-arg ref="auditDataSource"/>
   </bean>
 

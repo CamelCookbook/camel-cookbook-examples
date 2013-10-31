@@ -43,6 +43,13 @@ public class OnCompletionMultipleTest extends CamelTestSupport {
         MockEndpoint mockFailed = getMockEndpoint("mock:failed");
         mockFailed.setExpectedMessageCount(0);
 
+        // neither of the global completion blocks should be triggered
+        MockEndpoint mockGlobalCompleted = getMockEndpoint("mock:globalCompleted");
+        mockGlobalCompleted.setExpectedMessageCount(0);
+
+        MockEndpoint mockGlobalFailed = getMockEndpoint("mock:globalFailed");
+        mockGlobalFailed.setExpectedMessageCount(0);
+
         template.asyncSendBody("direct:in", "this message should be fine");
 
         assertMockEndpointsSatisfied();
@@ -56,6 +63,13 @@ public class OnCompletionMultipleTest extends CamelTestSupport {
 
         MockEndpoint mockCompleted = getMockEndpoint("mock:completed");
         mockCompleted.setExpectedMessageCount(0);
+
+        // neither of the global completion blocks should be triggered
+        MockEndpoint mockGlobalCompleted = getMockEndpoint("mock:globalCompleted");
+        mockGlobalCompleted.setExpectedMessageCount(0);
+
+        MockEndpoint mockGlobalFailed = getMockEndpoint("mock:globalFailed");
+        mockGlobalFailed.setExpectedMessageCount(0);
 
         template.asyncSendBody("direct:in", "this message should explode");
 

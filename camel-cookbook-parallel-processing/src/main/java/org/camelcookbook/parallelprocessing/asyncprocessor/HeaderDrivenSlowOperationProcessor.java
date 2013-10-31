@@ -21,21 +21,19 @@ import org.apache.camel.AsyncCallback;
 import org.apache.camel.AsyncProcessor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HeaderDrivenSlowOperationProcessor implements AsyncProcessor {
-    private final ExecutorService backgroundExecutor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     public boolean process(final Exchange exchange,
             final AsyncCallback asyncCallback) {
         final Message in = exchange.getIn();
         if (in.getHeader("processAsync", Boolean.class)) {
-            backgroundExecutor.submit(new Runnable() {
+            executorService.submit(new Runnable() {
                 @Override
                 public void run() {
                     in.setBody("Processed async: " + in.getBody(String.class));

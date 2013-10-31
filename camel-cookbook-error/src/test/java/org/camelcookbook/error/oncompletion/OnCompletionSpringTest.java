@@ -15,31 +15,22 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.oncompletion;
+package org.camelcookbook.error.oncompletion;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Demonstrates the use of onCompletion blocks.
  */
-public class OnCompletionTest extends CamelTestSupport {
+public class OnCompletionSpringTest extends CamelSpringTestSupport {
 
     @Override
-    protected RouteBuilder[] createRouteBuilders() throws Exception {
-        return new RouteBuilder[] {
-                new OnCompletionRouteBuilder(),
-                new RouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        from("direct:inAnotherRouteBuilder")
-                            .log("No global onCompletion should apply")
-                            .to("mock:outAnotherRouteBuilder");
-                    }
-                }
-        };
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("META-INF/spring/onCompletion-context.xml");
     }
 
     @Test
@@ -83,21 +74,6 @@ public class OnCompletionTest extends CamelTestSupport {
 
         template.asyncSendBody("direct:noOnCompletion", "this message should explode");
 
-        assertMockEndpointsSatisfied();
-    }
-
-    @Test
-    public void testOnCompletionGlobalNotInvokedFromAnotherRouteBuilder() throws InterruptedException {
-        MockEndpoint mockGlobal = getMockEndpoint("mock:global");
-        mockGlobal.setExpectedMessageCount(0);
-
-        MockEndpoint mockOutAnotherRouteBuilder = getMockEndpoint("mock:outAnotherRouteBuilder");
-        mockOutAnotherRouteBuilder.setExpectedMessageCount(1);
-        mockOutAnotherRouteBuilder.message(0).body().isEqualTo("test message");
-
-        template.asyncSendBody("direct:inAnotherRouteBuilder", "test message");
-
-        Thread.sleep(100); // give global a chance to kick in, if it will
         assertMockEndpointsSatisfied();
     }
 

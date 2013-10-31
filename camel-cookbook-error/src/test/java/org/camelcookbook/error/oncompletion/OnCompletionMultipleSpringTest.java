@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.oncompletion;
+package org.camelcookbook.error.oncompletion;
 
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;

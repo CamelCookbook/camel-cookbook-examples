@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.synchronizations;
+package org.camelcookbook.error.synchronizations;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;

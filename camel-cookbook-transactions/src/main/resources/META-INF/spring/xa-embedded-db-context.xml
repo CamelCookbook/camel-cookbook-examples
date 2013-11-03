@@ -26,7 +26,7 @@
        ">
 
   <!-- this class implements javax.sql.XADataSource and javax.sql.DataSource-->
-  <bean id="h2.dataSource" class="org.h2.jdbcx.JdbcDataSource">
+  <bean id="h2.xaDataSource" class="org.h2.jdbcx.JdbcDataSource">
     <property name="URL" value="jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1"/>
     <property name="user" value="sa"/>
     <property name="password" value=""/>
@@ -34,7 +34,7 @@
 
   <bean id="auditDataSource" class="org.camelcookbook.transactions.util.DataSourceInitializer"
         factory-method="initializeDataSource">
-    <constructor-arg ref="h2.dataSource"/>
+    <constructor-arg ref="h2.xaDataSource"/>
     <constructor-arg value="classpath:sql/schema.sql"/>
   </bean>
 

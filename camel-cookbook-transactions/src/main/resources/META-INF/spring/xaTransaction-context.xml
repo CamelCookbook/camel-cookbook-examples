@@ -31,7 +31,7 @@
   <bean id="atomikos.connectionFactory" class="com.atomikos.jms.AtomikosConnectionFactoryBean"
         init-method="init" destroy-method="close">
     <property name="uniqueResourceName" value="xa.activemq"/>
-    <property name="xaConnectionFactory" ref="xa.connectionFactory"/>
+    <property name="xaConnectionFactory" ref="xa.amqConnectionFactory"/>
     <!-- XAConnectionFactory -->
     <property name="maxPoolSize" value="10"/>
   </bean>
@@ -48,8 +48,11 @@
 
 
   <!-- javax.transaction.TransactionManager -->
-  <bean id="atomikos.transactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
-        init-method="init" destroy-method="close">
+  <bean id="atomikos.transactionManager"
+        class="com.atomikos.icatch.jta.UserTransactionManager"
+        init-method="init"
+        destroy-method="close"
+        depends-on="atomikos.connectionFactory,atomikos.dataSource">
     <property name="forceShutdown" value="false"/>
   </bean>
 

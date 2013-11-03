@@ -43,7 +43,7 @@
     </transportConnectors>
   </broker>
 
-  <bean id="xa.connectionFactory" class="org.apache.activemq.ActiveMQXAConnectionFactory">
+  <bean id="xa.amqConnectionFactory" class="org.apache.activemq.ActiveMQXAConnectionFactory">
     <property name="brokerURL" value="vm://myEmbeddedBroker"/>
   </bean>
 

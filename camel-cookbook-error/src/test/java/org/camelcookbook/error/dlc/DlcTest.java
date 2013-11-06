@@ -15,20 +15,18 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.dlq;
+package org.camelcookbook.error.dlc;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.error.retry.RetryRouteBuilder;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class DlqTest extends CamelTestSupport {
+public class DlcTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new DlqRouteBuilder();
+        return new DlcRouteBuilder();
     }
 
     @Test
@@ -43,7 +41,7 @@ public class DlqTest extends CamelTestSupport {
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
         mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlqRoute");
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcRoute");
         mockError.message(0).header("myHeader").isEqualTo("changed");
 
         template.sendBodyAndHeader("direct:start", "Foo", "myHeader", "original");
@@ -106,7 +104,7 @@ public class DlqTest extends CamelTestSupport {
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
         mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlqOriginalRoute");
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcOriginalRoute");
         mockError.message(0).header("myHeader").isEqualTo("original");
 
         template.sendBodyAndHeader("direct:useOriginal", "Foo", "myHeader", "original");

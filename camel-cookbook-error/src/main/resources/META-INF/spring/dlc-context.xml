@@ -27,21 +27,21 @@
 
   <bean id="flakyProcessor" class="org.camelcookbook.error.shared.FlakyProcessor"/>
 
-  <camelContext errorHandlerRef="dlqErrorHandler" xmlns="http://camel.apache.org/schema/spring">
-    <errorHandler id="dlqErrorHandler"
+  <camelContext errorHandlerRef="dlcErrorHandler" xmlns="http://camel.apache.org/schema/spring">
+    <errorHandler id="dlcErrorHandler"
                   type="DeadLetterChannel"
                   deadLetterUri="seda:error"/>
 
-    <errorHandler id="dlqRouteSpecificErrorHandler"
+    <errorHandler id="dlcRouteSpecificErrorHandler"
                   type="DeadLetterChannel"
                   deadLetterUri="seda:error"/>
 
-    <errorHandler id="dlqRouteSpecificOriginalErrorHandler"
+    <errorHandler id="dlcRouteSpecificOriginalErrorHandler"
                   type="DeadLetterChannel"
                   deadLetterUri="seda:error"
                   useOriginalMessage="true"/>
 
-    <route id="myDlqRoute">
+    <route id="myDlcRoute">
       <from uri="direct:start"/>
       <setHeader headerName="myHeader">
         <constant>changed</constant>
@@ -50,7 +50,7 @@
       <to uri="mock:result"/>
     </route>
 
-    <route id="myDlqMultistepRoute">
+    <route id="myDlcMultistepRoute">
       <from uri="direct:multiroute"/>
       <setHeader headerName="myHeader">
         <constant>multistep</constant>
@@ -70,7 +70,7 @@
       <bean ref="flakyProcessor"/>
     </route>
 
-    <route id="myDlqMultistepOriginalRoute">
+    <route id="myDlcMultistepOriginalRoute">
       <from uri="direct:multirouteOriginal"/>
       <setHeader headerName="myHeader">
         <constant>multistep</constant>
@@ -83,7 +83,7 @@
     </route>
 
     <route id="myFlakyRouteOriginal"
-           errorHandlerRef="dlqRouteSpecificOriginalErrorHandler">
+           errorHandlerRef="dlcRouteSpecificOriginalErrorHandler">
       <from uri="seda:flakyrouteOriginal"/>
       <setHeader headerName="myHeader">
         <constant>flaky</constant>
@@ -91,15 +91,15 @@
       <bean ref="flakyProcessor"/>
     </route>
 
-    <route id="myDlqSpecificRoute"
-           errorHandlerRef="dlqRouteSpecificErrorHandler">
+    <route id="myDlcSpecificRoute"
+           errorHandlerRef="dlcRouteSpecificErrorHandler">
       <from uri="seda:routeSpecific"/>
       <bean ref="flakyProcessor"/>
       <to uri="mock:result"/>
     </route>
 
-    <route id="myDlqOriginalRoute"
-           errorHandlerRef="dlqRouteSpecificOriginalErrorHandler">
+    <route id="myDlcOriginalRoute"
+           errorHandlerRef="dlcRouteSpecificOriginalErrorHandler">
       <from uri="direct:useOriginal"/>
       <setHeader headerName="myHeader">
         <constant>changed</constant>
@@ -108,7 +108,7 @@
       <to uri="mock:result"/>
     </route>
 
-    <route id="myDlqChannelRoute">
+    <route id="myDlcChannelRoute">
       <from uri="seda:error"/>
       <to uri="mock:error"/>
     </route>

@@ -38,7 +38,7 @@ public class SimpleTransformAnnotationsBlueprintTest extends CamelBlueprintTestS
     @Override
     protected String getBlueprintDescriptor() {
         return "/OSGI-INF/blueprint/simpleTransform-context.xml," +
-               "/OSGI-INF/blueprint/simpleTransform-props-context.xml";
+                "/OSGI-INF/blueprint/simpleTransform-properties-context.xml";
     }
 
     @Test

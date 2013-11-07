@@ -26,11 +26,7 @@
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-  <util:properties id="ctx.properties">
-    <prop key="start.endpoint">direct:in</prop>
-    <prop key="end.endpoint">mock:out</prop>
-  </util:properties>
-
+  <util:properties id="ctx.properties" location="classpath:spring/test.properties"/>
   <context:property-placeholder properties-ref="ctx.properties"/>
 
 </beans>

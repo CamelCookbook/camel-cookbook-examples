@@ -20,11 +20,13 @@ package org.camelcookbook.error.exception;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.error.shared.FlakyException;
 import org.camelcookbook.error.shared.FlakyProcessor;
+import org.camelcookbook.error.shared.SporadicException;
 
 public class ExceptionRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        onException(FlakyException.class).to("mock:error");
+        onException(FlakyException.class, SporadicException.class).to("mock:error");
+        onException(Exception.class).to("mock:genericerror");
 
         from("direct:start")
             .bean(FlakyProcessor.class)

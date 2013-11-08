@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xmlsecurity;
+package org.camelcookbook.security.xmlsecurity;
 
 import java.io.InputStream;
 
@@ -25,11 +25,11 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class SecurityAsymSpringTest extends CamelSpringTestSupport {
+public class SecuritySpringTest extends CamelSpringTestSupport {
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/xmlsecurity-asym-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/xmlsecurity-context.xml");
     }
 
     @Test

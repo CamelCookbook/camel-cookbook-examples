@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xmlsecurity;
+package org.camelcookbook.security.xmlsecurity;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.util.jsse.KeyStoreParameters;
@@ -28,19 +28,19 @@ public class SecurityAsymRouteBuilder extends RouteBuilder {
         final boolean secureTagContents = true;
 
         final KeyStoreParameters trustStoreParameters = new KeyStoreParameters();
-        trustStoreParameters.setResource("truststore.jks");
-        trustStoreParameters.setPassword("camelstorepass");
+        trustStoreParameters.setResource("xml_truststore.jks");
+        trustStoreParameters.setPassword("truststorePassword");
 
         final KeyStoreParameters keyStoreParameters = new KeyStoreParameters();
-        keyStoreParameters.setResource("keystore.jks");
-        keyStoreParameters.setPassword("camelstorepass");
+        keyStoreParameters.setResource("xml_keystore.jks");
+        keyStoreParameters.setPassword("keystorePassword");
 
         from("direct:marshal")
-            .marshal().secureXML(tagXPath, secureTagContents, "scott", XMLCipher.TRIPLEDES, XMLCipher.RSA_v1dot5, trustStoreParameters)
+            .marshal().secureXML(tagXPath, secureTagContents, "system_a", XMLCipher.TRIPLEDES, XMLCipher.RSA_v1dot5, trustStoreParameters)
             .to("mock:marshalResult");
 
         from("direct:unmarshal")
-            .unmarshal().secureXML(tagXPath, secureTagContents, "scott", XMLCipher.TRIPLEDES, XMLCipher.RSA_v1dot5, keyStoreParameters, "camelkeypass")
+            .unmarshal().secureXML(tagXPath, secureTagContents, "system_a", XMLCipher.TRIPLEDES, XMLCipher.RSA_v1dot5, keyStoreParameters, "keyPasswordA")
             .to("mock:unmarshalResult");
     }
 }

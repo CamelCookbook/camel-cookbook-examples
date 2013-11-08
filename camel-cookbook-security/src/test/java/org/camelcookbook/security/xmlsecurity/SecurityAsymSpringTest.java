@@ -15,24 +15,25 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xmlsecurity;
+package org.camelcookbook.security.xmlsecurity;
 
 import java.io.InputStream;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.XPathBuilder;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class SecurityTest extends CamelTestSupport {
+public class SecurityAsymSpringTest extends CamelSpringTestSupport {
 
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SecurityRouteBuilder();
+    protected AbstractApplicationContext createApplicationContext() {
+        return new ClassPathXmlApplicationContext("META-INF/spring/xmlsecurity-asym-context.xml");
     }
 
     @Test
-    public void testSecurity() throws Exception {
+    public void testSecuritySpring() throws Exception {
         final InputStream resource = getClass().getClassLoader().getResourceAsStream("booklocations.xml");
         final String request = context().getTypeConverter().convertTo(String.class, resource);
 

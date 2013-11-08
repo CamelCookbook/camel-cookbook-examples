@@ -25,8 +25,8 @@
            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
 
-  <camel:keyStoreParameters id="keyStoreParams" resource="keystore.jks" password="camelstorepass"/>
-  <camel:keyStoreParameters id="trustStoreParams" resource="truststore.jks" password="camelstorepass"/>
+  <camel:keyStoreParameters id="keyStoreParams" resource="xml_keystore.jks" password="keystorePassword"/>
+  <camel:keyStoreParameters id="trustStoreParams" resource="xml_truststore.jks" password="truststorePassword"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
@@ -36,7 +36,7 @@
                    secureTagContents="true"
                    xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
                    keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
-                   recipientKeyAlias="scott"
+                   recipientKeyAlias="system_a"
                    keyOrTrustStoreParametersId="trustStoreParams"/>
       </marshal>
       <to uri="mock:marshalResult"/>
@@ -49,9 +49,9 @@
                    secureTagContents="true"
                    xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
                    keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
-                   recipientKeyAlias="scott"
+                   recipientKeyAlias="system_a"
                    keyOrTrustStoreParametersId="keyStoreParams"
-                   keyPassword="camelkeypass"/>
+                   keyPassword="keyPasswordA"/>
       </unmarshal>
       <to uri="mock:unmarshalResult"/>
     </route>

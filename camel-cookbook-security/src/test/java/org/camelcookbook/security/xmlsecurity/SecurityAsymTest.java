@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xmlsecurity;
+package org.camelcookbook.security.xmlsecurity;
 
 import java.io.InputStream;
 

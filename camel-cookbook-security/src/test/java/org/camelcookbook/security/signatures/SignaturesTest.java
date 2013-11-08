@@ -22,6 +22,7 @@ import java.security.SignatureException;
 
 import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.crypto.DigitalSignatureConstants;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
@@ -98,5 +99,45 @@ public class SignaturesTest extends CamelTestSupport {
         }
 
         assertMockEndpointsSatisfied();
+    }
+
+    @Test
+    public void testMessageSigningMissingKey() throws InterruptedException {
+        MockEndpoint mockVerified = getMockEndpoint("mock:verified");
+        mockVerified.setExpectedMessageCount(0);
+
+        try {
+            template.sendBodyAndHeader("direct:sign", "foo", DigitalSignatureConstants.KEYSTORE_ALIAS, "cheese");
+            fail();
+        } catch (CamelExecutionException cex) {
+            assertTrue(ExceptionUtils.getRootCause(cex) instanceof IllegalStateException);
+            String rootCauseMessage = ExceptionUtils.getRootCauseMessage(cex);
+            assertTrue(rootCauseMessage.startsWith("IllegalStateException: Cannot sign message as no Private Key has been supplied."));
+        }
+    }
+
+    @Test
+    public void testMessageSigningMismatchedKeys() throws InterruptedException {
+        MockEndpoint mockVerified = getMockEndpoint("mock:verified");
+        mockVerified.setExpectedMessageCount(0);
+
+        MockEndpoint mockSigned = getMockEndpoint("mock:signed");
+        mockSigned.whenAnyExchangeReceived(new Processor() {
+
+            @Override
+            public void process(Exchange exchange) throws Exception {
+                // let's override the key used by the verifying endpoint
+                exchange.getIn().setHeader(DigitalSignatureConstants.KEYSTORE_ALIAS, "system_b");
+            }
+        });
+
+        try {
+            template.sendBody("direct:sign", "foo");
+            fail();
+        } catch (CamelExecutionException cex) {
+            assertTrue(ExceptionUtils.getRootCause(cex) instanceof SignatureException);
+            String rootCauseMessage = ExceptionUtils.getRootCauseMessage(cex);
+            assertEquals("SignatureException: Cannot verify signature of exchange", rootCauseMessage);
+        }
     }
 }

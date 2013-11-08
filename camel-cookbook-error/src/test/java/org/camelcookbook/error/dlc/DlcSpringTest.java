@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.dlq;
+package org.camelcookbook.error.dlc;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -24,10 +24,10 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class DlqSpringTest extends CamelSpringTestSupport {
+public class DlcSpringTest extends CamelSpringTestSupport {
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/dlq-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/dlc-context.xml");
     }
 
     @Test
@@ -42,7 +42,7 @@ public class DlqSpringTest extends CamelSpringTestSupport {
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
         mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlqRoute");
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcRoute");
         mockError.message(0).header("myHeader").isEqualTo("changed");
 
         template.sendBodyAndHeader("direct:start", "Foo", "myHeader", "original");
@@ -105,7 +105,7 @@ public class DlqSpringTest extends CamelSpringTestSupport {
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
         mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlqOriginalRoute");
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcOriginalRoute");
         mockError.message(0).header("myHeader").isEqualTo("original");
 
         template.sendBodyAndHeader("direct:useOriginal", "Foo", "myHeader", "original");

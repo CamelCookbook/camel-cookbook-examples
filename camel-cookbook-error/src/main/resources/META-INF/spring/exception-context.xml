@@ -30,7 +30,12 @@
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <onException>
       <exception>org.camelcookbook.error.shared.FlakyException</exception>
+      <exception>org.camelcookbook.error.shared.SporadicException</exception>
       <to uri="mock:error"/>
+    </onException>
+    <onException>
+      <exception>java.lang.Exception</exception>
+      <to uri="mock:genericerror"/>
     </onException>
 
     <route>

@@ -36,6 +36,9 @@ public class ExceptionTest extends CamelTestSupport {
         final MockEndpoint mockError = getMockEndpoint("mock:error");
         mockError.expectedMessageCount(1);
 
+        final MockEndpoint mockGenericError = getMockEndpoint("mock:genericerror");
+        mockGenericError.expectedMessageCount(0);
+
         try {
             template.sendBody("direct:start", "Foo");
         } catch (Throwable e) {
@@ -62,6 +65,9 @@ public class ExceptionTest extends CamelTestSupport {
 
         final MockEndpoint mockError = getMockEndpoint("mock:error");
         mockError.expectedBodiesReceived("Something Bad Happened!");
+
+        final MockEndpoint mockGenericError = getMockEndpoint("mock:genericerror");
+        mockGenericError.expectedMessageCount(0);
 
         String response;
 
@@ -91,6 +97,9 @@ public class ExceptionTest extends CamelTestSupport {
 
         final MockEndpoint mockError = getMockEndpoint("mock:ignore");
         mockError.expectedMessageCount(1);
+
+        final MockEndpoint mockGenericError = getMockEndpoint("mock:genericerror");
+        mockGenericError.expectedMessageCount(0);
 
         String response;
 

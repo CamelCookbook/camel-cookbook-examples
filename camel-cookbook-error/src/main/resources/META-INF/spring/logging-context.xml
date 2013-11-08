@@ -30,9 +30,11 @@
   <camelContext errorHandlerRef="loggingErrorHandler" xmlns="http://camel.apache.org/schema/spring">
     <errorHandler id="loggingErrorHandler"
                   type="LoggingErrorHandler"
+                  level="ERROR"
                   logName="MyLoggingErrorHandler"/>
     <errorHandler id="myRouteSpecificLoggingErrorHandler"
                   type="LoggingErrorHandler"
+                  level="ERROR"
                   logName="MyRouteSpecificLogging"/>
 
     <route>

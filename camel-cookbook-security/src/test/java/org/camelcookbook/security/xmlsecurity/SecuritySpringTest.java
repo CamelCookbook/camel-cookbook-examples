@@ -19,7 +19,9 @@ package org.camelcookbook.security.xmlsecurity;
 
 import java.io.InputStream;
 
+import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.xml.XPathBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -32,23 +34,46 @@ public class SecuritySpringTest extends CamelSpringTestSupport {
         return new ClassPathXmlApplicationContext("META-INF/spring/xmlsecurity-context.xml");
     }
 
+    @Override
+    public boolean isUseAdviceWith() {
+        return true;
+    }
+
     @Test
-    public void testSecuritySpring() throws Exception {
+    public void testXmlEncryptionDecryption() throws Exception {
+        final String cityExistsXPath = "exists(/booksignings/store/address/city)";
+
+        context.getRouteDefinition("encrypt")
+                .adviceWith(context, new AdviceWithRouteBuilder() {
+                    @Override
+                    public void configure() throws Exception {
+                        interceptSendToEndpoint("direct:decrypt")
+                                .when(xpath(cityExistsXPath))
+                                .to("mock:incorrectlyEncrypted");
+                    }
+                });
+        context.getRouteDefinition("decrypt")
+                .adviceWith(context, new AdviceWithRouteBuilder() {
+                    @Override
+                    public void configure() throws Exception {
+                        interceptSendToEndpoint("mock:out")
+                                .when(xpath(cityExistsXPath))
+                                .to("mock:correctlyDecrypted");
+                    }
+                });
+        context.start();
+
+        MockEndpoint mockIncorrectlyEncrypted = getMockEndpoint("mock:incorrectlyEncrypted");
+        mockIncorrectlyEncrypted.setExpectedMessageCount(0);
+        MockEndpoint mockCorrectlyDecrypted = getMockEndpoint("mock:correctlyDecrypted");
+        mockCorrectlyDecrypted.setExpectedMessageCount(1);
+        MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.setExpectedMessageCount(1);
+
         final InputStream resource = getClass().getClassLoader().getResourceAsStream("booklocations.xml");
         final String request = context().getTypeConverter().convertTo(String.class, resource);
 
-        String response = template.requestBody("direct:marshal", request, String.class);
-
-        log.info("Marshal result = {}", response);
-
-        final XPathBuilder builder = XPathBuilder.xpath("exists(/booksignings/store/address/city)").booleanResult();
-
-        assertFalse(builder.evaluate(context(), response, boolean.class));
-
-        response = template.requestBody("direct:unmarshal", response, String.class);
-
-        log.info("Unmarshal result = {}", response);
-
-        assertTrue(builder.evaluate(context(), response, boolean.class));
+        template.sendBody("direct:encrypt", request);
+        assertMockEndpointsSatisfied();
     }
 }

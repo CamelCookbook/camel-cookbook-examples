@@ -33,16 +33,16 @@
                  passPhrase="Do not tell anyone this."/>
     </dataFormats>
 
-    <route>
-      <from uri="direct:marshal"/>
+    <route id="encrypt">
+      <from uri="direct:encrypt"/>
       <marshal ref="mySecureXml"/>
-      <to uri="mock:marshalResult"/>
+      <to uri="direct:decrypt"/>
     </route>
 
-    <route>
-      <from uri="direct:unmarshal"/>
+    <route id="decrypt">
+      <from uri="direct:decrypt"/>
       <unmarshal ref="mySecureXml"/>
-      <to uri="mock:unmarshalResult"/>
+      <to uri="mock:out"/>
     </route>
   </camelContext>
 

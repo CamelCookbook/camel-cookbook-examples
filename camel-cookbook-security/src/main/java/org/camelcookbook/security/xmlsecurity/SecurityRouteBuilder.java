@@ -28,12 +28,12 @@ public class SecurityRouteBuilder extends RouteBuilder {
         // For the default Triple DES, the passPhrase is 24 Bytes
         final String passPhrase = "Do not tell anyone this.";
 
-        from("direct:marshal")
+        from("direct:encrypt").id("encrypt")
             .marshal().secureXML(tagXPath, secureTagContents, passPhrase)
-            .to("mock:marshalResult");
+            .to("direct:decrypt");
 
-        from("direct:unmarshal")
+        from("direct:decrypt").id("decrypt")
             .unmarshal().secureXML(tagXPath, secureTagContents, passPhrase)
-            .to("mock:unmarshalResult");
+            .to("mock:out");
     }
 }

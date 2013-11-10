@@ -29,8 +29,8 @@
   <camel:keyStoreParameters id="trustStoreParams" resource="xml_truststore.jks" password="truststorePassword"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <route>
-      <from uri="direct:marshal"/>
+    <route id="encrypt">
+      <from uri="direct:encrypt"/>
       <marshal>
         <secureXML secureTag="/booksignings/store/address"
                    secureTagContents="true"
@@ -39,11 +39,11 @@
                    keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
                    keyOrTrustStoreParametersId="trustStoreParams"/>
       </marshal>
-      <to uri="mock:marshalResult"/>
+      <to uri="direct:decrypt"/>
     </route>
 
-    <route>
-      <from uri="direct:unmarshal"/>
+    <route id="decrypt">
+      <from uri="direct:decrypt"/>
       <unmarshal>
         <secureXML secureTag="/booksignings/store/address"
                    secureTagContents="true"
@@ -53,7 +53,7 @@
                    keyOrTrustStoreParametersId="keyStoreParams"
                    keyPassword="keyPasswordA"/>
       </unmarshal>
-      <to uri="mock:unmarshalResult"/>
+      <to uri="mock:out"/>
     </route>
   </camelContext>
 

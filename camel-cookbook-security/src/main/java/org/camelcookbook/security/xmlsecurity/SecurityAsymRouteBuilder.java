@@ -34,27 +34,27 @@ public class SecurityAsymRouteBuilder extends RouteBuilder {
         keyStoreParameters.setResource("xml_keystore.jks");
         keyStoreParameters.setPassword("keystorePassword");
 
-        from("direct:marshal")
+        from("direct:encrypt").id("encrypt")
             .marshal()
                 .secureXML(
                     "/booksignings/store/address", // secure tag
-                    secureTagContents,             // secure tag contents
+                    secureTagContents,
                     "system_a",                    // recipient key alias
                     XMLCipher.TRIPLEDES,           // xml cipher
                     XMLCipher.RSA_v1dot5,          // key cipher
                     trustStoreParameters)
-            .to("mock:marshalResult");
+            .to("direct:decrypt");
 
-        from("direct:unmarshal")
+        from("direct:decrypt").id("decrypt")
             .unmarshal()
                 .secureXML(
                     "/booksignings/store/address", // secure tag
-                    secureTagContents,             // secure tag contents
+                    secureTagContents,
                     "system_a",                    // recipient key alias
                     XMLCipher.TRIPLEDES,           // xml cipher
                     XMLCipher.RSA_v1dot5,          // key cipher
                     keyStoreParameters,
                     "keyPasswordA")                // key password
-            .to("mock:unmarshalResult");
+            .to("mock:out");
     }
 }

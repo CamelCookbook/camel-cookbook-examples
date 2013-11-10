@@ -34,9 +34,9 @@
       <marshal>
         <secureXML secureTag="/booksignings/store/address"
                    secureTagContents="true"
+                   recipientKeyAlias="system_a"
                    xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
                    keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
-                   recipientKeyAlias="system_a"
                    keyOrTrustStoreParametersId="trustStoreParams"/>
       </marshal>
       <to uri="mock:marshalResult"/>
@@ -47,9 +47,9 @@
       <unmarshal>
         <secureXML secureTag="/booksignings/store/address"
                    secureTagContents="true"
+                   recipientKeyAlias="system_a"
                    xmlCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#tripledes-cbc"
                    keyCipherAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"
-                   recipientKeyAlias="system_a"
                    keyOrTrustStoreParametersId="keyStoreParams"
                    keyPassword="keyPasswordA"/>
       </unmarshal>

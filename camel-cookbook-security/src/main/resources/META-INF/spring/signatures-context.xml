@@ -18,7 +18,6 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:crypt="http://springcryptoutils.com/schema/crypt"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="

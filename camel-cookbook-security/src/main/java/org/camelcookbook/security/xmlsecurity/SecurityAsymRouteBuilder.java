@@ -24,7 +24,6 @@ import org.apache.xml.security.encryption.XMLCipher;
 public class SecurityAsymRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        final String tagXPath = "/booksignings/store/address";
         final boolean secureTagContents = true;
 
         final KeyStoreParameters trustStoreParameters = new KeyStoreParameters();
@@ -36,11 +35,26 @@ public class SecurityAsymRouteBuilder extends RouteBuilder {
         keyStoreParameters.setPassword("keystorePassword");
 
         from("direct:marshal")
-            .marshal().secureXML(tagXPath, secureTagContents, "system_a", XMLCipher.TRIPLEDES, XMLCipher.RSA_v1dot5, trustStoreParameters)
+            .marshal()
+                .secureXML(
+                    "/booksignings/store/address", // secure tag
+                    secureTagContents,             // secure tag contents
+                    "system_a",                    // recipient key alias
+                    XMLCipher.TRIPLEDES,           // xml cipher
+                    XMLCipher.RSA_v1dot5,          // key cipher
+                    trustStoreParameters)
             .to("mock:marshalResult");
 
         from("direct:unmarshal")
-            .unmarshal().secureXML(tagXPath, secureTagContents, "system_a", XMLCipher.TRIPLEDES, XMLCipher.RSA_v1dot5, keyStoreParameters, "keyPasswordA")
+            .unmarshal()
+                .secureXML(
+                    "/booksignings/store/address", // secure tag
+                    secureTagContents,             // secure tag contents
+                    "system_a",                    // recipient key alias
+                    XMLCipher.TRIPLEDES,           // xml cipher
+                    XMLCipher.RSA_v1dot5,          // key cipher
+                    keyStoreParameters,
+                    "keyPasswordA")                // key password
             .to("mock:unmarshalResult");
     }
 }

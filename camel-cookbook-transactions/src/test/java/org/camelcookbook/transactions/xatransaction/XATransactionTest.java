@@ -75,6 +75,7 @@ public class XATransactionTest extends CamelTestSupport {
         atomikosConnectionFactoryBean.setXaConnectionFactory(xaConnectionFactory);
         atomikosConnectionFactoryBean.setUniqueResourceName("xa.activemq");
         atomikosConnectionFactoryBean.setMaxPoolSize(10);
+        atomikosConnectionFactoryBean.setIgnoreSessionTransactedFlag(false);
         registry.put("atomikos.connectionFactory", atomikosConnectionFactoryBean);
 
 

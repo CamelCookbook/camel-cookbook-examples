@@ -34,6 +34,7 @@ class SplitExceptionHandlingRouteBuilder extends RouteBuilder {
                         }
                     }
                 })
+                .log("Processing fragment[${property[CamelSplitIndex]}]:${body}")
                 .to("mock:split")
             .end()
             .to("mock:out");

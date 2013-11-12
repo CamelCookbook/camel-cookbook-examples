@@ -27,7 +27,7 @@
 
   <bean id="sporadicProcessor" class="org.camelcookbook.error.shared.SporadicProcessor"/>
 
-  <bean id="myRetryPredicate" class="org.camelcookbook.error.retryconditional.RetryConditionalProcessor">
+  <bean id="myRetryPredicate" class="org.camelcookbook.error.retryconditional.SimplePredicateWrapper">
     <property name="simplePredicate"
               value="${header.CamelRedeliveryCounter} &lt; 2 or ${date:now:EEE} contains 'Tue'"/>
   </bean>

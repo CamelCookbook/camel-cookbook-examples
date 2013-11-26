@@ -29,7 +29,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class JmsTransactionRequestReplySpringTest extends CamelSpringTestSupport {
 
-    public static final int MAX_WAIT_TIME = 1000;
+    public static final int MAX_WAIT_TIME = 4000;
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
@@ -78,7 +78,10 @@ public class JmsTransactionRequestReplySpringTest extends CamelSpringTestSupport
 
         // when transacted, ActiveMQ receives a failed signal when the exception is thrown
         // the message is placed into a dead letter queue
-        assertEquals(message, consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class));
+        final String dlqMessage = consumer.receiveBody("jms:ActiveMQ.DLQ", MAX_WAIT_TIME, String.class);
+        assertNotNull("Timed out waiting for DLQ message", dlqMessage);
+        log.info("dlq message = {}", dlqMessage);
+        assertEquals(message, dlqMessage);
         assertNull(consumer.receiveBody("jms:auditQueue", MAX_WAIT_TIME, String.class));
     }
 }

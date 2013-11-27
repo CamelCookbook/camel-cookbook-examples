@@ -24,6 +24,9 @@
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
        ">
+
+  <bean id="validator" class="org.camelcookbook.monitoring.debug.ValidatorBean"/>
+
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:start"/>
@@ -31,6 +34,7 @@
         <simple>Debug ${body}</simple>
       </transform>
       <log message="${body}"/>
+      <bean ref="validator"/>
       <to uri="mock:result"/>
     </route>
   </camelContext>

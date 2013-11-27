@@ -227,6 +227,20 @@
     <url-pattern>/javadoc/*</url-pattern>
   </servlet-mapping>
 
+  <!-- configure the hawtio plugins -->
+  <listener>
+    <listener-class>org.apache.aries.blueprint.web.BlueprintContextListener</listener-class>
+  </listener>
+  <context-param>
+      <param-name>blueprintProperties</param-name>
+      <param-value>blueprint.properties</param-value>
+  </context-param>
+  <context-param>
+      <param-name>blueprintLocation</param-name>
+      <param-value>OSGI-INF/blueprint/blueprint.xml</param-value>
+  </context-param>
+
+
   <listener>
     <listener-class>io.hawt.HawtioContextListener</listener-class>
   </listener>
@@ -244,6 +258,7 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

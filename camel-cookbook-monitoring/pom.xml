@@ -28,11 +28,14 @@
   </parent>
 
   <artifactId>monitoring</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>${application-name} :: Monitoring</name>
 
   <properties>
+<!--
+    <osgi-import-package>org.apache.camel.processor.interceptor,*</osgi-import-package>
+-->
   </properties>
 
   <dependencies>
@@ -83,12 +86,79 @@
       <artifactId>log4j</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.hawt</groupId>
+      <artifactId>hawtio-default</artifactId>
+      <version>1.2.0</version>
+      <!--
+        NOTE this WAR dependency type which enables this WAR to
+        inherit all the plugins and content from the hawtio-default WAR
+      -->
+      <type>war</type>
+    </dependency>
+
+    <!-- lets mark dependencies from the WAR as provided to avoid jetty:run adding duplicates -->
+    <dependency>
+      <groupId>io.hawt</groupId>
+      <artifactId>hawtio-core</artifactId>
+      <version>1.2.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.hawt</groupId>
+      <artifactId>hawtio-git</artifactId>
+      <version>1.2.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jolokia</groupId>
+      <artifactId>jolokia-core</artifactId>
+      <version>1.1.5</version>
+    </dependency>
   </dependencies>
 
   <build>
     <defaultGoal>install</defaultGoal>
 
     <plugins>
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>7.6.9.v20130131</version>
+        <configuration>
+          <webAppSourceDirectory>${project.build.directory}/${project.name}</webAppSourceDirectory>
+          <scanIntervalSeconds>1</scanIntervalSeconds>
+          <webAppConfig>
+            <contextPath>/hawtio</contextPath>
+          </webAppConfig>
+          <connectors>
+            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+              <port>8080</port>
+              <maxIdleTime>60000</maxIdleTime>
+            </connector>
+          </connectors>
+          <systemProperties>
+            <systemProperty>
+              <key>hawtio.config.dir</key>
+              <value>${basedir}/hawtio-config</value>
+            </systemProperty>
+            <systemProperty>
+              <key>hawtio.config.repo</key>
+              <value>https://github.com/hawtio/hawtio-config.git</value>
+            </systemProperty>
+          </systemProperties>
+          <stopKey/>
+          <stopPort/>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

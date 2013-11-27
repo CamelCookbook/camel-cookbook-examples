@@ -31,6 +31,14 @@
     <jmxAgent id="agent"/>
 
     <route>
+      <from uri="timer:foo?period=500"/>
+      <setBody>
+        <constant>Hello Camel</constant>
+      </setBody>
+      <to uri="direct:start"/>
+    </route>
+
+    <route>
       <from uri="direct:start"/>
       <bean id="myManagedBean" ref="myBean"/>
       <log message="${body}"/>

@@ -34,6 +34,15 @@
         <simple>Debug ${body}</simple>
       </transform>
       <log message="${body}"/>
+      <to uri="mock:result"/>
+    </route>
+
+    <route>
+      <from uri="direct:startValidate"/>
+      <transform>
+        <simple>Debug ${body}</simple>
+      </transform>
+      <log message="${body}"/>
       <bean ref="validator"/>
       <to uri="mock:result"/>
     </route>

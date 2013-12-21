@@ -29,6 +29,10 @@
 
   <name>${application-name}</name>
 
+  <scm>
+    <developerConnection>scm:git:https://github.com/CamelCookbook/camel-cookbook-examples.git</developerConnection>
+  </scm>
+
   <properties>
     <application-name>Camel Cookbook Examples</application-name>
 
@@ -51,6 +55,7 @@
 
     <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
     <maven-bundle-plugin-version>2.4.0</maven-bundle-plugin-version>
+    <maven-release-plugin-version>2.4.2</maven-release-plugin-version>
 
     <osgi-import-package>*</osgi-import-package>
     <fusesource-repo>http://repo.fusesource.com/nexus/content/repositories/releases/</fusesource-repo>
@@ -376,6 +381,16 @@
           <instructions>
             <Import-Package>${osgi-import-package}</Import-Package>
           </instructions>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${maven-release-plugin-version}</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <tagNameFormat>Camel-v@{project.version}</tagNameFormat>
         </configuration>
       </plugin>
     </plugins>

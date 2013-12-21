@@ -43,9 +43,9 @@ public class ProxyRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final String paymentServiceProxyUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
-                port1, Payment.class.getCanonicalName());
+            port1, Payment.class.getCanonicalName());
         final String paymentServiceBackendUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
-                port2, Payment.class.getCanonicalName());
+            port2, Payment.class.getCanonicalName());
 
         from(paymentServiceProxyUri + "&dataFormat=PAYLOAD")
                 .id("wsProxy")

@@ -36,7 +36,7 @@ public class SplitExecutorServiceSpringTest extends CamelSpringTestSupport {
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/splitExecutorService-context.xml");
+            "/META-INF/spring/splitExecutorService-context.xml");
     }
 
     @Test

@@ -36,7 +36,7 @@ public class AggregateCompletionTimeoutSpringTest extends CamelSpringTestSupport
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregateCompletionTimeout-context.xml");
+            "/META-INF/spring/aggregateCompletionTimeout-context.xml");
     }
 
     @Test

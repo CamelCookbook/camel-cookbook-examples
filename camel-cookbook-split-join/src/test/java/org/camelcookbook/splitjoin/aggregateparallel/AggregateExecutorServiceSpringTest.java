@@ -39,7 +39,7 @@ public class AggregateExecutorServiceSpringTest extends CamelSpringTestSupport {
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregateExecutorService-context.xml");
+            "/META-INF/spring/aggregateExecutorService-context.xml");
     }
 
     @Test

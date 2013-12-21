@@ -17,16 +17,15 @@
 
 package org.camelcookbook.security.xmlsecurity;
 
+import java.io.InputStream;
+
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
-import org.apache.camel.builder.xml.XPathBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.io.InputStream;
 
 /**
  * Demonstrates the use of XML Namespaces with XML encryption.
@@ -49,23 +48,23 @@ public class SecurityAsymNamespacesSpringTest extends CamelSpringTestSupport {
         final String cityExistsXPath = "exists(/c:booksignings/c:store/c:address/c:city)";
 
         context.getRouteDefinition("encrypt")
-                .adviceWith(context, new AdviceWithRouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        interceptSendToEndpoint("direct:decrypt")
-                            .when(namespaces.xpath(cityExistsXPath))
-                                .to("mock:incorrectlyEncrypted");
-                    }
-                });
+            .adviceWith(context, new AdviceWithRouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    interceptSendToEndpoint("direct:decrypt")
+                        .when(namespaces.xpath(cityExistsXPath))
+                            .to("mock:incorrectlyEncrypted");
+                }
+            });
         context.getRouteDefinition("decrypt")
-                .adviceWith(context, new AdviceWithRouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        interceptSendToEndpoint("mock:out")
-                            .when(namespaces.xpath(cityExistsXPath))
-                                .to("mock:correctlyDecrypted");
-                    }
-                });
+            .adviceWith(context, new AdviceWithRouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    interceptSendToEndpoint("mock:out")
+                        .when(namespaces.xpath(cityExistsXPath))
+                            .to("mock:correctlyDecrypted");
+                }
+            });
         context.start();
 
         MockEndpoint mockIncorrectlyEncrypted = getMockEndpoint("mock:incorrectlyEncrypted");

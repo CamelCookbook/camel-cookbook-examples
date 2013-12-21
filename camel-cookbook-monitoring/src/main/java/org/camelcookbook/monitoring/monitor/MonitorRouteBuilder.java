@@ -43,14 +43,14 @@ public class MonitorRouteBuilder extends RouteBuilder {
         map.put("name", "\"monitorRoute\"");
 
         JMXUriBuilder jmxUriBuilder = new JMXUriBuilder("platform")
-                .withObjectDomain("org.apache.camel")
-                .withObjectProperties(map)
-                .withMonitorType("counter")
-                .withObservedAttribute("ExchangesCompleted")
-                .withInitThreshold(0)
-                .withGranularityPeriod(500)
-                .withOffset(1)
-                .withDifferenceMode(false);
+            .withObjectDomain("org.apache.camel")
+            .withObjectProperties(map)
+            .withMonitorType("counter")
+            .withObservedAttribute("ExchangesCompleted")
+            .withInitThreshold(0)
+            .withGranularityPeriod(500)
+            .withOffset(1)
+            .withDifferenceMode(false);
 
         log.info("jmxUri = {}", jmxUriBuilder.toString());
 

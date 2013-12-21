@@ -37,7 +37,7 @@ public class SecurityContextLoader implements Processor {
         String password = in.getHeader("password", String.class);
 
         Authentication authenticationToken =
-                new UsernamePasswordAuthenticationToken(username, password);
+            new UsernamePasswordAuthenticationToken(username, password);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 }

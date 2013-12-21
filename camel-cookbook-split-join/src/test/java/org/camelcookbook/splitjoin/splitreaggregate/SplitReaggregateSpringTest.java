@@ -83,7 +83,7 @@ public class SplitReaggregateSpringTest extends CamelSpringTestSupport {
             assertTrue(books.containsAll(Arrays.asList("Apache Camel Developer's Cookbook")));
         } else if (category.equals("Cooking")) {
             assertTrue(books.containsAll(Arrays.asList("Camel Cookbook",
-                    "Double decadence with extra cream", "Cooking with Butter")));
+                "Double decadence with extra cream", "Cooking with Butter")));
         } else {
             fail();
         }

@@ -70,7 +70,7 @@ public class SignaturesSpringTest extends CamelSpringTestSupport {
         } catch (CamelExecutionException cex) {
             assertTrue(ExceptionUtils.getRootCause(cex) instanceof SignatureException);
             assertEquals("SignatureException: Cannot verify signature of exchange",
-                    ExceptionUtils.getRootCauseMessage(cex));
+                ExceptionUtils.getRootCauseMessage(cex));
         }
 
         assertMockEndpointsSatisfied();

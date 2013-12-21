@@ -39,7 +39,7 @@ public class AggregateParallelProcessingSpringTest extends CamelSpringTestSuppor
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregateParallelProcessing-context.xml");
+            "/META-INF/spring/aggregateParallelProcessing-context.xml");
     }
 
     @Test

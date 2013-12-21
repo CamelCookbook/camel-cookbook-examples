@@ -31,16 +31,16 @@ public class ClientTest extends CamelTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-                new ClientRouteBuilder(port1),
-                new RouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        // Create a WS Consuming route for testing purposes
-                        from(String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port1))
-                            .transform(simple("${in.body[0]}"))
-                            .bean(PaymentServiceImpl.class);
-                    }
+            new ClientRouteBuilder(port1),
+            new RouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    // Create a WS Consuming route for testing purposes
+                    from(String.format("cxf:http://localhost:%d/paymentService?serviceClass=org.camelcookbook.ws.payment_service.Payment", port1))
+                        .transform(simple("${in.body[0]}"))
+                        .bean(PaymentServiceImpl.class);
                 }
+            }
         };
     }
 

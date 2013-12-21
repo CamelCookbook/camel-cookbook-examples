@@ -51,29 +51,29 @@ public class JaxbTest extends CamelTestSupport {
 
         log.info(response);
         assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<bookstore>\n" +
-                "    <book>\n" +
-                "        <title>Apache Camel Developer's Cookbook</title>\n" +
-                "        <author>Scott Cranton</author>\n" +
-                "        <author>Jakub Korab</author>\n" +
-                "        <year>2013</year>\n" +
-                "        <price>39.99</price>\n" +
-                "    </book>\n" +
-                "</bookstore>\n", response);
+            "<bookstore>\n" +
+            "    <book>\n" +
+            "        <title>Apache Camel Developer's Cookbook</title>\n" +
+            "        <author>Scott Cranton</author>\n" +
+            "        <author>Jakub Korab</author>\n" +
+            "        <year>2013</year>\n" +
+            "        <price>39.99</price>\n" +
+            "    </book>\n" +
+            "</bookstore>\n", response);
     }
 
     @Test
     public void testJaxbUnmarshal() throws Exception {
         final String request = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<bookstore>\n" +
-                "    <book>\n" +
-                "        <title>Apache Camel Developer's Cookbook</title>\n" +
-                "        <author>Scott Cranton</author>\n" +
-                "        <author>Jakub Korab</author>\n" +
-                "        <year>2013</year>\n" +
-                "        <price>39.99</price>\n" +
-                "    </book>\n" +
-                "</bookstore>\n";
+            "<bookstore>\n" +
+            "    <book>\n" +
+            "        <title>Apache Camel Developer's Cookbook</title>\n" +
+            "        <author>Scott Cranton</author>\n" +
+            "        <author>Jakub Korab</author>\n" +
+            "        <year>2013</year>\n" +
+            "        <price>39.99</price>\n" +
+            "    </book>\n" +
+            "</bookstore>\n";
 
         Bookstore response = template.requestBody("direct:unmarshal", request, Bookstore.class);
 

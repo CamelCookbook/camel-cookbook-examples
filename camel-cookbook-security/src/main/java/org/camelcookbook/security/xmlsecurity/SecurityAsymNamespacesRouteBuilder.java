@@ -17,12 +17,12 @@
 
 package org.camelcookbook.security.xmlsecurity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.util.jsse.KeyStoreParameters;
 import org.apache.xml.security.encryption.XMLCipher;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Demonstrates the use of XML Namespaces with XML encryption.

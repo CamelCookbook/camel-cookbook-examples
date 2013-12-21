@@ -52,7 +52,7 @@ public class DynamicRouterAnnotated {
     @DynamicRouter(delimiter = ",")
     public String routeMe(String body, @Properties Map<String, Object> properties) {
         LOG.info("Exchange.SLIP_ENDPOINT = {}, invoked = {}",
-                properties.get(Exchange.SLIP_ENDPOINT), properties.get(PROPERTY_NAME_INVOKED));
+            properties.get(Exchange.SLIP_ENDPOINT), properties.get(PROPERTY_NAME_INVOKED));
 
         // Store a property with the message exchange that will drive the routing
         // decisions of this Dynamic Router implementation.

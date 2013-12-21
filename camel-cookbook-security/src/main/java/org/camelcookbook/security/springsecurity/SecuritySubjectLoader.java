@@ -37,7 +37,7 @@ public class SecuritySubjectLoader implements Processor {
         String password = in.getHeader("password", String.class);
 
         Authentication authenticationToken =
-                new UsernamePasswordAuthenticationToken(username, password);
+            new UsernamePasswordAuthenticationToken(username, password);
         Subject subject = new Subject();
         subject.getPrincipals().add(authenticationToken);
         in.setHeader(Exchange.AUTHENTICATION, subject);

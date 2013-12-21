@@ -67,7 +67,7 @@ public class XATransactionTest extends CamelTestSupport {
 
         // JMS setup
         ActiveMQXAConnectionFactory xaConnectionFactory =
-                new ActiveMQXAConnectionFactory();
+            new ActiveMQXAConnectionFactory();
         xaConnectionFactory.setBrokerURL(broker.getTcpConnectorUri());
         registry.put("connectionFactory", xaConnectionFactory);
 
@@ -127,7 +127,7 @@ public class XATransactionTest extends CamelTestSupport {
         {
             // non-transactional JMS component setup for test purposes
             ActiveMQConnectionFactory connectionFactory =
-                    new ActiveMQConnectionFactory();
+                new ActiveMQConnectionFactory();
             connectionFactory.setBrokerURL(broker.getTcpConnectorUri());
 
             ActiveMQComponent activeMQComponent = new ActiveMQComponent();

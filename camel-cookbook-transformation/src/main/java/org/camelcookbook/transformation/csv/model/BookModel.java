@@ -126,13 +126,13 @@ public class BookModel {
     @Override
     public String toString() {
         return "BookModel{" +
-                "category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", titleLanguage='" + titleLanguage + '\'' +
-                ", author1='" + author1 + '\'' +
-                ", author2='" + author2 + '\'' +
-                ", publishDate=" + publishDate +
-                ", price=" + price +
-                '}';
+            "category='" + category + '\'' +
+            ", title='" + title + '\'' +
+            ", titleLanguage='" + titleLanguage + '\'' +
+            ", author1='" + author1 + '\'' +
+            ", author2='" + author2 + '\'' +
+            ", publishDate=" + publishDate +
+            ", price=" + price +
+            '}';
     }
 }

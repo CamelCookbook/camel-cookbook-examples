@@ -30,7 +30,7 @@ public class CustomThreadPoolProfileRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         ThreadPoolProfile customThreadPoolProfile =
-                new ThreadPoolProfileBuilder("customThreadPoolProfile").poolSize(5).maxQueueSize(100).build();
+            new ThreadPoolProfileBuilder("customThreadPoolProfile").poolSize(5).maxQueueSize(100).build();
         ModelCamelContext context = getContext();
         context.getExecutorServiceManager().registerThreadPoolProfile(customThreadPoolProfile);
 

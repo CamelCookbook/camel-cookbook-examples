@@ -40,16 +40,16 @@ public class ClientSpringTest extends CamelSpringTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-                super.createRouteBuilder(),
-                new RouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        // Create a WS Consuming route for testing purposes
-                        from("cxf:bean:paymentServiceEndpoint")
-                            .transform(simple("${in.body[0]}"))
-                            .bean(PaymentServiceImpl.class);
-                    }
+            super.createRouteBuilder(),
+            new RouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    // Create a WS Consuming route for testing purposes
+                    from("cxf:bean:paymentServiceEndpoint")
+                        .transform(simple("${in.body[0]}"))
+                        .bean(PaymentServiceImpl.class);
                 }
+            }
         };
     }
 

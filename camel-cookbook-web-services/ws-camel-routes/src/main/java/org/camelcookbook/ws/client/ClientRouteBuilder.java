@@ -37,8 +37,8 @@ public class ClientRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final String cxfUri =
-                String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
-                        port1, Payment.class.getName());
+            String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+                port1, Payment.class.getName());
 
         from("direct:start")
                 .id("wsClient")

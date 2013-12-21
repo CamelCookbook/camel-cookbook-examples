@@ -36,7 +36,7 @@ public class ConfirmCancelProcessor implements Processor {
         log.info("Starting two-phase operation");
 
         final ProducerTemplate producerTemplate =
-                exchange.getContext().createProducerTemplate();
+            exchange.getContext().createProducerTemplate();
         producerTemplate.send("mock:start", exchange);
 
         exchange.addOnCompletion(new Synchronization() {

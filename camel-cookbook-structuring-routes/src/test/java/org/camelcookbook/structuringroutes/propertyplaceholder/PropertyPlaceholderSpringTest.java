@@ -18,7 +18,6 @@
 package org.camelcookbook.structuringroutes.propertyplaceholder;
 
 import org.apache.camel.EndpointInject;
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;

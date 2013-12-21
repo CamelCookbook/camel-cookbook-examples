@@ -17,20 +17,20 @@
 
 package org.camelcookbook.parallelprocessing.asyncprocessor;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.camel.AsyncCallback;
 import org.apache.camel.AsyncProcessor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class HeaderDrivenSlowOperationProcessor implements AsyncProcessor {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     public boolean process(final Exchange exchange,
-            final AsyncCallback asyncCallback) {
+                           final AsyncCallback asyncCallback) {
         final Message in = exchange.getIn();
         if (in.getHeader("processAsync", Boolean.class)) {
             executorService.submit(new Runnable() {

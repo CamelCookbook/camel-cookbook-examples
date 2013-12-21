@@ -34,7 +34,7 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @RunWith(CamelSpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/spring/test-properties-context.xml",
-        "/META-INF/spring/simpleTransform-context.xml"})
+                       "/META-INF/spring/simpleTransform-context.xml"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class SimpleTransformEnhancedSpringTest {
 

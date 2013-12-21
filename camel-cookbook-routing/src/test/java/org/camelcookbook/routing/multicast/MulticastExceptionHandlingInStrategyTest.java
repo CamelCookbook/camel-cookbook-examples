@@ -58,7 +58,7 @@ public class MulticastExceptionHandlingInStrategyTest extends CamelTestSupport {
 
         afterMulticast.setExpectedMessageCount(1);
         afterMulticast.message(0)
-                .predicate().simple("${header.multicast_exception} != null");
+            .predicate().simple("${header.multicast_exception} != null");
 
         exceptionHandler.setExpectedMessageCount(1);
 

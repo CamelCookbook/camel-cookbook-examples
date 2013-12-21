@@ -52,7 +52,7 @@ public class JmsTransactionTest extends CamelTestSupport {
     protected CamelContext createCamelContext() throws Exception {
         SimpleRegistry registry = new SimpleRegistry();
         ActiveMQConnectionFactory connectionFactory =
-                new ActiveMQConnectionFactory();
+            new ActiveMQConnectionFactory();
         connectionFactory.setBrokerURL(broker.getTcpConnectorUri());
         registry.put("connectionFactory", connectionFactory);
 

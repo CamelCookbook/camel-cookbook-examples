@@ -30,7 +30,7 @@
   <artifactId>extend</artifactId>
   <packaging>jar</packaging>
 
-  <name>${application-name} :: Extend</name>
+  <name>${application-name} :: Routing to your Code</name>
 
   <properties>
   </properties>

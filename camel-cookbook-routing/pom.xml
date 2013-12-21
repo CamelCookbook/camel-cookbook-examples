@@ -30,7 +30,7 @@
   <artifactId>routing</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Routing</name>
+  <name>${application-name} :: Message Routing</name>
 
   <dependencies>
     <dependency>

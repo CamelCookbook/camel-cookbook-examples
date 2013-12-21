@@ -62,75 +62,18 @@
   <modules>
     <module>camel-cookbook-structuring-routes</module>
     <module>camel-cookbook-routing</module>
-    <module>camel-cookbook-transformation</module>
-    <module>camel-cookbook-testing</module>
     <module>camel-cookbook-extend</module>
+    <module>camel-cookbook-transformation</module>
     <module>camel-cookbook-split-join</module>
-    <module>camel-cookbook-error</module>
     <module>camel-cookbook-parallel-processing</module>
+    <module>camel-cookbook-error</module>
+    <module>camel-cookbook-transactions</module>
+    <module>camel-cookbook-testing</module>
     <module>camel-cookbook-monitoring</module>
     <module>camel-cookbook-security</module>
-    <module>camel-cookbook-transactions</module>
     <module>camel-cookbook-web-services</module>
   </modules>
 
-  <repositories>
-<!--
-    <repository>
-      <id>release.fusesource.org</id>
-      <name>FuseSource Release Repository</name>
-      <url>${fusesource-repo}</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
--->
-<!--
-    <repository>
-      <id>release.camel.apache.org</id>
-      <name>Camel Release Repository</name>
-      <url>${camel-repo}</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
--->
-  </repositories>
-
-  <pluginRepositories>
-<!--
-    <pluginRepository>
-      <id>release.fusesource.org</id>
-      <name>FuseSource Release Repository</name>
-      <url>${fusesource-repo}</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </pluginRepository>
--->
-<!--
-    <pluginRepository>
-      <id>release.camel.apache.org</id>
-      <name>Camel Release Repository</name>
-      <url>${camel-repo}</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </pluginRepository>
--->
-  </pluginRepositories>
 
   <dependencyManagement>
     <dependencies>

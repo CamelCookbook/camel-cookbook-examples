@@ -30,7 +30,7 @@
   <artifactId>error</artifactId>
   <packaging>jar</packaging>
 
-  <name>${application-name} :: Error</name>
+  <name>${application-name} :: Error Handling</name>
 
   <properties>
   </properties>

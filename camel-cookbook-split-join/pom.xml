@@ -30,7 +30,7 @@
   <artifactId>split-join</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Split/Join</name>
+  <name>${application-name} :: Splitting &amp; Aggregating</name>
 
   <dependencies>
     <dependency>

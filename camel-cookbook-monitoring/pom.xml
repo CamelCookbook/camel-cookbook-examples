@@ -30,7 +30,7 @@
   <artifactId>monitoring</artifactId>
   <packaging>jar</packaging>
 
-  <name>${application-name} :: Monitoring</name>
+  <name>${application-name} :: Monitoring &amp; Debugging</name>
 
   <properties>
   </properties>

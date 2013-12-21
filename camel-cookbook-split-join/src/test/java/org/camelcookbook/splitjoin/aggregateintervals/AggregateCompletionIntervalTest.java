@@ -38,7 +38,7 @@ public class AggregateCompletionIntervalTest extends CamelTestSupport {
     @Test
     public void testAggregation() throws InterruptedException {
         MockEndpoint mockOut = getMockEndpoint("mock:out");
-        mockOut.setExpectedMessageCount(6);
+        mockOut.setMinimumExpectedMessageCount(6);
 
         sendAndSleep("direct:in", "One", "group", "odd");
         sendAndSleep("direct:in", "Two", "group", "even");
@@ -51,15 +51,7 @@ public class AggregateCompletionIntervalTest extends CamelTestSupport {
         sendAndSleep("direct:in", "Nine", "group", "odd");
         sendAndSleep("direct:in", "Ten", "group", "even");
 
-        List<Exchange> exchangeList = mockOut.getExchanges();
-        log.info("number of exchanges = {}", exchangeList.size());
-        for (Exchange exchange : exchangeList) {
-            log.info("exchange body = {}", exchange.getIn().getBody());
-        }
-
-        //TODO: fix race condition where occasionally number of exhanges is 7
-        //assertMockEndpointsSatisfied();
-        assertTrue(exchangeList.size() >= 6);
+        assertMockEndpointsSatisfied();
     }
 
     private void sendAndSleep(String endpointUri, String body, String headerName, String headerValue) throws InterruptedException {

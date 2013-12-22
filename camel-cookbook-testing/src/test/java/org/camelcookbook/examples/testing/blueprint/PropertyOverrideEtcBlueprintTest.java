@@ -38,14 +38,14 @@ public class PropertyOverrideEtcBlueprintTest extends CamelBlueprintTestSupport 
     @Override
     protected String getBlueprintDescriptor() {
         return "/OSGI-INF/blueprint/simpleTransform-context.xml," +
-                "/OSGI-INF/blueprint/simpleTransform-properties-context.xml";
+               "/OSGI-INF/blueprint/simpleTransform-properties-context.xml";
     }
 
     @Override
     protected String[] loadConfigAdminConfigurationFile() {
         return new String[]{
-                "src/test/resources/blueprint/org.camelcookbook.blueprint.cfg",
-                "org.camelcookbook.testing" // Persistent ID
+            "src/test/resources/blueprint/org.camelcookbook.blueprint.cfg",
+            "org.camelcookbook.testing" // Persistent ID
         };
     }
 

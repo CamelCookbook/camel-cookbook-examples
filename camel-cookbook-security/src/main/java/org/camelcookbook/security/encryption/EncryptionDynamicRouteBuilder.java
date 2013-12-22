@@ -36,15 +36,15 @@ public class EncryptionDynamicRouteBuilder extends RouteBuilder {
         final CryptoDataFormat crypto = new CryptoDataFormat("DES", null);
 
         from("direct:encrypt")
-             .process(new Processor() {
-                 @Override
-                 public void process(Exchange exchange) throws Exception {
-                     Registry registry = exchange.getContext().getRegistry();
-                     Message in = exchange.getIn();
-                     Key key = registry.lookupByNameAndType("shared_" + in.getHeader("system"), Key.class);
-                     in.setHeader(CryptoDataFormat.KEY, key);
-                 }
-             })
+            .process(new Processor() {
+                @Override
+                public void process(Exchange exchange) throws Exception {
+                    Registry registry = exchange.getContext().getRegistry();
+                    Message in = exchange.getIn();
+                    Key key = registry.lookupByNameAndType("shared_" + in.getHeader("system"), Key.class);
+                    in.setHeader(CryptoDataFormat.KEY, key);
+                }
+            })
             .log("Encrypting message: ${body} using ${header[CamelCryptoKey]}")
             .marshal(crypto)
             .log("Message encrypted: ${body}")

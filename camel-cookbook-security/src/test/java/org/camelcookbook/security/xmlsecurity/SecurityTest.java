@@ -21,7 +21,6 @@ import java.io.InputStream;
 
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.builder.xml.XPathBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
@@ -43,23 +42,23 @@ public class SecurityTest extends CamelTestSupport {
         final String cityExistsXPath = "exists(/booksignings/store/address/city)";
 
         context.getRouteDefinition("encrypt")
-                .adviceWith(context, new AdviceWithRouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        interceptSendToEndpoint("direct:decrypt")
-                                .when(xpath(cityExistsXPath))
-                                .to("mock:incorrectlyEncrypted");
-                    }
-                });
+            .adviceWith(context, new AdviceWithRouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    interceptSendToEndpoint("direct:decrypt")
+                        .when(xpath(cityExistsXPath))
+                            .to("mock:incorrectlyEncrypted");
+                }
+            });
         context.getRouteDefinition("decrypt")
-                .adviceWith(context, new AdviceWithRouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        interceptSendToEndpoint("mock:out")
-                                .when(xpath(cityExistsXPath))
-                                .to("mock:correctlyDecrypted");
-                    }
-                });
+            .adviceWith(context, new AdviceWithRouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    interceptSendToEndpoint("mock:out")
+                        .when(xpath(cityExistsXPath))
+                            .to("mock:correctlyDecrypted");
+                }
+            });
         context.start();
 
         MockEndpoint mockIncorrectlyEncrypted = getMockEndpoint("mock:incorrectlyEncrypted");

@@ -32,7 +32,7 @@ public class WireTapCustomThreadPoolRouteBuilder extends RouteBuilder {
 
         ThreadPoolBuilder builder = new ThreadPoolBuilder(getContext());
         ExecutorService oneThreadOnly = builder.poolSize(1).maxPoolSize(1)
-                .maxQueueSize(100).build("JustMeDoingTheTapping");
+            .maxQueueSize(100).build("JustMeDoingTheTapping");
 
         from("direct:start")
             .wireTap("direct:tapped").executorService(oneThreadOnly)

@@ -47,21 +47,21 @@ public class ProxyCxfSpringTest extends CamelSpringTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-                super.createRouteBuilder(),
-                new RouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        // Create a WS Consuming route for testing purposes
-                        from("cxf:bean:paymentServiceBackend")
-                                .id("wsBackend")
-                            .onException(TransferException.class)
-                                .handled(true)
-                                .setFaultBody(method(FaultHandler.class, "createFault"))
-                            .end()
-                            .transform(simple("${in.body[0]}"))
-                            .bean(PaymentServiceImpl.class);
-                    }
+            super.createRouteBuilder(),
+            new RouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    // Create a WS Consuming route for testing purposes
+                    from("cxf:bean:paymentServiceBackend")
+                            .id("wsBackend")
+                        .onException(TransferException.class)
+                            .handled(true)
+                            .setFaultBody(method(FaultHandler.class, "createFault"))
+                        .end()
+                        .transform(simple("${in.body[0]}"))
+                        .bean(PaymentServiceImpl.class);
                 }
+            }
         };
     }
 

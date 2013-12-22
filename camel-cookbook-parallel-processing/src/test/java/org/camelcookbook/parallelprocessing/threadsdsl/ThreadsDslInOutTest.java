@@ -67,18 +67,18 @@ public class ThreadsDslInOutTest extends CamelTestSupport {
 
         for (int i = 0; i < messageCount; i++) {
             Future<Object> future = template.asyncCallbackRequestBody("direct:in", "Message[" + i + "]",
-                    new Synchronization() {
-                        @Override
-                        public void onComplete(Exchange exchange) {
-                            final Message response = exchange.hasOut() ? exchange.getOut() : exchange.getIn();
-                            assertEquals("Processed", response.getBody(String.class));
-                        }
+                new Synchronization() {
+                    @Override
+                    public void onComplete(Exchange exchange) {
+                        final Message response = exchange.hasOut() ? exchange.getOut() : exchange.getIn();
+                        assertEquals("Processed", response.getBody(String.class));
+                    }
 
-                        @Override
-                        public void onFailure(Exchange exchange) {
-                            fail();
-                        }
-                    });
+                    @Override
+                    public void onFailure(Exchange exchange) {
+                        fail();
+                    }
+                });
         }
 
         assertMockEndpointsSatisfied();

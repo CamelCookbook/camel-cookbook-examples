@@ -38,21 +38,21 @@ public class ProxyCxfTest extends CamelTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-                new ProxyRouteBuilder(port1, port2),
-                new RouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        // Create a WS Consuming route for testing purposes
-                        from(String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s", port2, Payment.class.getCanonicalName()))
-                                .id("wsBackend")
-                            .onException(TransferException.class)
-                                .handled(true)
-                                .setFaultBody(method(FaultHandler.class, "createFault"))
-                            .end()
-                            .transform(simple("${in.body[0]}"))
-                            .bean(PaymentServiceImpl.class);
-                    }
+            new ProxyRouteBuilder(port1, port2),
+            new RouteBuilder() {
+                @Override
+                public void configure() throws Exception {
+                    // Create a WS Consuming route for testing purposes
+                    from(String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s", port2, Payment.class.getCanonicalName()))
+                            .id("wsBackend")
+                        .onException(TransferException.class)
+                            .handled(true)
+                            .setFaultBody(method(FaultHandler.class, "createFault"))
+                        .end()
+                        .transform(simple("${in.body[0]}"))
+                        .bean(PaymentServiceImpl.class);
                 }
+            }
         };
     }
 

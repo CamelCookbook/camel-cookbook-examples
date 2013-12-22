@@ -75,6 +75,6 @@ public class VmTest {
         out.assertIsSatisfied(1000);
         Message message = out.getExchanges().get(0).getIn();
         assertFalse(message.getHeader("harness.threadName").equals(
-                message.getHeader(ExternalLoggingRouteBuilder.LOGGING_THREAD_NAME)));
+            message.getHeader(ExternalLoggingRouteBuilder.LOGGING_THREAD_NAME)));
     }
 }

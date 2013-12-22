@@ -37,8 +37,8 @@ public class OperationRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final String cxfUri =
-                String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=%s",
-                        port1, Payment.class.getCanonicalName());
+            String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=%s",
+                port1, Payment.class.getCanonicalName());
 
         from(cxfUri)
                 .id("wsRoute")

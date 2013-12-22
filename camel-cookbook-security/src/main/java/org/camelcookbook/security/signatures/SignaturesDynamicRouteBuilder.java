@@ -33,14 +33,14 @@ public class SignaturesDynamicRouteBuilder extends RouteBuilder {
             .to("direct:verify");
 
         from("direct:sign_b")
-             .to("crypto:sign://usingKeystore?keystore=#keyStore&alias=system_b&password=keyPasswordB")
-             .setHeader("sendingSystem", constant("b"))
-             .to("direct:verify");
+            .to("crypto:sign://usingKeystore?keystore=#keyStore&alias=system_b&password=keyPasswordB")
+            .setHeader("sendingSystem", constant("b"))
+            .to("direct:verify");
 
         from("direct:verify")
             .log("Verifying message")
             .setHeader(DigitalSignatureConstants.KEYSTORE_ALIAS,
-                    simple("system_${header[sendingSystem]}"))
+                simple("system_${header[sendingSystem]}"))
             .to("crypto:verify//usingKeystore?keystore=#trustStore")
             .log("Message verified")
             .to("mock:verified");

@@ -29,7 +29,7 @@
   <camel:keyStoreParameters id="trustStoreParams" resource="xml_truststore.jks" password="truststorePassword"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring"
-      xmlns:c="http://camelcookbook.org/schema/booksignings">
+                xmlns:c="http://camelcookbook.org/schema/booksignings">
     <route id="encrypt">
       <from uri="direct:encrypt"/>
       <marshal>

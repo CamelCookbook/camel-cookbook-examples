@@ -49,10 +49,10 @@ public class View {
     @Override
     public String toString() {
         return "View{" +
-                "age=" + age +
-                ", weight=" + weight +
-                ", height=" + height +
-                '}';
+            "age=" + age +
+            ", weight=" + weight +
+            ", height=" + height +
+            '}';
     }
 
     @Override

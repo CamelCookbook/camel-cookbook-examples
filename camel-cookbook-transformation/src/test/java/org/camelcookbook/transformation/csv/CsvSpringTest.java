@@ -69,14 +69,14 @@ public class CsvSpringTest extends CamelSpringTestSupport {
 
         log.info(response);
         final String expects = "PROGRAMMING,Camel in Action,en,Claus Ibsen,Jon Anstey,Dec-2010,49.99\n" +
-                "PROGRAMMING,Apache Camel Developer's Cookbook,en,Scott Cranton,Jakub Korab,Dec-2013,49.99\n";
+            "PROGRAMMING,Apache Camel Developer's Cookbook,en,Scott Cranton,Jakub Korab,Dec-2013,49.99\n";
         assertEquals(expects, response);
     }
 
     @Test
     public void testCsvUnmarshal() throws Exception {
         final String request = "PROGRAMMING,Camel in Action,en,Claus Ibsen,Jon Anstey,Dec-2010,49.99\n" +
-                "PROGRAMMING,Apache Camel Developer's Cookbook,en,Scott Cranton,Jakub Korab,Dec-2013,49.99\n";
+            "PROGRAMMING,Apache Camel Developer's Cookbook,en,Scott Cranton,Jakub Korab,Dec-2013,49.99\n";
 
         final List<Map<String, BookModel>> response = CastUtils.cast(template.requestBody("direct:unmarshal", request, List.class));
 

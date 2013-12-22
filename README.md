@@ -1,8 +1,8 @@
 Apache Camel Developer's Cookbook Samples
 =========================================
 
-This project contains the sample code for the Apache Camel Developer's Cookbook (Packt Publishing, Dec 2013)
-by Scott Cranton and Jakub Korab. The latest version of this code is available on
+This project contains the sample code for the [_Apache Camel Developer's Cookbook_](http://www.packtpub.com/apache-camel-developers-cookbook/book) (Packt Publishing, Dec 2013)
+by [Scott Cranton](https://github.com/scranton) and [Jakub Korab](https://github.com/jkorab). The latest version of this code is available on
 [GitHub](http://github.com/CamelCookbook/camel-cookbook-examples).
 
 The samples are all driven from unit tests, so in order to execute them all you need to do is run:

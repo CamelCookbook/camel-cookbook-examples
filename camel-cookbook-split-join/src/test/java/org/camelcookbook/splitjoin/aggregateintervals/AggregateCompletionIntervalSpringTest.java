@@ -31,7 +31,7 @@ public class AggregateCompletionIntervalSpringTest extends CamelSpringTestSuppor
     @Override
     protected AbstractApplicationContext createApplicationContext() {
         return new ClassPathXmlApplicationContext(
-                "/META-INF/spring/aggregateCompletionInterval-context.xml");
+            "/META-INF/spring/aggregateCompletionInterval-context.xml");
     }
 
     @Test

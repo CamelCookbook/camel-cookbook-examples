@@ -46,7 +46,7 @@ public class JmsTransactionRequestReplyTest extends CamelTestSupport {
     protected CamelContext createCamelContext() throws Exception {
         SimpleRegistry registry = new SimpleRegistry();
         ActiveMQConnectionFactory connectionFactory =
-                new ActiveMQConnectionFactory("vm://embedded?broker.persistent=false");
+            new ActiveMQConnectionFactory("vm://embedded?broker.persistent=false");
         registry.put("connectionFactory", connectionFactory);
 
         JmsTransactionManager jmsTransactionManager = new JmsTransactionManager();

@@ -17,13 +17,13 @@
 
 package org.camelcookbook.examples.testing.spring;
 
+import java.util.Properties;
+
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.Properties;
 
 /**
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.

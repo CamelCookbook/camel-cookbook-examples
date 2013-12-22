@@ -21,7 +21,6 @@ import org.apache.camel.CamelExecutionException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.error.exception.ExceptionRouteBuilder;
 import org.camelcookbook.error.shared.FlakyException;
 import org.junit.Test;
 

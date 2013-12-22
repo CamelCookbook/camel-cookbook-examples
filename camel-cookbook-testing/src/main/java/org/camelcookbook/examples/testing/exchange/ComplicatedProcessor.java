@@ -43,7 +43,7 @@ public class ComplicatedProcessor implements Processor {
                 in.setBody(something + " " + body);
             } else {
                 throw new IllegalArgumentException(
-                        "Unrecognized action requested: [" + action + "]");
+                    "Unrecognized action requested: [" + action + "]");
             }
         }
     }

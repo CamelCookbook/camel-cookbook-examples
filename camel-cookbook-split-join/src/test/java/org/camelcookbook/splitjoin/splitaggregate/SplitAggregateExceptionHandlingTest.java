@@ -48,9 +48,9 @@ public class SplitAggregateExceptionHandlingTest extends CamelTestSupport {
         Exchange exchange = mockOut.getReceivedExchanges().get(0);
         Set<String> backendResponses = exchange.getIn().getBody(Set.class);
         assertTrue(backendResponses.containsAll(
-                Arrays.asList("Processed: one",
-                        "Failed: two",
-                        "Processed: three")));
+            Arrays.asList("Processed: one",
+                "Failed: two",
+                "Processed: three")));
     }
 
 }

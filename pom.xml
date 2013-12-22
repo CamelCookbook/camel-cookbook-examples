@@ -25,7 +25,7 @@
   <groupId>org.camelcookbook.examples</groupId>
   <artifactId>camel-cookbook-examples</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0</version>
+  <version>1.x-SNAPSHOT</version>
   <inceptionYear>2013</inceptionYear>
 
   <name>${application-name}</name>

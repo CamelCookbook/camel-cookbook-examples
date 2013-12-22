@@ -24,7 +24,7 @@
   <parent>
     <artifactId>camel-cookbook-examples</artifactId>
     <groupId>org.camelcookbook.examples</groupId>
-    <version>1.0.0</version>
+    <version>1.x-SNAPSHOT</version>
   </parent>
 
   <artifactId>split-join</artifactId>

@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- * Utility class for accessing the messages table used in the database examples.
+ * Utility class for accessing the <code>messages</code> table used in the database examples.
  */
 public class MessageDao {
 

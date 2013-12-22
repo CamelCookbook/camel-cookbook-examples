@@ -45,5 +45,4 @@ public class ThrottlerTest extends CamelTestSupport {
         // messages are currently suspended for throttling
         assertMockEndpointsSatisfied();
     }
-
 }

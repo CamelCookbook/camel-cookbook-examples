@@ -53,5 +53,4 @@ public class ThrottlerDynamicTest extends CamelTestSupport {
         // messages are currently suspended for throttling
         assertMockEndpointsSatisfied();
     }
-
 }

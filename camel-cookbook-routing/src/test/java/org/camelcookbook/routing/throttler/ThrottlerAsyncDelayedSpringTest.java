@@ -48,7 +48,7 @@ public class ThrottlerAsyncDelayedSpringTest extends CamelSpringTestSupport {
         // here we are going to test that of 10 messages sent, the last 5
         // will have been throttled and processed on a different thread
 
-        // let's wait until al of the messages have been processed
+        // let's wait until all of the messages have been processed
         MockEndpoint mockThrottled = getMockEndpoint("mock:throttled");
         mockThrottled.expectedMessageCount(messageCount);
 
@@ -68,6 +68,5 @@ public class ThrottlerAsyncDelayedSpringTest extends CamelSpringTestSupport {
                 assertTrue(threadName.contains("Throttle"));
             }
         }
-
     }
 }

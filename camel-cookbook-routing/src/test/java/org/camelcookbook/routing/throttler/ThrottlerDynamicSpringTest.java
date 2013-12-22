@@ -53,4 +53,5 @@ public class ThrottlerDynamicSpringTest extends CamelSpringTestSupport {
         // the only way this set of conditions can happen is if 2
         // messages are currently suspended for throttling
         assertMockEndpointsSatisfied();
-    }}
+    }
+}

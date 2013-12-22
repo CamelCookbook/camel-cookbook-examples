@@ -17,19 +17,11 @@
 
 package org.camelcookbook.routing.throttler;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ThrottlerTest extends CamelTestSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(ThrottlerTest.class);
-
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new ThrottlerRouteBuilder();
@@ -44,27 +36,14 @@ public class ThrottlerTest extends CamelTestSupport {
         getMockEndpoint("mock:throttled").expectedMessageCount(throttleRate);
         getMockEndpoint("mock:after").expectedMessageCount(throttleRate);
 
-        ExecutorService executor = Executors.newFixedThreadPool(messageCount);
-
-        // Send the message on separate threads as sendBody will block on the throttler
-        final AtomicInteger threadCount = new AtomicInteger(0);
         for (int i = 0; i < messageCount; i++) {
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    template.sendBody("direct:start", "Camel Rocks");
-
-                    final int threadId = threadCount.incrementAndGet();
-                    LOG.info("Thread {} finished", threadId);
-                }
-            });
+            template.asyncSendBody("direct:start", "Camel Rocks");
         }
 
+        // the test will stop once all of the conditions have been met
+        // the only way this set of conditions can happen is if 2
+        // messages are currently suspended for throttling
         assertMockEndpointsSatisfied();
-
-        LOG.info("Threads completed {} of {}", threadCount.get(), messageCount);
-        assertEquals("Threads completed should equal throttle rate", throttleRate, threadCount.get());
-
-        executor.shutdownNow();
     }
+
 }

@@ -24,7 +24,8 @@ public class ThrottlerAsyncDelayedRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:start")
             .to("mock:unthrottled")
-            .throttle(5).timePeriodMillis(10000).asyncDelayed().executorServiceRef("myThrottler")
+            .throttle(5).timePeriodMillis(2000).asyncDelayed().executorServiceRef("myThrottler")
+                .setHeader("threadName", simple("${threadName}"))
                 .to("mock:throttled")
             .end()
             .to("mock:after");

@@ -35,8 +35,11 @@
     <route>
       <from uri="direct:start"/>
       <to uri="mock:unthrottled"/>
-      <throttle timePeriodMillis="10000" asyncDelayed="true" executorServiceRef="myThrottler">
+      <throttle timePeriodMillis="2000" asyncDelayed="true" executorServiceRef="myThrottler">
         <constant>5</constant>
+        <setHeader headerName="threadName">
+            <simple>${threadName}</simple>
+        </setHeader>
         <to uri="mock:throttled"/>
       </throttle>
       <to uri="mock:after"/>

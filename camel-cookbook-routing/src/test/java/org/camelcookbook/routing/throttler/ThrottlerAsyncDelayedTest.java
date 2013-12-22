@@ -17,20 +17,16 @@
 
 package org.camelcookbook.routing.throttler;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolProfileBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
-    private static final Logger LOG = LoggerFactory.getLogger(ThrottlerAsyncDelayedTest.class);
-
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         ThreadPoolProfileBuilder builder = new ThreadPoolProfileBuilder("myThrottler");
@@ -52,31 +48,30 @@ public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
         final int throttleRate = 5;
         final int messageCount = throttleRate + 2;
 
-        getMockEndpoint("mock:unthrottled").expectedMessageCount(messageCount);
-        getMockEndpoint("mock:throttled").expectedMessageCount(throttleRate);
-        getMockEndpoint("mock:after").expectedMessageCount(throttleRate);
+        // here we are going to test that of 10 messages sent, the last 5
+        // will have been throttled and processed on a different thread
 
-        ExecutorService executor = Executors.newFixedThreadPool(messageCount);
+        // let's wait until al of the messages have been processed
+        MockEndpoint mockThrottled = getMockEndpoint("mock:throttled");
+        mockThrottled.expectedMessageCount(messageCount);
 
-        // Send the message on separate threads as sendBody will block on the throttler
-        final AtomicInteger threadCount = new AtomicInteger(0);
         for (int i = 0; i < messageCount; i++) {
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    template.sendBody("direct:start", "Camel Rocks");
-
-                    final int threadId = threadCount.incrementAndGet();
-                    LOG.info("Thread {} finished", threadId);
-                }
-            });
+            template.asyncSendBody("direct:start", "Camel Rocks");
         }
 
         assertMockEndpointsSatisfied();
 
-        LOG.info("Threads completed {} of {}", threadCount.get(), messageCount);
-        //assertEquals("Threads completed should equal throttle rate", throttleRate, threadCount.get());
+        List<Exchange> exchanges = mockThrottled.getExchanges();
+        for (int i = 0; i < exchanges.size(); i++) {
+            Exchange exchange = exchanges.get(i);
+            String threadName = exchange.getIn().getHeader("threadName", String.class);
+            if (i < throttleRate) {
+                assertTrue(threadName.contains("ProducerTemplate"));
+            } else {
+                assertTrue(threadName.contains("Throttle"));
+            }
+        }
 
-        executor.shutdownNow();
     }
+
 }

@@ -17,14 +17,14 @@
 
 package org.camelcookbook.routing.routingslip;
 
+import org.apache.camel.Consume;
+import org.apache.camel.Headers;
+import org.apache.camel.RoutingSlip;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.camel.Consume;
-import org.apache.camel.Headers;
-import org.apache.camel.RoutingSlip;
 
 public class RoutingSlipAnnotated {
 

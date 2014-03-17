@@ -49,6 +49,9 @@ public class JmxNamingContextSpringTest extends CamelSpringTestSupport {
         naming.setHostName("localhost");
         naming.setDomainName("org.apache.camel");
 
+        // setup the ManagementAgent to include the hostname
+        camelContext.getManagementStrategy().getManagementAgent().setIncludeHostName(true);
+
         return camelContext;
     }
 

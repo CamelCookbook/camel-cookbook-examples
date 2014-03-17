@@ -51,6 +51,9 @@ public class ManagedSpringTest extends CamelSpringTestSupport {
         naming.setHostName("localhost");
         naming.setDomainName("org.apache.camel");
 
+        // setup the ManagementAgent to include the hostname
+        camelContext.getManagementStrategy().getManagementAgent().setIncludeHostName(true);
+
         return camelContext;
     }
 
@@ -71,6 +74,7 @@ public class ManagedSpringTest extends CamelSpringTestSupport {
 
         // Get the Camel Context MBean
         ObjectName onContext = ObjectName.getInstance(mBeanServerDefaultDomain + ":context=localhost/" + managementName + ",type=context,name=\"" + context.getName() + "\"");
+
         assertTrue("Should be registered", mBeanServer.isRegistered(onContext));
 
         // Get myManagedBean

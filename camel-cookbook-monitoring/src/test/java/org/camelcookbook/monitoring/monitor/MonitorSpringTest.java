@@ -43,6 +43,9 @@ public class MonitorSpringTest extends CamelSpringTestSupport {
         naming.setHostName("localhost");
         naming.setDomainName("org.apache.camel");
 
+        // setup the ManagementAgent to include the hostname
+        context.getManagementStrategy().getManagementAgent().setIncludeHostName(true);
+
         return context;
     }
 

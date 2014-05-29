@@ -54,7 +54,7 @@
   <properties>
     <application-name>Camel Cookbook Examples</application-name>
 
-    <camel-version>2.13.0</camel-version>
+    <camel-version>2.13.1</camel-version>
 
     <activemq-version>5.9.0</activemq-version>
     <aries-blueprint-cm-version>1.0.0</aries-blueprint-cm-version>

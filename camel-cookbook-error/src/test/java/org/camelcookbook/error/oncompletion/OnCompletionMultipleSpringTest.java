@@ -22,12 +22,14 @@ import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
 
 /**
  * Demonstrates that multiple onCompletion blocks defined in the same scope do not behave as expected.
  * The one defined last within the route will be triggered.
  * The one defined first in a global scope will be triggered.
  */
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) // timing issue with mocks
 public class OnCompletionMultipleSpringTest extends CamelSpringTestSupport {
 
     @Override

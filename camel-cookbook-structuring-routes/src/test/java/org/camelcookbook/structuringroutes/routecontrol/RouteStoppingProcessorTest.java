@@ -22,11 +22,14 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Demonstrates the manual shutting down of a route.
  */
 public class RouteStoppingProcessorTest extends CamelTestSupport {
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
@@ -38,6 +41,11 @@ public class RouteStoppingProcessorTest extends CamelTestSupport {
                     .process(new RouteStoppingProcessor())
                     .log("Signalled to stop route")
                     .to("mock:out");
+
+                from("timer:statusChecker").routeId("statusChecker")
+                    .to("controlbus:route?routeId=mainRoute&action=status")
+                    .filter(simple("${body} == 'Stopped'"))
+                    .to("mock:stopped");
             }
         };
     }
@@ -47,11 +55,11 @@ public class RouteStoppingProcessorTest extends CamelTestSupport {
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
 
+        MockEndpoint mockStopped = getMockEndpoint("mock:stopped");
+        mockStopped.setExpectedMessageCount(1);
+
         template.sendBody("direct:in", "mainRoute");
 
         assertMockEndpointsSatisfied();
-        Thread.sleep(100);
-        ServiceStatus mainRouteStatus = context.getRouteStatus("mainRoute");
-        assertTrue(mainRouteStatus.isStopped());
     }
 }

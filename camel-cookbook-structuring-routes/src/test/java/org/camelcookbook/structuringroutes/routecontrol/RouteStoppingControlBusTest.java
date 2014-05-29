@@ -38,6 +38,11 @@ public class RouteStoppingControlBusTest extends CamelTestSupport {
                     .to("controlbus:route?routeId=mainRoute&action=stop&async=true")
                     .log("Signalled to stop route")
                     .to("mock:out");
+
+                from("timer:statusChecker").routeId("statusChecker")
+                    .to("controlbus:route?routeId=mainRoute&action=status")
+                    .filter(simple("${body} == 'Stopped'"))
+                    .to("mock:stopped");
             }
         };
     }
@@ -47,11 +52,11 @@ public class RouteStoppingControlBusTest extends CamelTestSupport {
         MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
 
+        MockEndpoint mockStopped = getMockEndpoint("mock:stopped");
+        mockStopped.setExpectedMessageCount(1);
+
         template.sendBody("direct:in", "mainRoute");
 
         assertMockEndpointsSatisfied();
-        Thread.sleep(100);
-        ServiceStatus mainRouteStatus = context.getRouteStatus("mainRoute");
-        assertTrue(mainRouteStatus.isStopped());
     }
 }

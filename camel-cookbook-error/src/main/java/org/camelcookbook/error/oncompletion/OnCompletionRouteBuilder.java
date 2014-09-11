@@ -88,8 +88,11 @@ public class OnCompletionRouteBuilder extends RouteBuilder {
 
         from("direct:processCompletion")
             .log("onCompletion thread: ${threadName}")
+            .log("${body}")
             .choice()
-                .when(simple("${exception} == null"))
+                //.when(simple("${exception.class} == null"))
+                // Since CAMEL-7707 we cannot get exception here, but onWhen still work
+                .when(simple("${body} contains 'complete'"))
                     .to("mock:completed")
                 .otherwise()
                     .to("mock:failed")

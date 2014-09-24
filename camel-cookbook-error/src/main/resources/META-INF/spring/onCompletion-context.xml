@@ -103,7 +103,8 @@
         <log message="onCompletion thread: ${threadName}"/>
         <choice>
           <when>
-            <simple>${exception} == null</simple>
+            <!-- Since CAMEL-7707 we cannot get exception here, but onWhen still work -->
+            <simple>${body} contains 'complete'</simple>
             <to uri="mock:completed"/>
           </when>
           <otherwise>

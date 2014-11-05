@@ -78,6 +78,7 @@
     <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
     <maven-bundle-plugin-version>2.4.0</maven-bundle-plugin-version>
     <maven-enforcer-plugin-version>1.1</maven-enforcer-plugin-version>
+    <maven-surefire-plugin-version>2.18</maven-surefire-plugin-version>
 
     <osgi-import-package>*</osgi-import-package>
 
@@ -489,6 +490,17 @@
             </execution>
           </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin-version}</version>
+        <configuration>
+          <!-- set the locale for all tests rather than rely on the system locale -->
+          <argLine>-Duser.country=US -Duser.language=en</argLine>
+        </configuration>
+      </plugin>
+
     </plugins>
 
     <pluginManagement>

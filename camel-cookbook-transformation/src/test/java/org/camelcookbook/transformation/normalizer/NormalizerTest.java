@@ -18,6 +18,7 @@
 package org.camelcookbook.transformation.normalizer;
 
 import java.io.InputStream;
+import java.util.Locale;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
@@ -28,6 +29,12 @@ import org.camelcookbook.transformation.myschema.Bookstore;
 import org.junit.Test;
 
 public class NormalizerTest extends CamelTestSupport {
+
+    @Override
+    public void doPreSetup() throws Exception {
+        super.doPreSetup();
+        Locale.setDefault(Locale.US);
+    }
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {

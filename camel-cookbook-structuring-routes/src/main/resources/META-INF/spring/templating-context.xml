@@ -32,7 +32,7 @@
 
   <bean id="monthFirstOrderFileNameProcessor"
         class="org.camelcookbook.structuringroutes.templating.OrderFileNameProcessor">
-    <property name="countryDateFormat" value="dd-MM-yyyy"/>
+    <property name="countryDateFormat" value="MM-dd-yyyy"/>
   </bean>
 
   <bean id="ukOrdersRouteBuilder"

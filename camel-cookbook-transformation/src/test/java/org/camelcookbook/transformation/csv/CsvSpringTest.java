@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.camel.test.spring.CamelSpringTestSupport;
@@ -31,6 +32,12 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CsvSpringTest extends CamelSpringTestSupport {
+
+    @Override
+    public void doPreSetup() throws Exception {
+        super.doPreSetup();
+        Locale.setDefault(Locale.US);
+    }
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {

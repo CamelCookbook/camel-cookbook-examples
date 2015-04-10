@@ -20,19 +20,23 @@ package org.camelcookbook.transformation.normalizer;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.camelcookbook.transformation.csv.model.BookModel;
 import org.camelcookbook.transformation.myschema.Book;
 import org.camelcookbook.transformation.myschema.Bookstore;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class MyNormalizerTest {
+
+    @Before
+    public void setupLocale() throws Exception {
+        Locale.setDefault(Locale.US);
+    }
+
     @Test
     public void testBookModelToJaxb() throws Exception {
         final MyNormalizer myNormalizer = new MyNormalizer();

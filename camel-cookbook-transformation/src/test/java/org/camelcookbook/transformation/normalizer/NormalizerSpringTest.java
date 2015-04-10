@@ -18,6 +18,7 @@
 package org.camelcookbook.transformation.normalizer;
 
 import java.io.InputStream;
+import java.util.Locale;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -29,6 +30,12 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class NormalizerSpringTest extends CamelSpringTestSupport {
+
+    @Override
+    public void doPreSetup() throws Exception {
+        super.doPreSetup();
+        Locale.setDefault(Locale.US);
+    }
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {

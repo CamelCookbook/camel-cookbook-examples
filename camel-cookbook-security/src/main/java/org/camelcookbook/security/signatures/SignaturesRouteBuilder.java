@@ -36,7 +36,7 @@ public class SignaturesRouteBuilder extends RouteBuilder {
 
         from("direct:verify")
             .log("Verifying message")
-            .to("crypto:verify//usingKeystore?keystore=#trustStore&alias=system_a")
+            .to("crypto:verify://usingKeystore?keystore=#trustStore&alias=system_a")
             .log("Message verified")
             .to("mock:verified");
     }

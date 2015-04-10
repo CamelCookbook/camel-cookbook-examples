@@ -41,7 +41,7 @@ public class SignaturesDynamicRouteBuilder extends RouteBuilder {
             .log("Verifying message")
             .setHeader(DigitalSignatureConstants.KEYSTORE_ALIAS,
                 simple("system_${header[sendingSystem]}"))
-            .to("crypto:verify//usingKeystore?keystore=#trustStore")
+            .to("crypto:verify://usingKeystore?keystore=#trustStore")
             .log("Message verified")
             .to("mock:verified");
     }

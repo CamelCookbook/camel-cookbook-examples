@@ -71,6 +71,10 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-xmljson</artifactId>
     </dependency>
+    <dependency>
+      <groupId>xom</groupId>
+      <artifactId>xom</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>commons-lang</groupId>

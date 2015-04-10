@@ -32,7 +32,9 @@ public class SimpleTransformPropertiesInjectingSpringTest extends CamelSpringTes
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("/META-INF/spring/simpleTransform-context.xml");
+        return new ClassPathXmlApplicationContext(
+                "/spring/test-properties-context.xml",
+                "/META-INF/spring/simpleTransform-context.xml");
     }
 
     @Override

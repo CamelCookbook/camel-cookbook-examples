@@ -32,7 +32,7 @@ public class DynamicOnCompletionRouteBuilder extends RouteBuilder {
             .choice()
                 .when(simple("${body} contains 'explode'"))
                     .throwException(new IllegalArgumentException("Exchange caused explosion"))
-            .endChoice()
+            .end()
             .log("Processed message");
     }
 }

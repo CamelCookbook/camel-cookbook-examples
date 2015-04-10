@@ -34,7 +34,7 @@
         <header>messageId</header>
         <choice>
           <when>
-            <property>CamelDuplicateMessage</property>
+            <simple>${header[CamelDuplicateMessage]} != null</simple>
             <log message="Duplicate"/>
             <to uri="mock:duplicate"/>
           </when>

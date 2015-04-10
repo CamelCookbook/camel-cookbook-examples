@@ -43,7 +43,7 @@ public class RollbackMarkRollbackOnlyLastRouteBuilder extends RouteBuilder {
                         .markRollbackOnlyLast()
                     .otherwise()
                         .log("Message processed successfully")
-                .endChoice()
+                .end()
                 .to("mock:out2")
             .end();
     }

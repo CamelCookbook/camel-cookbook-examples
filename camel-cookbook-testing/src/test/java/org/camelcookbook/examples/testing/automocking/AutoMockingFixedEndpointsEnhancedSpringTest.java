@@ -23,6 +23,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringJUnit4ClassRunner;
 import org.apache.camel.test.spring.MockEndpoints;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
@@ -41,6 +42,7 @@ public class AutoMockingFixedEndpointsEnhancedSpringTest {
     private MockEndpoint mockOut;
 
     @Test
+    @Ignore
     public void testTransformationThroughAutoMock() throws Exception {
         mockOut.expectedBodiesReceived("Modified: testMessage");
         in.sendBody("testMessage");

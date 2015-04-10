@@ -45,7 +45,7 @@
     <route>
       <from uri="direct:verify"/>
       <log message="Verifying message"/>
-      <to uri="crypto:verify//usingKeystore?keystore=#trustStore&amp;alias=system_a"/>
+      <to uri="crypto:verify://usingKeystore?keystore=#trustStore&amp;alias=system_a"/>
       <log message="Message verified"/>
       <to uri="mock:verified"/>
     </route>

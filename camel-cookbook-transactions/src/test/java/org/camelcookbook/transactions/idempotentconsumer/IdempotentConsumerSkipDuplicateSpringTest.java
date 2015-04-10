@@ -30,7 +30,8 @@ public class IdempotentConsumerSkipDuplicateSpringTest extends CamelSpringTestSu
 
     @Override
     protected AbstractApplicationContext createApplicationContext() {
-        return new ClassPathXmlApplicationContext("META-INF/spring/idempotentConsumerSkipDuplicate-context.xml");
+        return new ClassPathXmlApplicationContext(
+                "META-INF/spring/idempotentConsumerSkipDuplicate-context.xml");
     }
 
     @Test

@@ -364,6 +364,12 @@
         <version>${log4j-version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>xom</groupId>
+        <artifactId>xom</artifactId>
+        <version>${xom-version}</version>
+      </dependency>
+
       <!-- transitive dependencies -->
       <dependency>
         <groupId>org.springframework</groupId>

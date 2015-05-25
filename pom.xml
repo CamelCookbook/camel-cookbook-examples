@@ -99,6 +99,7 @@
     <module>camel-cookbook-monitoring</module>
     <module>camel-cookbook-security</module>
     <module>camel-cookbook-web-services</module>
+    <module>training</module>
   </modules>
 
 

@@ -45,14 +45,14 @@ public class DirectVmTest {
             public void configure() throws Exception {
                 from("direct:in")
                     .setHeader("harness.threadName", simple("${threadName}"))
-                    .to("vm:logMessageToBackendSystem")
+                    .to("direct-vm:logMessageToBackendSystem")
                     .log("Completed logging");
             }
         });
         testHarnessContext.start();
 
         externalLoggingContext = new DefaultCamelContext();
-        externalLoggingContext.addRoutes(new ExternalLoggingRouteBuilder("vm"));
+        externalLoggingContext.addRoutes(new ExternalLoggingRouteBuilder("direct-vm"));
         externalLoggingContext.start();
     }
 
@@ -73,7 +73,7 @@ public class DirectVmTest {
         producerTemplate.sendBody("direct:in", "something happened");
         out.assertIsSatisfied(1000);
         Message message = out.getExchanges().get(0).getIn();
-        assertFalse(message.getHeader("harness.threadName").equals(
+        assertTrue(message.getHeader("harness.threadName").equals(
             message.getHeader(ExternalLoggingRouteBuilder.LOGGING_THREAD_NAME)));
     }
 }

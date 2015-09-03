@@ -38,6 +38,7 @@ public class OrderProcessingRouteBuilderTest extends CamelTestSupport {
         orderFileNameProcessor.setCountryDateFormat("dd-MM-yyyy");
 
         OrderProcessingRouteBuilder routeBuilder = new OrderProcessingRouteBuilder();
+        routeBuilder.setId("testOrders");
         routeBuilder.inputUri = "direct:in";
         routeBuilder.outputUri = "mock:out";
         routeBuilder.setOrderFileNameProcessor(orderFileNameProcessor);

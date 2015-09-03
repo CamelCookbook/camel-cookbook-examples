@@ -23,9 +23,14 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.Validate;
 
 public class OrderProcessingRouteBuilder extends RouteBuilder {
+    String id;
     String inputUri;
     String outputUri;
     private OrderFileNameProcessor orderFileNameProcessor;
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public void setInputDirectory(String inputDirectory) {
         inputUri = "file://" + inputDirectory;
@@ -49,6 +54,7 @@ public class OrderProcessingRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from(inputUri)
+            .id(id)
             .split(body(String.class).tokenize("\n")) // split into individual lines
                 .process(orderFileNameProcessor)
                 .log("Writing file: ${header.CamelFileName}")

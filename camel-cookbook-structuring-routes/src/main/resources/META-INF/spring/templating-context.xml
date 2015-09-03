@@ -37,6 +37,7 @@
 
   <bean id="ukOrdersRouteBuilder"
         class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
+    <property name="id" value="ukOrders"/>
     <property name="inputDirectory" value="/orders/in/UK"/>
     <property name="outputDirectory" value="/orders/out/UK"/>
     <property name="orderFileNameProcessor" ref="dateFirstOrderFileNameProcessor"/>
@@ -44,6 +45,7 @@
 
   <bean id="usOrdersRouteBuilder"
         class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
+    <property name="id" value="usOrders"/>
     <property name="inputDirectory" value="/orders/in/US"/>
     <property name="outputDirectory" value="/orders/out/US"/>
     <property name="orderFileNameProcessor" ref="monthFirstOrderFileNameProcessor"/>
@@ -51,6 +53,7 @@
 
   <bean id="jamaicaOrdersRouteBuilder"
         class="org.camelcookbook.structuringroutes.templating.OrderProcessingRouteBuilder">
+    <property name="id" value="jamaicaOrders"/>
     <property name="inputDirectory" value="/orders/in/JA"/>
     <property name="outputDirectory" value="/orders/out/JA"/>
     <property name="orderFileNameProcessor" ref="dateFirstOrderFileNameProcessor"/>

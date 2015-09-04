@@ -17,14 +17,14 @@
 
 package org.camelcookbook.routing.throttler;
 
+import java.util.List;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.List;
 
 public class ThrottlerAsyncDelayedSpringTest extends CamelSpringTestSupport {
 

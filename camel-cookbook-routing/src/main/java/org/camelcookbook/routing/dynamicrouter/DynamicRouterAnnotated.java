@@ -17,14 +17,14 @@
 
 package org.camelcookbook.routing.dynamicrouter;
 
+import java.util.Map;
+
 import org.apache.camel.Consume;
 import org.apache.camel.DynamicRouter;
 import org.apache.camel.Exchange;
 import org.apache.camel.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 public class DynamicRouterAnnotated {
     private static final Logger LOG = LoggerFactory.getLogger(DynamicRouterAnnotated.class);

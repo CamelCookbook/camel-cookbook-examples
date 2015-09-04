@@ -17,6 +17,8 @@
 
 package org.camelcookbook.routing.wiretap;
 
+import java.util.List;
+
 import org.apache.camel.*;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
@@ -24,8 +26,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.List;
 
 public class WireTapCustomThreadPoolSpringTest extends CamelSpringTestSupport {
 

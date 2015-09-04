@@ -17,14 +17,14 @@
 
 package org.camelcookbook.routing.wiretap;
 
+import java.util.List;
+
 import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.List;
 
 public class WireTapCustomThreadPoolTest extends CamelTestSupport {
 

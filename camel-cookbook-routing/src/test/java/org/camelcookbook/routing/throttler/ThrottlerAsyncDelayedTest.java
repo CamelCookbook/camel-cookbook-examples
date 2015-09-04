@@ -17,14 +17,14 @@
 
 package org.camelcookbook.routing.throttler;
 
+import java.util.List;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.ThreadPoolProfileBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-
-import java.util.List;
 
 public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
     @Override

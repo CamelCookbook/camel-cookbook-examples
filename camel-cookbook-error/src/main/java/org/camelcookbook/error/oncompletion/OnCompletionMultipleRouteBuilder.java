@@ -27,11 +27,11 @@ public class OnCompletionMultipleRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         onCompletion().onCompleteOnly()
-                .log("global onCompletionOnly thread: ${threadName}")
-                .to("mock:globalCompleted");
+            .log("global onCompletionOnly thread: ${threadName}")
+            .to("mock:globalCompleted");
         onCompletion().onFailureOnly()
-                .log("global onFailureOnly thread: ${threadName}")
-                .to("mock:globalFailed");
+            .log("global onFailureOnly thread: ${threadName}")
+            .to("mock:globalFailed");
 
         from("direct:in")
             .onCompletion().onCompleteOnly()

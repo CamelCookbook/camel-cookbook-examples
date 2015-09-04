@@ -38,7 +38,7 @@
       <throttle timePeriodMillis="2000" asyncDelayed="true" executorServiceRef="myThrottler">
         <constant>5</constant>
         <setHeader headerName="threadName">
-            <simple>${threadName}</simple>
+          <simple>${threadName}</simple>
         </setHeader>
         <to uri="mock:throttled"/>
       </throttle>

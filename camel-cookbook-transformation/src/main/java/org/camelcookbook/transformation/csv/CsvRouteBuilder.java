@@ -24,7 +24,7 @@ import org.apache.camel.spi.DataFormat;
 public class CsvRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        final DataFormat bindy = new BindyCsvDataFormat("org.camelcookbook.transformation.csv.model");
+        final DataFormat bindy = new BindyCsvDataFormat(org.camelcookbook.transformation.csv.model.BookModel.class);
 
         from("direct:unmarshal").unmarshal(bindy);
         from("direct:marshal").marshal(bindy);

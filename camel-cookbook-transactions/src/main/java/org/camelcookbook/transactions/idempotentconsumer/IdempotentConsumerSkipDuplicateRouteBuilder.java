@@ -29,7 +29,7 @@ class IdempotentConsumerSkipDuplicateRouteBuilder extends RouteBuilder {
             .log("Received message ${header[messageId]}")
             .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository()).skipDuplicate(false)
                 .choice()
-                    .when(property(Exchange.DUPLICATE_MESSAGE))
+                    .when(exchangeProperty(Exchange.DUPLICATE_MESSAGE))
                         .log("Duplicate")
                         .to("mock:duplicate")
                     .otherwise()

@@ -54,32 +54,36 @@
   <properties>
     <application-name>Camel Cookbook Examples</application-name>
 
-    <camel-version>2.15.2</camel-version>
+    <camel-version>2.16-SNAPSHOT</camel-version>
 
-    <activemq-version>5.11.1</activemq-version>
-    <aries-blueprint-cm-version>1.0.0</aries-blueprint-cm-version>
+    <activemq-version>5.12.0</activemq-version>
+    <aries-blueprint-api-version>1.0.1</aries-blueprint-api-version>
+    <aries-blueprint-cm-version>1.0.6</aries-blueprint-cm-version>
+    <aries-blueprint-core-version>1.4.4</aries-blueprint-core-version>
+    <aries-blueprint-proxy-version>1.0.1</aries-blueprint-proxy-version>
+    <aries-blueprint-proxy-impl-version>1.0.4</aries-blueprint-proxy-impl-version>
     <aries-util-version>1.1.0</aries-util-version>
     <atomikos-version>3.9.3</atomikos-version>
     <commons-codec-version>1.10</commons-codec-version>
     <commons-lang-version>2.6</commons-lang-version>
-    <commons-logging-version>1.1.3</commons-logging-version>
-    <cxf-version>3.0.4</cxf-version>
+    <commons-logging-version>1.2</commons-logging-version>
+    <cxf-version>3.1.2</cxf-version>
     <h2-version>1.3.167</h2-version>
     <jaxb-version>2.2.11</jaxb-version>
     <junit-version>4.11</junit-version>
     <log4j-version>1.2.17</log4j-version>
     <slf4j-version>1.7.12</slf4j-version>
-    <spring-security-version>3.2.5.RELEASE</spring-security-version>
+    <spring-security-version>3.2.8.RELEASE</spring-security-version>
     <spring-version>4.1.6.RELEASE</spring-version>
     <xalan-version>2.7.2</xalan-version>
     <xbean.version>3.18</xbean.version>
     <xml-apis-version>1.4.01</xml-apis-version>
     <xom-version>1.2.5</xom-version>
 
-    <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
+    <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
     <maven-bundle-plugin-version>2.4.0</maven-bundle-plugin-version>
-    <maven-enforcer-plugin-version>1.1</maven-enforcer-plugin-version>
-    <maven-surefire-plugin-version>2.18</maven-surefire-plugin-version>
+    <maven-enforcer-plugin-version>1.4</maven-enforcer-plugin-version>
+    <maven-surefire-plugin-version>2.18.1</maven-surefire-plugin-version>
 
     <osgi-import-package>*</osgi-import-package>
 
@@ -122,8 +126,28 @@
 
       <dependency>
         <groupId>org.apache.aries.blueprint</groupId>
+        <artifactId>org.apache.aries.blueprint.api</artifactId>
+        <version>${aries-blueprint-api-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.aries.blueprint</groupId>
         <artifactId>org.apache.aries.blueprint.cm</artifactId>
         <version>${aries-blueprint-cm-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.aries.blueprint</groupId>
+        <artifactId>org.apache.aries.blueprint.core</artifactId>
+        <version>${aries-blueprint-core-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.aries.proxy</groupId>
+        <artifactId>org.apache.aries.proxy.api</artifactId>
+        <version>${aries-blueprint-proxy-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.aries.proxy</groupId>
+        <artifactId>org.apache.aries.proxy.impl</artifactId>
+        <version>${aries-blueprint-proxy-impl-version}</version>
       </dependency>
 
       <dependency>

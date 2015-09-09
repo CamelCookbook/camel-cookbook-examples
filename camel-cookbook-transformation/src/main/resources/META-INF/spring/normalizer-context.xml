@@ -34,7 +34,7 @@
         <when>
           <simple>${header.CamelFileName} regex '.*\.csv$'</simple>
           <unmarshal>
-            <bindy type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
+            <bindy type="Csv" classType="org.camelcookbook.transformation.csv.model.BookModel"/>
           </unmarshal>
           <bean ref="myNormalizer" method="bookModelToJaxb"/>
           <to uri="mock:csv"/>

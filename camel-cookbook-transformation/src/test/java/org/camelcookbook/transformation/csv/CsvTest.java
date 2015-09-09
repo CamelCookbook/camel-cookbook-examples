@@ -20,13 +20,12 @@ package org.camelcookbook.transformation.csv;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.camel.util.CastUtils;
 import org.camelcookbook.transformation.csv.model.BookModel;
 import org.junit.Test;
 
@@ -84,7 +83,8 @@ public class CsvTest extends CamelTestSupport {
         final String request = "PROGRAMMING,Camel in Action,en,Claus Ibsen,Jon Anstey,Dec-2010,49.99\n" +
             "PROGRAMMING,Apache Camel Developer's Cookbook,en,Scott Cranton,Jakub Korab,Dec-2013,49.99\n";
 
-        final List<Map<String, BookModel>> response = CastUtils.cast(template.requestBody("direct:unmarshal", request, List.class));
+        @SuppressWarnings("unchecked")
+        final List<BookModel> response = Collections.checkedList(template.requestBody("direct:unmarshal", request, List.class), BookModel.class);
 
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM-yyyy");
 
@@ -106,18 +106,10 @@ public class CsvTest extends CamelTestSupport {
         book2.setPublishDate(simpleDateFormat.parse("Dec-2013"));
         book2.setPrice(BigDecimal.valueOf(49.99));
 
-        Map<String, BookModel> response1 = response.get(0);
-        assertEquals(1, response1.size());
+        BookModel response1 = response.get(0);
+        assertEquals(book1, response1);
 
-        // Map of <class name String>, <Model object value>
-        Map.Entry<String, BookModel> entry1 = response1.entrySet().iterator().next();
-        assertEquals(BookModel.class.getName(), entry1.getKey());
-        assertEquals(book1, entry1.getValue());
-
-        Map<String, BookModel> response2 = response.get(1);
-        assertEquals(1, response1.size());
-        Map.Entry<String, BookModel> entry2 = response2.entrySet().iterator().next();
-        assertEquals(BookModel.class.getName(), entry2.getKey());
-        assertEquals(book2, entry2.getValue());
+        BookModel response2 = response.get(1);
+        assertEquals(book2, response2);
     }
 }

@@ -45,7 +45,7 @@ public class IdempotentConsumerInTransactionTest extends CamelTestSupport {
 
     private AuditLogDao auditLogDao;
     private DataSource auditDataSource;
-    private IdempotentRepository idempotentRepository;
+    private IdempotentRepository<String> idempotentRepository;
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {

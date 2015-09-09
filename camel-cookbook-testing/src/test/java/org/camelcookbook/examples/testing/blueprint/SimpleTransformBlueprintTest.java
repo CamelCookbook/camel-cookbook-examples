@@ -19,11 +19,13 @@ package org.camelcookbook.examples.testing.blueprint;
 
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
  */
+@Ignore
 public class SimpleTransformBlueprintTest extends CamelBlueprintTestSupport {
 
     @Override

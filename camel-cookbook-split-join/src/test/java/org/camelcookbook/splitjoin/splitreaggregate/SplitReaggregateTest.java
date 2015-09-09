@@ -20,6 +20,7 @@ package org.camelcookbook.splitjoin.splitreaggregate;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -75,15 +76,20 @@ public class SplitReaggregateTest extends CamelTestSupport {
 
     private void assertBooksByCategory(Exchange exchange) {
         Message in = exchange.getIn();
-        Set<String> books = in.getBody(Set.class);
+        @SuppressWarnings("unchecked")
+        Set<String> books = Collections.checkedSet(in.getBody(Set.class), String.class);
         String category = in.getHeader("category", String.class);
-        if (category.equals("Tech")) {
-            assertTrue(books.containsAll(Arrays.asList("Apache Camel Developer's Cookbook")));
-        } else if (category.equals("Cooking")) {
-            assertTrue(books.containsAll(Arrays.asList("Camel Cookbook",
-                "Double decadence with extra cream", "Cooking with Butter")));
-        } else {
-            fail();
+        switch (category) {
+            case "Tech":
+                assertTrue(books.containsAll(Collections.singletonList("Apache Camel Developer's Cookbook")));
+                break;
+            case "Cooking":
+                assertTrue(books.containsAll(Arrays.asList("Camel Cookbook",
+                    "Double decadence with extra cream", "Cooking with Butter")));
+                break;
+            default:
+                fail();
+                break;
         }
     }
 }

@@ -17,6 +17,8 @@
 
 package org.camelcookbook.error.exception;
 
+import java.util.Arrays;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.error.shared.FlakyException;
 import org.camelcookbook.error.shared.FlakyProcessor;

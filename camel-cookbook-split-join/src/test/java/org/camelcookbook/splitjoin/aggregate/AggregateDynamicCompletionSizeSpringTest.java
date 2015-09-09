@@ -62,10 +62,12 @@ public class AggregateDynamicCompletionSizeSpringTest extends CamelSpringTestSup
         assertMockEndpointsSatisfied();
 
         List<Exchange> receivedExchanges = mockOut.getReceivedExchanges();
-        Set<String> even = receivedExchanges.get(0).getIn().getBody(Set.class);
+        @SuppressWarnings("unchecked")
+        Set<String> even = Collections.checkedSet(receivedExchanges.get(0).getIn().getBody(Set.class), String.class);
         assertTrue(even.containsAll(Arrays.asList("Two", "Four", "Six", "Eight")));
 
-        Set<String> odd = receivedExchanges.get(1).getIn().getBody(Set.class);
+        @SuppressWarnings("unchecked")
+        Set<String> odd = Collections.checkedSet(receivedExchanges.get(1).getIn().getBody(Set.class), String.class);
         assertTrue(odd.containsAll(Arrays.asList("One", "Three", "Five", "Seven", "Nine")));
     }
 }

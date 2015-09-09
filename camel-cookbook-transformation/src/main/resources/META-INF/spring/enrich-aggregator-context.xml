@@ -31,8 +31,9 @@
     <route>
       <from uri="direct:start"/>
       <bean ref="myMerger" method="setup"/>
-      <enrich uri="direct:expander"
-              strategyRef="myMerger"/>
+      <enrich strategyRef="myMerger">
+        <constant>direct:expander</constant>
+      </enrich>
     </route>
   </camelContext>
 

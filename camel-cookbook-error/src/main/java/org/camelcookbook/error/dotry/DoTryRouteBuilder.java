@@ -37,6 +37,7 @@ public class DoTryRouteBuilder extends RouteBuilder {
             .end()
             .to("mock:after");
 
+        // TODO: update handled(false) to explicit rethrow
         from("direct:unhandled")
             .to("mock:before")
             .doTry()

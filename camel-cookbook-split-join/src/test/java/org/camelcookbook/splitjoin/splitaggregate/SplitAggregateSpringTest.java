@@ -18,6 +18,7 @@
 package org.camelcookbook.splitjoin.splitaggregate;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 
 import org.apache.camel.Exchange;
@@ -48,7 +49,8 @@ public class SplitAggregateSpringTest extends CamelSpringTestSupport {
 
         assertMockEndpointsSatisfied();
         Exchange exchange = mockOut.getReceivedExchanges().get(0);
-        Set<String> backendResponses = exchange.getIn().getBody(Set.class);
+        @SuppressWarnings("unchecked")
+        Set<String> backendResponses = Collections.checkedSet(exchange.getIn().getBody(Set.class), String.class);
         assertTrue(backendResponses.containsAll(
             Arrays.asList("Processed: one",
                 "Processed: two",

@@ -57,7 +57,9 @@ public class IdempotentConsumerInTransactionSpringTest extends CamelSpringTestSu
 
         assertMockEndpointsSatisfied();
         assertEquals(0, auditLogDao.getAuditCount(message)); // the insert was rolled back
-        IdempotentRepository idempotentRepository = getMandatoryBean(IdempotentRepository.class, "jdbcIdempotentRepository");
+
+        @SuppressWarnings("unchecked")
+        IdempotentRepository<String> idempotentRepository = getMandatoryBean(IdempotentRepository.class, "jdbcIdempotentRepository");
 
         // even though the transaction rolled back, the repository should still contain an entry for this messageId
         assertTrue(idempotentRepository.contains("foo"));
@@ -76,7 +78,9 @@ public class IdempotentConsumerInTransactionSpringTest extends CamelSpringTestSu
 
         assertMockEndpointsSatisfied();
         assertEquals(1, auditLogDao.getAuditCount(message)); // the insert was successful
-        IdempotentRepository idempotentRepository = getMandatoryBean(IdempotentRepository.class, "jdbcIdempotentRepository");
+
+        @SuppressWarnings("unchecked")
+        IdempotentRepository<String> idempotentRepository = getMandatoryBean(IdempotentRepository.class, "jdbcIdempotentRepository");
 
         // even though the transaction rolled back, the repository should still contain an entry for this messageId
         assertTrue(idempotentRepository.contains("foo"));
@@ -103,7 +107,9 @@ public class IdempotentConsumerInTransactionSpringTest extends CamelSpringTestSu
 
         assertMockEndpointsSatisfied();
         assertEquals(0, auditLogDao.getAuditCount(message)); // the insert was successful
-        IdempotentRepository idempotentRepository = getMandatoryBean(IdempotentRepository.class, "jdbcIdempotentRepository");
+
+        @SuppressWarnings("unchecked")
+        IdempotentRepository<String> idempotentRepository = getMandatoryBean(IdempotentRepository.class, "jdbcIdempotentRepository");
 
         // the repository has not seen this messageId
         assertTrue(!idempotentRepository.contains("foo"));

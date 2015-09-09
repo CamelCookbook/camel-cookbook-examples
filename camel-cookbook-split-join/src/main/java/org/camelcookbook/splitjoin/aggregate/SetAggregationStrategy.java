@@ -17,6 +17,7 @@
 
 package org.camelcookbook.splitjoin.aggregate;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +34,8 @@ public class SetAggregationStrategy implements AggregationStrategy {
             newExchange.getIn().setBody(set);
             return newExchange;
         } else {
-            Set<String> set = oldExchange.getIn().getBody(Set.class);
+            @SuppressWarnings("unchecked")
+            Set<String> set = Collections.checkedSet(oldExchange.getIn().getBody(Set.class), String.class);
             set.add(body);
             return oldExchange;
         }

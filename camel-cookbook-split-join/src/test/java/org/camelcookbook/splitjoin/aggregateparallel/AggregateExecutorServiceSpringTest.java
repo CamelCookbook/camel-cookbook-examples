@@ -18,6 +18,7 @@
 package org.camelcookbook.splitjoin.aggregateparallel;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -72,8 +73,10 @@ public class AggregateExecutorServiceSpringTest extends CamelSpringTestSupport {
         final List<String> odd = Arrays.asList("One", "Three", "Five", "Seven", "Nine");
         final List<String> even = Arrays.asList("Two", "Four", "Six", "Eight", "Ten");
 
-        final Set<String> set1 = message1.getBody(Set.class);
-        final Set<String> set2 = message2.getBody(Set.class);
+        @SuppressWarnings("unchecked")
+        final Set<String> set1 = Collections.checkedSet(message1.getBody(Set.class), String.class);
+        @SuppressWarnings("unchecked")
+        final Set<String> set2 = Collections.checkedSet(message2.getBody(Set.class), String.class);
 
         if ("odd".equals(message1.getHeader("group"))) {
             assertTrue(set1.containsAll(odd));

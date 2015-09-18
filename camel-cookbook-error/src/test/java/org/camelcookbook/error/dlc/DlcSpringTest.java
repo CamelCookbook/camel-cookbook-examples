@@ -35,14 +35,14 @@ public class DlcSpringTest extends CamelSpringTestSupport {
         final MockEndpoint mockResult = getMockEndpoint("mock:result");
         mockResult.expectedMessageCount(1);
         mockResult.expectedBodiesReceived("Foo");
-        mockResult.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNull();
+        mockResult.message(0).property(Exchange.EXCEPTION_CAUGHT).isNull();
         mockResult.message(0).header("myHeader").isEqualTo("changed");
 
         final MockEndpoint mockError = getMockEndpoint("mock:error");
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
-        mockError.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).exchangeProperty(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcRoute");
+        mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcRoute");
         mockError.message(0).header("myHeader").isEqualTo("changed");
 
         template.sendBodyAndHeader("direct:start", "Foo", "myHeader", "original");
@@ -56,14 +56,14 @@ public class DlcSpringTest extends CamelSpringTestSupport {
         final MockEndpoint mockResult = getMockEndpoint("mock:result");
         mockResult.expectedMessageCount(1);
         mockResult.expectedBodiesReceived("Foo");
-        mockResult.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNull();
+        mockResult.message(0).property(Exchange.EXCEPTION_CAUGHT).isNull();
         mockResult.message(0).header("myHeader").isEqualTo("changed");
 
         final MockEndpoint mockError = getMockEndpoint("mock:error");
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
-        mockError.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).exchangeProperty(Exchange.FAILURE_ROUTE_ID).isEqualTo("myFlakyRoute");
+        mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myFlakyRoute");
         mockError.message(0).header("myHeader").isEqualTo("flaky");
 
         template.sendBodyAndHeader("direct:multiroute", "Foo", "myHeader", "original");
@@ -77,14 +77,14 @@ public class DlcSpringTest extends CamelSpringTestSupport {
         final MockEndpoint mockResult = getMockEndpoint("mock:result");
         mockResult.expectedMessageCount(1);
         mockResult.expectedBodiesReceived("Foo");
-        mockResult.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNull();
+        mockResult.message(0).property(Exchange.EXCEPTION_CAUGHT).isNull();
         mockResult.message(0).header("myHeader").isEqualTo("changed");
 
         final MockEndpoint mockError = getMockEndpoint("mock:error");
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
-        mockError.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).exchangeProperty(Exchange.FAILURE_ROUTE_ID).isEqualTo("myFlakyRouteOriginal");
+        mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myFlakyRouteOriginal");
         mockError.message(0).header("myHeader").isEqualTo("multistep");
 
         template.sendBodyAndHeader("direct:multirouteOriginal", "Foo", "myHeader", "original");
@@ -98,14 +98,14 @@ public class DlcSpringTest extends CamelSpringTestSupport {
         final MockEndpoint mockResult = getMockEndpoint("mock:result");
         mockResult.expectedMessageCount(1);
         mockResult.expectedBodiesReceived("Foo");
-        mockResult.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNull();
+        mockResult.message(0).property(Exchange.EXCEPTION_CAUGHT).isNull();
         mockResult.message(0).header("myHeader").isEqualTo("changed");
 
         final MockEndpoint mockError = getMockEndpoint("mock:error");
         mockError.expectedMessageCount(1);
         mockError.expectedBodiesReceived("KaBoom");
-        mockError.message(0).exchangeProperty(Exchange.EXCEPTION_CAUGHT).isNotNull();
-        mockError.message(0).exchangeProperty(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcOriginalRoute");
+        mockError.message(0).property(Exchange.EXCEPTION_CAUGHT).isNotNull();
+        mockError.message(0).property(Exchange.FAILURE_ROUTE_ID).isEqualTo("myDlcOriginalRoute");
         mockError.message(0).header("myHeader").isEqualTo("original");
 
         template.sendBodyAndHeader("direct:useOriginal", "Foo", "myHeader", "original");

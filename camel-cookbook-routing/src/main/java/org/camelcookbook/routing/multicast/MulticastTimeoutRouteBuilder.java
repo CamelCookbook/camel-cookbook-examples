@@ -47,7 +47,7 @@ public class MulticastTimeoutRouteBuilder extends RouteBuilder {
             .setHeader("threadName").simple("${threadName}")
             .delay(5000)
             .to("mock:second")
-            .filter(exchangeProperty("CamelMulticastComplete").isEqualTo(false))
+            .filter(property("CamelMulticastComplete").isEqualTo(false))
             .setHeader("timedOut", constant("false"));
     }
 }

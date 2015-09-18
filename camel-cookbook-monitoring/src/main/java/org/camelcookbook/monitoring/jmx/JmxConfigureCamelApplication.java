@@ -31,21 +31,14 @@ public class JmxConfigureCamelApplication {
 
         // Configure JMX settings
         final ManagementStrategy managementStrategy = context.getManagementStrategy();
-/*
         managementStrategy.setStatisticsLevel(ManagementStatisticsLevel.All);
         managementStrategy.setLoadStatisticsEnabled(true);
-*/
 
-        // TODO: double check this is right way to get and configure Management Agent
         final ManagementAgent managementAgent = managementStrategy.getManagementAgent();
         managementAgent.setConnectorPort(1099);
         managementAgent.setServiceUrlPath("/jmxrmi/camel");
         managementAgent.setCreateConnector(false);
         managementAgent.setUsePlatformMBeanServer(true);
-
-        // TODO: check that level Extended is same/better as ALL
-        managementAgent.setStatisticsLevel(ManagementStatisticsLevel.Extended);
-        managementAgent.setLoadStatisticsEnabled(true);
 
         // Add a simple test route
         context.addRoutes(new RouteBuilder() {

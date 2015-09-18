@@ -29,7 +29,7 @@ import org.apache.camel.spi.DataFormat;
 public class NormalizerRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        final DataFormat bindy = new BindyCsvDataFormat(org.camelcookbook.transformation.csv.model.BookModel.class);
+        final DataFormat bindy = new BindyCsvDataFormat("org.camelcookbook.transformation.csv.model");
         final DataFormat jaxb = new JaxbDataFormat("org.camelcookbook.transformation.myschema");
 
         final XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();

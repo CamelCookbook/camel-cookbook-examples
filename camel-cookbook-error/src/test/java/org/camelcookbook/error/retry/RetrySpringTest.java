@@ -66,7 +66,7 @@ public class RetrySpringTest extends CamelSpringTestSupport {
         mockEndpoint.allMessages().header(Exchange.REDELIVERED).isEqualTo(true);
         mockEndpoint.allMessages().header(Exchange.REDELIVERY_COUNTER).isEqualTo(1);
         mockEndpoint.allMessages().header(Exchange.REDELIVERY_MAX_COUNTER).isEqualTo(2);
-        mockEndpoint.allMessages().exchangeProperty("SporadicDelay").isGreaterThanOrEqualTo(500);
+        mockEndpoint.allMessages().property("SporadicDelay").isGreaterThanOrEqualTo(500);
 
         template.sendBody("direct:routeSpecificDelay", "Foo");
 

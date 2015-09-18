@@ -22,13 +22,11 @@ import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Test class that demonstrates overriding properties in a Blueprint environment.
  */
-@Ignore
 public class PropertyOverrideEtcBlueprintTest extends CamelBlueprintTestSupport {
 
     @Produce(uri = "direct:in")

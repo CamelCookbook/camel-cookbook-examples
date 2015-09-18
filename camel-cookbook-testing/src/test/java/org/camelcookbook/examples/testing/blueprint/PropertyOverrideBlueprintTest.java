@@ -24,13 +24,11 @@ import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Test class that demonstrates overriding properties in a Blueprint environment.
  */
-@Ignore
 public class PropertyOverrideBlueprintTest extends CamelBlueprintTestSupport {
 
     @Produce(uri = "direct:in")
@@ -43,12 +41,6 @@ public class PropertyOverrideBlueprintTest extends CamelBlueprintTestSupport {
     protected String getBlueprintDescriptor() {
         return "/OSGI-INF/blueprint/simpleTransform-context.xml," +
                "/OSGI-INF/blueprint/simpleTransform-properties-context.xml";
-    }
-
-    /* TODO: workaround for bug in CamelBlueprintTestSupport */
-    @Override
-    protected boolean expectBlueprintContainerReloadOnConfigAdminUpdate() {
-        return false;
     }
 
     @Override

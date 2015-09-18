@@ -530,4 +530,19 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <repositories>
+    <repository>
+      <id>apache-public</id>
+      <url>https://repository.apache.org/content/groups/public/</url>
+      <name>Apache Public Repository</name>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
 </project>

@@ -76,10 +76,10 @@
     <xml-apis-version>1.4.01</xml-apis-version>
     <xom-version>1.2.5</xom-version>
 
-    <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
+    <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
     <maven-bundle-plugin-version>2.4.0</maven-bundle-plugin-version>
-    <maven-enforcer-plugin-version>1.1</maven-enforcer-plugin-version>
-    <maven-surefire-plugin-version>2.18</maven-surefire-plugin-version>
+    <maven-enforcer-plugin-version>1.4</maven-enforcer-plugin-version>
+    <maven-surefire-plugin-version>2.18.1</maven-surefire-plugin-version>
 
     <osgi-import-package>*</osgi-import-package>
 

@@ -52,7 +52,7 @@ public class ProxyRouteBuilder extends RouteBuilder {
                 .errorHandler(defaultErrorHandler().maximumRedeliveries(2))
             .to("log:wsProxyRequest?showAll=true&multiline=true")
             .to(paymentServiceBackendUri + "&dataFormat=PAYLOAD")
-            .to("log:wsProxyRequest?showAll=true&multiline=true")
+            .to("log:wsProxyResponse?showAll=true&multiline=true")
         ;
     }
 }

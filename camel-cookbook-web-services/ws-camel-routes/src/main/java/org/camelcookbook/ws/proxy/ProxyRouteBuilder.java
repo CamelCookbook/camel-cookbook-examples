@@ -47,11 +47,11 @@ public class ProxyRouteBuilder extends RouteBuilder {
         final String paymentServiceBackendUri = String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
             port2, Payment.class.getCanonicalName());
 
-        from(paymentServiceProxyUri + "&dataFormat=PAYLOAD")
+        from(paymentServiceProxyUri + "&dataFormat=PAYLOAD&allowStreaming=false")
                 .id("wsProxy")
                 .errorHandler(defaultErrorHandler().maximumRedeliveries(2))
             .to("log:wsProxyRequest?showAll=true&multiline=true")
-            .to(paymentServiceBackendUri + "&dataFormat=PAYLOAD")
+            .to(paymentServiceBackendUri + "&dataFormat=PAYLOAD&allowStreaming=false")
             .to("log:wsProxyResponse?showAll=true&multiline=true")
         ;
     }

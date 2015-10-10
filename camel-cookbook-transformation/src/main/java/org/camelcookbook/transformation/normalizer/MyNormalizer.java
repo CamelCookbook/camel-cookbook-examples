@@ -26,16 +26,14 @@ import org.camelcookbook.transformation.myschema.Book;
 import org.camelcookbook.transformation.myschema.Bookstore;
 
 public class MyNormalizer {
-    public Bookstore bookModelToJaxb(List<Map<String, Object>> books) {
+    public Bookstore bookModelToJaxb(List<BookModel> books) {
         final Bookstore bookstore = new Bookstore();
 
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
 
-        for (Map<String, Object> bookEntry : books) {
+        for (BookModel bookModel : books) {
             final Book book = new Book();
             final Book.Title title = new Book.Title();
-
-            final BookModel bookModel = (BookModel) bookEntry.get(BookModel.class.getCanonicalName());
 
             book.setCategory(bookModel.getCategory());
 

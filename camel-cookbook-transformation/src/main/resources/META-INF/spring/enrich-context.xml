@@ -30,7 +30,9 @@
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:start"/>
-      <enrich uri="bean:myExpander?method=expand"/>
+      <enrich>
+        <constant>bean:myExpander?method=expand</constant>
+      </enrich>
     </route>
   </camelContext>
 

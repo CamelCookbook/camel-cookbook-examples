@@ -20,7 +20,9 @@ package org.camelcookbook.transformation.normalizer;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import org.camelcookbook.transformation.csv.model.BookModel;
 import org.camelcookbook.transformation.myschema.Book;
@@ -41,15 +43,15 @@ public class MyNormalizerTest {
     public void testBookModelToJaxb() throws Exception {
         final MyNormalizer myNormalizer = new MyNormalizer();
 
-        final List<Map<String, Object>> books = createCsvModel();
+        final List<BookModel> books = createCsvModel();
 
         final Bookstore result = myNormalizer.bookModelToJaxb(books);
 
         assertEquals(createJaxbModel(), result);
     }
 
-    protected List<Map<String, Object>> createCsvModel() throws ParseException {
-        final List<Map<String, Object>> books = new ArrayList<Map<String, Object>>();
+    protected List<BookModel> createCsvModel() throws ParseException {
+        final List<BookModel> books = new ArrayList<>();
 
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM-yyyy");
 
@@ -62,9 +64,7 @@ public class MyNormalizerTest {
         book.setPublishDate(simpleDateFormat.parse("Dec-2013"));
         book.setPrice(BigDecimal.valueOf(49.99));
 
-        Map<String, Object> bookEntry = new HashMap<String, Object>();
-        bookEntry.put(BookModel.class.getCanonicalName(), book);
-        books.add(bookEntry);
+        books.add(book);
 
         return books;
     }

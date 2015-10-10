@@ -27,7 +27,9 @@
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <route>
       <from uri="direct:start"/>
-      <enrich uri="xslt:book.xslt"/>
+      <enrich>
+        <constant>xslt:book.xslt</constant>
+      </enrich>
     </route>
   </camelContext>
 

@@ -65,7 +65,9 @@
         <simple>${body}</simple>
       </setHeader>
       <to uri="sql:insert into audit_log (message) values (:#message)"/>
-      <enrich uri="direct:invokeWs"/>
+      <enrich>
+        <constant>direct:invokeWs</constant>
+      </enrich>
       <to uri="mock:out"/>
     </route>
 

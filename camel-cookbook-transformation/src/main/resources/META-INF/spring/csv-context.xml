@@ -27,7 +27,7 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <dataFormats>
-      <bindy id="bookModel" type="Csv" packages="org.camelcookbook.transformation.csv.model"/>
+      <bindy id="bookModel" type="Csv" classType="org.camelcookbook.transformation.csv.model.BookModel"/>
     </dataFormats>
 
     <route>

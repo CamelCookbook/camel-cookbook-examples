@@ -79,6 +79,7 @@
     <xbean.version>3.18</xbean.version>
     <xml-apis-version>1.4.01</xml-apis-version>
     <xom-version>1.2.5</xom-version>
+    <saxon-version>9.5.1-5</saxon-version>
 
     <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
     <maven-bundle-plugin-version>2.4.0</maven-bundle-plugin-version>
@@ -459,6 +460,11 @@
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-impl</artifactId>
         <version>${jaxb-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.saxon</groupId>
+        <artifactId>Saxon-HE</artifactId>
+        <version>${saxon-version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

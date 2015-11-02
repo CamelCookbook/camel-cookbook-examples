@@ -58,7 +58,6 @@
     <dependency>
       <groupId>net.sf.saxon</groupId>
       <artifactId>Saxon-HE</artifactId>
-      <version>9.5.0.2</version>
     </dependency>
     <dependency>
       <groupId>xalan</groupId>

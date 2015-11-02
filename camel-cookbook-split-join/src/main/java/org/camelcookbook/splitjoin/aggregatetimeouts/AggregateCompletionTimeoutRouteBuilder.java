@@ -28,7 +28,7 @@ class AggregateCompletionTimeoutRouteBuilder extends RouteBuilder {
             .aggregate(header("group"), new SetAggregationStrategy())
                     .completionSize(10).completionTimeout(1000)
                 .log("${threadName} - out")
-                .delay(500)
+//                .delay(500)
                 .to("mock:out")
             .end();
     }

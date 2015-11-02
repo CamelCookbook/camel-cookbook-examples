@@ -56,13 +56,14 @@ public class AggregateCompletionTimeoutTest extends CamelTestSupport {
 
         assertMockEndpointsSatisfied();
 
-        List<Exchange> receivedExchanges = mockOut.getReceivedExchanges();
-        @SuppressWarnings("unchecked")
-        Set<String> odd = Collections.checkedSet(receivedExchanges.get(0).getIn().getBody(Set.class), String.class);
-        assertTrue(odd.containsAll(Arrays.asList("One", "Three", "Five", "Seven", "Nine")));
-
-        @SuppressWarnings("unchecked")
-        Set<String> even = Collections.checkedSet(receivedExchanges.get(1).getIn().getBody(Set.class), String.class);
-        assertTrue(even.containsAll(Arrays.asList("Two", "Four", "Six", "Eight", "Ten")));
+        for (Exchange exchange : mockOut.getReceivedExchanges()) {
+            @SuppressWarnings("unchecked")
+            Set<String> set = Collections.checkedSet(exchange.getIn().getBody(Set.class), String.class);
+            if (set.contains("One")) { // odd
+                assertTrue(set.containsAll(Arrays.asList("One", "Three", "Five", "Seven", "Nine")));
+            } else { // even
+                assertTrue(set.containsAll(Arrays.asList("Two", "Four", "Six", "Eight", "Ten")));
+            }
+        }
     }
 }

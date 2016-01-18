@@ -27,14 +27,13 @@
     <version>1.x-SNAPSHOT</version>
   </parent>
 
-  <artifactId>web-services</artifactId>
+  <artifactId>rest</artifactId>
   <packaging>pom</packaging>
 
-  <name>${application-name} :: Web Services</name>
+  <name>${application-name} :: REST</name>
 
   <modules>
-    <module>ws-payments-api</module>
-    <module>ws-camel-routes</module>
+    <module>rest-war</module>
   </modules>
 
 </project>

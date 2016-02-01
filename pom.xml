@@ -54,7 +54,7 @@
   <properties>
     <application-name>Camel Cookbook Examples</application-name>
 
-    <camel-version>2.16.1</camel-version>
+    <camel-version>2.16.2</camel-version>
 
     <activemq-version>5.12.1</activemq-version>
     <aries-blueprint-api-version>1.0.1</aries-blueprint-api-version>
@@ -74,7 +74,7 @@
     <log4j-version>1.2.17</log4j-version>
     <slf4j-version>1.7.12</slf4j-version>
     <spring-security-version>3.2.8.RELEASE</spring-security-version>
-    <spring-version>4.1.8.RELEASE</spring-version>
+    <spring-version>4.1.9.RELEASE</spring-version>
     <xalan-version>2.7.2</xalan-version>
     <xbean.version>3.18</xbean.version>
     <xml-apis-version>1.4.01</xml-apis-version>

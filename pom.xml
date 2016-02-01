@@ -474,6 +474,30 @@
 
     <plugins>
       <plugin>
+        <groupId>io.fabric8.forge</groupId>
+        <artifactId>fabric8-camel-maven-plugin</artifactId>
+        <version>2.2.116</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <configuration>
+              <includeTest>true</includeTest>
+            </configuration>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>validate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin-version}</version>

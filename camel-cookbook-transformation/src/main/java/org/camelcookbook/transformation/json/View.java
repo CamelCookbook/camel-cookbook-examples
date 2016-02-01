@@ -56,6 +56,14 @@ public class View {
     }
 
     @Override
+    public int hashCode() {
+        int result = age;
+        result = 31 * result + weight;
+        result = 31 * result + height;
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

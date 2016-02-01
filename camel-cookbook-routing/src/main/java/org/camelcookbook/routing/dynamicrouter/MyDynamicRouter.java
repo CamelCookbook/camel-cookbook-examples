@@ -36,7 +36,7 @@ public class MyDynamicRouter {
      * to pass parts of the Camel Exchange to the method for processing. This can
      * help the code be easier to maintain as it does not need the extra boilerplate
      * code for extracting the relative data from the Exchange.
-     * <p/>
+     * <p></p>
      * This implementation stores an int property with the message exchange that is
      * used to drive the routing behavior. This method will be called from multiple
      * threads, one per message, so storing message specific state as a property is

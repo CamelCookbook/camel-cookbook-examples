@@ -33,6 +33,6 @@ public class AuditLogDao {
     }
 
     public int getAuditCount(String message) {
-        return jdbcTemplate.queryForInt("select count(*) from audit_log where message = ?", message);
+        return jdbcTemplate.queryForObject("select count(*) from audit_log where message = ?", Integer.class, message);
     }
 }

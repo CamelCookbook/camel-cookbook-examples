@@ -5,11 +5,12 @@ This project contains the sample code for the [_Apache Camel Developer's Cookboo
 (Packt Publishing, Dec 2013) by [Scott Cranton](https://github.com/scranton) and [Jakub Korab](https://github.com/jkorab).
 The latest version of this code is available on [GitHub](http://github.com/CamelCookbook/camel-cookbook-examples).
 
+*This project is up to date with [Apache Camel 2.17.0](http://camel.apache.org/camel-2170-release.html).*
+
 All of the examples are driven through JUnit tests, and are collectively structured as a set
-of Apache Maven projects. To execute them, you will need a copy of the [Java 7 JDK]
-(http://www.oracle.com/technetwork/java/javase/downloads/index.html) (6 should be OK as well)
-and an [Apache Maven 3](http://maven.apache.org/) installation . Maven will download
-all of the appropriate project dependencies.
+of Apache Maven projects. To execute them, you will need a copy of the [Java 8 JDK]
+(http://openjdk.java.net/install/) and an [Apache Maven 3](http://maven.apache.org/) installation. 
+Maven will download all of the appropriate project dependencies.
 
 In order to execute all the tests, all you need to do is run:
 

@@ -13,7 +13,7 @@
   <artifactId>training</artifactId>
   <packaging>jar</packaging>
 
-  <name>Training :: Effective Integration with Apache Camel</name>
+  <name>Training :: Modern Integration with Apache Camel</name>
 
   <dependencies>
     <dependency>

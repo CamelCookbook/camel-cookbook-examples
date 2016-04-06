@@ -11,6 +11,9 @@ public class SplitRouteTest extends CamelTestSupport {
     @EndpointInject(uri = "mock:out")
     MockEndpoint mockOut;
 
+    @EndpointInject(uri = "mock:split")
+    MockEndpoint mockSplit;
+
     @Override
     protected RoutesBuilder createRouteBuilder() throws Exception {
         return new SplitRoute();
@@ -18,10 +21,11 @@ public class SplitRouteTest extends CamelTestSupport {
 
     @Test
     public void testRoute() throws InterruptedException {
-        mockOut.setExpectedMessageCount(3);
-        mockOut.message(0).body().isEqualTo("one");
-        mockOut.message(1).body().isEqualTo("two");
-        mockOut.message(2).body().isEqualTo("three");
+        mockSplit.setExpectedMessageCount(3);
+        mockSplit.expectedBodiesReceivedInAnyOrder("one", "two", "three");
+
+        mockOut.setExpectedMessageCount(1);
+        mockOut.expectedBodiesReceived("one,two,three");
 
         template.sendBody("direct:in", "one,two,three");
 

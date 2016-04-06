@@ -1,40 +1,35 @@
 package com.ameliant.training.day1;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.RoutesBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SimpleRouteTest {
+public class SimpleRouteWithSupportTest extends CamelTestSupport {
 
-    CamelContext context;
+    @EndpointInject(uri = "mock:out")
+    MockEndpoint mockOut;
 
-    @Before
-    public void setUp() throws Exception {
-        context = new DefaultCamelContext();
-        context.addRoutes(new SimpleRoute());
-        context.start();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        context.stop();
+    @Override
+    protected RoutesBuilder createRouteBuilder() throws Exception {
+        return new SimpleRoute();
     }
 
     @Test
     public void testRoute() throws InterruptedException {
-        MockEndpoint mockOut =
-                (MockEndpoint) context.getEndpoint("mock:out");
+        //MockEndpoint mockOut = getMockEndpoint("mock:out");
         mockOut.setExpectedMessageCount(1);
         mockOut.message(0).body().isEqualTo("Hello Oslo");
 
-        ProducerTemplate template = context.createProducerTemplate();
         template.sendBody("direct:in", "Oslo");
 
-        mockOut.assertIsSatisfied();
+        assertMockEndpointsSatisfied();
     }
 
 }

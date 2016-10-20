@@ -35,12 +35,12 @@ public class XqueryParamTest extends CamelTestSupport {
         final InputStream resource = getClass().getClassLoader().getResourceAsStream("bookstore.xml");
         final String request = context().getTypeConverter().convertTo(String.class, resource);
 
-        String response = template.requestBodyAndHeader("direct:start", request, "myParamValue", 30, String.class);
+        String response = template.requestBodyAndHeader("direct:start", request, "myParamValue", new Integer(30), String.class);
 
         log.info("Response > 30 = {}", response);
         assertEquals("<books value=\"30\"><title lang=\"en\">Apache Camel Developer's Cookbook</title><title lang=\"en\">Learning XML</title></books>", response);
 
-        response = template.requestBodyAndHeader("direct:start", request, "myParamValue", 40, String.class);
+        response = template.requestBodyAndHeader("direct:start", request, "myParamValue", new Integer(40), String.class);
 
         log.info("Response > 40 = {}", response);
         assertEquals("<books value=\"40\"><title lang=\"en\">Apache Camel Developer's Cookbook</title></books>", response);

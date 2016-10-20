@@ -40,7 +40,7 @@ public class SecurityAsymSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testXmlEncryptionDecryption() throws Exception {
-        final String cityExistsXPath = "exists(/booksignings/store/address/city)";
+        final String cityExistsXPath = "/booksignings/store/address/city";
 
         context.getRouteDefinition("encrypt")
             .adviceWith(context, new AdviceWithRouteBuilder() {

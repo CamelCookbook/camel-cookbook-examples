@@ -30,10 +30,10 @@
       <from uri="direct:start"/>
       <transform>
         <xquery>
-          declare variable $in.headers.myParamValue as xs:integer external;
+          declare variable $in.headers.myParamValue as xs:string external;
           &lt;books value='{$in.headers.myParamValue}'&gt;{
           for $x in /bookstore/book
-          where $x/price>$in.headers.myParamValue
+          where $x/price>($in.headers.myParamValue cast as xs:integer)
           order by $x/title
           return $x/title
           }&lt;/books&gt;

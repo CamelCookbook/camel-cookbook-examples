@@ -22,7 +22,7 @@ import java.util.Map;
 import org.apache.camel.Consume;
 import org.apache.camel.DynamicRouter;
 import org.apache.camel.Exchange;
-import org.apache.camel.Properties;
+import org.apache.camel.ExchangeProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +50,7 @@ public class DynamicRouterAnnotated {
      */
     @Consume(uri = "direct:start")
     @DynamicRouter(delimiter = ",")
-    public String routeMe(String body, @Properties Map<String, Object> properties) {
+    public String routeMe(String body, @ExchangeProperties Map<String, Object> properties) {
         LOG.info("Exchange.SLIP_ENDPOINT = {}, invoked = {}",
             properties.get(Exchange.SLIP_ENDPOINT), properties.get(PROPERTY_NAME_INVOKED));
 

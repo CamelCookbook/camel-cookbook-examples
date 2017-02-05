@@ -29,7 +29,7 @@
     <route>
       <from uri="direct:marshal"/>
       <marshal>
-        <json/>
+        <json library="XStream"/>
       </marshal>
       <to uri="mock:marshalResult"/>
     </route>
@@ -37,7 +37,7 @@
     <route>
       <from uri="direct:unmarshal"/>
       <unmarshal>
-        <json/>
+        <json library="XStream" unmarshalTypeName="org.camelcookbook.transformation.json.View"/>
       </unmarshal>
       <to uri="mock:unmarshalResult"/>
     </route>

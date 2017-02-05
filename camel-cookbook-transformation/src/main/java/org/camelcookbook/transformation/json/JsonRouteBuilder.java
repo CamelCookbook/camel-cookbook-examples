@@ -18,16 +18,17 @@
 package org.camelcookbook.transformation.json;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 
 public class JsonRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:marshal")
-            .marshal().json()
+            .marshal().json(JsonLibrary.XStream)
             .to("mock:marshalResult");
 
         from("direct:unmarshal")
-            .unmarshal().json()
+            .unmarshal().json(JsonLibrary.XStream, View.class)
             .to("mock:unmarshalResult");
     }
 }

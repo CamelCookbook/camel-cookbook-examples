@@ -104,6 +104,18 @@ public class BookModel {
     }
 
     @Override
+    public int hashCode() {
+        int result = category != null ? category.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (titleLanguage != null ? titleLanguage.hashCode() : 0);
+        result = 31 * result + (author1 != null ? author1.hashCode() : 0);
+        result = 31 * result + (author2 != null ? author2.hashCode() : 0);
+        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

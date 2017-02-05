@@ -44,7 +44,7 @@ public class SecurityAsymNamespacesTest extends CamelTestSupport {
     @Test
     public void testXmlEncryptionDecryption() throws Exception {
         final Namespaces namespaces = new Namespaces("c", "http://camelcookbook.org/schema/booksignings");
-        final String cityExistsXPath = "exists(/c:booksignings/c:store/c:address/c:city)";
+        final String cityExistsXPath = "/c:booksignings/c:store/c:address/c:city";
 
         context.getRouteDefinition("encrypt")
             .adviceWith(context, new AdviceWithRouteBuilder() {

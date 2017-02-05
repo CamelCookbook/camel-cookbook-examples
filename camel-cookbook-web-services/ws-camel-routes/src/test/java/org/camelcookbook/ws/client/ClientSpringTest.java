@@ -40,7 +40,7 @@ public class ClientSpringTest extends CamelSpringTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-            super.createRouteBuilder(),
+            (RouteBuilder) super.createRouteBuilder(),
             new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {

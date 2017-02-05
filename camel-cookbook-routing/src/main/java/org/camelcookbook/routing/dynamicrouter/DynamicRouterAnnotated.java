@@ -22,7 +22,7 @@ import java.util.Map;
 import org.apache.camel.Consume;
 import org.apache.camel.DynamicRouter;
 import org.apache.camel.Exchange;
-import org.apache.camel.Properties;
+import org.apache.camel.ExchangeProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +38,7 @@ public class DynamicRouterAnnotated {
      * to pass parts of the Camel Exchange to the method for processing. This can
      * help the code be easier to maintain as it does not need the extra boilerplate
      * code for extracting the relative data from the Exchange.
-     * <p/>
+     * <p></p>
      * This implementation stores an int property with the message exchange that is
      * used to drive the routing behavior. This method will be called from multiple
      * threads, one per message, so storing message specific state as a property is
@@ -50,7 +50,7 @@ public class DynamicRouterAnnotated {
      */
     @Consume(uri = "direct:start")
     @DynamicRouter(delimiter = ",")
-    public String routeMe(String body, @Properties Map<String, Object> properties) {
+    public String routeMe(String body, @ExchangeProperties Map<String, Object> properties) {
         LOG.info("Exchange.SLIP_ENDPOINT = {}, invoked = {}",
             properties.get(Exchange.SLIP_ENDPOINT), properties.get(PROPERTY_NAME_INVOKED));
 

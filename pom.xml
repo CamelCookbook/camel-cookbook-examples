@@ -37,7 +37,7 @@
   </scm>
 
   <prerequisites>
-    <maven>3.0.4</maven>
+    <maven>3.2.5</maven>
   </prerequisites>
 
   <developers>
@@ -54,38 +54,40 @@
   <properties>
     <application-name>Camel Cookbook Examples</application-name>
 
-    <camel-version>2.16.0</camel-version>
+    <camel-version>2.19.0-SNAPSHOT</camel-version>
 
-    <activemq-version>5.12.0</activemq-version>
+    <activemq-version>5.14.3</activemq-version>
     <aries-blueprint-api-version>1.0.1</aries-blueprint-api-version>
     <aries-blueprint-cm-version>1.0.6</aries-blueprint-cm-version>
     <aries-blueprint-core-version>1.4.4</aries-blueprint-core-version>
     <aries-blueprint-proxy-version>1.0.1</aries-blueprint-proxy-version>
     <aries-blueprint-proxy-impl-version>1.0.4</aries-blueprint-proxy-impl-version>
-    <aries-util-version>1.1.0</aries-util-version>
+    <aries-util-version>1.1.3</aries-util-version>
     <atomikos-version>3.9.3</atomikos-version>
     <commons-codec-version>1.10</commons-codec-version>
     <commons-lang-version>2.6</commons-lang-version>
     <commons-logging-version>1.2</commons-logging-version>
-    <cxf-version>3.1.2</cxf-version>
+    <cxf-version>3.1.9</cxf-version>
     <h2-version>1.3.167</h2-version>
     <jaxb-version>2.2.11</jaxb-version>
     <jetty9-version>9.3.7.v20160115</jetty9-version>
-    <junit-version>4.11</junit-version>
+    <junit-version>4.12</junit-version>
     <log4j-version>1.2.17</log4j-version>
-    <slf4j-version>1.7.12</slf4j-version>
-    <spring-security-version>3.2.8.RELEASE</spring-security-version>
-    <spring-version>4.1.6.RELEASE</spring-version>
+    <saxon-version>9.7.0-14</saxon-version>
+    <slf4j-version>1.7.22</slf4j-version>
+    <spring-security-version>4.1.4.RELEASE</spring-security-version>
+    <spring-version>4.3.6.RELEASE</spring-version>
     <xalan-version>2.7.2</xalan-version>
-    <xbean.version>3.18</xbean.version>
+    <xbean.version>4.5</xbean.version>
     <xml-apis-version>1.4.01</xml-apis-version>
     <xom-version>1.2.5</xom-version>
-    <saxon-version>9.5.1-5</saxon-version>
 
-    <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
-    <maven-bundle-plugin-version>2.4.0</maven-bundle-plugin-version>
-    <maven-enforcer-plugin-version>1.4</maven-enforcer-plugin-version>
-    <maven-surefire-plugin-version>2.18.1</maven-surefire-plugin-version>
+    <maven-compiler-plugin-version>3.6.0</maven-compiler-plugin-version>
+    <maven-bundle-plugin-version>3.2.0</maven-bundle-plugin-version>
+    <maven-enforcer-plugin-version>1.4.1</maven-enforcer-plugin-version>
+    <maven-surefire-plugin-version>2.19.1</maven-surefire-plugin-version>
+
+    <fabric8-camel-maven-plugin-version>2.3.85</fabric8-camel-maven-plugin-version>
 
     <osgi-import-package>*</osgi-import-package>
 
@@ -486,14 +488,38 @@
 
     <plugins>
       <plugin>
+        <groupId>io.fabric8.forge</groupId>
+        <artifactId>fabric8-camel-maven-plugin</artifactId>
+        <version>${fabric8-camel-maven-plugin-version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <configuration>
+              <includeTest>true</includeTest>
+            </configuration>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>validate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin-version}</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
           <showDeprecation>true</showDeprecation>
-          <compilerArgument>-Xlint:unchecked</compilerArgument>
+          <compilerArgument>-Xlint</compilerArgument>
         </configuration>
       </plugin>
 
@@ -584,6 +610,17 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
+    </repository>
+    <repository>
+      <id>apache.snapshots</id>
+      <url>http://repository.apache.org/snapshots/</url>
+      <name>Apache Snapshot Repo</name>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
     </repository>
   </repositories>
 

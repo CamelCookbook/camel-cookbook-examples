@@ -33,6 +33,6 @@ public class MessageDao {
     }
 
     public int getMessageCount(String message) {
-        return jdbcTemplate.queryForInt("select count(*) from messages where message = ?", message);
+        return jdbcTemplate.queryForObject("select count(*) from messages where message = ?", Integer.class, message);
     }
 }

@@ -47,7 +47,7 @@ public class ProxyCxfSpringTest extends CamelSpringTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-            super.createRouteBuilder(),
+            (RouteBuilder) super.createRouteBuilder(),
             new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {

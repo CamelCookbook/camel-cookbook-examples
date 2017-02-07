@@ -1,7 +1,7 @@
 <?org.camelcookbook.examples.testing.exchange.xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (C) Scott Cranton and Jakub Korab
+  ~ Copyright (C) Scott Cranton, Jakub Korab, and Christian Posta
   ~ https://github.com/CamelCookbook
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");

@@ -57,9 +57,9 @@
 
   <properties>
     <application-name>Camel Cookbook Examples</application-name>
-
+    <spring-boot-version>1.4.1.RELEASE</spring-boot-version>
     <camel-version>2.19.0-SNAPSHOT</camel-version>
-
+    <karaf-version>4.1.0</karaf-version>
     <activemq-version>5.14.3</activemq-version>
     <aries-blueprint-api-version>1.0.1</aries-blueprint-api-version>
     <aries-blueprint-cm-version>1.0.6</aries-blueprint-cm-version>
@@ -112,6 +112,7 @@
     <module>camel-cookbook-security</module>
     <module>camel-cookbook-web-services</module>
     <module>camel-cookbook-rest</module>
+    <module>camel-cookbook-runtimes</module>
   </modules>
 
 

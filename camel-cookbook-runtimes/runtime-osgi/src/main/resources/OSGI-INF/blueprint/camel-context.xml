@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+  <reference id="httpService" interface="org.osgi.service.http.HttpService"/>
+
+  <bean class="org.apache.camel.component.servlet.osgi.OsgiServletRegisterer"
+        init-method="register"
+        destroy-method="unregister">
+    <property name="alias" value="/rest"/>
+    <property name="httpService" ref="httpService"/>
+    <property name="servlet" ref="camelServlet"/>
+  </bean>
+
+  <bean id="camelServlet" class="org.apache.camel.component.servlet.CamelHttpTransportServlet"/>
+
+  <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+
+    <restConfiguration component="servlet"
+                       bindingMode="auto"/>
+
+    <!-- http://localhost:8080/rest-war/greetings/Bob -->
+    <rest path="/greetings/{name}">
+      <get produces="text/plain">
+        <route>
+          <transform>
+            <simple>Hello ${header.name}</simple>
+          </transform>
+        </route>
+      </get>
+    </rest>
+
+  </camelContext>
+
+</blueprint>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- We are purposefully not inheriting from the parent as the
+     transitive parent properties collide with the wildfly-swarm fraction versions-->
+<!--    <parent>
+        <artifactId>camel-cookbook-runtimes</artifactId>
+        <groupId>org.camelcookbook.examples</groupId>
+        <version>2.0-SNAPSHOT</version>
+    </parent>-->
+
+    <groupId>org.camelcookbook.examples</groupId>
+    <artifactId>runtime-wildfly-swarm</artifactId>
+    <version>2.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <properties>
+        <application-name>Camel Cookbook Examples</application-name>
+        <wildfly-swarm-version>2017.2.0</wildfly-swarm-version>
+    </properties>
+
+    <name>${application-name} :: Runtime JVMs :: WildFly Swarm</name>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>bom-all</artifactId>
+                <version>${wildfly-swarm-version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>camel-undertow</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>wildfly-swarm-plugin</artifactId>
+                <version>${wildfly-swarm-version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>org.camelcookbook.runtimes.swarm.Application</mainClass>
+                    <useUberJar>true</useUberJar>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

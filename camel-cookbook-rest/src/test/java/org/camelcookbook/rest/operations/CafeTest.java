@@ -75,6 +75,20 @@ public class CafeTest extends CamelTestSupport {
     }
 
     @Test
+    public void testGetInvalid() throws Exception {
+        final int size = menuService.getMenuItems().size();
+
+        try {
+            String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/" + (size + 1), null, Exchange.HTTP_METHOD, "GET", String.class);
+        } catch (Exception e) {
+            System.out.println("Exception Message = " + e.getMessage());
+            return;
+        }
+
+        fail("Expected call to fail with exception thrown");
+    }
+
+    @Test
     public void testCreate() throws Exception {
         Collection<MenuItem> menuItems = menuService.getMenuItems();
         assertEquals(2, menuItems.size());

@@ -26,6 +26,8 @@ public class MenuService {
     private final Map<Integer, MenuItem> menu = new TreeMap<>();
     private final AtomicInteger ids = new AtomicInteger();
 
+    // TODO: add unit tests for common classes
+
     public MenuService() throws Exception {
         MenuItem item = new MenuItem();
         item.setName("Coffee");

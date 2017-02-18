@@ -38,7 +38,8 @@ public class HelloWorldEmbeddedRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        restConfiguration().component("undertow").port(port1);
+        restConfiguration()
+            .component("netty4-http").port(port1);
 
         rest("/say")
             .get("/hello")

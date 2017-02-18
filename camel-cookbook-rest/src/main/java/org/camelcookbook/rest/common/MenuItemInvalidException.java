@@ -21,6 +21,8 @@ package org.camelcookbook.rest.common;
  * Exception when menu item content is invalid.
  */
 public class MenuItemInvalidException extends Exception {
+    private static final long serialVersionUID = 1650325376356770263L;
+
     public MenuItemInvalidException(String message) {
         super(message);
     }

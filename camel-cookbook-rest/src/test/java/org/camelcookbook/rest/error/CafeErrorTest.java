@@ -19,6 +19,7 @@ package org.camelcookbook.rest.error;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -26,13 +27,8 @@ import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.rest.common.MenuItem;
 import org.camelcookbook.rest.common.MenuService;
-import org.camelcookbook.rest.operations.CafeRouteBuilder;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.Collection;
 
 public class CafeErrorTest extends CamelTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();
@@ -61,11 +57,18 @@ public class CafeErrorTest extends CamelTestSupport {
     }
 
     @Test
-    @Ignore
     public void testInvalidJson() throws Exception {
-        // TODO: clean up
+        try {
+            String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/1", "This is not JSON format", Exchange.HTTP_METHOD, "PUT", String.class);
+        } catch(CamelExecutionException e) {
+            HttpOperationFailedException httpException = (HttpOperationFailedException)e.getCause();
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/update", "This is not JSON format", Exchange.HTTP_METHOD, "PUT", String.class);
+            assertEquals(400, httpException.getStatusCode());
+            assertEquals("Invalid json data", httpException.getResponseBody());
+
+            return;
+        }
+        fail("Expected exception to be thrown");
     }
 
     @Test
@@ -74,7 +77,7 @@ public class CafeErrorTest extends CamelTestSupport {
 
         // TODO: clean up
 
-        Exchange exchange = template.request("http://localhost:" + port1 + "/cafe/menu/" + (size + 1), new Processor() {
+        Exchange exchange = template.request("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getIn().setBody(null);

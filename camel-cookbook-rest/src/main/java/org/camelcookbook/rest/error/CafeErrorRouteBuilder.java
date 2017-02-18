@@ -44,7 +44,7 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         restConfiguration()
-            .component("undertow").port(port1)
+            .component("netty4-http").port(port1)
             .bindingMode(RestBindingMode.json_xml);
 
         // TODO: add exception handler for Invalid Item
@@ -61,15 +61,15 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
             .setBody().constant("Invalid json data");
 
         rest("/cafe/menu")
-            .get("/list").outTypeList(MenuItem.class)
+            .get("/items").outTypeList(MenuItem.class)
                 .to("bean:menuService?method=getMenuItems")
-            .get("/{id}").outType(MenuItem.class)
+            .get("/items/{id}").outType(MenuItem.class)
                 .to("bean:menuService?method=getMenuItem(${header.id})")
-            .post("/create").type(MenuItem.class)
+            .post("/items").type(MenuItem.class)
                 .to("bean:menuService?method=createMenuItem")
-            .put("/update").type(MenuItem.class)
-                .to("bean:menuService?method=updateMenuItem")
-            .delete("/delete/{id}")
-                .to("bean:menuService?method=removeMenuItem(${header.id})");
+            .put("/items/{id}").type(MenuItem.class)
+                .to("bean:menuService?method=updateMenuItem(${header.id}, ${body})")
+            .delete("/items/{id}")
+               .to("bean:menuService?method=removeMenuItem(${header.id})");
     }
 }

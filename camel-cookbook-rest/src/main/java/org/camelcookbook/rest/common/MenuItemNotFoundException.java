@@ -21,6 +21,8 @@ package org.camelcookbook.rest.common;
  * Exception when item id is not found.
  */
 public class MenuItemNotFoundException extends Exception {
+    private static final long serialVersionUID = 5929423385228527233L;
+
     private int id;
 
     public MenuItemNotFoundException(int id) {

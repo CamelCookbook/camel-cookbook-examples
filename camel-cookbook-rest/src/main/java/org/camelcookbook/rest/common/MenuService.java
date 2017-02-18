@@ -43,14 +43,21 @@ public class MenuService {
     }
 
     public int createMenuItem(MenuItem item) throws MenuItemInvalidException {
-        if (item.getCost() <=0) {
+        return createMenuItem(ids.incrementAndGet(), item);
+    }
+
+    public int createMenuItem(int itemId, MenuItem item) throws MenuItemInvalidException {
+        if (menu.containsKey(itemId)) {
+            throw new MenuItemInvalidException("itemID " + itemId + " already exists");
+        }
+
+        if (item.getCost() <= 0) {
             throw new MenuItemInvalidException("Cost must be greater than 0");
         }
 
-        int id = ids.incrementAndGet();
-        item.setId(id);
-        menu.put(id, item);
-        return id;
+        item.setId(itemId);
+        menu.put(itemId, item);
+        return itemId;
     }
 
     public Collection<MenuItem> getMenuItems() {
@@ -65,9 +72,9 @@ public class MenuService {
         return item;
     }
 
-    public void updateMenuItem(MenuItem item) throws MenuItemNotFoundException {
-        if (!menu.containsKey(item.getId())) {
-            throw new MenuItemNotFoundException(item.getId());
+    public void updateMenuItem(int itemId, MenuItem item) throws MenuItemInvalidException {
+        if (!menu.containsKey(itemId)) {
+            createMenuItem(itemId, item);
         }
         menu.put(item.getId(), item);
     }

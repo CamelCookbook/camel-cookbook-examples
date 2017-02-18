@@ -60,7 +60,7 @@ public class CafeTest extends CamelTestSupport {
     public void testGetAll() throws Exception {
         final String origValue = objectWriter.writeValueAsString(menuService.getMenuItems());
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/list", null, Exchange.HTTP_METHOD, "GET", String.class);
+        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items", null, Exchange.HTTP_METHOD, "GET", String.class);
 
         assertEquals(origValue, out);
     }
@@ -69,7 +69,7 @@ public class CafeTest extends CamelTestSupport {
     public void testGetOne() throws Exception {
         final String origValue = objectWriter.writeValueAsString(menuService.getMenuItem(1));
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/1", null, Exchange.HTTP_METHOD, "GET", String.class);
+        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/1", null, Exchange.HTTP_METHOD, "GET", String.class);
 
         assertEquals(origValue, out);
     }
@@ -79,7 +79,7 @@ public class CafeTest extends CamelTestSupport {
         final int size = menuService.getMenuItems().size();
 
         try {
-            String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/" + (size + 1), null, Exchange.HTTP_METHOD, "GET", String.class);
+            String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), null, Exchange.HTTP_METHOD, "GET", String.class);
         } catch (Exception e) {
             System.out.println("Exception Message = " + e.getMessage());
             return;
@@ -99,7 +99,7 @@ public class CafeTest extends CamelTestSupport {
         newItem.setCost(5);
         String newItemJson = objectWriter.writeValueAsString(newItem);
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/create", newItemJson, Exchange.HTTP_METHOD, "POST", String.class);
+        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items", newItemJson, Exchange.HTTP_METHOD, "POST", String.class);
 
         assertEquals("3", out);
 
@@ -130,7 +130,7 @@ public class CafeTest extends CamelTestSupport {
 
         String newItemJson = objectWriter.writeValueAsString(newItem);
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/update", newItemJson, Exchange.HTTP_METHOD, "PUT", String.class);
+        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/2", newItemJson, Exchange.HTTP_METHOD, "PUT", String.class);
 
         assertEquals(newItemJson, out);
 
@@ -149,7 +149,7 @@ public class CafeTest extends CamelTestSupport {
         Collection<MenuItem> menuItems = menuService.getMenuItems();
         assertEquals(2, menuItems.size());
 
-        template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/delete/2", null, Exchange.HTTP_METHOD, "DELETE", String.class);
+        template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/2", null, Exchange.HTTP_METHOD, "DELETE", String.class);
 
         Collection<MenuItem> menuUpdateItems = menuService.getMenuItems();
         assertEquals(1, menuUpdateItems.size());

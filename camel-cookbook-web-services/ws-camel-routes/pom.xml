@@ -36,7 +36,7 @@
     <dependency>
       <groupId>org.camelcookbook.examples</groupId>
       <artifactId>ws-payments-api</artifactId>
-      <version>1.x-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>

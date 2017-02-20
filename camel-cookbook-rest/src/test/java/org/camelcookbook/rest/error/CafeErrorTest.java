@@ -73,7 +73,7 @@ public class CafeErrorTest extends CamelTestSupport {
 
     @Test
     public void testGetInvalid() throws Exception {
-        final int size = menuService.getMenuItems().size();
+        final int size = menuService.getMenu().getMenuItem().size();
 
         // TODO: clean up
 

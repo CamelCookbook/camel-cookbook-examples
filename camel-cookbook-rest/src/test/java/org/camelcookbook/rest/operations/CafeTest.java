@@ -58,7 +58,7 @@ public class CafeTest extends CamelTestSupport {
 
     @Test
     public void testGetAll() throws Exception {
-        final String origValue = objectWriter.writeValueAsString(menuService.getMenuItems());
+        final String origValue = objectWriter.writeValueAsString(menuService.getMenu());
 
         String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items", null, Exchange.HTTP_METHOD, "GET", String.class);
 
@@ -76,7 +76,7 @@ public class CafeTest extends CamelTestSupport {
 
     @Test
     public void testGetInvalid() throws Exception {
-        final int size = menuService.getMenuItems().size();
+        final int size = menuService.getMenu().getMenuItem().size();
 
         try {
             String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), null, Exchange.HTTP_METHOD, "GET", String.class);
@@ -90,7 +90,7 @@ public class CafeTest extends CamelTestSupport {
 
     @Test
     public void testCreate() throws Exception {
-        Collection<MenuItem> menuItems = menuService.getMenuItems();
+        Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
         assertEquals(2, menuItems.size());
 
         MenuItem newItem = new MenuItem();
@@ -103,7 +103,7 @@ public class CafeTest extends CamelTestSupport {
 
         assertEquals("3", out);
 
-        Collection<MenuItem> menuUpdateItems = menuService.getMenuItems();
+        Collection<MenuItem> menuUpdateItems = menuService.getMenu().getMenuItem();
         assertEquals(3, menuUpdateItems.size());
 
         MenuItem item3 = menuService.getMenuItem(3);
@@ -115,7 +115,7 @@ public class CafeTest extends CamelTestSupport {
 
     @Test
     public void testUpdate() throws Exception {
-        Collection<MenuItem> menuItems = menuService.getMenuItems();
+        Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
         assertEquals(2, menuItems.size());
 
         MenuItem origMenuItem2 = menuService.getMenuItem(2);
@@ -134,7 +134,7 @@ public class CafeTest extends CamelTestSupport {
 
         assertEquals(newItemJson, out);
 
-        Collection<MenuItem> menuUpdateItems = menuService.getMenuItems();
+        Collection<MenuItem> menuUpdateItems = menuService.getMenu().getMenuItem();
         assertEquals(2, menuUpdateItems.size());
 
         MenuItem curItem2 = menuService.getMenuItem(2);
@@ -146,12 +146,12 @@ public class CafeTest extends CamelTestSupport {
 
     @Test
     public void testDelete() throws Exception {
-        Collection<MenuItem> menuItems = menuService.getMenuItems();
+        Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
         assertEquals(2, menuItems.size());
 
         template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/2", null, Exchange.HTTP_METHOD, "DELETE", String.class);
 
-        Collection<MenuItem> menuUpdateItems = menuService.getMenuItems();
+        Collection<MenuItem> menuUpdateItems = menuService.getMenu().getMenuItem();
         assertEquals(1, menuUpdateItems.size());
         assertEquals(menuItems.iterator().next(), menuUpdateItems.iterator().next());
     }

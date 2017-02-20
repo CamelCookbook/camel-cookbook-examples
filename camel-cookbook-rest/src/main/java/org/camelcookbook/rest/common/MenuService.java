@@ -17,13 +17,11 @@
 
 package org.camelcookbook.rest.common;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MenuService {
-    private final Map<Integer, MenuItem> menu = new TreeMap<>();
+    private final Map<Integer, MenuItem> menuItems = new TreeMap<>();
     private final AtomicInteger ids = new AtomicInteger();
 
     // TODO: add unit tests for common classes
@@ -47,7 +45,7 @@ public class MenuService {
     }
 
     public int createMenuItem(int itemId, MenuItem item) throws MenuItemInvalidException {
-        if (menu.containsKey(itemId)) {
+        if (menuItems.containsKey(itemId)) {
             throw new MenuItemInvalidException("itemID " + itemId + " already exists");
         }
 
@@ -56,16 +54,17 @@ public class MenuService {
         }
 
         item.setId(itemId);
-        menu.put(itemId, item);
+        menuItems.put(itemId, item);
         return itemId;
     }
 
-    public Collection<MenuItem> getMenuItems() {
-        return menu.values();
+    // TODO : Not thrilled with this pattern of returning a class with a collection just for XML binding
+    public Menu getMenu() {
+        return new Menu(menuItems.values());
     }
 
     public MenuItem getMenuItem(int itemId) throws MenuItemNotFoundException {
-        MenuItem item = menu.get(itemId);
+        MenuItem item = menuItems.get(itemId);
         if (item == null) {
             throw new MenuItemNotFoundException(itemId);
         }
@@ -73,13 +72,13 @@ public class MenuService {
     }
 
     public void updateMenuItem(int itemId, MenuItem item) throws MenuItemInvalidException {
-        if (!menu.containsKey(itemId)) {
+        if (!menuItems.containsKey(itemId)) {
             createMenuItem(itemId, item);
         }
-        menu.put(item.getId(), item);
+        menuItems.put(item.getId(), item);
     }
 
     public void removeMenuItem(int itemId) {
-        menu.remove(itemId);
+        menuItems.remove(itemId);
     }
 }

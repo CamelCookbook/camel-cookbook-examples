@@ -30,7 +30,7 @@ public class CafeErrorMain {
 
         System.out.println("*******************************");
         System.out.println();
-        System.out.println("You can call this service at http://localhost:8080/cafe/menu");
+        System.out.println("You can call this service at http://localhost:8080/cafe/menu/items");
         System.out.println();
         System.out.println("*******************************");
 

@@ -44,7 +44,7 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         restConfiguration()
-            .component("netty4-http").port(port1)
+            .component("undertow").port(port1)
             .bindingMode(RestBindingMode.json_xml);
 
         // TODO: add exception handler for Invalid Item

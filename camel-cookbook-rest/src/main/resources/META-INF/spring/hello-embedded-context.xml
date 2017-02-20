@@ -26,7 +26,7 @@
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <restConfiguration component="netty4-http" port="{{port1}}"/>
+    <restConfiguration component="undertow" port="{{port1}}"/>
 
     <rest path="/say">
       <get uri="/hello">

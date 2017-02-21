@@ -19,19 +19,14 @@ package org.camelcookbook.runtimes.swarm;
 import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.camel.core.CamelCoreFraction;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
 public class Application {
     public static void main(String[] args) throws Exception {
         Swarm swarm = new Swarm();
 
         // Camel Fraction
         swarm.fraction(new CamelCoreFraction()
-                .addRouteBuilder("rest-builders", new CamelRoutes()));
+            .addRouteBuilder("rest-builders", new CamelRoutes()));
 
         swarm.start().deploy();
-
     }
 }

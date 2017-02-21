@@ -25,12 +25,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
 public class CamelVerticle extends AbstractVerticle {
-
     private CamelContext camelContext;
     private CamelBridge bridge;
 
@@ -47,7 +42,6 @@ public class CamelVerticle extends AbstractVerticle {
                 .addOutboundMapping(OutboundMapping.fromVertx("greetings-counter").toCamel("seda:greetings"))
         ).start();
     }
-
 
     @Override
     public void stop() throws Exception {

@@ -28,11 +28,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camel-cookbook-runtimes</artifactId>
+  <artifactId>runtime</artifactId>
   <packaging>pom</packaging>
 
-  <name>${application-name} :: Runtime JVMs </name>
-
+  <name>${application-name} :: Runtime</name>
 
   <modules>
     <module>runtime-servlet</module>

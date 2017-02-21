@@ -18,11 +18,7 @@ package com.camelcookbook.runtimes.vertx;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
-public class CamelRoutes extends RouteBuilder{
+public class CamelRoutes extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("seda:greetings").to("stream:out");

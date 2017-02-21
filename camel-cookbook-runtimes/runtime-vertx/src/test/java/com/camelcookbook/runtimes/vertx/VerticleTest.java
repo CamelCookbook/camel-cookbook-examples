@@ -27,10 +27,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
 @RunWith(VertxUnitRunner.class)
 public class VerticleTest {
 

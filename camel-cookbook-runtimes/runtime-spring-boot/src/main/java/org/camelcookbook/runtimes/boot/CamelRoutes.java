@@ -20,10 +20,6 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
 @Component
 public class CamelRoutes extends RouteBuilder {
 
@@ -34,7 +30,6 @@ public class CamelRoutes extends RouteBuilder {
         rest()
             .get("/greetings/{name}").produces("text/plain")
                 .route().transform(simple("Hello ${header.name}"));
-
     }
 
 }

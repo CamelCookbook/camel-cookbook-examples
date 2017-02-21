@@ -25,18 +25,14 @@ import io.vertx.ext.web.Router;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
 public class HttpVerticle extends AbstractVerticle {
     @Override
     public void start(Future<Void> startFuture) throws Exception {
 
         Router router = Router.router(vertx);
-        router.route("/greetings/:name").handler( routingContext -> {
+        router.route("/greetings/:name").handler(routingContext -> {
             HttpServerResponse response = routingContext.response();
-            Map<String,Object> values =new HashMap<>();
+            Map<String, Object> values = new HashMap<>();
             values.put("name", routingContext.request().params().get("name"));
             values.put("increment", 1);
 
@@ -51,12 +47,12 @@ public class HttpVerticle extends AbstractVerticle {
         int port = config().getInteger("http.port", 8080);
 
         vertx.createHttpServer().requestHandler(router::accept)
-        .listen(port, result -> {
-            if (result.succeeded()) {
-                startFuture.complete();
-            }else {
-                startFuture.fail(result.cause());
-            }
-        });
+                .listen(port, result -> {
+                    if (result.succeeded()) {
+                        startFuture.complete();
+                    } else {
+                        startFuture.fail(result.cause());
+                    }
+                });
     }
 }

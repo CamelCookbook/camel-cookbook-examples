@@ -19,20 +19,14 @@ package org.camelcookbook.runtimes.swarm;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
 public class CamelRoutes extends RouteBuilder {
-
-
     @Override
     public void configure() throws Exception {
         restConfiguration().component("undertow")
-                .contextPath("/rest").bindingMode(RestBindingMode.auto);
+            .contextPath("/rest").bindingMode(RestBindingMode.auto);
 
         rest()
-                .get("/greetings/{name}").produces("text/plain")
+            .get("/greetings/{name}").produces("text/plain")
                 .route().transform(simple("Hello ${header.name}"));
     }
 }

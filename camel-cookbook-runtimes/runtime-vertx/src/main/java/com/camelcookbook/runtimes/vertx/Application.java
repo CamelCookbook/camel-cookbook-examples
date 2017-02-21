@@ -18,10 +18,6 @@ package com.camelcookbook.runtimes.vertx;
 
 import io.vertx.core.Vertx;
 
-/**
- * Created by ceposta 
- * <a href="http://christianposta.com/blog>http://christianposta.com/blog</a>.
- */
 public class Application {
 
     public static void main(String[] args) {

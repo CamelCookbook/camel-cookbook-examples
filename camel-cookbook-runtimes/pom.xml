@@ -39,5 +39,6 @@
     <module>runtime-spring-boot</module>
     <module>runtime-wildfly-swarm</module>
     <module>runtime-vertx</module>
+    <module>runtime-docker</module>
   </modules>
 </project>

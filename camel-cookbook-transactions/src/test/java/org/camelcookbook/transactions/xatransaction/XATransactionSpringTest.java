@@ -41,7 +41,6 @@ public class XATransactionSpringTest extends CamelSpringTestSupport {
     // Getting an issue with Travis CI failing implying duplicate xa.activemq named resources
     // TODO : revisit with update to Narayana
     @Test
-    @Ignore
     public void testTransactedRolledBack() throws InterruptedException {
         AuditLogDao auditLogDao = getMandatoryBean(AuditLogDao.class, "auditLogDao");
 

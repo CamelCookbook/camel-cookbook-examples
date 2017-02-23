@@ -32,13 +32,13 @@ public class HelloWorldEmbeddedTest extends CamelTestSupport {
 
     @Test
     public void testHello() throws Exception {
-        String out = template.requestBody("http://localhost:" + port1 + "/say/hello", null, String.class);
+        String out = fluentTemplate().to("http://localhost:" + port1 + "/say/hello").request(String.class);
         assertEquals("Hello World", out);
     }
 
     @Test
     public void testBye() throws Exception {
-        String out = template.requestBody("http://localhost:" + port1 + "/say/bye", null, String.class);
+        String out = fluentTemplate().to("http://localhost:" + port1 + "/say/bye").request(String.class);
         assertEquals("Bye World", out);
     }
 }

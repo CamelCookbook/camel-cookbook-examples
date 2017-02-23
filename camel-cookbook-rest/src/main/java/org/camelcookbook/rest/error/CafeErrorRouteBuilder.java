@@ -52,7 +52,7 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
 
         onException(MenuItemNotFoundException.class)
             .handled(true)
-            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
+            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
             .setBody().simple("${exception.message}");
 
         onException(JsonParseException.class)
@@ -67,7 +67,7 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
             .get("/items/{id}").outType(MenuItem.class)
                 .to("bean:menuService?method=getMenuItem(${header.id})")
             .post("/items").type(MenuItem.class)
-                .to("bean:menuService?method=createMenuItem")
+                .route().to("bean:menuService?method=createMenuItem").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201)).endRest()
             .put("/items/{id}").type(MenuItem.class)
                 .to("bean:menuService?method=updateMenuItem(${header.id}, ${body})")
             .delete("/items/{id}")

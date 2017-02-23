@@ -59,7 +59,10 @@ public class CafeErrorTest extends CamelTestSupport {
     @Test
     public void testInvalidJson() throws Exception {
         try {
-            String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/1", "This is not JSON format", Exchange.HTTP_METHOD, "PUT", String.class);
+            String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/1")
+                    .withHeader(Exchange.HTTP_METHOD, "PUT")
+                    .withBody("This is not JSON format")
+                    .request(String.class);
         } catch(CamelExecutionException e) {
             HttpOperationFailedException httpException = (HttpOperationFailedException)e.getCause();
 
@@ -68,6 +71,7 @@ public class CafeErrorTest extends CamelTestSupport {
 
             return;
         }
+
         fail("Expected exception to be thrown");
     }
 
@@ -77,7 +81,7 @@ public class CafeErrorTest extends CamelTestSupport {
 
         // TODO: clean up
 
-        Exchange exchange = template.request("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), new Processor() {
+        Exchange exchange = template().request("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getIn().setBody(null);
@@ -87,7 +91,7 @@ public class CafeErrorTest extends CamelTestSupport {
 
         HttpOperationFailedException exception = exchange.getException(HttpOperationFailedException.class);
 
-        System.out.println("Message " + exception.getResponseBody());
-        assertEquals(400, exception.getStatusCode());
+        //System.out.println("Message " + exception.getResponseBody());
+        assertEquals(404, exception.getStatusCode());
     }
 }

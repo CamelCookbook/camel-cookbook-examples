@@ -17,6 +17,7 @@
 
 package org.camelcookbook.rest.operations;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.camelcookbook.rest.common.Menu;
@@ -51,7 +52,7 @@ public class CafeRouteBuilder extends RouteBuilder {
             .get("/items/{id}").outType(MenuItem.class)
                 .to("bean:menuService?method=getMenuItem(${header.id})")
             .post("/items").type(MenuItem.class)
-                .to("bean:menuService?method=createMenuItem")
+                .route().to("bean:menuService?method=createMenuItem").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(201)).endRest()
             .put("/items/{id}").type(MenuItem.class)
                 .to("bean:menuService?method=updateMenuItem(${header.id}, ${body})")
             .delete("/items/{id}")

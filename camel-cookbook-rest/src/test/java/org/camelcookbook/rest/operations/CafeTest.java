@@ -20,6 +20,7 @@ package org.camelcookbook.rest.operations;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.test.AvailablePortFinder;
@@ -60,7 +61,9 @@ public class CafeTest extends CamelTestSupport {
     public void testGetAll() throws Exception {
         final String origValue = objectWriter.writeValueAsString(menuService.getMenu());
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items", null, Exchange.HTTP_METHOD, "GET", String.class);
+        String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items")
+                .withHeader(Exchange.HTTP_METHOD, "GET")
+                .request(String.class);
 
         assertEquals(origValue, out);
     }
@@ -69,7 +72,9 @@ public class CafeTest extends CamelTestSupport {
     public void testGetOne() throws Exception {
         final String origValue = objectWriter.writeValueAsString(menuService.getMenuItem(1));
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/1", null, Exchange.HTTP_METHOD, "GET", String.class);
+        String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/1")
+                .withHeader(Exchange.HTTP_METHOD, "GET")
+                .request(String.class);
 
         assertEquals(origValue, out);
     }
@@ -79,9 +84,12 @@ public class CafeTest extends CamelTestSupport {
         final int size = menuService.getMenu().getMenuItem().size();
 
         try {
-            String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), null, Exchange.HTTP_METHOD, "GET", String.class);
+            String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1))
+                    .withHeader(Exchange.HTTP_METHOD, "GET")
+                    .request(String.class);
         } catch (Exception e) {
-            System.out.println("Exception Message = " + e.getMessage());
+            // Expect Exception to be thrown since we're requesting an item that does not exist
+            //System.out.println("Exception Message = " + e.getMessage());
             return;
         }
 
@@ -99,8 +107,18 @@ public class CafeTest extends CamelTestSupport {
         newItem.setCost(5);
         String newItemJson = objectWriter.writeValueAsString(newItem);
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items", newItemJson, Exchange.HTTP_METHOD, "POST", String.class);
+        Exchange outExchange = template().request("http://localhost:" + port1 + "/cafe/menu/items", new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        exchange.getIn().setBody(newItemJson);
+                        exchange.getIn().setHeader(Exchange.HTTP_METHOD, "POST");
+                    }
+                }
+        );
 
+        assertEquals(201, outExchange.getOut().getHeader(Exchange.HTTP_RESPONSE_CODE));
+
+        String out = outExchange.getOut().getBody(String.class);
         assertEquals("3", out);
 
         Collection<MenuItem> menuUpdateItems = menuService.getMenu().getMenuItem();
@@ -130,7 +148,10 @@ public class CafeTest extends CamelTestSupport {
 
         String newItemJson = objectWriter.writeValueAsString(newItem);
 
-        String out = template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/2", newItemJson, Exchange.HTTP_METHOD, "PUT", String.class);
+        String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/2")
+                .withHeader(Exchange.HTTP_METHOD, "PUT")
+                .withBody(newItemJson)
+                .request(String.class);
 
         assertEquals(newItemJson, out);
 
@@ -149,7 +170,9 @@ public class CafeTest extends CamelTestSupport {
         Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
         assertEquals(2, menuItems.size());
 
-        template.requestBodyAndHeader("http://localhost:" + port1 + "/cafe/menu/items/2", null, Exchange.HTTP_METHOD, "DELETE", String.class);
+        fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/2")
+                .withHeader(Exchange.HTTP_METHOD, "DELETE")
+                .send();
 
         Collection<MenuItem> menuUpdateItems = menuService.getMenu().getMenuItem();
         assertEquals(1, menuUpdateItems.size());

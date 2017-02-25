@@ -36,10 +36,6 @@
     <url>https://github.com/CamelCookbook/camel-cookbook-examples</url>
   </scm>
 
-  <prerequisites>
-    <maven>3.3.9</maven>
-  </prerequisites>
-
   <developers>
     <developer>
       <id>scranton</id>
@@ -600,9 +596,9 @@
             <configuration>
               <rules>
                 <dependencyConvergence />
-                <requirePrerequisite>
-                  <mavenVersion>[${project.prerequisites.maven},)</mavenVersion>
-                </requirePrerequisite>
+                <requireMavenVersion>
+                  <version>[3.3.9,)</version>
+                </requireMavenVersion>
                 <requireJavaVersion>
                   <version>[1.8.0,)</version>
                 </requireJavaVersion>

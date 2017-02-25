@@ -24,11 +24,13 @@
 
   <!-- We are purposefully not inheriting from the parent as the
    transitive parent properties collide with the wildfly-swarm fraction versions-->
-  <!--    <parent>
-          <artifactId>camel-cookbook-runtimes</artifactId>
-          <groupId>org.camelcookbook.examples</groupId>
-          <version>2.0-SNAPSHOT</version>
-      </parent>-->
+<!--
+  <parent>
+    <artifactId>runtime</artifactId>
+    <groupId>org.camelcookbook.examples</groupId>
+    <version>2.0-SNAPSHOT</version>
+  </parent>
+-->
 
   <groupId>org.camelcookbook.examples</groupId>
   <artifactId>runtime-wildfly-swarm</artifactId>

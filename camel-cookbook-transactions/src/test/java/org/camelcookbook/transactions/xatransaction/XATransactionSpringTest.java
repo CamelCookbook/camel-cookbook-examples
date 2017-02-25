@@ -29,6 +29,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Demonstrates the use of an XA transaction manager with a JMS component and database.
  */
+@Ignore
 public class XATransactionSpringTest extends CamelSpringTestSupport {
 
     public static final int MAX_WAIT_TIME = 1000;

@@ -3,7 +3,8 @@ sudo: false
 addons:
   apt:
     packages:
-      - oracle-java8-installerlanguage: java
+      - oracle-java8-installer
+language: java
 jdk:
   - openjdk8
 before_install:

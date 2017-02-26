@@ -33,20 +33,17 @@ import org.junit.Test;
 public class CafeErrorTest extends CamelTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();
 
-    private MenuService menuService;
-    private ObjectWriter objectWriter;
+    private ObjectWriter objectWriter = new ObjectMapper().writer();
 
-    @Override
-    public void doPreSetup() throws Exception {
-        menuService = new MenuService();
-        objectWriter = new ObjectMapper().writer();
+    private MenuService getMenuService() {
+        return context().getRegistry().lookupByNameAndType("menuService", MenuService.class);
     }
 
     @Override
     protected JndiRegistry createRegistry() throws Exception {
         JndiRegistry registry = super.createRegistry();
 
-        registry.bind("menuService", menuService);
+        registry.bind("menuService", new MenuService());
 
         return registry;
     }
@@ -63,8 +60,8 @@ public class CafeErrorTest extends CamelTestSupport {
                     .withHeader(Exchange.HTTP_METHOD, "PUT")
                     .withBody("This is not JSON format")
                     .request(String.class);
-        } catch(CamelExecutionException e) {
-            HttpOperationFailedException httpException = (HttpOperationFailedException)e.getCause();
+        } catch (CamelExecutionException e) {
+            HttpOperationFailedException httpException = (HttpOperationFailedException) e.getCause();
 
             assertEquals(400, httpException.getStatusCode());
             assertEquals("Invalid json data", httpException.getResponseBody());
@@ -77,17 +74,15 @@ public class CafeErrorTest extends CamelTestSupport {
 
     @Test
     public void testGetInvalid() throws Exception {
-        final int size = menuService.getMenu().getMenuItem().size();
-
-        // TODO: clean up
+        final int size = getMenuService().getMenu().getMenuItem().size();
 
         Exchange exchange = template().request("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        exchange.getIn().setBody(null);
-                        exchange.getIn().setHeader(Exchange.HTTP_METHOD, "GET");
-                    }
-                });
+            @Override
+            public void process(Exchange exchange) throws Exception {
+                exchange.getIn().setBody(null);
+                exchange.getIn().setHeader(Exchange.HTTP_METHOD, "GET");
+            }
+        });
 
         HttpOperationFailedException exception = exchange.getException(HttpOperationFailedException.class);
 

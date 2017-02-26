@@ -18,88 +18,89 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>runtime</artifactId>
-        <groupId>org.camelcookbook.examples</groupId>
-        <version>2.0-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <artifactId>runtime</artifactId>
+    <groupId>org.camelcookbook.examples</groupId>
+    <version>2.0-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>runtime-docker</artifactId>
-    <packaging>jar</packaging>
+  <artifactId>runtime-docker</artifactId>
+  <packaging>jar</packaging>
 
-    <name>${application-name} :: Runtime :: Docker</name>
+  <name>${application-name} :: Runtime :: Docker</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-undertow</artifactId>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-undertow</artifactId>
+    </dependency>
 
-    </dependencies>
+  </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>org.camelcookbook.runtimes.docker.Application</mainClass>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>fabric8-maven-plugin</artifactId>
-                <version>3.2.27</version>
-                <executions>
-                    <execution>
-                        <id>fmp</id>
-                        <goals>
-                            <goal>resource</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generator>
-                        <config>
-                            <java-exec>
-                                <mainClass>org.camelcookbook.runtimes.docker.Application</mainClass>
-                            </java-exec>
-                        </config>
-                    </generator>
-                    <mode>kubernetes</mode>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <!-- Run shade goal on package phase -->
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>org.camelcookbook.runtimes.docker.Application</Main-Class>
-                                    </manifestEntries>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.5.0</version>
+        <configuration>
+          <mainClass>org.camelcookbook.runtimes.docker.Application</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>3.2.27</version>
+        <executions>
+          <execution>
+            <id>fmp</id>
+            <goals>
+              <goal>resource</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <generator>
+            <config>
+              <java-exec>
+                <mainClass>org.camelcookbook.runtimes.docker.Application</mainClass>
+              </java-exec>
+            </config>
+          </generator>
+          <mode>kubernetes</mode>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <!-- Run shade goal on package phase -->
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>org.camelcookbook.runtimes.docker.Application</Main-Class>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

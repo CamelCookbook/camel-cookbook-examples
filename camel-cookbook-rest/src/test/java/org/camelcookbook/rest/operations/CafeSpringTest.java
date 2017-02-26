@@ -21,17 +21,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.test.AvailablePortFinder;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.rest.common.MenuItem;
 import org.camelcookbook.rest.common.MenuService;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Collection;
 
-public class CafeTest extends CamelTestSupport {
+public class CafeSpringTest extends CamelSpringTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();
 
     private ObjectWriter objectWriter = new ObjectMapper().writer();
@@ -41,17 +41,10 @@ public class CafeTest extends CamelTestSupport {
     }
 
     @Override
-    protected JndiRegistry createRegistry() throws Exception {
-        JndiRegistry registry = super.createRegistry();
+    protected AbstractApplicationContext createApplicationContext() {
+        System.setProperty("port1", String.valueOf(port1));
 
-        registry.bind("menuService", new MenuService());
-
-        return registry;
-    }
-
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new CafeRouteBuilder(port1);
+        return new ClassPathXmlApplicationContext("META-INF/spring/operations-context.xml");
     }
 
     @Test

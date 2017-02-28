@@ -29,7 +29,7 @@ You will find the sample code laid out for the chapters as follows:
 7. Parallel Processing - `camel-cookbook-parallel-processing`
 8. Error Handling and Compensation - `camel-cookbook-error`
 9. Transactions and Idempotency - `camel-cookbook-transactions`
-10. Runtimes - `camel-cookbook-runtime`
+10. Runtimes - `camel-cookbook-runtimes`
 11. Testing - `camel-cookbook-testing`
 12. Monitoring and Debugging - `camel-cookbook-monitoring`
 13. Security - `camel-cookbook-security`

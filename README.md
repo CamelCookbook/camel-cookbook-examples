@@ -23,12 +23,14 @@ You will find the sample code laid out for the chapters as follows:
 1. Structuring Routes - `camel-cookbook-structuring-routes`
 2. Message Routing - `camel-cookbook-routing`
 3. Routing to your Code - `camel-cookbook-extend`
-4. Transformation - `camel-cookbook-transformation`
-5. Splitting and Aggregating - `camel-cookbook-split-join`
-6. Parallel Processing - `camel-cookbook-parallel-processing`
-7. Error Handling and Compensation - `camel-cookbook-error`
-8. Transactions and Idempotency - `camel-cookbook-transactions`
-9. Testing - `camel-cookbook-testing`
-10. Monitoring and Debugging - `camel-cookbook-monitoring`
-11. Security - `camel-cookbook-security`
-12. Web Services - `camel-cookbook-web-services`
+4. Rest - `camel-cookbook-rest`
+5. Transformation - `camel-cookbook-transformation`
+6. Splitting and Aggregating - `camel-cookbook-split-join`
+7. Parallel Processing - `camel-cookbook-parallel-processing`
+8. Error Handling and Compensation - `camel-cookbook-error`
+9. Transactions and Idempotency - `camel-cookbook-transactions`
+10. Runtimes - `camel-cookbook-runtime`
+11. Testing - `camel-cookbook-testing`
+12. Monitoring and Debugging - `camel-cookbook-monitoring`
+13. Security - `camel-cookbook-security`
+14. Web Services - `camel-cookbook-web-services`

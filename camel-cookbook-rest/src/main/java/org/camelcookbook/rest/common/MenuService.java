@@ -17,14 +17,14 @@
 
 package org.camelcookbook.rest.common;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MenuService {
     private final Map<Integer, MenuItem> menuItems = new TreeMap<>();
     private final AtomicInteger ids = new AtomicInteger();
-
-    // TODO: add unit tests for common classes
 
     public MenuService() throws Exception {
         MenuItem item = new MenuItem();
@@ -53,14 +53,15 @@ public class MenuService {
             throw new MenuItemInvalidException("Cost must be greater than 0");
         }
 
-        item.setId(itemId);
-        menuItems.put(itemId, item);
+        MenuItem itemCopy = new MenuItem(item);
+        itemCopy.setId(itemId);
+        menuItems.put(itemId, itemCopy);
         return itemId;
     }
 
     // TODO : Not thrilled with this pattern of returning a class with a collection just for XML binding
     public Menu getMenu() {
-        return new Menu(menuItems.values());
+        return new Menu(Collections.unmodifiableCollection(menuItems.values()));
     }
 
     public MenuItem getMenuItem(int itemId) throws MenuItemNotFoundException {

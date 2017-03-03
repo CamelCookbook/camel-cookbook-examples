@@ -58,11 +58,11 @@
       </setBody>
     </onException>
 
-    <restConfiguration component="undertow" port="{{port1}}" bindingMode="json_xml"/>
+    <restConfiguration component="undertow" port="{{port1}}" bindingMode="json"/>
 
     <rest path="/cafe/menu">
-      <get uri="/items" outType="org.camelcookbook.rest.common.Menu">
-        <to uri="bean:menuService?method=getMenu"/>
+      <get uri="/items" outType="org.camelcookbook.rest.common.MenuItem[]">
+        <to uri="bean:menuService?method=getMenuItems"/>
       </get>
       <get uri="/items/{id}" outType="org.camelcookbook.rest.common.MenuItem">
         <to uri="bean:menuService?method=getMenuItem(${header.id})"/>

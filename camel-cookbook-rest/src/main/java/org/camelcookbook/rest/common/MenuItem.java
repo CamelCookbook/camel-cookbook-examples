@@ -18,21 +18,11 @@
 package org.camelcookbook.rest.common;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "menuItem")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class MenuItem {
-    @XmlAttribute
     private int id;
-    @XmlAttribute
     private String name;
-    @XmlAttribute
     private int cost;
-    @XmlAttribute
     private String description;
 
     public MenuItem() {

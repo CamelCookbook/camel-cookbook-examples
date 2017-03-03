@@ -15,33 +15,46 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.rest.common;
+package org.camelcookbook.rest.configuration;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collection;
 
-@XmlRootElement(name = "menu")
+@XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Menu {
-    @XmlElement(name = "menuItem")
-    private Collection<MenuItem> menuItem = null;
+public class Item {
+    @XmlAttribute
+    private String name;
 
-    public Menu() {
-
+    public Item() {
     }
 
-    public Menu(Collection<MenuItem> menuItems) {
-        this.menuItem = menuItems;
+    public Item(String name) {
+        this.name = name;
     }
 
-    public Collection<MenuItem> getMenuItem() {
-        return menuItem;
+    public String getName() {
+        return name;
     }
 
-    public void setMenuItem(Collection<MenuItem> menuItem) {
-        this.menuItem = menuItem;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        return name != null ? name.equals(item.name) : item.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }

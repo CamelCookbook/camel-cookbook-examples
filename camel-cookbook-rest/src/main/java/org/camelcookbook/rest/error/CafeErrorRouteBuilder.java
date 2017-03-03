@@ -21,7 +21,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.camelcookbook.rest.common.Menu;
 import org.camelcookbook.rest.common.MenuItem;
 import org.camelcookbook.rest.common.MenuItemNotFoundException;
 
@@ -46,7 +45,7 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         restConfiguration()
             .component("undertow").port(port1)
-            .bindingMode(RestBindingMode.json_xml);
+            .bindingMode(RestBindingMode.json);
 
         // TODO: add exception handler for Invalid Item
 
@@ -62,8 +61,8 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
             .setBody().constant("Invalid json data");
 
         rest("/cafe/menu")
-            .get("/items").outType(Menu.class)
-                .to("bean:menuService?method=getMenu")
+            .get("/items").outTypeList(MenuItem.class)
+                .to("bean:menuService?method=getMenuItems")
             .get("/items/{id}").outType(MenuItem.class)
                 .to("bean:menuService?method=getMenuItem(${header.id})")
             .post("/items").type(MenuItem.class)

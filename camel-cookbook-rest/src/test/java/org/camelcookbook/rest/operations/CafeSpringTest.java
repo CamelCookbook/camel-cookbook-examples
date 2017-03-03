@@ -49,7 +49,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testGetAll() throws Exception {
-        final String origValue = objectWriter.writeValueAsString(getMenuService().getMenu());
+        final String origValue = objectWriter.writeValueAsString(getMenuService().getMenuItems());
 
         String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
@@ -71,7 +71,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testGetInvalid() throws Exception {
-        final int size = getMenuService().getMenu().getMenuItem().size();
+        final int size = getMenuService().getMenuItems().size();
 
         try {
             String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1))
@@ -88,7 +88,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testCreate() throws Exception {
-        Collection<MenuItem> menuItems = getMenuService().getMenu().getMenuItem();
+        Collection<MenuItem> menuItems = getMenuService().getMenuItems();
         assertEquals(2, menuItems.size());
 
         MenuItem newItem = new MenuItem();
@@ -111,7 +111,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
         String out = outExchange.getOut().getBody(String.class);
         assertEquals("3", out);
 
-        Collection<MenuItem> menuUpdateItems = getMenuService().getMenu().getMenuItem();
+        Collection<MenuItem> menuUpdateItems = getMenuService().getMenuItems();
         assertEquals(3, menuUpdateItems.size());
 
         MenuItem item3 = getMenuService().getMenuItem(3);
@@ -123,7 +123,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testUpdate() throws Exception {
-        Collection<MenuItem> menuItems = getMenuService().getMenu().getMenuItem();
+        Collection<MenuItem> menuItems = getMenuService().getMenuItems();
         assertEquals(2, menuItems.size());
 
         MenuItem origMenuItem2 = getMenuService().getMenuItem(2);
@@ -146,7 +146,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
 
         assertEquals(newItemJson, out);
 
-        Collection<MenuItem> menuUpdateItems = getMenuService().getMenu().getMenuItem();
+        Collection<MenuItem> menuUpdateItems = getMenuService().getMenuItems();
         assertEquals(2, menuUpdateItems.size());
 
         MenuItem curItem2 = getMenuService().getMenuItem(2);
@@ -158,14 +158,14 @@ public class CafeSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testDelete() throws Exception {
-        Collection<MenuItem> menuItems = getMenuService().getMenu().getMenuItem();
+        Collection<MenuItem> menuItems = getMenuService().getMenuItems();
         assertEquals(2, menuItems.size());
 
         fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/2")
                 .withHeader(Exchange.HTTP_METHOD, "DELETE")
                 .send();
 
-        Collection<MenuItem> menuUpdateItems = getMenuService().getMenu().getMenuItem();
+        Collection<MenuItem> menuUpdateItems = getMenuService().getMenuItems();
         assertEquals(1, menuUpdateItems.size());
         assertEquals(menuItems.iterator().next(), menuUpdateItems.iterator().next());
     }

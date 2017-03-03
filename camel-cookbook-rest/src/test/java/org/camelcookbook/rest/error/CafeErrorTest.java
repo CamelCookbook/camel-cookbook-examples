@@ -74,7 +74,7 @@ public class CafeErrorTest extends CamelTestSupport {
 
     @Test
     public void testGetInvalid() throws Exception {
-        final int size = getMenuService().getMenu().getMenuItem().size();
+        final int size = getMenuService().getMenuItems().size();
 
         Exchange exchange = template().request("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), new Processor() {
             @Override

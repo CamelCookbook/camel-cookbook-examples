@@ -34,7 +34,7 @@ public class MenuServiceTest {
 
     @Test
     public void createMenuItem() throws Exception {
-        final Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
+        final Collection<MenuItem> menuItems = menuService.getMenuItems();
         final int initialSize = menuItems.size();
 
         MenuItem newItem = new MenuItem();
@@ -59,14 +59,14 @@ public class MenuServiceTest {
         assertEquals(newItem.getCost(), menuItem.getCost());
         assertEquals(newItem.getDescription(), menuItem.getDescription());
 
-        Collection<MenuItem> newMenuItems = menuService.getMenu().getMenuItem();
+        Collection<MenuItem> newMenuItems = menuService.getMenuItems();
         assertTrue(newMenuItems.size() > initialSize);
         assertTrue(newMenuItems.contains(menuItem));
     }
 
     @Test
     public void createMenuItemDuplicateId() throws Exception {
-        final Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
+        final Collection<MenuItem> menuItems = menuService.getMenuItems();
         final int initialSize = menuItems.size();
         assertTrue(initialSize >= 1); // assumes menuService setup with at least 1 item
 
@@ -106,13 +106,13 @@ public class MenuServiceTest {
     }
 
     @Test
-    public void getMenu() throws Exception {
-        assertNotNull(menuService.getMenu());
+    public void getMenuItems() throws Exception {
+        assertNotNull(menuService.getMenuItems());
     }
 
     @Test
     public void getMenuItem() throws Exception {
-        final Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
+        final Collection<MenuItem> menuItems = menuService.getMenuItems();
         assertTrue(menuItems.size() >= 1);
 
         final MenuItem menuItem = menuService.getMenuItem(1);
@@ -121,7 +121,7 @@ public class MenuServiceTest {
 
     @Test
     public void updateMenuItemCreate() throws Exception {
-        final Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
+        final Collection<MenuItem> menuItems = menuService.getMenuItems();
         final int initialSize = menuItems.size();
 
         MenuItem newItem = new MenuItem();
@@ -150,7 +150,7 @@ public class MenuServiceTest {
     public void updateMenuItemModify() throws Exception {
         final int testId = 1;
 
-        Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
+        Collection<MenuItem> menuItems = menuService.getMenuItems();
         final int initialSize = menuItems.size();
         assertTrue(initialSize >= 1);
 
@@ -172,7 +172,7 @@ public class MenuServiceTest {
     public void removeMenuItem() throws Exception {
         final int testId = 1;
 
-        Collection<MenuItem> menuItems = menuService.getMenu().getMenuItem();
+        Collection<MenuItem> menuItems = menuService.getMenuItems();
         final int initialSize = menuItems.size();
         assertTrue(initialSize >= 1);
 
@@ -181,7 +181,7 @@ public class MenuServiceTest {
 
         menuService.removeMenuItem(testId);
 
-        final Collection<MenuItem> curMenuItems = menuService.getMenu().getMenuItem();
+        final Collection<MenuItem> curMenuItems = menuService.getMenuItems();
         assertTrue(curMenuItems.size() < initialSize);
         assertFalse(curMenuItems.contains(origMenuItem));
 

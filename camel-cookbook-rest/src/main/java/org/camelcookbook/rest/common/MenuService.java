@@ -17,6 +17,7 @@
 
 package org.camelcookbook.rest.common;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
@@ -59,9 +60,8 @@ public class MenuService {
         return itemId;
     }
 
-    // TODO : Not thrilled with this pattern of returning a class with a collection just for XML binding
-    public Menu getMenu() {
-        return new Menu(Collections.unmodifiableCollection(menuItems.values()));
+    public Collection<MenuItem> getMenuItems() {
+        return Collections.unmodifiableCollection(menuItems.values());
     }
 
     public MenuItem getMenuItem(int itemId) throws MenuItemNotFoundException {

@@ -25,34 +25,22 @@
 
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 
-  <bean name="menuService" class="org.camelcookbook.rest.common.MenuService"/>
+  <bean name="itemService" class="org.camelcookbook.rest.configuration.ItemService"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <restConfiguration component="undertow" port="{{port1}}" bindingMode="json"/>
+    <restConfiguration component="undertow" port="{{port1}}" bindingMode="json_xml"/>
 
-    <rest path="/cafe/menu">
-      <get uri="/items" outType="org.camelcookbook.rest.common.MenuItem[]">
-        <to uri="bean:menuService?method=getMenuItems"/>
+    <rest>
+      <get uri="/items/{id}" outType="org.camelcookbook.rest.configuration.Item">
+        <to uri="bean:itemService?method=getItem(${header.id})"/>
       </get>
-      <get uri="/items/{id}" outType="org.camelcookbook.rest.common.MenuItem">
-        <to uri="bean:menuService?method=getMenuItem(${header.id})"/>
+      <get uri="/items/{id}/xml" outType="org.camelcookbook.rest.configuration.Item" bindingMode="xml">
+        <to uri="bean:itemService?method=getItem(${header.id})"/>
       </get>
-      <post uri="/items" type="org.camelcookbook.rest.common.MenuItem">
-        <route>
-          <to uri="bean:menuService?method=createMenuItem"/>
-          <setHeader headerName="CamelHttpResponseCode">
-            <constant>201</constant>
-          </setHeader>
-        </route>
-      </post>
-      <put uri="/items/{id}" type="org.camelcookbook.rest.common.MenuItem">
-        <to uri="bean:menuService?method=updateMenuItem(${header.id}, ${body})"/>
-      </put>
-      <delete uri="/items/{id}">
-        <to uri="bean:menuService?method=removeMenuItem(${header.id})"/>
-      </delete>
+      <get uri="/items/{id}/json" outType="org.camelcookbook.rest.configuration.Item" bindingMode="json">
+        <to uri="bean:itemService?method=getItem(${header.id})"/>
+      </get>
     </rest>
-
   </camelContext>
 
 </beans>

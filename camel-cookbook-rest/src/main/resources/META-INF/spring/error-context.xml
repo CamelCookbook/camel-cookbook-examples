@@ -34,7 +34,7 @@
       <handled>
         <constant>true</constant>
       </handled>
-      <setHeader headerName="CamelHttpResponseCode">
+      <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
         <constant>404</constant>
       </setHeader>
       <setBody>
@@ -47,10 +47,10 @@
       <handled>
         <constant>true</constant>
       </handled>
-      <setHeader headerName="CamelHttpResponseCode">
+      <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
         <constant>400</constant>
       </setHeader>
-      <setHeader headerName="Content-Type">
+      <setHeader headerName="Exchange.CONTENT_TYPE">
         <constant>text/plain</constant>
       </setHeader>
       <setBody>
@@ -70,7 +70,7 @@
       <post uri="/items" type="org.camelcookbook.rest.common.MenuItem">
         <route>
           <to uri="bean:menuService?method=createMenuItem"/>
-          <setHeader headerName="CamelHttpResponseCode">
+          <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
             <constant>201</constant>
           </setHeader>
         </route>

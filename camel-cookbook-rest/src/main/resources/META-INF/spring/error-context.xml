@@ -37,6 +37,25 @@
       <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
         <constant>404</constant>
       </setHeader>
+      <setHeader headerName="Exchange.CONTENT_TYPE">
+        <constant>text/plain</constant>
+      </setHeader>
+      <setBody>
+        <simple>${exception.message}</simple>
+      </setBody>
+    </onException>
+
+    <onException>
+      <exception>org.camelcookbook.rest.common.MenuItemInvalidException</exception>
+      <handled>
+        <constant>true</constant>
+      </handled>
+      <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
+        <constant>400</constant>
+      </setHeader>
+      <setHeader headerName="Exchange.CONTENT_TYPE">
+        <constant>text/plain</constant>
+      </setHeader>
       <setBody>
         <simple>${exception.message}</simple>
       </setBody>

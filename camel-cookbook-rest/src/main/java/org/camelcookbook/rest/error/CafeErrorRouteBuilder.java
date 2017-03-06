@@ -22,6 +22,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.camelcookbook.rest.common.MenuItem;
+import org.camelcookbook.rest.common.MenuItemInvalidException;
 import org.camelcookbook.rest.common.MenuItemNotFoundException;
 
 /**
@@ -52,6 +53,13 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
         onException(MenuItemNotFoundException.class)
             .handled(true)
             .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(404))
+            .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
+            .setBody().simple("${exception.message}");
+
+        onException(MenuItemInvalidException.class)
+            .handled(true)
+            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(400))
+            .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
             .setBody().simple("${exception.message}");
 
         onException(JsonParseException.class)
@@ -70,6 +78,6 @@ public class CafeErrorRouteBuilder extends RouteBuilder {
             .put("/items/{id}").type(MenuItem.class)
                 .to("bean:menuService?method=updateMenuItem(${header.id}, ${body})")
             .delete("/items/{id}")
-               .to("bean:menuService?method=removeMenuItem(${header.id})");
+                .to("bean:menuService?method=removeMenuItem(${header.id})");
     }
 }

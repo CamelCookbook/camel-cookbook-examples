@@ -17,38 +17,19 @@
 
 package org.camelcookbook.rest.api;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import io.swagger.jaxrs.config.BeanConfig;
-import io.swagger.models.Swagger;
-import org.apache.camel.CamelContext;
-import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.http.common.HttpOperationFailedException;
-import org.apache.camel.impl.DefaultClassResolver;
 import org.apache.camel.impl.JndiRegistry;
-import org.apache.camel.management.DefaultManagementNamingStrategy;
-import org.apache.camel.model.rest.RestDefinition;
-import org.apache.camel.swagger.RestSwaggerReader;
-import org.apache.camel.swagger.RestSwaggerSupport;
 import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.camelcookbook.rest.common.MenuItem;
 import org.camelcookbook.rest.common.MenuService;
-import org.camelcookbook.rest.operations.CafeRouteBuilder;
 import org.junit.Test;
 
-import javax.annotation.meta.Exhaustive;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Collection;
-import java.util.List;
 
 public class CafeApiTest extends CamelTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();

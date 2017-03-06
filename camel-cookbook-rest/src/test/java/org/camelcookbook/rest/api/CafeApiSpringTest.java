@@ -19,10 +19,8 @@ package org.camelcookbook.rest.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.camelcookbook.rest.common.MenuItem;

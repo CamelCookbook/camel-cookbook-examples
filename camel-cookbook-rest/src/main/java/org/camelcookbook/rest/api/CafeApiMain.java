@@ -19,7 +19,6 @@ package org.camelcookbook.rest.api;
 
 import org.apache.camel.main.Main;
 import org.camelcookbook.rest.common.MenuService;
-import org.camelcookbook.rest.operations.CafeRouteBuilder;
 
 public class CafeApiMain {
     public static void main(String[] args) throws Exception {

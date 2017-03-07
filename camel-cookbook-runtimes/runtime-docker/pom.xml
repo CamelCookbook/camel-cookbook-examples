@@ -40,7 +40,26 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-undertow</artifactId>
     </dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+    </dependency>
 
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <scope>runtime</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -53,29 +72,30 @@
           <mainClass>org.camelcookbook.runtimes.docker.Application</mainClass>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>fabric8-maven-plugin</artifactId>
-        <version>3.2.27</version>
-        <executions>
-          <execution>
-            <id>fmp</id>
-            <goals>
-              <goal>resource</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <generator>
-            <config>
-              <java-exec>
-                <mainClass>org.camelcookbook.runtimes.docker.Application</mainClass>
-              </java-exec>
-            </config>
-          </generator>
-          <mode>kubernetes</mode>
-        </configuration>
-      </plugin>
+        <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.20.0</version>
+            <configuration>
+                <images>
+                    <image>
+                        <name>camelcookbook/camel-docker:${project.version}</name>
+                        <build>
+                            <from>fabric8/java-alpine-openjdk8-jdk:1.2</from>
+                            <assembly>
+                                <descriptorRef>artifact</descriptorRef>
+                            </assembly>
+                            <env>
+                                <JAVA_APP_DIR>/maven</JAVA_APP_DIR>
+                            </env>
+                            <ports>
+                                <port>8080</port>
+                            </ports>
+                        </build>
+                    </image>
+                </images>
+            </configuration>
+        </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -102,5 +122,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>

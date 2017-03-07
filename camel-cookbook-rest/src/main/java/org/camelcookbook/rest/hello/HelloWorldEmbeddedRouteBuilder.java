@@ -39,16 +39,18 @@ public class HelloWorldEmbeddedRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         restConfiguration()
-            .component("undertow").port(port1);
+            .component("undertow").host("localhost").port(port1);
 
         rest("/say")
             .get("/hello")
                 .route()
                     .transform().constant("Hello World")
                 .endRest()
-            .get("/bye")
+            .get("/bye/{name}")
                 .route()
-                    .transform().constant("Bye World")
-                .endRest();
+                    .transform().simple("Bye ${header.name}")
+                .endRest()
+            .post("/bye")
+                .consumes("application/json").to("mock:update");
     }
 }

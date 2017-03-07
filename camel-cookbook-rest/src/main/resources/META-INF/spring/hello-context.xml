@@ -26,15 +26,18 @@
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <restConfiguration component="undertow" port="{{port1}}"/>
+    <restConfiguration component="undertow" host="localhost" port="{{port1}}"/>
 
     <rest path="/say">
       <get uri="/hello">
         <to uri="direct:hello"/>
       </get>
-      <get uri="/bye">
+      <get uri="/bye/{name}">
         <to uri="direct:bye"/>
       </get>
+      <post uri="/bye" consumes="application/json">
+        <to uri="mock:update"/>
+      </post>
     </rest>
 
     <route>
@@ -46,7 +49,7 @@
     <route>
       <from uri="direct:bye"/>
       <transform>
-        <constant>Bye World</constant>
+        <simple>Bye ${header.name}</simple>
       </transform>
     </route>
   </camelContext>

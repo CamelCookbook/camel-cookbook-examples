@@ -39,15 +39,19 @@ public class HelloWorldRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         restConfiguration()
-            .component("undertow").port(port1);
+            .component("undertow").host("localhost").port(port1);
 
         rest("/say")
-            .get("/hello").to("direct:hello")
-            .get("/bye").to("direct:bye");
+            .get("/hello")
+                .to("direct:hello")
+            .get("/bye/{name}")
+                .to("direct:bye")
+            .post("/bye")
+                .consumes("application/json").to("mock:update");
 
         from("direct:hello")
             .transform().constant("Hello World");
         from("direct:bye")
-            .transform().constant("Bye World");
+            .transform().simple("Bye ${header.name}");
     }
 }

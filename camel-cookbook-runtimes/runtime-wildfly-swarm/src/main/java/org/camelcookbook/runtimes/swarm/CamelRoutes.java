@@ -17,16 +17,37 @@
 package org.camelcookbook.runtimes.swarm;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.cdi.ContextName;
+import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.model.rest.RestBindingMode;
+import org.wildfly.swarm.Swarm;
+import org.wildfly.swarm.container.runtime.cdi.ConfigViewProducingExtension;
+import org.wildfly.swarm.container.runtime.cdi.ConfigurationValueProducer;
+import org.wildfly.swarm.spi.runtime.annotations.ConfigurationValue;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@ApplicationScoped
+@ContextName("cdi-context")
 public class CamelRoutes extends RouteBuilder {
+
+    @Inject
+    @ConfigurationValue("swarm.camel.foo.name")
+    private String name;
+
     @Override
     public void configure() throws Exception {
+
         restConfiguration().component("undertow")
             .contextPath("/rest").bindingMode(RestBindingMode.auto);
 
         rest()
             .get("/greetings/{name}").produces("text/plain")
-                .route().transform(simple("Hello ${header.name}"));
+                .route().transform(simple("Hello ${header.name} from " + name));
     }
+
 }

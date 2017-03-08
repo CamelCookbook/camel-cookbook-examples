@@ -477,21 +477,11 @@
 
     <plugins>
       <plugin>
-        <groupId>io.fabric8.forge</groupId>
-        <artifactId>fabric8-camel-maven-plugin</artifactId>
-        <version>${fabric8-camel-maven-plugin-version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j-version}</version>
-          </dependency>
-        </dependencies>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-maven-plugin</artifactId>
+        <version>${camel-version}</version>
         <executions>
           <execution>
-            <configuration>
-              <includeTest>true</includeTest>
-            </configuration>
             <phase>process-test-classes</phase>
             <goals>
               <goal>validate</goal>

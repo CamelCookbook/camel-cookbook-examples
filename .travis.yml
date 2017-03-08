@@ -3,9 +3,14 @@ sudo: false
 language: java
 jdk:
   - openjdk8
+
+cache:
+  directories:
+  - $HOME/.m2
+
+env:
+  MAVEN_SKIP_RC=true
+  MAVEN_OPTS="-Dmaven.repo.local=$HOME/.m2/repository -Xmx2g"
+
 before_install:
-  - rm ~/.m2/settings.xml
-  - export MAVEN_SKIP_RC=true
-  - export MAVEN_OPTS="-Dmaven.repo.local=$HOME/.m2/repository -Xmx2g"
-  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --update-snapshots
-  
+  - sed -i.bak -e 's|https://nexus.codehaus.org/snapshots/|https://oss.sonatype.org/content/repositories/codehaus-snapshots/|g' ~/.m2/settings.xml

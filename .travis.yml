@@ -5,8 +5,8 @@ jdk:
   - openjdk8
 before_install:
   - rm ~/.m2/settings.xml
-  - echo /etc/mavenrc
-  - echo $HOME/.mavenrc
+  - cat /etc/mavenrc
+  - cat $HOME/.mavenrc
   - export MAVEN_OPTS="-Xmx2g"
   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --update-snapshots
   

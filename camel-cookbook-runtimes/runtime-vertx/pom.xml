@@ -94,7 +94,6 @@
         </executions>
         <configuration>
           <redeploy>true</redeploy>
-          <!--<verticle>com.camelcookbook.runtimes.vertx.HttpVerticle</verticle>-->
           <launcher>com.camelcookbook.runtimes.vertx.Application</launcher>
         </configuration>
       </plugin>

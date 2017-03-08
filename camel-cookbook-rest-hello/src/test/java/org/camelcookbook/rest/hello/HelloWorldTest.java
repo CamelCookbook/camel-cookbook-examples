@@ -24,12 +24,12 @@ import org.apache.camel.test.AvailablePortFinder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-public class HelloWorldEmbeddedTest extends CamelTestSupport {
+public class HelloWorldTest extends CamelTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new HelloWorldEmbeddedRouteBuilder(port1);
+        return new HelloWorldRouteBuilder(port1);
     }
 
     @Test
@@ -53,11 +53,12 @@ public class HelloWorldEmbeddedTest extends CamelTestSupport {
     @Test
     public void testPostBye() throws Exception {
         final String json = "{ \"name\": \"Scott\" }";
+        final String mockName = "testThis";
 
-        MockEndpoint update = getMockEndpoint("mock:update");
+        MockEndpoint update = getMockEndpoint("mock:" + mockName);
         update.expectedBodiesReceived(json);
 
-        fluentTemplate().to("http://localhost:" + port1 + "/say/bye")
+        fluentTemplate().to("http://localhost:" + port1 + "/say/bye/" + mockName)
                 .withHeader(Exchange.HTTP_METHOD, "POST")
                 .withHeader(Exchange.CONTENT_ENCODING, "application/json")
                 .withBody(json)

@@ -43,8 +43,8 @@
           </transform>
         </route>
       </get>
-      <post uri="/bye" consumes="application/json">
-        <to uri="mock:update"/>
+      <post uri="/bye/{name}" consumes="application/json">
+        <toD uri="mock:${header.name}"/>
       </post>
     </rest>
   </camelContext>

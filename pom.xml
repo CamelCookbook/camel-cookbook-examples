@@ -112,6 +112,7 @@
     <module>camel-cookbook-web-services</module>
     <module>camel-cookbook-rest</module>
     <module>camel-cookbook-runtimes</module>
+    <module>camel-cookbook-rest-hello</module>
   </modules>
 
 

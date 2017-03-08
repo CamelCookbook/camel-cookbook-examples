@@ -50,7 +50,7 @@ public class HelloWorldEmbeddedRouteBuilder extends RouteBuilder {
                 .route()
                     .transform().simple("Bye ${header.name}")
                 .endRest()
-            .post("/bye")
-                .consumes("application/json").to("mock:update");
+            .post("/bye/{name}")
+                .consumes("application/json").toD("mock:${header.name}");
     }
 }

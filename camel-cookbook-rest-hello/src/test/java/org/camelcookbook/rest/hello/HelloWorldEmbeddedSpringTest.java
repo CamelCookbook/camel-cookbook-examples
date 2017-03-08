@@ -18,18 +18,21 @@
 package org.camelcookbook.rest.hello;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.AvailablePortFinder;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class HelloWorldTest extends CamelTestSupport {
+public class HelloWorldEmbeddedSpringTest extends CamelSpringTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();
 
     @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new HelloWorldRouteBuilder(port1);
+    protected AbstractApplicationContext createApplicationContext() {
+        System.setProperty("port1", String.valueOf(port1));
+
+        return new ClassPathXmlApplicationContext("META-INF/spring/hello-embedded-context.xml");
     }
 
     @Test
@@ -53,11 +56,12 @@ public class HelloWorldTest extends CamelTestSupport {
     @Test
     public void testPostBye() throws Exception {
         final String json = "{ \"name\": \"Scott\" }";
+        final String mockName = "testThis";
 
-        MockEndpoint update = getMockEndpoint("mock:update");
+        MockEndpoint update = getMockEndpoint("mock:" + mockName);
         update.expectedBodiesReceived(json);
 
-        fluentTemplate().to("http://localhost:" + port1 + "/say/bye")
+        fluentTemplate().to("http://localhost:" + port1 + "/say/bye/" + mockName)
                 .withHeader(Exchange.HTTP_METHOD, "POST")
                 .withHeader(Exchange.CONTENT_ENCODING, "application/json")
                 .withBody(json)

@@ -46,8 +46,8 @@ public class HelloWorldRouteBuilder extends RouteBuilder {
                 .to("direct:hello")
             .get("/bye/{name}")
                 .to("direct:bye")
-            .post("/bye")
-                .consumes("application/json").to("mock:update");
+            .post("/bye/{name}")
+                .toD("mock:${header.name}");
 
         from("direct:hello")
             .transform().constant("Hello World");

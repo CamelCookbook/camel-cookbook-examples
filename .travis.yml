@@ -5,4 +5,5 @@ jdk:
   - openjdk8
 before_install:
   - rm ~/.m2/settings.xml
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --update-snapshots
   

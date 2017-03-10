@@ -64,7 +64,7 @@ public class CafeApiRouteBuilder extends RouteBuilder {
             .setBody().constant("Invalid json data");
 
         restConfiguration()
-            .component("netty4-http").port(port1)
+            .component("undertow").port(port1)
             .bindingMode(RestBindingMode.json)
             .apiContextPath("api-doc")
             .apiProperty("api.title", "Cafe Menu")

@@ -77,7 +77,7 @@
       </setBody>
     </onException>
 
-    <restConfiguration component="netty4-http"
+    <restConfiguration component="undertow"
                        port="{{port1}}"
                        bindingMode="json"
                        apiContextPath="api-doc"

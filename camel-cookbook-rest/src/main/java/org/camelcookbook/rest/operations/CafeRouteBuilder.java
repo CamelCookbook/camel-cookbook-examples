@@ -46,7 +46,7 @@ public class CafeRouteBuilder extends RouteBuilder {
             .bindingMode(RestBindingMode.json);
 
         rest("/cafe/menu")
-            .get("/items").outTypeList(MenuItem.class)
+            .get("/items").outType(MenuItem[].class)
                 .to("bean:menuService?method=getMenuItems")
             .get("/items/{id}").outType(MenuItem.class)
                 .to("bean:menuService?method=getMenuItem(${header.id})")

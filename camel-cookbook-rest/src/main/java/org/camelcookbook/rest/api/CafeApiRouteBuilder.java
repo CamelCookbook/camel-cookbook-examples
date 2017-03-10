@@ -77,7 +77,7 @@ public class CafeApiRouteBuilder extends RouteBuilder {
             .enableCORS(true);
 
         rest("/cafe/menu").description("Cafe Menu Services")
-            .get("/items").description("Returns all menu items").outTypeList(MenuItem.class)
+            .get("/items").description("Returns all menu items").outType(MenuItem[].class)
                 .responseMessage().code(200).message("All of the menu items").endResponseMessage()
                 .to("bean:menuService?method=getMenuItems")
             .get("/items/{id}").description("Returns menu item with matching id").outType(MenuItem.class)

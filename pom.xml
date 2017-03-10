@@ -90,8 +90,6 @@
     <maven-enforcer-plugin-version>1.4.1</maven-enforcer-plugin-version>
     <maven-surefire-plugin-version>2.19.1</maven-surefire-plugin-version>
 
-    <fabric8-camel-maven-plugin-version>2.3.85</fabric8-camel-maven-plugin-version>
-
     <osgi-import-package>*</osgi-import-package>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -111,8 +109,8 @@
     <module>camel-cookbook-security</module>
     <module>camel-cookbook-web-services</module>
     <module>camel-cookbook-rest</module>
-    <module>camel-cookbook-runtimes</module>
     <module>camel-cookbook-rest-hello</module>
+    <module>camel-cookbook-runtimes</module>
   </modules>
 
 
@@ -681,7 +679,7 @@
       <name>Apache Snapshot Repo</name>
       <snapshots>
         <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
+        <updatePolicy>daily</updatePolicy>
         <checksumPolicy>fail</checksumPolicy>
       </snapshots>
       <releases>
@@ -698,7 +696,7 @@
       <url>http://repository.apache.org/snapshots/</url>
       <snapshots>
         <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
+        <updatePolicy>daily</updatePolicy>
         <checksumPolicy>fail</checksumPolicy>
       </snapshots>
       <releases>

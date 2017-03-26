@@ -32,11 +32,8 @@
       <get uri="/hello">
         <to uri="direct:hello"/>
       </get>
-      <get uri="/bye/{name}">
-        <to uri="direct:bye"/>
-      </get>
-      <post uri="/bye/{name}" consumes="application/json">
-        <toD uri="mock:${header.name}"/>
+      <post uri="/bye" consumes="application/json">
+        <to uri="mock:update"/>
       </post>
     </rest>
 
@@ -44,12 +41,6 @@
       <from uri="direct:hello"/>
       <transform>
         <constant>Hello World</constant>
-      </transform>
-    </route>
-    <route>
-      <from uri="direct:bye"/>
-      <transform>
-        <simple>Bye ${header.name}</simple>
       </transform>
     </route>
   </camelContext>

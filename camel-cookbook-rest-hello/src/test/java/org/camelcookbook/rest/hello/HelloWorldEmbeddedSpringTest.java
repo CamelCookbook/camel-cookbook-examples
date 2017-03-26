@@ -37,7 +37,7 @@ public class HelloWorldEmbeddedSpringTest extends CamelSpringTestSupport {
 
     @Test
     public void testHello() throws Exception {
-        String out = fluentTemplate().to("http://localhost:" + port1 + "/say/hello")
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/say/hello")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
                 .request(String.class);
 
@@ -45,23 +45,13 @@ public class HelloWorldEmbeddedSpringTest extends CamelSpringTestSupport {
     }
 
     @Test
-    public void testBye() throws Exception {
-        String out = fluentTemplate().to("http://localhost:" + port1 + "/say/bye/Scott")
-                .withHeader(Exchange.HTTP_METHOD, "GET")
-                .request(String.class);
-
-        assertEquals("Bye Scott", out);
-    }
-
-    @Test
     public void testPostBye() throws Exception {
         final String json = "{ \"name\": \"Scott\" }";
-        final String mockName = "testThis";
 
-        MockEndpoint update = getMockEndpoint("mock:" + mockName);
+        MockEndpoint update = getMockEndpoint("mock:update");
         update.expectedBodiesReceived(json);
 
-        fluentTemplate().to("http://localhost:" + port1 + "/say/bye/" + mockName)
+        fluentTemplate().to("undertow:http://localhost:" + port1 + "/say/bye")
                 .withHeader(Exchange.HTTP_METHOD, "POST")
                 .withHeader(Exchange.CONTENT_ENCODING, "application/json")
                 .withBody(json)

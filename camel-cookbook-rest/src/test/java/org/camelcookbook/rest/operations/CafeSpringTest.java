@@ -51,7 +51,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
     public void testGetAll() throws Exception {
         final String origValue = objectWriter.writeValueAsString(getMenuService().getMenuItems());
 
-        String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items")
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/cafe/menu/items")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
                 .request(String.class);
 
@@ -62,7 +62,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
     public void testGetOne() throws Exception {
         final String origValue = objectWriter.writeValueAsString(getMenuService().getMenuItem(1));
 
-        String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/1")
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/cafe/menu/items/1")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
                 .request(String.class);
 
@@ -74,7 +74,8 @@ public class CafeSpringTest extends CamelSpringTestSupport {
         final int size = getMenuService().getMenuItems().size();
 
         try {
-            String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1))
+            // TODO: report camel-undertow not throwing exception on failure
+            String out = fluentTemplate().to("netty4-http:http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1))
                     .withHeader(Exchange.HTTP_METHOD, "GET")
                     .request(String.class);
         } catch (Exception e) {
@@ -97,7 +98,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
         newItem.setCost(5);
         String newItemJson = objectWriter.writeValueAsString(newItem);
 
-        Exchange outExchange = template().request("http://localhost:" + port1 + "/cafe/menu/items", new Processor() {
+        Exchange outExchange = template().request("undertow:http://localhost:" + port1 + "/cafe/menu/items", new Processor() {
                     @Override
                     public void process(Exchange exchange) throws Exception {
                         exchange.getIn().setBody(newItemJson);
@@ -138,7 +139,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
 
         String newItemJson = objectWriter.writeValueAsString(newItem);
 
-        String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/2")
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/cafe/menu/items/2")
                 .withHeader(Exchange.HTTP_METHOD, "PUT")
                 .withHeader(Exchange.CONTENT_ENCODING, "application/json")
                 .withBody(newItemJson)
@@ -161,7 +162,7 @@ public class CafeSpringTest extends CamelSpringTestSupport {
         Collection<MenuItem> menuItems = getMenuService().getMenuItems();
         assertEquals(2, menuItems.size());
 
-        fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/2")
+        fluentTemplate().to("undertow:http://localhost:" + port1 + "/cafe/menu/items/2")
                 .withHeader(Exchange.HTTP_METHOD, "DELETE")
                 .send();
 

@@ -58,14 +58,14 @@ public class BindingModeTest extends CamelTestSupport {
         final Item origItem = getItemService().getItem(0);
         final String origItemJson = objectWriter.writeValueAsString(origItem);
 
-        String outJson = fluentTemplate().to("http://localhost:" + port1 + "/items/0")
+        String outJson = fluentTemplate().to("undertow:http://localhost:" + port1 + "/items/0")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
                 .withHeader("Accept", "application/json")
                 .request(String.class);
 
         assertEquals(origItemJson, outJson);
 
-        String outXml = fluentTemplate().to("http://localhost:" + port1 + "/items/0")
+        String outXml = fluentTemplate().to("undertow:http://localhost:" + port1 + "/items/0")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
                 .withHeader("Accept", "application/xml")
                 .request(String.class);
@@ -82,7 +82,7 @@ public class BindingModeTest extends CamelTestSupport {
     public void testGetOneJson() throws Exception {
         final String origValue = objectWriter.writeValueAsString(getItemService().getItem(0));
 
-        String out = fluentTemplate().to("http://localhost:" + port1 + "/items/0/json")
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/items/0/json")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
                 .request(String.class);
 
@@ -93,7 +93,7 @@ public class BindingModeTest extends CamelTestSupport {
     public void testGetOneXml() throws Exception {
         final Item origItem = getItemService().getItem(0);
 
-        String out = fluentTemplate().to("http://localhost:" + port1 + "/items/0/xml")
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/items/0/xml")
                 .withHeader(Exchange.HTTP_METHOD, "GET")
                 .request(String.class);
 

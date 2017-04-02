@@ -23,6 +23,7 @@ import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.netty4.http.NettyHttpOperationFailedException;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.test.AvailablePortFinder;
@@ -56,15 +57,16 @@ public class CafeErrorTest extends CamelTestSupport {
     @Test
     public void testInvalidJson() throws Exception {
         try {
-            String out = fluentTemplate().to("http://localhost:" + port1 + "/cafe/menu/items/1")
+            // TODO: report camel-undertow not throwing exception on failure
+            String out = fluentTemplate().to("netty4-http:http://localhost:" + port1 + "/cafe/menu/items/1")
                     .withHeader(Exchange.HTTP_METHOD, "PUT")
                     .withBody("This is not JSON format")
                     .request(String.class);
         } catch (CamelExecutionException e) {
-            HttpOperationFailedException httpException = (HttpOperationFailedException) e.getCause();
+            NettyHttpOperationFailedException httpException = (NettyHttpOperationFailedException) e.getCause();
 
             assertEquals(400, httpException.getStatusCode());
-            assertEquals("Invalid json data", httpException.getResponseBody());
+            assertEquals("Invalid json data", httpException.getContentAsString());
 
             return;
         }
@@ -76,7 +78,7 @@ public class CafeErrorTest extends CamelTestSupport {
     public void testGetInvalid() throws Exception {
         final int size = getMenuService().getMenuItems().size();
 
-        Exchange exchange = template().request("http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), new Processor() {
+        Exchange exchange = template().request("undertow:http://localhost:" + port1 + "/cafe/menu/items/" + (size + 1), new Processor() {
             @Override
             public void process(Exchange exchange) throws Exception {
                 exchange.getIn().setBody(null);
@@ -84,9 +86,6 @@ public class CafeErrorTest extends CamelTestSupport {
             }
         });
 
-        HttpOperationFailedException exception = exchange.getException(HttpOperationFailedException.class);
-
-        //System.out.println("Message " + exception.getResponseBody());
-        assertEquals(404, exception.getStatusCode());
+        assertEquals(404, exchange.getOut().getHeader(Exchange.HTTP_RESPONSE_CODE));
     }
 }

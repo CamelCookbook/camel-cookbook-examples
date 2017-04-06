@@ -74,7 +74,7 @@
     <jaxb-version>2.2.11</jaxb-version>
     <jetty9-version>9.3.14.v20161028</jetty9-version>
     <junit-version>4.12</junit-version>
-    <karaf-version>4.1.0</karaf-version>
+    <karaf-version>4.1.1</karaf-version>
     <log4j2-version>2.8.1</log4j2-version>
     <saxon-version>9.7.0-15</saxon-version>
     <slf4j-version>1.7.22</slf4j-version>

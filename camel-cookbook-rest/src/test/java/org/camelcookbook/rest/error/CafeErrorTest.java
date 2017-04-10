@@ -23,7 +23,6 @@ import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.netty4.http.NettyHttpOperationFailedException;
 import org.apache.camel.http.common.HttpOperationFailedException;
 import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.test.AvailablePortFinder;
@@ -57,21 +56,19 @@ public class CafeErrorTest extends CamelTestSupport {
     @Test
     public void testInvalidJson() throws Exception {
         try {
-            // TODO: report camel-undertow not throwing exception on failure
-            String out = fluentTemplate().to("netty4-http:http://localhost:" + port1 + "/cafe/menu/items/1")
+            String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/cafe/menu/items/1")
                     .withHeader(Exchange.HTTP_METHOD, "PUT")
                     .withBody("This is not JSON format")
                     .request(String.class);
+
+            fail("Expected exception to be thrown");
         } catch (CamelExecutionException e) {
-            NettyHttpOperationFailedException httpException = (NettyHttpOperationFailedException) e.getCause();
+            HttpOperationFailedException httpException = assertIsInstanceOf(HttpOperationFailedException.class, e.getCause());
 
             assertEquals(400, httpException.getStatusCode());
-            assertEquals("Invalid json data", httpException.getContentAsString());
-
-            return;
+            assertEquals("text/plain", httpException.getResponseHeaders().get(Exchange.CONTENT_TYPE));
+            assertEquals("Invalid json data", httpException.getResponseBody());
         }
-
-        fail("Expected exception to be thrown");
     }
 
     @Test

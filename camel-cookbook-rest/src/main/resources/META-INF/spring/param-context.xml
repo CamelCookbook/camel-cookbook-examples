@@ -44,6 +44,7 @@
         </route>
       </get>
       <get uri="/hello/query/{name}?verbose={verbose}">
+        <param name="verbose" type="query" defaultValue="false"/>
         <to uri="direct:hello"/>
       </get>
       <post uri="/bye/{name}">

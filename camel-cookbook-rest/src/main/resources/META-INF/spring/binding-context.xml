@@ -25,21 +25,27 @@
 
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 
-  <bean name="itemService" class="org.camelcookbook.rest.configuration.ItemService"/>
+  <bean name="itemService" class="org.camelcookbook.rest.binding.ItemService"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <restConfiguration component="undertow" port="{{port1}}" bindingMode="json_xml"/>
 
     <rest>
-      <get uri="/items/{id}" outType="org.camelcookbook.rest.configuration.Item">
+      <get uri="/items" outType="org.camelcookbook.rest.binding.Item[]">
+        <to uri="bean:itemService?method=getItems"/>
+      </get>
+      <get uri="/items/{id}" outType="org.camelcookbook.rest.binding.Item">
         <to uri="bean:itemService?method=getItem(${header.id})"/>
       </get>
-      <get uri="/items/{id}/xml" outType="org.camelcookbook.rest.configuration.Item" bindingMode="xml">
+      <get uri="/items/{id}/xml" outType="org.camelcookbook.rest.binding.Item" bindingMode="xml">
         <to uri="bean:itemService?method=getItem(${header.id})"/>
       </get>
-      <get uri="/items/{id}/json" outType="org.camelcookbook.rest.configuration.Item" bindingMode="json">
+      <get uri="/items/{id}/json" outType="org.camelcookbook.rest.binding.Item" bindingMode="json">
         <to uri="bean:itemService?method=getItem(${header.id})"/>
       </get>
+      <put uri="/items/{id}" type="org.camelcookbook.rest.binding.Item">
+        <to uri="bean:itemService?method=setItem(${header.id}, ${body})"/>
+      </put>
     </rest>
   </camelContext>
 

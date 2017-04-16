@@ -15,13 +15,35 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.rest.configuration;
+package org.camelcookbook.rest.binding;
+
+import java.util.ArrayList;
 
 public class ItemService {
+    private ArrayList<Item> items = new ArrayList<>();
+
     public ItemService() {
+        items.add(new Item("Thing0"));
+        items.add(new Item("Thing1"));
+    }
+
+    public Item[] getItems() {
+        Item[] out = new Item[items.size()];
+        return items.toArray(out);
     }
 
     public Item getItem(int id) {
-        return new Item("Thing" + id);
+        return items.get(id);
+    }
+
+    public void setItem(int id, Item item) {
+        items.set(id, item);
+    }
+
+    public void setItems(Item[] items) {
+        this.items.clear();
+        for (int i = 0; i < items.length; i++) {
+            this.items.add(i, items[i]);
+        }
     }
 }

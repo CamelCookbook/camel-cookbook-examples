@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.rest.configuration;
+package org.camelcookbook.rest.binding;
 
 import org.apache.camel.main.Main;
 

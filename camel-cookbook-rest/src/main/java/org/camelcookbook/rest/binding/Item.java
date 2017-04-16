@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.rest.configuration;
+package org.camelcookbook.rest.binding;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

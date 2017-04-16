@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.rest.configuration;
+package org.camelcookbook.rest.binding;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -43,8 +43,10 @@ public class BindingModeRouteBuilder extends RouteBuilder {
             .component("undertow").port(port1).bindingMode(RestBindingMode.json_xml);
 
         rest()
+            .get("/items").outType(Item[].class).to("bean:itemService?method=getItems")
             .get("/items/{id}").outType(Item.class).to("bean:itemService?method=getItem(${header.id})")
             .get("/items/{id}/xml").outType(Item.class).bindingMode(RestBindingMode.xml).to("bean:itemService?method=getItem(${header.id})")
-            .get("/items/{id}/json").outType(Item.class).bindingMode(RestBindingMode.json).to("bean:itemService?method=getItem(${header.id})");
+            .get("/items/{id}/json").outType(Item.class).bindingMode(RestBindingMode.json).to("bean:itemService?method=getItem(${header.id})")
+            .put("/items/{id}").type(Item.class).to("bean:itemService?method=setItem(${header.id}, ${body})");
     }
 }

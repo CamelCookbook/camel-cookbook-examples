@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.rest.configuration;
+package org.camelcookbook.rest.binding;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -27,8 +27,10 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
+import java.io.StringWriter;
 
 public class BindingModeSpringTest extends CamelSpringTestSupport {
     private final int port1 = AvailablePortFinder.getNextAvailable();
@@ -43,7 +45,20 @@ public class BindingModeSpringTest extends CamelSpringTestSupport {
     protected AbstractApplicationContext createApplicationContext() {
         System.setProperty("port1", String.valueOf(port1));
 
-        return new ClassPathXmlApplicationContext("META-INF/spring/binding-mode-context.xml");
+        return new ClassPathXmlApplicationContext("META-INF/spring/binding-context.xml");
+    }
+
+    @Test
+    public void testGetMany() throws Exception {
+        final Item[] origItems = getItemService().getItems();
+        final String origItemsJson = objectWriter.writeValueAsString(origItems);
+
+        String outJson = fluentTemplate().to("undertow:http://localhost:" + port1 + "/items")
+                .withHeader(Exchange.HTTP_METHOD, "GET")
+                .withHeader("Accept", "application/json")
+                .request(String.class);
+
+        assertEquals(origItemsJson, outJson);
     }
 
     @Test
@@ -96,5 +111,45 @@ public class BindingModeSpringTest extends CamelSpringTestSupport {
         Item itemOut = (Item) jaxbUnmarshaller.unmarshal(new StringReader(out));
 
         assertEquals(origItem, itemOut);
+    }
+
+    @Test
+    public void testSetOneJson() throws Exception {
+        Item item = getItemService().getItem(0);
+
+        // change name to something different
+        item.setName(item.getName() + "Foo");
+
+        final String jsonItem = objectWriter.writeValueAsString(item);
+
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/items/0")
+                .withHeader(Exchange.HTTP_METHOD, "PUT")
+                .withBody(jsonItem)
+                .request(String.class);
+
+        assertEquals(item, getItemService().getItem(0));
+    }
+
+    @Test
+    public void testSetOneXml() throws Exception {
+        final Item item = getItemService().getItem(0);
+
+        // change name to something different
+        item.setName(item.getName() + "Foo");
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Item.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        StringWriter sw = new StringWriter();
+
+        jaxbMarshaller.marshal(item, sw);
+
+        String xmlItem = sw.toString();
+
+        String out = fluentTemplate().to("undertow:http://localhost:" + port1 + "/items/0")
+                .withHeader(Exchange.HTTP_METHOD, "PUT")
+                .withBody(xmlItem)
+                .request(String.class);
+
+        assertEquals(item, getItemService().getItem(0));
     }
 }

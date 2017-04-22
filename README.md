@@ -1,9 +1,9 @@
 Apache Camel Developer's Cookbook, 2nd Edition Samples
 ======================================================
 
-[![Build Status](https://travis-ci.org/CamelCookbook/camel-cookbook-examples.png?branch=2nd_ed)](https://travis-ci.org/CamelCookbook/camel-cookbook-examples)
+[![Build Status](https://travis-ci.org/CamelCookbook/camel-cookbook-examples.png?branch=camel-v2.19.x)](https://travis-ci.org/CamelCookbook/camel-cookbook-examples)
 
-This project contains the sample code for the [_Apache Camel Developer's Cookbook, 2nd Edition_](http://www.packtpub.com/apache-camel-developers-cookbook/book)
+This project contains the sample code for the [_Apache Camel Developer's Cookbook_](http://www.packtpub.com/apache-camel-developers-cookbook/book)
 (Packt Publishing, May 2017) by [Scott Cranton](https://github.com/scranton), [Jakub Korab](https://github.com/jkorab), and [Christian Posta](https://github.com/christian-posta).
 The latest version of this code is available on [GitHub](http://github.com/CamelCookbook/camel-cookbook-examples).
 

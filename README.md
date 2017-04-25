@@ -10,8 +10,8 @@ The latest version of this code is available on [GitHub](http://github.com/Camel
 *This project is up to date with [Apache Camel 2.18.4](http://camel.apache.org/camel-2184-release.html).*
 
 All of the examples are driven through JUnit tests, and are collectively structured as a set
-of Apache Maven projects. To execute them, you will need a copy of the [Java 8 JDK]
-(http://openjdk.java.net/install/) and an [Apache Maven 3](http://maven.apache.org/) installation. 
+of Apache Maven projects. To execute them, you will need a copy of the [Java 8 JDK](http://openjdk.java.net/install/)
+and an [Apache Maven 3](http://maven.apache.org/) installation. 
 Maven will download all of the appropriate project dependencies.
 
 In order to execute all the tests, all you need to do is run:

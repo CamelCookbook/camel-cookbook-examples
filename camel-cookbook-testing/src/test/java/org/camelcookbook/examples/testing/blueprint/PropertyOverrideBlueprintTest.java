@@ -24,6 +24,7 @@ import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -60,6 +61,7 @@ public class PropertyOverrideBlueprintTest extends CamelBlueprintTestSupport {
     }
 
     @Test
+    @Ignore
     public void testPayloadIsTransformedAgain() throws InterruptedException {
         mockOut.setExpectedMessageCount(1);
         mockOut.message(0).body().isEqualTo("Overridden: Foo");

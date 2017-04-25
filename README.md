@@ -1,7 +1,7 @@
 Apache Camel Developer's Cookbook Samples
 =========================================
 
-[![Build Status](https://travis-ci.org/CamelCookbook/camel-cookbook-examples.png?branch=camel-v2.18.x)](https://travis-ci.org/CamelCookbook/camel-cookbook-examples)
+[![Build Status](https://travis-ci.org/CamelCookbook/camel-cookbook-examples.png?branch=master)](https://travis-ci.org/CamelCookbook/camel-cookbook-examples)
 
 This project contains the sample code for the [_Apache Camel Developer's Cookbook_](http://www.packtpub.com/apache-camel-developers-cookbook/book)
 (Packt Publishing, Dec 2013) by [Scott Cranton](https://github.com/scranton) and [Jakub Korab](https://github.com/jkorab).

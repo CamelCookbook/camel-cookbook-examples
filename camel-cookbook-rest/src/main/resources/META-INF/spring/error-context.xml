@@ -1,0 +1,107 @@
+<!--
+  ~ Copyright (C) Scott Cranton, Jakub Korab, and Christian Posta
+  ~ https://github.com/CamelCookbook
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       ">
+
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
+
+  <bean name="menuService" class="org.camelcookbook.rest.common.MenuService"/>
+
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+    <!-- make sure to put onException first -->
+    <onException>
+      <exception>org.camelcookbook.rest.common.MenuItemNotFoundException</exception>
+      <handled>
+        <constant>true</constant>
+      </handled>
+      <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
+        <constant>404</constant>
+      </setHeader>
+      <setHeader headerName="Exchange.CONTENT_TYPE">
+        <constant>text/plain</constant>
+      </setHeader>
+      <setBody>
+        <simple>${exception.message}</simple>
+      </setBody>
+    </onException>
+
+    <onException>
+      <exception>org.camelcookbook.rest.common.MenuItemInvalidException</exception>
+      <handled>
+        <constant>true</constant>
+      </handled>
+      <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
+        <constant>400</constant>
+      </setHeader>
+      <setHeader headerName="Exchange.CONTENT_TYPE">
+        <constant>text/plain</constant>
+      </setHeader>
+      <setBody>
+        <simple>${exception.message}</simple>
+      </setBody>
+    </onException>
+
+    <onException>
+      <exception>com.fasterxml.jackson.core.JsonParseException</exception>
+      <handled>
+        <constant>true</constant>
+      </handled>
+      <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
+        <constant>400</constant>
+      </setHeader>
+      <setHeader headerName="Exchange.CONTENT_TYPE">
+        <constant>text/plain</constant>
+      </setHeader>
+      <setBody>
+        <constant>Invalid json data</constant>
+      </setBody>
+    </onException>
+
+    <restConfiguration component="undertow" port="{{port1}}" bindingMode="json"/>
+
+    <rest path="/cafe/menu">
+      <get uri="/items" outType="org.camelcookbook.rest.common.MenuItem[]">
+        <to uri="bean:menuService?method=getMenuItems"/>
+      </get>
+      <get uri="/items/{id}" outType="org.camelcookbook.rest.common.MenuItem">
+        <to uri="bean:menuService?method=getMenuItem(${header.id})"/>
+      </get>
+      <post uri="/items" type="org.camelcookbook.rest.common.MenuItem">
+        <route>
+          <to uri="bean:menuService?method=createMenuItem"/>
+          <setHeader headerName="Exchange.HTTP_RESPONSE_CODE">
+            <constant>201</constant>
+          </setHeader>
+        </route>
+      </post>
+      <put uri="/items/{id}" type="org.camelcookbook.rest.common.MenuItem">
+        <to uri="bean:menuService?method=updateMenuItem(${header.id}, ${body})"/>
+      </put>
+      <delete uri="/items/{id}">
+        <to uri="bean:menuService?method=removeMenuItem(${header.id})"/>
+      </delete>
+    </rest>
+
+  </camelContext>
+
+</beans>

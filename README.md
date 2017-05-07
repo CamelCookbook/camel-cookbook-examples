@@ -7,7 +7,7 @@ This project contains the sample code for the [_Apache Camel Developer's Cookboo
 (Packt Publishing, Dec 2013) by [Scott Cranton](https://github.com/scranton) and [Jakub Korab](https://github.com/jkorab).
 The latest version of this code is available on [GitHub](http://github.com/CamelCookbook/camel-cookbook-examples).
 
-*This project is up to date with [Apache Camel 2.18.3](http://camel.apache.org/camel-2183-release.html).*
+*This project is up to date with [Apache Camel 2.19.0](http://camel.apache.org/camel-2190-release.html).*
 
 All of the examples are driven through JUnit tests, and are collectively structured as a set
 of Apache Maven projects. To execute them, you will need a copy of the [Java 8 JDK](http://openjdk.java.net/install/)

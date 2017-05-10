@@ -29,7 +29,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Demonstrates the use of an XA transaction manager with a JMS component and database.
  */
-@Ignore
 public class XATransactionSpringTest extends CamelSpringTestSupport {
 
     public static final int MAX_WAIT_TIME = 1000;
@@ -39,8 +38,6 @@ public class XATransactionSpringTest extends CamelSpringTestSupport {
         return new ClassPathXmlApplicationContext("META-INF/spring/xaTransaction-context.xml");
     }
 
-    // Getting an issue with Travis CI failing implying duplicate xa.activemq named resources
-    // TODO : revisit with update to Narayana
     @Test
     public void testTransactedRolledBack() throws InterruptedException {
         AuditLogDao auditLogDao = getMandatoryBean(AuditLogDao.class, "auditLogDao");

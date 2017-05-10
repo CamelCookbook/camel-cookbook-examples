@@ -78,17 +78,24 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
+
     <dependency>
-      <groupId>com.atomikos</groupId>
-      <artifactId>transactions</artifactId>
+      <groupId>org.jboss.narayana.jta</groupId>
+      <artifactId>jta</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.atomikos</groupId>
-      <artifactId>transactions-jdbc</artifactId>
+      <groupId>org.jboss.narayana.jta</groupId>
+      <artifactId>jdbc</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.atomikos</groupId>
-      <artifactId>transactions-jms</artifactId>
+      <groupId>org.jboss</groupId>
+      <artifactId>jboss-transaction-spi</artifactId>
+      <version>${jboss-transaction-spi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <version>${jboss-logging-version}</version>
     </dependency>
 
     <dependency>

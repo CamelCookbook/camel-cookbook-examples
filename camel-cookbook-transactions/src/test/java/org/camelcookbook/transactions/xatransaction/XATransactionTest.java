@@ -17,13 +17,12 @@
 
 package org.camelcookbook.transactions.xatransaction;
 
-import com.atomikos.icatch.jta.UserTransactionImp;
-import com.atomikos.icatch.jta.UserTransactionManager;
-import com.atomikos.jdbc.AtomikosDataSourceBean;
-import com.atomikos.jms.AtomikosConnectionFactoryBean;
+import com.arjuna.ats.jta.TransactionManager;
+import com.arjuna.ats.jta.UserTransaction;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.ActiveMQXAConnectionFactory;
 import org.apache.activemq.camel.component.ActiveMQComponent;
+import org.apache.activemq.jms.pool.XaPooledConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -37,10 +36,12 @@ import org.camelcookbook.transactions.utils.EmbeddedActiveMQBroker;
 import org.camelcookbook.transactions.utils.EmbeddedDataSourceFactory;
 import org.camelcookbook.transactions.utils.ExceptionThrowingProcessor;
 import org.h2.jdbcx.JdbcDataSource;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.jta.JtaTransactionManager;
+
+import java.util.Properties;
 
 /**
  * Demonstrates the use of an XA transaction manager with a JMS component and database.
@@ -53,8 +54,7 @@ public class XATransactionTest extends CamelTestSupport {
 
     @Rule
     public EmbeddedActiveMQBroker broker = new EmbeddedActiveMQBroker("embeddedBroker");
-    private AtomikosConnectionFactoryBean atomikosConnectionFactoryBean;
-    private UserTransactionManager userTransactionManager;
+    private javax.transaction.TransactionManager arjunaTransactionManager;
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
@@ -63,64 +63,64 @@ public class XATransactionTest extends CamelTestSupport {
 
     @Override
     protected CamelContext createCamelContext() throws Exception {
-        SimpleRegistry registry = new SimpleRegistry();
 
         // JMS setup
         ActiveMQXAConnectionFactory xaConnectionFactory =
             new ActiveMQXAConnectionFactory();
         xaConnectionFactory.setBrokerURL(broker.getTcpConnectorUri());
-        registry.put("connectionFactory", xaConnectionFactory);
 
-        atomikosConnectionFactoryBean = new AtomikosConnectionFactoryBean();
-        atomikosConnectionFactoryBean.setXaConnectionFactory(xaConnectionFactory);
-        atomikosConnectionFactoryBean.setUniqueResourceName("xa.activemq");
-        atomikosConnectionFactoryBean.setMaxPoolSize(10);
-        atomikosConnectionFactoryBean.setIgnoreSessionTransactedFlag(false);
-        registry.put("atomikos.connectionFactory", atomikosConnectionFactoryBean);
 
 
         // JDBC setup
-        JdbcDataSource jdbcDataSource = EmbeddedDataSourceFactory.getJdbcDataSource("sql/schema.sql");
+        DriverManagerDataSource h2ArjunaDataSource = new DriverManagerDataSource();
+        h2ArjunaDataSource.setDriverClassName("com.arjuna.ats.jdbc.TransactionalDriver");
+        h2ArjunaDataSource.setUrl("jdbc:arjuna:");
+        Properties prop = new Properties();
+        prop.setProperty("DYNAMIC_CLASS", "org.camelcookbook.transactions.xatransaction.H2DataSource");
+        prop.setProperty("user", "sa");
+        prop.setProperty("password", "");
+        h2ArjunaDataSource.setConnectionProperties(prop);
 
-        AtomikosDataSourceBean atomikosDataSourceBean = new AtomikosDataSourceBean();
-        atomikosDataSourceBean.setXaDataSource(jdbcDataSource);
-        atomikosDataSourceBean.setUniqueResourceName("xa.h2");
-        registry.put("atomikos.dataSource", atomikosDataSourceBean);
 
+        // Narayana/Arjuna setup
+        arjunaTransactionManager = TransactionManager.transactionManager();
+        arjunaTransactionManager.setTransactionTimeout(300);
 
-        // Atomikos setup
-        userTransactionManager = new UserTransactionManager();
-        userTransactionManager.setForceShutdown(false);
-        userTransactionManager.init();
+        javax.transaction.UserTransaction arjunaUserTransaction = UserTransaction.userTransaction();
+        arjunaUserTransaction.setTransactionTimeout(300);
 
-        UserTransactionImp userTransactionImp = new UserTransactionImp();
-        userTransactionImp.setTransactionTimeout(300);
-
+        // Spring tx manager set up
         JtaTransactionManager jtaTransactionManager = new JtaTransactionManager();
-        jtaTransactionManager.setTransactionManager(userTransactionManager);
-        jtaTransactionManager.setUserTransaction(userTransactionImp);
-
-        registry.put("jta.transactionManager", jtaTransactionManager);
+        jtaTransactionManager.setTransactionManager(arjunaTransactionManager);
+        jtaTransactionManager.setUserTransaction(arjunaUserTransaction);
 
         SpringTransactionPolicy propagationRequired = new SpringTransactionPolicy();
         propagationRequired.setTransactionManager(jtaTransactionManager);
         propagationRequired.setPropagationBehaviorName("PROPAGATION_REQUIRED");
+
+        // set up audit dao for non XA tx
+        log.info("building the audit database once and for all...");
+        JdbcDataSource nonTxDataSource = EmbeddedDataSourceFactory.getJdbcDataSource("sql/schema.sql");
+        auditLogDao = new AuditLogDao(nonTxDataSource);
+
+        // build the camel context
+        SimpleRegistry registry = new SimpleRegistry();
         registry.put("PROPAGATION_REQUIRED", propagationRequired);
-
-
-        auditLogDao = new AuditLogDao(jdbcDataSource);
-
         CamelContext camelContext = new DefaultCamelContext(registry);
 
         {
             SqlComponent sqlComponent = new SqlComponent();
-            sqlComponent.setDataSource(atomikosDataSourceBean);
+            sqlComponent.setDataSource(h2ArjunaDataSource);
             camelContext.addComponent("sql", sqlComponent);
         }
         {
             // transactional JMS component
+            XaPooledConnectionFactory pooledXaConnFactory = new XaPooledConnectionFactory();
+            pooledXaConnFactory.setTransactionManager(arjunaTransactionManager);
+            pooledXaConnFactory.setConnectionFactory(xaConnectionFactory);
+
             ActiveMQComponent activeMQComponent = new ActiveMQComponent();
-            activeMQComponent.setConnectionFactory(atomikosConnectionFactoryBean);
+            activeMQComponent.setConnectionFactory(pooledXaConnFactory);
             activeMQComponent.setTransactionManager(jtaTransactionManager);
             camelContext.addComponent("jms", activeMQComponent);
         }
@@ -138,11 +138,6 @@ public class XATransactionTest extends CamelTestSupport {
         return camelContext;
     }
 
-    @After
-    public void closeAtomikosResources() {
-        userTransactionManager.close();
-        atomikosConnectionFactoryBean.close();
-    }
 
 
     @Test

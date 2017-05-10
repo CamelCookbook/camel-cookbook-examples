@@ -27,53 +27,52 @@
   <!-- JMS config; with XAConnectionFactory -->
   <import resource="xa-embedded-jms-context.xml"/>
 
-  <!-- Atomikos JTA configuration, nothing specific to Spring here -->
-  <bean id="atomikos.connectionFactory" class="com.atomikos.jms.AtomikosConnectionFactoryBean"
-        init-method="init" destroy-method="close">
-    <property name="uniqueResourceName" value="xa.activemq"/>
-    <property name="xaConnectionFactory" ref="xa.amqConnectionFactory"/>
-    <!-- XAConnectionFactory -->
-    <property name="maxPoolSize" value="10"/>
-    <property name="ignoreSessionTransactedFlag" value="false"/>
+  <bean name="xa.pooledConnectionFactory" class="org.apache.activemq.jms.pool.XaPooledConnectionFactory">
+    <property name="transactionManager" ref="arjuna.transactionManager" />
+    <property name="connectionFactory" ref="xa.amqConnectionFactory" />
   </bean>
-
 
   <!-- database config; the auditDataSource bean is both a DataSource and an XADataSource-->
   <import resource="xa-embedded-db-context.xml"/>
 
-  <bean id="atomikos.dataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean">
-    <property name="uniqueResourceName" value="xa.h2"/>
-    <property name="xaDataSource" ref="auditDataSource"/>
-    <!-- XADataSource -->
+  <bean name="h2ArjunaXaDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.arjuna.ats.jdbc.TransactionalDriver"/>
+    <property name="url" value="jdbc:arjuna:"/>
+    <property name="connectionProperties">
+      <props>
+        <prop key="DYNAMIC_CLASS">org.camelcookbook.transactions.xatransaction.H2DataSource</prop>
+        <prop key="user">sa</prop>
+        <prop key="password"></prop>
+      </props>
+    </property>
   </bean>
 
 
   <!-- javax.transaction.TransactionManager -->
-  <bean id="atomikos.transactionManager"
-        class="com.atomikos.icatch.jta.UserTransactionManager"
-        init-method="init"
-        destroy-method="close"
-        depends-on="atomikos.connectionFactory,atomikos.dataSource">
-    <property name="forceShutdown" value="false"/>
+  <bean id="arjuna.transactionManager"
+        class="com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionManagerImple">
+    <property name="transactionTimeout" value="300"/>
   </bean>
 
   <!-- javax.transaction.UserTransaction -->
-  <bean id="atomikos.userTransaction"
-        class="com.atomikos.icatch.jta.UserTransactionImp">
+  <bean id="arjuna.userTransaction"
+        class="com.arjuna.ats.internal.jta.transaction.arjunacore.UserTransactionImple" >
     <property name="transactionTimeout" value="300"/>
   </bean>
+
+
 
   <!-- This is the Spring wrapper over the JTA configuration -->
   <!-- org.springframework.transaction.PlatformTransactionManager -->
   <bean id="jta.transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
-    <property name="transactionManager" ref="atomikos.transactionManager"/>
-    <property name="userTransaction" ref="atomikos.userTransaction"/>
+    <property name="transactionManager" ref="arjuna.transactionManager"/>
+    <property name="userTransaction" ref="arjuna.userTransaction"/>
   </bean>
 
 
   <!-- Camel components -->
   <bean id="jms" class="org.apache.activemq.camel.component.ActiveMQComponent">
-    <property name="connectionFactory" ref="atomikos.connectionFactory"/>
+    <property name="connectionFactory" ref="xa.pooledConnectionFactory"/>
     <property name="transactionManager" ref="jta.transactionManager"/>
   </bean>
 
@@ -83,7 +82,7 @@
   </bean>
 
   <bean id="sql" class="org.apache.camel.component.sql.SqlComponent">
-    <property name="dataSource" ref="atomikos.dataSource"/>
+    <property name="dataSource" ref="h2ArjunaXaDataSource"/>
   </bean>
 
   <!-- Policy -->

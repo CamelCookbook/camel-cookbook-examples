@@ -46,6 +46,7 @@ public class OrderProcessingRouteBuilder extends RouteBuilder {
 
     @PostConstruct
     public void checkMandatoryProperties() {
+        Validate.notEmpty(id, "id is empty");
         Validate.notEmpty(inputUri, "inputUri is empty");
         Validate.notEmpty(outputUri, "outputUri is empty");
         Validate.notNull(orderFileNameProcessor, "orderFileNameProcessor is null");

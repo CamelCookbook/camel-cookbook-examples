@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/CamelCookbook/camel-cookbook-examples.png?label=ready&title=Ready)](https://waffle.io/CamelCookbook/camel-cookbook-examples?utm_source=badge)
 Apache Camel Developer's Cookbook, 2nd Edition Samples
 ======================================================
 

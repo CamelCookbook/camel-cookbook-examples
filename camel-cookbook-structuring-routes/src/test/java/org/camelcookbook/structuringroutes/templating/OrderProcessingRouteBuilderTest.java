@@ -17,20 +17,20 @@
 
 package org.camelcookbook.structuringroutes.templating;
 
-import org.apache.camel.EndpointInject;
-import org.apache.camel.Produce;
-import org.apache.camel.ProducerTemplate;
+import org.apache.camel.Exchange;
+import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 public class OrderProcessingRouteBuilderTest extends CamelTestSupport {
-    @Produce(uri = "direct:in")
-    ProducerTemplate in;
+    public static final String ID = "testOrders";
 
-    @EndpointInject(uri = "mock:out")
-    MockEndpoint out;
+    @Override
+    public boolean isUseAdviceWith() {
+        return true;
+    }
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
@@ -38,21 +38,35 @@ public class OrderProcessingRouteBuilderTest extends CamelTestSupport {
         orderFileNameProcessor.setCountryDateFormat("dd-MM-yyyy");
 
         OrderProcessingRouteBuilder routeBuilder = new OrderProcessingRouteBuilder();
-        routeBuilder.setId("testOrders");
-        routeBuilder.inputUri = "direct:in";
-        routeBuilder.outputUri = "mock:out";
+        routeBuilder.setId(ID);
+        routeBuilder.setInputDirectory("input");
+        routeBuilder.setOutputDirectory("output");
         routeBuilder.setOrderFileNameProcessor(orderFileNameProcessor);
 
         return routeBuilder;
     }
 
     @Test
-    public void testRoutingLogic() throws InterruptedException {
-        out.setExpectedMessageCount(1);
-        out.message(0).body().startsWith("2013-11-23");
-        out.message(0).header("CamelFileName").isEqualTo("2013-11-23.csv");
+    public void testRoutingLogic() throws Exception {
+        context.getRouteDefinition(ID)
+                .adviceWith(context, new AdviceWithRouteBuilder() {
+                    @Override
+                    public void configure() throws Exception {
+                        replaceFromWith("direct:in");
 
-        in.sendBody("23-11-2013,1,Geology rocks t-shirt");
+                        interceptSendToEndpoint("file://output")
+                                .skipSendToOriginalEndpoint()
+                                .to("mock:out");
+                    }
+                });
+        context.start();
+
+        final MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().startsWith("2013-11-23");
+        mockOut.message(0).header(Exchange.FILE_NAME).isEqualTo("2013-11-23.csv");
+
+        fluentTemplate().to("direct:in").withBody("23-11-2013,1,Geology rocks t-shirt").send();
 
         assertMockEndpointsSatisfied();
     }

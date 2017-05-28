@@ -39,9 +39,9 @@ public class OrderFileNameProcessor implements Processor {
     /**
      * See http://xkcd.com/1179/
      */
-    public final static String UNIVERSAL_DATE_FORMAT = "yyyy-MM-dd";
+    private final static String UNIVERSAL_DATE_FORMAT = "yyyy-MM-dd";
 
-    public String countryDateFormat;
+    private String countryDateFormat;
 
     public void setCountryDateFormat(String countryDateFormat) {
         this.countryDateFormat = countryDateFormat;
@@ -49,20 +49,20 @@ public class OrderFileNameProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Message in = exchange.getIn();
+        final Message in = exchange.getIn();
 
         // there are better way to handle CSV files, but this is OK as an example
-        String[] fields = in.getBody(String.class).split(",");
-        String countrySpecificDate = fields[0];
+        final String[] fields = in.getBody(String.class).split(",");
+        final String countrySpecificDate = fields[0];
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(countryDateFormat);
-        Date date = simpleDateFormat.parse(countrySpecificDate);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(countryDateFormat);
+        final Date date = simpleDateFormat.parse(countrySpecificDate);
 
-        SimpleDateFormat universalDateFormat = new SimpleDateFormat(UNIVERSAL_DATE_FORMAT);
-        String universalDate = universalDateFormat.format(date);
+        final SimpleDateFormat universalDateFormat = new SimpleDateFormat(UNIVERSAL_DATE_FORMAT);
+        final String universalDate = universalDateFormat.format(date);
         fields[0] = universalDate;
 
-        in.setHeader("CamelFileName", universalDate + ".csv");
+        in.setHeader(Exchange.FILE_NAME, universalDate + ".csv");
         in.setBody(StringUtils.join(fields, ","));
     }
 }

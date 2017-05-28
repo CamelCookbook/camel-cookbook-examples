@@ -23,9 +23,9 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.Validate;
 
 public class OrderProcessingRouteBuilder extends RouteBuilder {
-    String id;
-    String inputUri;
-    String outputUri;
+    private String id;
+    private String inputDirectory;
+    private String outputDirectory;
     private OrderFileNameProcessor orderFileNameProcessor;
 
     public void setId(String id) {
@@ -33,11 +33,11 @@ public class OrderProcessingRouteBuilder extends RouteBuilder {
     }
 
     public void setInputDirectory(String inputDirectory) {
-        inputUri = "file://" + inputDirectory;
+        this.inputDirectory = inputDirectory;
     }
 
     public void setOutputDirectory(String outputDirectory) {
-        outputUri = "file://" + outputDirectory;
+        this.outputDirectory = outputDirectory;
     }
 
     public void setOrderFileNameProcessor(OrderFileNameProcessor orderFileNameProcessor) {
@@ -47,19 +47,19 @@ public class OrderProcessingRouteBuilder extends RouteBuilder {
     @PostConstruct
     public void checkMandatoryProperties() {
         Validate.notEmpty(id, "id is empty");
-        Validate.notEmpty(inputUri, "inputUri is empty");
-        Validate.notEmpty(outputUri, "outputUri is empty");
+        Validate.notEmpty(inputDirectory, "inputDirectory is empty");
+        Validate.notEmpty(outputDirectory, "outputDirectory is empty");
         Validate.notNull(orderFileNameProcessor, "orderFileNameProcessor is null");
     }
 
     @Override
     public void configure() throws Exception {
-        from(inputUri)
+        fromF("file://%s", inputDirectory)
             .id(id)
             .split(bodyAs(String.class).tokenize("\n")) // split into individual lines
                 .process(orderFileNameProcessor)
                 .log("Writing file: ${header.CamelFileName}")
-                .to(outputUri)
+                .toF("file://%s", outputDirectory)
             .end();
     }
 }

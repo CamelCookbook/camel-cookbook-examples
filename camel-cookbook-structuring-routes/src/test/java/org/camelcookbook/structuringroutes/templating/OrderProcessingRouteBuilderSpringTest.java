@@ -17,6 +17,7 @@
 
 package org.camelcookbook.structuringroutes.templating;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.spring.CamelSpringTestSupport;
@@ -75,40 +76,40 @@ public class OrderProcessingRouteBuilderSpringTest extends CamelSpringTestSuppor
 
         context.start();
 
-        MockEndpoint out = getMockEndpoint("mock:out");
-        out.setExpectedMessageCount(1);
-        out.message(0).body().startsWith("2013-11-23");
-        out.message(0).header("CamelFileName").isEqualTo("2013-11-23.csv");
+        final MockEndpoint mockOut = getMockEndpoint("mock:out");
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().startsWith("2013-11-23");
+        mockOut.message(0).header(Exchange.FILE_NAME).isEqualTo("2013-11-23.csv");
 
-        template.sendBody("direct:uk", "23-11-2013,1,Geology rocks t-shirt");
+        fluentTemplate().to("direct:uk").withBody("23-11-2013,1,Geology rocks t-shirt").send();
 
-        out.assertIsSatisfied();
+        mockOut.assertIsSatisfied();
 
-        out.reset();
-        out.setExpectedMessageCount(1);
-        out.message(0).body().startsWith("2013-11-23");
-        out.message(0).header("CamelFileName").isEqualTo("2013-11-23.csv");
+        mockOut.reset();
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().startsWith("2013-11-23");
+        mockOut.message(0).header(Exchange.FILE_NAME).isEqualTo("2013-11-23.csv");
 
-        template.sendBody("direct:us", "11-23-2013,1,Geology rocks t-shirt");
+        fluentTemplate().to("direct:us").withBody("11-23-2013,1,Geology rocks t-shirt").send();
 
-        out.assertIsSatisfied();
+        mockOut.assertIsSatisfied();
 
-        out.reset();
-        out.setExpectedMessageCount(1);
-        out.message(0).body().startsWith("2013-11-23");
-        out.message(0).header("CamelFileName").isEqualTo("2013-11-23.csv");
+        mockOut.reset();
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().startsWith("2013-11-23");
+        mockOut.message(0).header(Exchange.FILE_NAME).isEqualTo("2013-11-23.csv");
 
-        template.sendBody("direct:jamaica", "23-11-2013,1,Geology rocks t-shirt");
+        fluentTemplate().to("direct:jamaica").withBody("23-11-2013,1,Geology rocks t-shirt").send();
 
-        out.assertIsSatisfied();
+        mockOut.assertIsSatisfied();
 
-        out.reset();
-        out.setExpectedMessageCount(1);
-        out.message(0).body().startsWith("2013-11-23");
-        out.message(0).header("CamelFileName").isEqualTo("2013-11-23.csv");
+        mockOut.reset();
+        mockOut.setExpectedMessageCount(1);
+        mockOut.message(0).body().startsWith("2013-11-23");
+        mockOut.message(0).header(Exchange.FILE_NAME).isEqualTo("2013-11-23.csv");
 
-        template.sendBody("direct:uk", "11-23-2013,1,Geology rocks t-shirt");
+        fluentTemplate().to("direct:uk").withBody("11-23-2013,1,Geology rocks t-shirt").send();
 
-        out.assertIsNotSatisfied();
+        mockOut.assertIsNotSatisfied();
     }
 }

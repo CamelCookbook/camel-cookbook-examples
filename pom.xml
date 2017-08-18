@@ -80,9 +80,9 @@
     <slf4j-version>1.7.22</slf4j-version>
     <spring-boot-version>1.5.4.RELEASE</spring-boot-version>
     <spring-security-version>4.1.4.RELEASE</spring-security-version>
-    <spring4-version>4.3.9.RELEASE</spring4-version>
+    <spring4-version>4.3.10.RELEASE</spring4-version>
     <swagger-java-guava-version>20.0</swagger-java-guava-version>
-    <swagger-java-version>1.5.15</swagger-java-version>
+    <swagger-java-version>1.5.16</swagger-java-version>
     <xalan-version>2.7.2</xalan-version>
     <xbean-spring-version>4.5</xbean-spring-version>
     <xml-apis-version>1.4.01</xml-apis-version>

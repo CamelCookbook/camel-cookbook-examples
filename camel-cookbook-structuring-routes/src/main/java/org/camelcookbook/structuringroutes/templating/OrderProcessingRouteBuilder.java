@@ -55,7 +55,7 @@ public class OrderProcessingRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         fromF("file://%s", inputDirectory)
-            .id(id)
+            .routeId(id)
             .split(bodyAs(String.class).tokenize("\n")) // split into individual lines
                 .process(orderFileNameProcessor)
                 .log("Writing file: ${header.CamelFileName}")

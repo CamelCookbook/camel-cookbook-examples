@@ -31,7 +31,7 @@ public class RouteStoppingProcessorTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("direct:in").id("mainRoute")
+                from("direct:in").routeId("mainRoute")
                     .log("Stopping route")
                     .process(new RouteStoppingProcessor())
                     .log("Signalled to stop route")

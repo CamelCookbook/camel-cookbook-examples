@@ -32,7 +32,7 @@ public class RouteStoppingControlBusTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("direct:in").id("mainRoute")
+                from("direct:in").routeId("mainRoute")
                     .log("Stopping route")
                     .to("controlbus:route?routeId=mainRoute&action=stop&async=true")
                     .log("Signalled to stop route")

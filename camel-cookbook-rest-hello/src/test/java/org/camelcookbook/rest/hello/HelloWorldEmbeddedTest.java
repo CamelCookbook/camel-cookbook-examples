@@ -29,7 +29,7 @@ public class HelloWorldEmbeddedTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new HelloWorldEmbeddedRouteBuilder(port1);
+        return new HelloWorldEmbeddedRoute(port1);
     }
 
     @Test

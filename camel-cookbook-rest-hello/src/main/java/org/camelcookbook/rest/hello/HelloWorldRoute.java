@@ -22,13 +22,13 @@ import org.apache.camel.builder.RouteBuilder;
 /**
  * Simple REST DSL example
  */
-public class HelloWorldRouteBuilder extends RouteBuilder {
+public class HelloWorldRoute extends RouteBuilder {
     private int port1;
 
-    public HelloWorldRouteBuilder() {
+    public HelloWorldRoute() {
     }
 
-    public HelloWorldRouteBuilder(int port) {
+    public HelloWorldRoute(int port) {
         this.port1 = port;
     }
 

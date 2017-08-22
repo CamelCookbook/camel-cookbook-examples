@@ -23,7 +23,7 @@ public class HelloMain {
     public static void main(String[] args) throws Exception {
         Main main = new Main();
 
-        main.addRouteBuilder(new HelloWorldRouteBuilder(8080));
+        main.addRouteBuilder(new HelloWorldRoute(8080));
 
         System.out.println("*******************************");
         System.out.println();

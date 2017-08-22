@@ -27,7 +27,7 @@ public class ContentBasedRouterTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new ContentBasedRouterRouteBuilder();
+        return new ContentBasedRouterRoute();
     }
 
     @Test

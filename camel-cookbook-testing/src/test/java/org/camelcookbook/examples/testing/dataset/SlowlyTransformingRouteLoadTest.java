@@ -23,13 +23,13 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.camelcookbook.examples.testing.java.SlowlyTransformingRouteBuilder;
+import org.camelcookbook.examples.testing.java.SlowlyTransformingRoute;
 import org.junit.Test;
 
 /**
  * Test class that demonstrates using the DataSet component to load test a route.
  */
-public class SlowlyTransformingRouteBuilderLoadTest extends CamelTestSupport {
+public class SlowlyTransformingRouteLoadTest extends CamelTestSupport {
     @Override
     protected CamelContext createCamelContext() throws Exception {
         final int testBatchSize = 1000;
@@ -49,7 +49,7 @@ public class SlowlyTransformingRouteBuilderLoadTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        SlowlyTransformingRouteBuilder routeBuilder = new SlowlyTransformingRouteBuilder();
+        SlowlyTransformingRoute routeBuilder = new SlowlyTransformingRoute();
         routeBuilder.setSourceUri("dataset:input?produceDelay=-1");
         routeBuilder.setTargetUri("dataset:expectedOutput");
         return routeBuilder;

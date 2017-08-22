@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.examples.testing.mocks;
+package org.camelcookbook.examples.testing.mockreply;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class ContentBasedRouterRouteBuilder extends RouteBuilder {
+/**
+ * Simple route that expects a response from a mock endpoint.
+ */
+public class MockReplyRoute extends RouteBuilder {
+
     @Override
-    public void configure() throws Exception {
-        from("direct:start")
-            .choice()
-                .when().simple("${body} contains 'Camel'")
-                    .setHeader("verified").constant(true)
-                    .to("mock:camel")
-                .otherwise()
-                    .to("mock:other")
-            .end();
+    public void configure() {
+        from("direct:in")
+            .inOut("mock:replying")
+            .to("mock:out");
     }
 }

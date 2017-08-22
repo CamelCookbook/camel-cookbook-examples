@@ -25,7 +25,7 @@ import org.apache.camel.language.constant.ConstantLanguage;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-public class MockReplyRouteBuilderTest extends CamelTestSupport {
+public class MockReplyRouteTest extends CamelTestSupport {
 
     @EndpointInject(uri = "mock:replying")
     private MockEndpoint mockReplying;
@@ -38,7 +38,7 @@ public class MockReplyRouteBuilderTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MockReplyRouteBuilder();
+        return new MockReplyRoute();
     }
 
     @Test

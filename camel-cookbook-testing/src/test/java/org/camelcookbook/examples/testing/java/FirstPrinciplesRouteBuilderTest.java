@@ -34,7 +34,7 @@ public class FirstPrinciplesRouteBuilderTest {
     @Before
     public void setUpContext() throws Exception {
         this.camelContext = new DefaultCamelContext();
-        camelContext.addRoutes(new SimpleTransformRouteBuilder());
+        camelContext.addRoutes(new SimpleTransformRoute());
         camelContext.start();
     }
 

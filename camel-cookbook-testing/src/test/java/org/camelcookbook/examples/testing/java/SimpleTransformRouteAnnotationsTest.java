@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * Test class that demonstrates the fundamental interactions going on to verify that a route behaves as it should.
  */
-public class SimpleTransformAnnotationsRouteBuilderTest extends CamelTestSupport {
+public class SimpleTransformRouteAnnotationsTest extends CamelTestSupport {
 
     @Produce(uri = "direct:in")
     private ProducerTemplate producerTemplate;
@@ -38,7 +38,7 @@ public class SimpleTransformAnnotationsRouteBuilderTest extends CamelTestSupport
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SimpleTransformRouteBuilder();
+        return new SimpleTransformRoute();
     }
 
     @Test

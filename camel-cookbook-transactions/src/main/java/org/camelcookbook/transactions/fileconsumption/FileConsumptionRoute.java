@@ -22,12 +22,12 @@ import java.io.File;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.Validate;
 
-public class FileConsumptionRouteBuilder extends RouteBuilder {
+public class FileConsumptionRoute extends RouteBuilder {
     private final String inputDirectory;
     private final String outputDirectory;
     private final String errorDirectory;
 
-    public FileConsumptionRouteBuilder(String targetIn, String targetOut, String targetErrors) {
+    public FileConsumptionRoute(String targetIn, String targetOut, String targetErrors) {
         Validate.notEmpty(targetIn, "targetIn is empty");
         Validate.notEmpty(targetOut, "targetOut is empty");
         Validate.notEmpty(targetOut, "targetErrors is empty");

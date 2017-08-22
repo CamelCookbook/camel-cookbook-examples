@@ -15,25 +15,22 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.transactionpolicy;
+package org.camelcookbook.transactions.idempotentconsumer;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-/**
- * Demonstrates the use of policies to scope transactions
- */
-public class TransactionPolicyRouteBuilder extends RouteBuilder {
+class IdempotentConsumerRoute extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
-        from("direct:policies")
-            .setHeader("message", body())
-            .policy("PROPAGATION_REQUIRED")
-                .to("sql:insert into audit_log (message) values (:#message)")
-                .to("mock:out1")
+        from("direct:in")
+            .log("Received message ${header[messageId]}")
+            .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository())
+                .log("Invoking WS")
+                .to("mock:ws")
             .end()
-            .policy("PROPAGATION_REQUIRED")
-                .to("sql:insert into messages (message) values (:#message)")
-                .to("mock:out2")
-            .end();
+            .log("Completing")
+            .to("mock:out");
     }
 }

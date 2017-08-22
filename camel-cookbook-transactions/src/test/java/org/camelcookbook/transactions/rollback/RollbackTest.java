@@ -43,7 +43,7 @@ public class RollbackTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RollbackRouteBuilder();
+        return new RollbackRoute();
     }
 
     @Override

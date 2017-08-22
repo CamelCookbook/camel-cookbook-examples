@@ -15,24 +15,28 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.idempotentconsumer;
+package org.camelcookbook.transactions.rollback;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-public class IdempotentConsumerMultipleEndpointsRouteBuilder extends RouteBuilder {
-
+/**
+ * Demonstrates the use of the markRollbackOnly statement roll back the transaction without throwing a transaction.
+ */
+public class RollbackMarkRollbackOnlyRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:in")
-            .log("Received message ${header[messageId]}")
-            .enrich("direct:invokeWs")
-            .log("Completing")
+        from("direct:transacted")
+            .transacted()
+            .log("Processing message: ${body}")
+            .setHeader("message", body())
+            .to("sql:insert into audit_log (message) values (:#message)")
+            .choice()
+                .when(simple("${body} contains 'explode'"))
+                    .log("Message cannot be processed further - rolling back insert")
+                    .markRollbackOnly()
+                .otherwise()
+                    .log("Message processed successfully")
+            .end()
             .to("mock:out");
-
-        from("direct:invokeWs")
-            .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository())
-                .log("Invoking WS")
-                .to("mock:ws");
     }
 }

@@ -49,7 +49,7 @@ public class IdempotentConsumerInTransactionTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new IdempotentConsumerInTransactionRouteBuilder(idempotentRepository);
+        return new IdempotentConsumerInTransactionRoute(idempotentRepository);
     }
 
     @Override

@@ -15,18 +15,28 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.databasetransaction;
+package org.camelcookbook.transactions.transactionpolicy;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class DatabaseTransactionRouteBuilder extends RouteBuilder {
+/**
+ * Demonstrates the use of nested transaction policies.
+ */
+public class TransactionPolicyNestedRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:transacted")
-            .transacted()
-            .log("Processing message: ${body}")
-            .setHeader("message", body())
-            .to("sql:insert into audit_log (message) values (:#message)")
-            .to("mock:out");
+        from("direct:policies")
+            .setHeader("message", simple("${body}"))
+            .policy("PROPAGATION_REQUIRED")
+                .to("sql:insert into messages (message) values (:#message)")
+                .to("direct:nestedPolicy")
+                .to("mock:out1")
+            .end();
+
+        from("direct:nestedPolicy")
+            .policy("PROPAGATION_NOT_SUPPORTED")
+                .to("sql:insert into audit_log (message) values (:#message)")
+                .to("mock:out2")
+            .end();
     }
 }

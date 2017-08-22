@@ -29,7 +29,7 @@ public class IdempotentConsumerTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new IdempotentConsumerRouteBuilder();
+        return new IdempotentConsumerRoute();
     }
 
     @Test

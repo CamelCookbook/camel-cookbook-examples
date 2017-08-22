@@ -22,7 +22,7 @@ import org.apache.camel.builder.RouteBuilder;
 /**
  * Demonstrates the behavior of marking the last transaction for rollback.
  */
-public class RollbackMarkRollbackOnlyLastRouteBuilder extends RouteBuilder {
+public class RollbackMarkRollbackOnlyLastRoute extends RouteBuilder {
 
     @Override
     public void configure() {

@@ -15,31 +15,24 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.idempotentconsumerintransaction;
+package org.camelcookbook.transactions.idempotentconsumer;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.spi.IdempotentRepository;
+import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-public class IdempotentConsumerInTransactionRouteBuilder extends RouteBuilder {
-
-    private final IdempotentRepository idempotentRepository;
-
-    public IdempotentConsumerInTransactionRouteBuilder(IdempotentRepository idempotentRepository) {
-        this.idempotentRepository = idempotentRepository;
-    }
+public class IdempotentConsumerMultipleEndpointsRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:transacted").id("main")
-            .transacted("PROPAGATION_REQUIRED")
-            .setHeader("message", body())
-            .to("sql:insert into audit_log (message) values (:#message)")
+        from("direct:in")
+            .log("Received message ${header[messageId]}")
             .enrich("direct:invokeWs")
+            .log("Completing")
             .to("mock:out");
 
-        from("direct:invokeWs").id("idempotentWs")
-            .idempotentConsumer(header("messageId"), idempotentRepository)
-                .to("mock:ws")
-            .end();
+        from("direct:invokeWs")
+            .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository())
+                .log("Invoking WS")
+                .to("mock:ws");
     }
 }

@@ -17,15 +17,19 @@
 
 package org.camelcookbook.transactions.rollback;
 
+import org.apache.camel.RollbackExchangeException;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Demonstrates the use of the markRollbackOnly statement roll back the transaction without throwing a transaction.
+ * Demonstrates the use of the rollback statement to throw an Exception, that will roll back the transaction
  */
-public class RollbackMarkRollbackOnlyRouteBuilder extends RouteBuilder {
+public class RollbackRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:transacted")
+            .onException(RollbackExchangeException.class)
+                .log("Caught rollback :P")
+            .end()
             .transacted()
             .log("Processing message: ${body}")
             .setHeader("message", body())
@@ -33,10 +37,9 @@ public class RollbackMarkRollbackOnlyRouteBuilder extends RouteBuilder {
             .choice()
                 .when(simple("${body} contains 'explode'"))
                     .log("Message cannot be processed further - rolling back insert")
-                    .markRollbackOnly()
+                    .rollback("Message contained word 'explode'")
                 .otherwise()
                     .log("Message processed successfully")
-            .end()
-            .to("mock:out");
+                    .to("mock:out");
     }
 }

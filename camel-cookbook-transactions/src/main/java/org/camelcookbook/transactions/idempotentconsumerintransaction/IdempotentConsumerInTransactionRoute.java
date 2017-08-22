@@ -15,23 +15,31 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.xatransaction;
+package org.camelcookbook.transactions.idempotentconsumerintransaction;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.spi.IdempotentRepository;
 
-/**
- * Demonstrates the use of an XA transaction manager with a JMS component and database.
- */
-public class XATransactionRouteBuilder extends RouteBuilder {
+public class IdempotentConsumerInTransactionRoute extends RouteBuilder {
+
+    private final IdempotentRepository idempotentRepository;
+
+    public IdempotentConsumerInTransactionRoute(IdempotentRepository idempotentRepository) {
+        this.idempotentRepository = idempotentRepository;
+    }
 
     @Override
-    public void configure() {
-        from("jms:inbound?transacted=true")
+    public void configure() throws Exception {
+        from("direct:transacted").id("main")
             .transacted("PROPAGATION_REQUIRED")
-            .log("Processing message: ${body}")
             .setHeader("message", body())
             .to("sql:insert into audit_log (message) values (:#message)")
-            .to("jms:outbound") // this send is transacted, so the message should not be sent
+            .enrich("direct:invokeWs")
             .to("mock:out");
+
+        from("direct:invokeWs").id("idempotentWs")
+            .idempotentConsumer(header("messageId"), idempotentRepository)
+                .to("mock:ws")
+            .end();
     }
 }

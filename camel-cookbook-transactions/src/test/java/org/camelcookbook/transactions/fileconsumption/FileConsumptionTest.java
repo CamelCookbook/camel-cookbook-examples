@@ -43,7 +43,7 @@ public class FileConsumptionTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
         createTargetDirectories();
-        return new FileConsumptionRouteBuilder(TARGET_IN, TARGET_OUT, TARGET_ERRORS);
+        return new FileConsumptionRoute(TARGET_IN, TARGET_OUT, TARGET_ERRORS);
     }
 
     @Test

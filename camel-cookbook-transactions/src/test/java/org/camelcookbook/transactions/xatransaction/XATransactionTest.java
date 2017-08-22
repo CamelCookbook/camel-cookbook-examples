@@ -58,7 +58,7 @@ public class XATransactionTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new XATransactionRouteBuilder();
+        return new XATransactionRoute();
     }
 
     @Override

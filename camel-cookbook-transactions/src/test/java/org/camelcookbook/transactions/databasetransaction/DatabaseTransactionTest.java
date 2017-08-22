@@ -45,7 +45,7 @@ public class DatabaseTransactionTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new DatabaseTransactionRouteBuilder();
+        return new DatabaseTransactionRoute();
     }
 
     @Override

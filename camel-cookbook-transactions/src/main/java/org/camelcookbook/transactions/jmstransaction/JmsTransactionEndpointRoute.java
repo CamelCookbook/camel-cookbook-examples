@@ -15,22 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.idempotentconsumer;
+package org.camelcookbook.transactions.jmstransaction;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-class IdempotentConsumerRouteBuilder extends RouteBuilder {
-
+/**
+ * Demonstrates the use of local transactions initiated via the transacted attribute on a consumer endpoint.
+ */
+public class JmsTransactionEndpointRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:in")
-            .log("Received message ${header[messageId]}")
-            .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository())
-                .log("Invoking WS")
-                .to("mock:ws")
-            .end()
-            .log("Completing")
+        from("jms:inbound?transacted=true")
+            .log("Processing message: ${body}")
+            // this send is transacted, so the message will not be sent until processing has completed
+            .to("jms:outbound")
             .to("mock:out");
     }
 }

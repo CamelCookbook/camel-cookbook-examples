@@ -32,7 +32,7 @@ public class IdempotentConsumerMultipleEndpointsTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new IdempotentConsumerMultipleEndpointsRouteBuilder();
+        return new IdempotentConsumerMultipleEndpointsRoute();
     }
 
     @Test

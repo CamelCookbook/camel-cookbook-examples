@@ -46,7 +46,7 @@ public class TransactionPolicyTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new TransactionPolicyRouteBuilder();
+        return new TransactionPolicyRoute();
     }
 
     @Override

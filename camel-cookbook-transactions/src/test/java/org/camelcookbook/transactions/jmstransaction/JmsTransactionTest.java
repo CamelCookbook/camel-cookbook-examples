@@ -45,7 +45,7 @@ public class JmsTransactionTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new JmsTransactionRouteBuilder();
+        return new JmsTransactionRoute();
     }
 
     @Override

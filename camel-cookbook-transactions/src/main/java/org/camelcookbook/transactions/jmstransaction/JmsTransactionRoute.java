@@ -15,28 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transactions.idempotentconsumer;
+package org.camelcookbook.transactions.jmstransaction;
 
-import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-class IdempotentConsumerSkipDuplicateRouteBuilder extends RouteBuilder {
-
+/**
+ * RouteBuilder that demonstrates JMS transactions using the transacted DSL method.
+ */
+public class JmsTransactionRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:in")
-            .log("Received message ${header[messageId]}")
-            .idempotentConsumer(header("messageId"), new MemoryIdempotentRepository()).skipDuplicate(false)
-                .choice()
-                    .when(exchangeProperty(Exchange.DUPLICATE_MESSAGE))
-                        .log("Duplicate")
-                        .to("mock:duplicate")
-                    .otherwise()
-                        .to("mock:ws")
-                .endChoice()
-            .end()
-            .log("Completing")
+        from("jms:inbound")
+            .transacted()
+            .log("Processing message ${body}")
+            .to("jms:outbound")
             .to("mock:out");
     }
 }

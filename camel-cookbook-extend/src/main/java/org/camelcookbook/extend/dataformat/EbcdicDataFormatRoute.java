@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.extend.predicate;
+package org.camelcookbook.extend.dataformat;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class MyPredicateBeanBindingRouteBuilder extends RouteBuilder {
+public class EbcdicDataFormatRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        MyPredicateBeanBinding predicate = new MyPredicateBeanBinding();
+        EbcdicDataFormat dataFormat = new EbcdicDataFormat("CP037");
 
-        from("direct:start")
-            .filter().method(predicate, "isWhatIWant")
-                .to("mock:boston");
+        from("direct:marshal").marshal(dataFormat);
+
+        from("direct:unmarshal").unmarshal(dataFormat);
     }
 }

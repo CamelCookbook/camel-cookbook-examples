@@ -22,7 +22,7 @@ import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
-public class MyProcessorInlineRouteBuilder extends RouteBuilder {
+public class MyProcessorInlineRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")

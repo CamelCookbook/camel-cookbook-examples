@@ -25,7 +25,7 @@ public class MyBeanCamelTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MyBeanRouteBuilder();
+        return new MyBeanRoute();
     }
 
     @Test

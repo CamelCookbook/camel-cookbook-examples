@@ -25,7 +25,7 @@ public class PredicateTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MyPredicateRouteBuilder();
+        return new MyPredicateRoute();
     }
 
     @Test

@@ -24,7 +24,7 @@ import org.junit.Test;
 public class ReverseDataFormatTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new ReverseDataFormatRouteBuilder();
+        return new ReverseDataFormatRoute();
     }
 
     @Test

@@ -19,7 +19,7 @@ package org.camelcookbook.extend.binding;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class MyBeanRouteBuilder extends RouteBuilder {
+public class MyBeanRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:normal").bean(MyBean.class, "sayHello(${body}, false)");

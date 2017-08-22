@@ -25,7 +25,7 @@ public class PredicateInlineTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MyPredicateInlineRouteBuilder();
+        return new MyPredicateInlineRoute();
     }
 
     @Test

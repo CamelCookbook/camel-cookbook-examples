@@ -19,7 +19,7 @@ package org.camelcookbook.extend.dataformat;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class ReverseDataFormatRouteBuilder extends RouteBuilder {
+public class ReverseDataFormatRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         ReverseDataFormat dataFormat = new ReverseDataFormat();

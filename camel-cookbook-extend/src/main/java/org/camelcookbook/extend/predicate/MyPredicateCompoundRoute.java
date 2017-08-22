@@ -19,13 +19,15 @@ package org.camelcookbook.extend.predicate;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class MyPredicateRouteBuilder extends RouteBuilder {
+import static org.apache.camel.builder.PredicateBuilder.and;
+
+public class MyPredicateCompoundRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         MyPredicate predicate = new MyPredicate();
 
         from("direct:start")
-            .filter().method(predicate, "isWhatIWant")
+            .filter(and(xpath("/someXml/city"), method(predicate, "isWhatIWant")))
                 .to("mock:boston");
     }
 }

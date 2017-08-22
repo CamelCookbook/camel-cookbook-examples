@@ -21,7 +21,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 
-public class MyPredicateInlineRouteBuilder extends RouteBuilder {
+public class MyPredicateInlineRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")

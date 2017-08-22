@@ -25,7 +25,7 @@ public class MyProcessorTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MyProcessorRouteBuilder();
+        return new MyProcessorRoute();
     }
 
     @Test

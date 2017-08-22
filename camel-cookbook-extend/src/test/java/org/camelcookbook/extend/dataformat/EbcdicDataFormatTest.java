@@ -24,7 +24,7 @@ import org.junit.Test;
 public class EbcdicDataFormatTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new EbcdicDataFormatRouteBuilder();
+        return new EbcdicDataFormatRoute();
     }
 
     @Test

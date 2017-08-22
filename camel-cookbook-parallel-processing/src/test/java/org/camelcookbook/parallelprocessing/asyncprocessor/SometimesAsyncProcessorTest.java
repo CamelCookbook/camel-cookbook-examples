@@ -32,7 +32,7 @@ public class SometimesAsyncProcessorTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SometimesAsyncProcessorRouteBuilder();
+        return new SometimesAsyncProcessorRoute();
     }
 
     @Test

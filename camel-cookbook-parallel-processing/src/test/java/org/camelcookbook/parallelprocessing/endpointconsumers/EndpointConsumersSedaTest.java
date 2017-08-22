@@ -29,7 +29,7 @@ public class EndpointConsumersSedaTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new EndpointConsumersSedaRouteBuilder();
+        return new EndpointConsumersSedaRoute();
     }
 
     @Test

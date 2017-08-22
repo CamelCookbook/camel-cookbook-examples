@@ -37,7 +37,7 @@ public class AsyncRequestTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SlowProcessingRouteBuilder();
+        return new SlowProcessingRoute();
     }
 
     @Test

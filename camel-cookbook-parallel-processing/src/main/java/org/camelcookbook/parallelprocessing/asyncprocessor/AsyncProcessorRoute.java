@@ -15,17 +15,31 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.parallelprocessing.asyncrequest;
+package org.camelcookbook.parallelprocessing.asyncprocessor;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class SlowProcessingRouteBuilder extends RouteBuilder {
+/**
+ * Demonstrates the use of an {@link org.apache.camel.AsyncProcessor}
+ */
+public class AsyncProcessorRoute extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
-        from("direct:processInOut")
-            .log("Received ${body}")
-            .delay(1000)
-            .log("Processing ${body}")
-            .transform(simple("Processed ${body}"));
+        from("seda:in?concurrentConsumers=5")
+            .to("direct:in")
+            .log("Processed by:${threadName}");
+
+        from("direct:in")
+            .log("Processing ${body}:${threadName}")
+            .process(new SlowOperationProcessor())
+            .log("Completed ${body}:${threadName}")
+            .to("mock:out");
+
+        from("direct:sync?synchronous=true")
+            .log("Processing ${body}:${threadName}")
+            .process(new SlowOperationProcessor())
+            .log("Completed ${body}:${threadName}")
+            .to("mock:out");
     }
 }

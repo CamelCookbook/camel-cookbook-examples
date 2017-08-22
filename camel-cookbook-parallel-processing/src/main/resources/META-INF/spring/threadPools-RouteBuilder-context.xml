@@ -25,7 +25,7 @@
        ">
 
   <bean id="routeBuilderUsingRef"
-        class="org.camelcookbook.parallelprocessing.threadpools.CustomThreadPoolRefRouteBuilder"/>
+        class="org.camelcookbook.parallelprocessing.threadpools.CustomThreadPoolRefRoute"/>
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <routeBuilder ref="routeBuilderUsingRef"/>

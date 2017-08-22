@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.parallelprocessing.threadsdsl;
+package org.camelcookbook.parallelprocessing.endpointconsumers;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Route that demonstrates using the Threads DSL to process messages from a single threaded endpoint concurrently.
+ * Route that demonstrates increasing the number of consumers on a SEDA endpoint.
  */
-public class ThreadsDslRouteBuilder extends RouteBuilder {
+public class EndpointConsumersSedaRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:in")
-            .log("Received ${body}:${threadName}")
-            .threads()
+        from("seda:in?concurrentConsumers=10")
             .delay(200)
             .log("Processing ${body}:${threadName}")
             .to("mock:out");

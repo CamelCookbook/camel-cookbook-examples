@@ -22,7 +22,7 @@ import org.apache.camel.builder.RouteBuilder;
 /**
  * Route that demonstrates using the Threads DSL to process messages from a single threaded endpoint concurrently.
  */
-public class ThreadsDslInOutRouteBuilder extends RouteBuilder {
+public class ThreadsDslRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
@@ -30,7 +30,6 @@ public class ThreadsDslInOutRouteBuilder extends RouteBuilder {
             .threads()
             .delay(200)
             .log("Processing ${body}:${threadName}")
-            .to("mock:out")
-            .transform(constant("Processed"));
+            .to("mock:out");
     }
 }

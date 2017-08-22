@@ -15,31 +15,30 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.parallelprocessing.asyncprocessor;
+package org.camelcookbook.parallelprocessing.threadpoolprofiles;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.ThreadPoolProfileBuilder;
+import org.apache.camel.model.ModelCamelContext;
+import org.apache.camel.spi.ThreadPoolProfile;
 
 /**
- * Demonstrates the use of an {@link org.apache.camel.AsyncProcessor}
+ * Route that demonstrates using the Threads DSL to process messages using a custom thread pool defined in the
+ * Camel registry.
  */
-public class AsyncProcessorRouteBuilder extends RouteBuilder {
-
+public class CustomThreadPoolProfileRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("seda:in?concurrentConsumers=5")
-            .to("direct:in")
-            .log("Processed by:${threadName}");
+        ThreadPoolProfile customThreadPoolProfile =
+            new ThreadPoolProfileBuilder("customThreadPoolProfile").poolSize(5).maxQueueSize(100).build();
+        ModelCamelContext context = getContext();
+        context.getExecutorServiceManager().registerThreadPoolProfile(customThreadPoolProfile);
 
         from("direct:in")
+            .log("Received ${body}:${threadName}")
+            .threads().executorServiceRef("customThreadPoolProfile")
             .log("Processing ${body}:${threadName}")
-            .process(new SlowOperationProcessor())
-            .log("Completed ${body}:${threadName}")
-            .to("mock:out");
-
-        from("direct:sync?synchronous=true")
-            .log("Processing ${body}:${threadName}")
-            .process(new SlowOperationProcessor())
-            .log("Completed ${body}:${threadName}")
+            .transform(simple("${threadName}"))
             .to("mock:out");
     }
 }

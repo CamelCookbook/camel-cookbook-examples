@@ -33,7 +33,7 @@ public class CustomThreadPoolInlineTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new CustomThreadPoolInlineRouteBuilder();
+        return new CustomThreadPoolInlineRoute();
     }
 
     @Test

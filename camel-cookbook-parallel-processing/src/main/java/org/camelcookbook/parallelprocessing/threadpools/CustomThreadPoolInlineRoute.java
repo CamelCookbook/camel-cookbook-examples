@@ -15,19 +15,28 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.parallelprocessing.endpointconsumers;
+package org.camelcookbook.parallelprocessing.threadpools;
 
+import java.util.concurrent.ExecutorService;
+
+import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.ThreadPoolBuilder;
 
 /**
- * Route that demonstrates increasing the number of consumers on a SEDA endpoint.
+ * Route that demonstrates using the Threads DSL to process messages using a custom thread pool defined inline.
  */
-public class EndpointConsumersSedaRouteBuilder extends RouteBuilder {
+public class CustomThreadPoolInlineRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("seda:in?concurrentConsumers=10")
-            .delay(200)
+        CamelContext context = getContext();
+        ExecutorService executorService = new ThreadPoolBuilder(context).poolSize(5).maxQueueSize(100).build("CustomThreadPool");
+
+        from("direct:in")
+            .log("Received ${body}:${threadName}")
+            .threads().executorService(executorService)
             .log("Processing ${body}:${threadName}")
+            .transform(simple("${threadName}"))
             .to("mock:out");
     }
 }

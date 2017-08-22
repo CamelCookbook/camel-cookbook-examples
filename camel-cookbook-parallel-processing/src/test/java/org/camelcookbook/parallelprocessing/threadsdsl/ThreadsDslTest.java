@@ -29,7 +29,7 @@ public class ThreadsDslTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new ThreadsDslRouteBuilder();
+        return new ThreadsDslRoute();
     }
 
     @Test

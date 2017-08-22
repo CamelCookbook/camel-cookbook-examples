@@ -29,7 +29,7 @@ public class CustomThreadPoolProfileTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new CustomThreadPoolProfileRouteBuilder();
+        return new CustomThreadPoolProfileRoute();
     }
 
     @Test

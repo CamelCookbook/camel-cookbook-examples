@@ -31,7 +31,7 @@ public class FaultTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new FaultRouteBuilder(port1);
+        return new FaultRoute(port1);
     }
 
     @Test

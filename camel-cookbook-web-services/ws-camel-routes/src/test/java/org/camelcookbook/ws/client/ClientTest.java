@@ -31,7 +31,7 @@ public class ClientTest extends CamelTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-            new ClientRouteBuilder(port1),
+            new ClientRoute(port1),
             new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {

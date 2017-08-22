@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.ws.multipleoperations;
+package org.camelcookbook.ws.service;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.ws.payment_service_v2.Payment;
+import org.camelcookbook.ws.payment_service.Payment;
 
-public class OperationRouteBuilder extends RouteBuilder {
+public class ProvideRoute extends RouteBuilder {
     private int port1;
 
-    public OperationRouteBuilder() {
+    public ProvideRoute() {
     }
 
-    public OperationRouteBuilder(int port1) {
+    public ProvideRoute(int port1) {
         this.port1 = port1;
     }
 
@@ -37,21 +37,14 @@ public class OperationRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final String cxfUri =
-            String.format("cxf:http://localhost:%d/paymentServicev2?serviceClass=%s",
+            String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
                 port1, Payment.class.getCanonicalName());
 
         from(cxfUri)
                 .id("wsRoute")
             .transform(simple("${in.body[0]}"))
             .log("request = ${body}")
-            .choice()
-                .when(simple("${in.header.operationName} == 'transferFunds'"))
-                    .bean(PaymentServiceV2Impl.class)
-                .when(simple("${in.header.operationName} == 'checkStatus'"))
-                    .bean(CheckStatusServiceV2Impl.class)
-                .otherwise()
-                    .setFaultBody(method(FaultHandler.class, "createInvalidOperation"))
-            .end()
+            .bean(PaymentServiceImpl.class)
             .log("response = ${body}");
     }
 }

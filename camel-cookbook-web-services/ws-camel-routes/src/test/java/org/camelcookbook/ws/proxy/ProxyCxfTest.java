@@ -38,7 +38,7 @@ public class ProxyCxfTest extends CamelTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-            new ProxyRouteBuilder(port1, port2),
+            new ProxyRoute(port1, port2),
             new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {

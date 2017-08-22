@@ -20,14 +20,14 @@ package org.camelcookbook.ws.proxy;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.ws.payment_service.Payment;
 
-public class ProxyRouteBuilder extends RouteBuilder {
+public class ProxyRoute extends RouteBuilder {
     private int port1;
     private int port2;
 
-    public ProxyRouteBuilder() {
+    public ProxyRoute() {
     }
 
-    public ProxyRouteBuilder(int port1, int port2) {
+    public ProxyRoute(int port1, int port2) {
         this.port1 = port1;
         this.port2 = port2;
     }

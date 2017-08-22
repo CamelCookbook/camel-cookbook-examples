@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.ws.service;
+package org.camelcookbook.ws.fault;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.ws.payment_service.Payment;
 
-public class ProvideRouteBuilder extends RouteBuilder {
+public class FaultRoute extends RouteBuilder {
     private int port1;
 
-    public ProvideRouteBuilder() {
+    public FaultRoute() {
     }
 
-    public ProvideRouteBuilder(int port1) {
+    public FaultRoute(int port1) {
         this.port1 = port1;
     }
 
@@ -37,11 +37,15 @@ public class ProvideRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final String cxfUri =
-            String.format("cxf:http://localhost:%d/paymentService?serviceClass=%s",
+            String.format("cxf:http://localhost:%d/paymentFaultService?serviceClass=%s",
                 port1, Payment.class.getCanonicalName());
 
         from(cxfUri)
                 .id("wsRoute")
+            .onException(TransferException.class)
+                .handled(true)
+                .setFaultBody(method(FaultHandler.class, "createFault"))
+            .end()
             .transform(simple("${in.body[0]}"))
             .log("request = ${body}")
             .bean(PaymentServiceImpl.class)

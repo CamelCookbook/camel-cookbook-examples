@@ -32,7 +32,7 @@ public class OperationTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new OperationRouteBuilder(port1);
+        return new OperationRoute(port1);
     }
 
     @Test

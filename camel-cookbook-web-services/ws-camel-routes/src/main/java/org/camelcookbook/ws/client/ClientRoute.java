@@ -20,13 +20,13 @@ package org.camelcookbook.ws.client;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.ws.payment_service.Payment;
 
-public class ClientRouteBuilder extends RouteBuilder {
+public class ClientRoute extends RouteBuilder {
     private int port1;
 
-    public ClientRouteBuilder() {
+    public ClientRoute() {
     }
 
-    public ClientRouteBuilder(int port1) {
+    public ClientRoute(int port1) {
         this.port1 = port1;
     }
 

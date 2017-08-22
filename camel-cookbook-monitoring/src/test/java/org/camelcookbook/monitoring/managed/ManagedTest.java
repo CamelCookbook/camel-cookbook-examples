@@ -34,7 +34,7 @@ public class ManagedTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new ManagedRouteBuilder();
+        return new ManagedRoute();
     }
 
     @Override

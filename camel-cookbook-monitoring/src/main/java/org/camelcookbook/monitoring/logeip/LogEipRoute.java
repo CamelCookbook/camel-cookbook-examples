@@ -15,19 +15,27 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.monitoring.logthroughput;
+package org.camelcookbook.monitoring.logeip;
 
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 
-public class LogThroughputRouteBuilder extends RouteBuilder {
+public class LogEipRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("log:throughput?groupSize=10")
+                .routeId("LogEipRoute")
+            .log("Something interesting happened - ${body}")
             .to("mock:result");
 
-        from("direct:startInterval")
-            .to("log:throughput?groupInterval=1000&groupDelay=500")
+        from("direct:startLevel")
+                .routeId("LogEipInfoLevelRoute")
+            .log(LoggingLevel.INFO, "Something informational happened - ${body}")
+            .to("mock:result");
+
+        from("direct:startName")
+                .routeId("LogEipCustomLogNameRoute")
+            .log(LoggingLevel.INFO, "MyName", "Something myName happened - ${body}")
             .to("mock:result");
     }
 }

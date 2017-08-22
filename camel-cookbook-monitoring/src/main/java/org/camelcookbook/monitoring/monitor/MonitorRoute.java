@@ -23,7 +23,7 @@ import java.util.Map;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jmx.JMXUriBuilder;
 
-public class MonitorRouteBuilder extends RouteBuilder {
+public class MonitorRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")

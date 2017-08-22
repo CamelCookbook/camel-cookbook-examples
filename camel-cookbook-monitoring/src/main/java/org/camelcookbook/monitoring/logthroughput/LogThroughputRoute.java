@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.monitoring.log;
+package org.camelcookbook.monitoring.logthroughput;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class LogRouteBuilder extends RouteBuilder {
+public class LogThroughputRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("log:myLog")
+            .to("log:throughput?groupSize=10")
             .to("mock:result");
 
-        from("direct:startAll")
-            .to("log:myLog?level=INFO&showAll=true&multiline=true")
+        from("direct:startInterval")
+            .to("log:throughput?groupInterval=1000&groupDelay=500")
             .to("mock:result");
     }
 }

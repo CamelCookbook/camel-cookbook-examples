@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.monitoring.managed;
+package org.camelcookbook.monitoring.debug;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class ManagedRouteBuilder extends RouteBuilder {
+public class DebugRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .bean(MyManagedBean.class, "doSomething").id("myManagedBean")
+            .transform(simple("Debug ${body}"))
             .log("${body}")
             .to("mock:result");
     }

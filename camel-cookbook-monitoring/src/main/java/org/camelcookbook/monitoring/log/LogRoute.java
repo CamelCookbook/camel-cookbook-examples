@@ -15,16 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.monitoring.debug;
+package org.camelcookbook.monitoring.log;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class DebugRouteBuilder extends RouteBuilder {
+public class LogRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .transform(simple("Debug ${body}"))
-            .log("${body}")
+            .to("log:myLog")
+            .to("mock:result");
+
+        from("direct:startAll")
+            .to("log:myLog?level=INFO&showAll=true&multiline=true")
             .to("mock:result");
     }
 }

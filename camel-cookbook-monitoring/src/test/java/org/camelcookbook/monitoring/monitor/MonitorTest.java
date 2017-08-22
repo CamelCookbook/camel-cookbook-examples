@@ -29,7 +29,7 @@ import org.junit.Test;
 public class MonitorTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MonitorRouteBuilder();
+        return new MonitorRoute();
     }
 
     @Override

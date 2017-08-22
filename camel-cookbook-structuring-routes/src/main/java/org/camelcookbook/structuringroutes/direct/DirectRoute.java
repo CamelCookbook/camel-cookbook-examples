@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes.simple;
+package org.camelcookbook.structuringroutes.direct;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Component;
 
-/**
- * Route that logs a message every second.
- */
-@Component
-public class LogMessageOnTimerEventRouteBuilder extends RouteBuilder {
+public class DirectRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("timer:logMessageTimer?period=1s")
-            .to("mylogger:insideTheRoute?showHeaders=true")
-            .log("Event triggered by ${property.CamelTimerName} at ${header.CamelTimerFiredTime}");
+        from("direct:A")
+            .transform(simple("A1[ ${body} ]"))
+            .to("direct:B")
+            .transform(simple("A2[ ${body} ]"))
+            .to("mock:endA");
+
+        from("direct:B")
+            .transform(simple("B[ ${body} ]"))
+            .to("mock:endB");
     }
 }

@@ -24,7 +24,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
-public class OrderProcessingRouteBuilderTest extends CamelTestSupport {
+public class OrderProcessingRouteTest extends CamelTestSupport {
     public static final String ID = "testOrders";
 
     @Override
@@ -37,7 +37,7 @@ public class OrderProcessingRouteBuilderTest extends CamelTestSupport {
         OrderFileNameProcessor orderFileNameProcessor = new OrderFileNameProcessor();
         orderFileNameProcessor.setCountryDateFormat("dd-MM-yyyy");
 
-        OrderProcessingRouteBuilder routeBuilder = new OrderProcessingRouteBuilder();
+        OrderProcessingRoute routeBuilder = new OrderProcessingRoute();
         routeBuilder.setId(ID);
         routeBuilder.setInputDirectory("input");
         routeBuilder.setOutputDirectory("output");

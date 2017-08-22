@@ -52,7 +52,7 @@ public class DirectVmTest {
         testHarnessContext.start();
 
         externalLoggingContext = new DefaultCamelContext();
-        externalLoggingContext.addRoutes(new ExternalLoggingRouteBuilder("direct-vm"));
+        externalLoggingContext.addRoutes(new ExternalLoggingRoute("direct-vm"));
         externalLoggingContext.start();
     }
 
@@ -74,6 +74,6 @@ public class DirectVmTest {
         out.assertIsSatisfied(1000);
         Message message = out.getExchanges().get(0).getIn();
         assertTrue(message.getHeader("harness.threadName").equals(
-            message.getHeader(ExternalLoggingRouteBuilder.LOGGING_THREAD_NAME)));
+            message.getHeader(ExternalLoggingRoute.LOGGING_THREAD_NAME)));
     }
 }

@@ -19,7 +19,7 @@ package org.camelcookbook.structuringroutes.routecontrol;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class RouteStartupRouteBuilder extends RouteBuilder {
+public class RouteStartupRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:receiveOrders").startupOrder(20)

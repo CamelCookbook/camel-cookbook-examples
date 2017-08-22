@@ -37,7 +37,7 @@ public class DirectTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new DirectRouteBuilder();
+        return new DirectRoute();
     }
 
     @Test

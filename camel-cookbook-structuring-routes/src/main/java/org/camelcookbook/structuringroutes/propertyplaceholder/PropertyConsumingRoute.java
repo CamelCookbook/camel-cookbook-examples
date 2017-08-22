@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes.direct;
+package org.camelcookbook.structuringroutes.propertyplaceholder;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class DirectRouteBuilder extends RouteBuilder {
+/**
+ * Route that demonstrates the use of properties in Java.
+ */
+public class PropertyConsumingRoute extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
-        from("direct:A")
-            .transform(simple("A1[ ${body} ]"))
-            .to("direct:B")
-            .transform(simple("A2[ ${body} ]"))
-            .to("mock:endA");
-
-        from("direct:B")
-            .transform(simple("B[ ${body} ]"))
-            .to("mock:endB");
+        from("{{start.endpoint}}")
+            .transform().simple("{{transform.message}}: ${body}")
+            .log("Set message to ${body}")
+            .to("{{end.endpoint}}");
     }
 }

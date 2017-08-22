@@ -29,7 +29,7 @@ public class SedaTimerTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SedaTimerRouteBuilder();
+        return new SedaTimerRoute();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class SedaTimerTest extends CamelTestSupport {
         final int pingCount = 10;
 
         out.setMinimumExpectedMessageCount(pingCount);
-        Thread.sleep((pingCount * SedaTimerRouteBuilder.TIMER_PERIOD) + LongRunningProcessor.DELAY_TIME);
+        Thread.sleep((pingCount * SedaTimerRoute.TIMER_PERIOD) + LongRunningProcessor.DELAY_TIME);
         out.assertIsSatisfied();
     }
 

@@ -24,13 +24,13 @@ import org.apache.commons.lang.Validate;
  * RouteBuilder that logs exchanges to a fictitious backend system. The endpoint scheme is
  * injected into this class to allow us to use it through VM and Direct-VM to highlight the differences.
  */
-public class ExternalLoggingRouteBuilder extends RouteBuilder {
+public class ExternalLoggingRoute extends RouteBuilder {
     public static final String LOG_MESSAGE_TO_BACKEND_SYSTEM = "logMessageToBackendSystem";
     public static final String LOGGING_THREAD_NAME = "logging.threadName";
 
     private final String logMessageSourceUri;
 
-    public ExternalLoggingRouteBuilder(String endpointScheme) {
+    public ExternalLoggingRoute(String endpointScheme) {
         Validate.notEmpty(endpointScheme, "endpointScheme is null or empty");
         this.logMessageSourceUri = endpointScheme + ":" + LOG_MESSAGE_TO_BACKEND_SYSTEM;
     }

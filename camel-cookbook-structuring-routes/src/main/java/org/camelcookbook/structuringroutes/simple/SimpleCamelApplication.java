@@ -33,7 +33,7 @@ public class SimpleCamelApplication {
         CamelContext context = new DefaultCamelContext(registry);
 
         context.addComponent("mylogger", new LogComponent());
-        context.addRoutes(new LogMessageOnTimerEventRouteBuilder());
+        context.addRoutes(new LogMessageOnTimerEventRoute());
 
         context.start();
 

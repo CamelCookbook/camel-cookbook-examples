@@ -39,7 +39,7 @@ public class SedaTimerSpringTest extends CamelSpringTestSupport {
         final int pingCount = 10;
 
         out.setMinimumExpectedMessageCount(pingCount);
-        Thread.sleep((pingCount * SedaTimerRouteBuilder.TIMER_PERIOD) + LongRunningProcessor.DELAY_TIME);
+        Thread.sleep((pingCount * SedaTimerRoute.TIMER_PERIOD) + LongRunningProcessor.DELAY_TIME);
         out.assertIsSatisfied();
     }
 }

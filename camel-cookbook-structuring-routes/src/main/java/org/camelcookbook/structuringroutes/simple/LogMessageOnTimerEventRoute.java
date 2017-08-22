@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes.seda;
+package org.camelcookbook.structuringroutes.simple;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.stereotype.Component;
 
-public class SedaTimerRouteBuilder extends RouteBuilder {
-    public final static int TIMER_PERIOD = 200;
-
+/**
+ * Route that logs a message every second.
+ */
+@Component
+public class LogMessageOnTimerEventRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("timer:ping?period=" + TIMER_PERIOD).startupOrder(2)
-            .transform(constant("Ping"))
-            .to("seda:longRunningPhase");
-
-        from("seda:longRunningPhase?concurrentConsumers=15").startupOrder(1)
-            .process(new LongRunningProcessor())
-            .to("mock:out");
+        from("timer:logMessageTimer?period=1s")
+            .to("mylogger:insideTheRoute?showHeaders=true")
+            .log("Event triggered by ${property.CamelTimerName} at ${header.CamelTimerFiredTime}");
     }
 }

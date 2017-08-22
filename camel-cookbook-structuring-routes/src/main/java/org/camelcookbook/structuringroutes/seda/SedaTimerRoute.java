@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.structuringroutes.propertyplaceholder;
+package org.camelcookbook.structuringroutes.seda;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * Route that demonstrates the use of properties in Java.
- */
-public class PropertyConsumingRouteBuilder extends RouteBuilder {
+public class SedaTimerRoute extends RouteBuilder {
+    public final static int TIMER_PERIOD = 200;
 
     @Override
     public void configure() throws Exception {
-        from("{{start.endpoint}}")
-            .transform().simple("{{transform.message}}: ${body}")
-            .log("Set message to ${body}")
-            .to("{{end.endpoint}}");
+        from("timer:ping?period=" + TIMER_PERIOD).startupOrder(2)
+            .transform(constant("Ping"))
+            .to("seda:longRunningPhase");
+
+        from("seda:longRunningPhase?concurrentConsumers=15").startupOrder(1)
+            .process(new LongRunningProcessor())
+            .to("mock:out");
     }
 }

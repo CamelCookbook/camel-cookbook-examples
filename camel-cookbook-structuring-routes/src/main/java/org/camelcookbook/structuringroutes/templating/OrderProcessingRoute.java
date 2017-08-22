@@ -22,7 +22,7 @@ import javax.annotation.PostConstruct;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang.Validate;
 
-public class OrderProcessingRouteBuilder extends RouteBuilder {
+public class OrderProcessingRoute extends RouteBuilder {
     private String id;
     private String inputDirectory;
     private String outputDirectory;

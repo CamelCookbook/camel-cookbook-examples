@@ -19,15 +19,12 @@ package org.camelcookbook.structuringroutes.routecontrol;
 
 import org.apache.camel.RoutesBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
 import org.junit.Test;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class RouteStartupTest extends CamelTestSupport {
     @Override
     protected RoutesBuilder createRouteBuilder() throws Exception {
-        return new RouteStartupRouteBuilder();
+        return new RouteStartupRoute();
     }
 
     @Test

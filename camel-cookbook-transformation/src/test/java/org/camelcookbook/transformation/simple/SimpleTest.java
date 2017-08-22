@@ -25,7 +25,7 @@ public class SimpleTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SimpleRouteBuilder();
+        return new SimpleRoute();
     }
 
     @Test

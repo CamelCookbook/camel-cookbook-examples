@@ -26,7 +26,7 @@ public class EnrichWithAggregatorTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
-        EnrichWithAggregatorRouteBuilder routeBuilder = new EnrichWithAggregatorRouteBuilder();
+        EnrichWithAggregatorRoute routeBuilder = new EnrichWithAggregatorRoute();
         routeBuilder.setMyMerger(context().getRegistry().lookupByNameAndType("myMerger", MergeInReplacementText.class));
 
         return new RouteBuilder[]{routeBuilder, new RouteBuilder() {
@@ -42,7 +42,7 @@ public class EnrichWithAggregatorTest extends CamelTestSupport {
     protected JndiRegistry createRegistry() throws Exception {
         JndiRegistry jndiRegistry = super.createRegistry();
 
-        // register beanId for use by EnrichRouteBuilder
+        // register beanId for use by EnrichRoute
         // you could also use Spring or Blueprint 'bean' to create and configure
         // these references where the '<bean id="<ref id>">'
         jndiRegistry.bind("myMerger", new MergeInReplacementText());

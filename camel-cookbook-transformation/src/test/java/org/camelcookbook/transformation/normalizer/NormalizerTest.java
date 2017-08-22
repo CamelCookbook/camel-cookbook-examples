@@ -38,7 +38,7 @@ public class NormalizerTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new NormalizerRouteBuilder();
+        return new NormalizerRoute();
     }
 
     @Test

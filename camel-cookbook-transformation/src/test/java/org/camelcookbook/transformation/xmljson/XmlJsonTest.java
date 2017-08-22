@@ -27,7 +27,7 @@ public class XmlJsonTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new XmlJsonRouteBuilder();
+        return new XmlJsonRoute();
     }
 
     @Test

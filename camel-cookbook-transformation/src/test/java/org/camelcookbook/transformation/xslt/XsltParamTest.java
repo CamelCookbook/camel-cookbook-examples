@@ -27,7 +27,7 @@ public class XsltParamTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new XsltParamRouteBuilder();
+        return new XsltParamRoute();
     }
 
     @Test

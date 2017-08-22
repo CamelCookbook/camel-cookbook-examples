@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xquery;
+package org.camelcookbook.transformation.enrich;
 
 import org.apache.camel.builder.RouteBuilder;
 
-import static org.apache.camel.component.xquery.XQueryBuilder.xquery;
-
-public class XqueryRouteBuilder extends RouteBuilder {
+public class EnrichRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .transform(xquery("<books>{for $x in /bookstore/book where $x/price>30 order by $x/title return $x/title}</books>"));
+            .enrich("bean:myExpander?method=expand");
     }
 }

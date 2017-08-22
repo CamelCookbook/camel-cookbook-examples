@@ -26,7 +26,7 @@ import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.dataformat.xmljson.XmlJsonDataFormat;
 import org.apache.camel.spi.DataFormat;
 
-public class NormalizerRouteBuilder extends RouteBuilder {
+public class NormalizerRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final DataFormat bindy = new BindyCsvDataFormat(org.camelcookbook.transformation.csv.model.BookModel.class);

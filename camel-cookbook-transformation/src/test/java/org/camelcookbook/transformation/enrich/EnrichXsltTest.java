@@ -27,7 +27,7 @@ public class EnrichXsltTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new EnrichXsltRouteBuilder();
+        return new EnrichXsltRoute();
     }
 
     @Test

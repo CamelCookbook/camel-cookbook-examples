@@ -15,20 +15,25 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.json;
+package org.camelcookbook.transformation.enrich;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
 
-public class JsonJacksonRouteBuilder extends RouteBuilder {
+public class EnrichWithAggregatorRoute extends RouteBuilder {
+    private MergeInReplacementText myMerger;
+
     @Override
     public void configure() throws Exception {
-        from("direct:marshal")
-            .marshal().json(JsonLibrary.Jackson)
-            .to("mock:marshalResult");
+        from("direct:start")
+            .bean(myMerger, "setup")
+            .enrich("direct:expander", myMerger);
+    }
 
-        from("direct:unmarshal")
-            .unmarshal().json(JsonLibrary.Jackson, View.class)
-            .to("mock:unmarshalResult");
+    public MergeInReplacementText getMyMerger() {
+        return myMerger;
+    }
+
+    public void setMyMerger(MergeInReplacementText myMerger) {
+        this.myMerger = myMerger;
     }
 }

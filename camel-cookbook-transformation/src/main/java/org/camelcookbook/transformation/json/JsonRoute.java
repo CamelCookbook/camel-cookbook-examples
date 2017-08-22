@@ -15,18 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.csv;
+package org.camelcookbook.transformation.json;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
-import org.apache.camel.spi.DataFormat;
+import org.apache.camel.model.dataformat.JsonLibrary;
 
-public class CsvRouteBuilder extends RouteBuilder {
+public class JsonRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        final DataFormat bindy = new BindyCsvDataFormat(org.camelcookbook.transformation.csv.model.BookModel.class);
+        from("direct:marshal")
+            .marshal().json(JsonLibrary.XStream)
+            .to("mock:marshalResult");
 
-        from("direct:unmarshal").unmarshal(bindy);
-        from("direct:marshal").marshal(bindy);
+        from("direct:unmarshal")
+            .unmarshal().json(JsonLibrary.XStream, View.class)
+            .to("mock:unmarshalResult");
     }
 }

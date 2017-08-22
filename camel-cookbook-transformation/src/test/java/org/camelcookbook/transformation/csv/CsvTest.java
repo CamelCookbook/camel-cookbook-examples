@@ -39,7 +39,7 @@ public class CsvTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new CsvRouteBuilder();
+        return new CsvRoute();
     }
 
     @Test

@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xslt;
+package org.camelcookbook.transformation.simple;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class XsltRouteBuilder extends RouteBuilder {
+public class SimpleRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("xslt:book.xslt");
+            .transform(simple("Hello ${body}"));
     }
 }

@@ -19,21 +19,10 @@ package org.camelcookbook.transformation.enrich;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class EnrichWithAggregatorRouteBuilder extends RouteBuilder {
-    private MergeInReplacementText myMerger;
-
+public class EnrichXsltRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .bean(myMerger, "setup")
-            .enrich("direct:expander", myMerger);
-    }
-
-    public MergeInReplacementText getMyMerger() {
-        return myMerger;
-    }
-
-    public void setMyMerger(MergeInReplacementText myMerger) {
-        this.myMerger = myMerger;
+            .enrich("xslt:book.xslt");
     }
 }

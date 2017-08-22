@@ -15,31 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.transformation.xmljson;
-
-import java.util.Arrays;
+package org.camelcookbook.transformation.json;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.dataformat.xmljson.XmlJsonDataFormat;
+import org.apache.camel.model.dataformat.JsonLibrary;
 
-public class XmlJsonRouteBuilder extends RouteBuilder {
+public class JsonJacksonRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:marshal")
-            .marshal().xmljson()
+            .marshal().json(JsonLibrary.Jackson)
             .to("mock:marshalResult");
 
         from("direct:unmarshal")
-            .unmarshal().xmljson()
+            .unmarshal().json(JsonLibrary.Jackson, View.class)
             .to("mock:unmarshalResult");
-
-        XmlJsonDataFormat xmlJsonFormat = new XmlJsonDataFormat();
-        xmlJsonFormat.setRootName("bookstore");
-        xmlJsonFormat.setElementName("book");
-        xmlJsonFormat.setExpandableProperties(Arrays.asList("author", "author"));
-
-        from("direct:unmarshalBookstore")
-            .unmarshal(xmlJsonFormat)
-            .to("mock:unmarshalBookstoreResult");
     }
 }

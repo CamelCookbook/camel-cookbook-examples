@@ -26,7 +26,7 @@ public class CafeMain {
 
         main.bind("menuService", new MenuService());
 
-        main.addRouteBuilder(new CafeRouteBuilder(8080));
+        main.addRouteBuilder(new CafeRoute(8080));
 
         System.out.println("*******************************");
         System.out.println();

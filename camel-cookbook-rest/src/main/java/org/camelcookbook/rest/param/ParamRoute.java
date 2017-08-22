@@ -23,13 +23,13 @@ import org.apache.camel.model.rest.RestParamType;
 /**
  * Simple REST DSL example
  */
-public class ParamRouteBuilder extends RouteBuilder {
+public class ParamRoute extends RouteBuilder {
     private int port1;
 
-    public ParamRouteBuilder() {
+    public ParamRoute() {
     }
 
-    public ParamRouteBuilder(int port) {
+    public ParamRoute(int port) {
         this.port1 = port;
     }
 

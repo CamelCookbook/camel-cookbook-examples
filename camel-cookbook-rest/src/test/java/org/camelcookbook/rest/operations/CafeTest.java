@@ -51,7 +51,7 @@ public class CafeTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new CafeRouteBuilder(port1);
+        return new CafeRoute(port1);
     }
 
     @Test

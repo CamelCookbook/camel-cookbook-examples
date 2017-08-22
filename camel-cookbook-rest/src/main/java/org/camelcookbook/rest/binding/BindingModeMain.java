@@ -25,7 +25,7 @@ public class BindingModeMain {
 
         main.bind("itemService", new ItemService());
 
-        main.addRouteBuilder(new BindingModeRouteBuilder(8080));
+        main.addRouteBuilder(new BindingModeRoute(8080));
 
         System.out.println("*******************************");
         System.out.println();

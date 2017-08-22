@@ -23,7 +23,7 @@ public class ParamMain {
     public static void main(String[] args) throws Exception {
         Main main = new Main();
 
-        main.addRouteBuilder(new ParamRouteBuilder(8080));
+        main.addRouteBuilder(new ParamRoute(8080));
 
         System.out.println("*******************************");
         System.out.println();

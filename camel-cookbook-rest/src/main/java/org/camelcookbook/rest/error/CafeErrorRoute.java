@@ -28,13 +28,13 @@ import org.camelcookbook.rest.common.MenuItemNotFoundException;
 /**
  * Simple REST DSL example
  */
-public class CafeErrorRouteBuilder extends RouteBuilder {
+public class CafeErrorRoute extends RouteBuilder {
     private int port1;
 
-    public CafeErrorRouteBuilder() {
+    public CafeErrorRoute() {
     }
 
-    public CafeErrorRouteBuilder(int port) {
+    public CafeErrorRoute(int port) {
         this.port1 = port;
     }
 

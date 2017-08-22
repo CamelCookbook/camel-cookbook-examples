@@ -29,7 +29,7 @@ public class ParamTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new ParamRouteBuilder(port1);
+        return new ParamRoute(port1);
     }
 
     @Test

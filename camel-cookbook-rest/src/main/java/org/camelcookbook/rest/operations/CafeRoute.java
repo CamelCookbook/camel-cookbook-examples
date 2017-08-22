@@ -25,13 +25,13 @@ import org.camelcookbook.rest.common.MenuItem;
 /**
  * Simple REST DSL example
  */
-public class CafeRouteBuilder extends RouteBuilder {
+public class CafeRoute extends RouteBuilder {
     private int port1;
 
-    public CafeRouteBuilder() {
+    public CafeRoute() {
     }
 
-    public CafeRouteBuilder(int port) {
+    public CafeRoute(int port) {
         this.port1 = port;
     }
 

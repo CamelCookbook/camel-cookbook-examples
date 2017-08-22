@@ -23,13 +23,13 @@ import org.apache.camel.model.rest.RestBindingMode;
 /**
  * Simple REST DSL example
  */
-public class BindingModeRouteBuilder extends RouteBuilder {
+public class BindingModeRoute extends RouteBuilder {
     private int port1;
 
-    public BindingModeRouteBuilder() {
+    public BindingModeRoute() {
     }
 
-    public BindingModeRouteBuilder(int port) {
+    public BindingModeRoute(int port) {
         this.port1 = port;
     }
 

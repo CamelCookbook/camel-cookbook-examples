@@ -52,7 +52,7 @@ public class BindingModeTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new BindingModeRouteBuilder(port1);
+        return new BindingModeRoute(port1);
     }
 
     @Test

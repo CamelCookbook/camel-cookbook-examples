@@ -26,7 +26,7 @@ public class CafeErrorMain {
 
         main.bind("menuService", new MenuService());
 
-        main.addRouteBuilder(new CafeErrorRouteBuilder(8080));
+        main.addRouteBuilder(new CafeErrorRoute(8080));
 
         System.out.println("*******************************");
         System.out.println();

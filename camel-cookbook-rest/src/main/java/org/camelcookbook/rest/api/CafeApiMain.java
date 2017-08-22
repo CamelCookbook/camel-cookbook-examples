@@ -26,7 +26,7 @@ public class CafeApiMain {
 
         main.bind("menuService", new MenuService());
 
-        main.addRouteBuilder(new CafeApiRouteBuilder(8080));
+        main.addRouteBuilder(new CafeApiRoute(8080));
 
         System.out.println("*******************************");
         System.out.println();

@@ -34,7 +34,7 @@ public class EncryptedPropertiesPasswordInSystemPropertyTest extends CamelTestSu
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new EncryptedPropertiesRouteBuilder();
+        return new EncryptedPropertiesRoute();
     }
 
     @Override

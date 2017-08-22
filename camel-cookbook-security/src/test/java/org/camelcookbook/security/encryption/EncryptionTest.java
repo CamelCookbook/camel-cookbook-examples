@@ -42,7 +42,7 @@ public class EncryptionTest extends CamelTestSupport {
         keyStore.load(classLoader.getResourceAsStream("shared.jceks"), "sharedKeystorePassword".toCharArray());
 
         Key sharedKey = keyStore.getKey("shared", "sharedKeyPassword".toCharArray());
-        return new EncryptionRouteBuilder(sharedKey);
+        return new EncryptionRoute(sharedKey);
     }
 
     @Test

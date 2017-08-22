@@ -41,7 +41,7 @@ public class SignaturesTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SignaturesRouteBuilder();
+        return new SignaturesRoute();
     }
 
     @Override

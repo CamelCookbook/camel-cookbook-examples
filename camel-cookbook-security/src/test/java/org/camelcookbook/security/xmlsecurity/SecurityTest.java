@@ -29,7 +29,7 @@ public class SecurityTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SecurityRouteBuilder();
+        return new SecurityRoute();
     }
 
     @Override

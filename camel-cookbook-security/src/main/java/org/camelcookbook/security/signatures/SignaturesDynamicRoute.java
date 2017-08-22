@@ -18,25 +18,30 @@
 package org.camelcookbook.security.signatures;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.crypto.DigitalSignatureConstants;
 
 /**
  * Demonstrates the use of public and private keys to digitally sign a message payload.
  */
-public class SignaturesRouteBuilder extends RouteBuilder {
+public class SignaturesDynamicRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("direct:sign")
-            .log("Signing message")
+        from("direct:sign_a")
             .to("crypto:sign://usingKeystore?keystore=#keyStore&alias=system_a&password=keyPasswordA")
-            .to("log:out?showHeaders=true")
-            .log("Message signed")
-            .to("mock:signed")
+            .setHeader("sendingSystem", constant("a"))
+            .to("direct:verify");
+
+        from("direct:sign_b")
+            .to("crypto:sign://usingKeystore?keystore=#keyStore&alias=system_b&password=keyPasswordB")
+            .setHeader("sendingSystem", constant("b"))
             .to("direct:verify");
 
         from("direct:verify")
             .log("Verifying message")
-            .to("crypto:verify://usingKeystore?keystore=#trustStore&alias=system_a")
+            .setHeader(DigitalSignatureConstants.KEYSTORE_ALIAS,
+                simple("system_${header[sendingSystem]}"))
+            .to("crypto:verify://usingKeystore?keystore=#trustStore")
             .log("Message verified")
             .to("mock:verified");
     }

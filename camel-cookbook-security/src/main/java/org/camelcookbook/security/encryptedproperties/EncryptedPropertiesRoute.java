@@ -22,7 +22,7 @@ import org.apache.camel.builder.RouteBuilder;
 /**
  * Demonstrates the use of encrypted properties in Camel routes.
  */
-public class EncryptedPropertiesRouteBuilder extends RouteBuilder {
+public class EncryptedPropertiesRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {

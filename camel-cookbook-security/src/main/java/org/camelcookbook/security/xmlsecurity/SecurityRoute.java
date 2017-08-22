@@ -19,7 +19,7 @@ package org.camelcookbook.security.xmlsecurity;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class SecurityRouteBuilder extends RouteBuilder {
+public class SecurityRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final String tagXPath = "/booksignings/store/address";

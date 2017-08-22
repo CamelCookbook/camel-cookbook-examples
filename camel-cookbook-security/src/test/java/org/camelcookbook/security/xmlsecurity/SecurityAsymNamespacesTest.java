@@ -33,7 +33,7 @@ public class SecurityAsymNamespacesTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SecurityAsymNamespacesRouteBuilder();
+        return new SecurityAsymNamespacesRoute();
     }
 
     @Override

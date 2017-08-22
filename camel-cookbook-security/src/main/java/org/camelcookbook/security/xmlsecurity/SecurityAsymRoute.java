@@ -17,17 +17,11 @@
 
 package org.camelcookbook.security.xmlsecurity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.util.jsse.KeyStoreParameters;
 import org.apache.xml.security.encryption.XMLCipher;
 
-/**
- * Demonstrates the use of XML Namespaces with XML encryption.
- */
-public class SecurityAsymNamespacesRouteBuilder extends RouteBuilder {
+public class SecurityAsymRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         final boolean secureTagContents = true;
@@ -40,14 +34,10 @@ public class SecurityAsymNamespacesRouteBuilder extends RouteBuilder {
         keyStoreParameters.setResource("xml_keystore.jks");
         keyStoreParameters.setPassword("keystorePassword");
 
-        final Map<String, String> namespaces = new HashMap<String, String>();
-        namespaces.put("c", "http://camelcookbook.org/schema/booksignings");
-
         from("direct:encrypt").id("encrypt")
             .marshal()
                 .secureXML(
-                    "/c:booksignings/c:store/c:address", // secure tag
-                    namespaces,
+                    "/booksignings/store/address", // secure tag
                     secureTagContents,
                     "system_a",                    // recipient key alias
                     XMLCipher.TRIPLEDES,           // xml cipher
@@ -58,9 +48,8 @@ public class SecurityAsymNamespacesRouteBuilder extends RouteBuilder {
         from("direct:decrypt").id("decrypt")
             .unmarshal()
                 .secureXML(
-                    "/c:booksignings/c:store/c:address", // secure tag
-                    namespaces,
-                    secureTagContents,             // secure tag contents
+                    "/booksignings/store/address", // secure tag
+                    secureTagContents,
                     "system_a",                    // recipient key alias
                     XMLCipher.TRIPLEDES,           // xml cipher
                     XMLCipher.RSA_v1dot5,          // key cipher

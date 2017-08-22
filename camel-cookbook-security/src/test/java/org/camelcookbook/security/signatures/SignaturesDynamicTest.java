@@ -38,7 +38,7 @@ public class SignaturesDynamicTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SignaturesDynamicRouteBuilder();
+        return new SignaturesDynamicRoute();
     }
 
     @Override

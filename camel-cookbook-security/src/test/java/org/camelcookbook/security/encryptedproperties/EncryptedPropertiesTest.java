@@ -33,7 +33,7 @@ public class EncryptedPropertiesTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new EncryptedPropertiesRouteBuilder();
+        return new EncryptedPropertiesRoute();
     }
 
     @Override

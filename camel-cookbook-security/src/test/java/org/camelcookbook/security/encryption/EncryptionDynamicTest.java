@@ -58,7 +58,7 @@ public class EncryptionDynamicTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new EncryptionDynamicRouteBuilder();
+        return new EncryptionDynamicRoute();
     }
 
     @Test

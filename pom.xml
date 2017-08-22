@@ -99,21 +99,21 @@
   </properties>
 
   <modules>
-    <module>camel-cookbook-structuring-routes</module>
-    <module>camel-cookbook-routing</module>
-    <module>camel-cookbook-extend</module>
-    <module>camel-cookbook-transformation</module>
-    <module>camel-cookbook-split-join</module>
-    <module>camel-cookbook-parallel-processing</module>
-    <module>camel-cookbook-error</module>
-    <module>camel-cookbook-transactions</module>
-    <module>camel-cookbook-testing</module>
-    <module>camel-cookbook-monitoring</module>
-    <module>camel-cookbook-security</module>
-    <module>camel-cookbook-web-services</module>
-    <module>camel-cookbook-rest</module>
-    <module>camel-cookbook-rest-hello</module>
-    <module>camel-cookbook-runtimes</module>
+    <module>01-structuring-routes</module>
+    <module>02-routing</module>
+    <module>03-extend</module>
+    <module>04-rest</module>
+    <module>04-rest-hello</module>
+    <module>05-transformation</module>
+    <module>06-split-join</module>
+    <module>07-parallel-processing</module>
+    <module>08-error</module>
+    <module>09-transactions</module>
+    <module>10-runtimes</module>
+    <module>11-testing</module>
+    <module>12-monitoring</module>
+    <module>13-security</module>
+    <module>14-web-services</module>
   </modules>
 
 

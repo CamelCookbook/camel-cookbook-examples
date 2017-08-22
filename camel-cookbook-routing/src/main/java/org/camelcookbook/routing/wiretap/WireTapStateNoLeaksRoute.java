@@ -15,23 +15,28 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.loadbalancer;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.routing.model.CheeseCloningProcessor;
+import org.camelcookbook.routing.model.CheeseRipener;
 
-public class LoadBalancerFailoverRouteBuilder extends RouteBuilder {
+/**
+ * Route showing wiretap without state leakage.
+ */
+public class WireTapStateNoLeaksRoute extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .loadBalance()
-                .failover(-1, false, true)
-                .to("mock:first")
-                .to("direct:second")
-                .to("mock:third")
-            .end()
+            .log("Cheese is ${body.age} months old")
+            .wireTap("direct:processInBackground")
+                .onPrepare(new CheeseCloningProcessor())
+            .delay(constant(1000))
             .to("mock:out");
 
-        from("direct:second")
-            .throwException(new IllegalStateException("oops"));
+        from("direct:processInBackground")
+            .bean(CheeseRipener.class, "ripen")
+            .to("mock:tapped");
     }
 }

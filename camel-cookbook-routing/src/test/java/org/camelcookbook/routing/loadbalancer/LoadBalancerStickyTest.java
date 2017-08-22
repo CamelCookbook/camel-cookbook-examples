@@ -43,7 +43,7 @@ public class LoadBalancerStickyTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new LoadBalancerStickyRouteBuilder();
+        return new LoadBalancerStickyRoute();
     }
 
     @Test

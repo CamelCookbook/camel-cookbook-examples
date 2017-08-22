@@ -15,22 +15,24 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.contentbasedrouter;
+package org.camelcookbook.routing.changingmep;
 
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 
-public class ContentBasedRouterRouteBuilder extends RouteBuilder {
+/**
+ * Changing the MEP of a message for one endpoint invocation to InOut.
+ */
+public class CallingInOutViaToRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .choice()
-                .when().simple("${body} contains 'Camel'")
-                    .to("mock:camel")
-                    .log("Camel ${body}")
-                .otherwise()
-                    .to("mock:other")
-                    .log("Other ${body}")
-            .end()
-            .log("Message ${body}");
+            .to("mock:beforeMessageModified")
+            .to(ExchangePattern.InOut, "direct:modifyMessage")
+            .to("mock:afterMessageModified");
+
+        from("direct:modifyMessage")
+            .to("mock:modifyMessage")
+            .transform(simple("[${body}] has been modified!"));
     }
 }

@@ -15,24 +15,18 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.changingmep;
+package org.camelcookbook.routing.throttler;
 
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * Changing the MEP of a message for one endpoint invocation to InOnly.
- */
-public class CallingInOnlyViaToRouteBuilder extends RouteBuilder {
+public class ThrottlerDynamicRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("mock:beforeOneWay")
-            .to(ExchangePattern.InOnly, "direct:oneWay")
-            .to("mock:afterOneWay")
-            .transform().constant("Done");
-
-        from("direct:oneWay")
-            .to("mock:oneWay");
+            .to("mock:unthrottled")
+            .throttle(header("ThrottleRate")).timePeriodMillis(10000)
+                .to("mock:throttled")
+            .end()
+            .to("mock:after");
     }
 }

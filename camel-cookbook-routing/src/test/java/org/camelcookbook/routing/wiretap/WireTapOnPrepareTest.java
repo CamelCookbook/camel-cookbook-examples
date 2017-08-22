@@ -38,7 +38,7 @@ public class WireTapOnPrepareTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new WireTapOnPrepareRouteBuilder();
+        return new WireTapOnPrepareRoute();
     }
 
     @Test

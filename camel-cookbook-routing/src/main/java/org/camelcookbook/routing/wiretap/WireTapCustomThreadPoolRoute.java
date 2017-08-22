@@ -17,26 +17,29 @@
 
 package org.camelcookbook.routing.wiretap;
 
+import java.util.concurrent.ExecutorService;
+
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.routing.model.CheeseCloningProcessor;
-import org.camelcookbook.routing.model.CheeseRipener;
+import org.apache.camel.builder.ThreadPoolBuilder;
 
 /**
- * Route showing wiretap without state leakage.
+ * Using a custom thread pool with a wiretap.
  */
-public class WireTapStateNoLeaksRouteBuilder extends RouteBuilder {
+public class WireTapCustomThreadPoolRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+
+        ThreadPoolBuilder builder = new ThreadPoolBuilder(getContext());
+        ExecutorService oneThreadOnly = builder.poolSize(1).maxPoolSize(1)
+            .maxQueueSize(100).build("JustMeDoingTheTapping");
+
         from("direct:start")
-            .log("Cheese is ${body.age} months old")
-            .wireTap("direct:processInBackground")
-                .onPrepare(new CheeseCloningProcessor())
-            .delay(constant(1000))
+            .wireTap("direct:tapped").executorService(oneThreadOnly)
             .to("mock:out");
 
-        from("direct:processInBackground")
-            .bean(CheeseRipener.class, "ripen")
+        from("direct:tapped")
+            .setHeader("threadName").simple("${threadName}")
             .to("mock:tapped");
     }
 }

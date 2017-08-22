@@ -23,7 +23,7 @@ public class CallingInOutViaToTest extends CallingInOutTest {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new CallingInOutViaToRouteBuilder();
+        return new CallingInOutViaToRoute();
     }
 
 }

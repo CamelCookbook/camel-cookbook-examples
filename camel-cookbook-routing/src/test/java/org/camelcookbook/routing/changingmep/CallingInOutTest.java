@@ -37,7 +37,7 @@ public class CallingInOutTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new CallingInOutRouteBuilder();
+        return new CallingInOutRoute();
     }
 
     @Test

@@ -41,7 +41,7 @@ public class MulticastTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastRouteBuilder();
+        return new MulticastRoute();
     }
 
     @Test

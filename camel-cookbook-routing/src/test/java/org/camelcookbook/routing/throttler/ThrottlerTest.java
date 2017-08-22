@@ -24,7 +24,7 @@ import org.junit.Test;
 public class ThrottlerTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new ThrottlerRouteBuilder();
+        return new ThrottlerRoute();
     }
 
     @Test

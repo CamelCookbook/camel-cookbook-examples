@@ -25,7 +25,7 @@ public class DynamicRouterTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new DynamicRouterRouteBuilder();
+        return new DynamicRouterRoute();
     }
 
     @Test

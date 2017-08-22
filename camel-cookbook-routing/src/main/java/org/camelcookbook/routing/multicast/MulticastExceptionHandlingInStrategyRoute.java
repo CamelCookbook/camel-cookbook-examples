@@ -17,37 +17,41 @@
 
 package org.camelcookbook.routing.multicast;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Simple multicast example with timeout.
+ * Multicast example with exceptions handled in the AggregationStrategy.
  */
-public class MulticastTimeoutRouteBuilder extends RouteBuilder {
+public class MulticastExceptionHandlingInStrategyRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .multicast().parallelProcessing().timeout(3000)
+            .multicast().aggregationStrategy(new ExceptionHandlingAggregationStrategy())
                 .to("direct:first")
                 .to("direct:second")
             .end()
-            .setHeader("threadName").simple("${threadName}")
+            .log("continuing with ${body}")
             .to("mock:afterMulticast")
-            .transform(constant("response"));
+            .transform(body()); // copy the In message to the Out message; this will become the route response
 
         from("direct:first")
-            .setHeader("firstModifies").constant("apple")
-            .setHeader("threadName").simple("${threadName}")
-            .to("mock:first");
+            .onException(Exception.class)
+                .log("Caught exception")
+                .to("mock:exceptionHandler")
+                .transform(constant("Oops"))
+            .end()
+            .to("mock:first")
+            .process(new Processor() {
+                @Override
+                public void process(Exchange exchange) throws Exception {
+                    throw new IllegalStateException("something went horribly wrong");
+                }
+            });
 
         from("direct:second")
-            .onCompletion().onWhen(header("timedOut").isNull())
-                .log("operation rolling back")
-            .end()
-            .setHeader("secondModifies").constant("banana")
-            .setHeader("threadName").simple("${threadName}")
-            .delay(5000)
             .to("mock:second")
-            .filter(exchangeProperty("CamelMulticastComplete").isEqualTo(false))
-            .setHeader("timedOut", constant("false"));
+            .transform(constant("All OK here"));
     }
 }

@@ -44,7 +44,7 @@ public class WireTapStateNoLeaksTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new WireTapStateNoLeaksRouteBuilder();
+        return new WireTapStateNoLeaksRoute();
     }
 
     @Test

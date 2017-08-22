@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.loadbalancer;
+package org.camelcookbook.routing.wiretap;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class LoadBalancerStickyRouteBuilder extends RouteBuilder {
+/**
+ * Simplest possible example of the wiretap EIP.
+ */
+public class WireTapRoute extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .loadBalance().sticky(header("customerId"))
-                .to("mock:first")
-                .to("mock:second")
-                .to("mock:third")
-            .end()
+            .wireTap("mock:tapped")
             .to("mock:out");
     }
 }

@@ -15,33 +15,22 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.multicast;
+package org.camelcookbook.routing.contentbasedrouter;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * Simple multicast example with parallel processing.
- */
-public class MulticastParallelProcessingRouteBuilder extends RouteBuilder {
+public class ContentBasedRouterRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .multicast().parallelProcessing()
-                .to("direct:first")
-                .to("direct:second")
+            .choice()
+                .when().simple("${body} contains 'Camel'")
+                    .to("mock:camel")
+                    .log("Camel ${body}")
+                .otherwise()
+                    .to("mock:other")
+                    .log("Other ${body}")
             .end()
-            .setHeader("threadName").simple("${threadName}")
-            .to("mock:afterMulticast")
-            .transform(constant("response"));
-
-        from("direct:first")
-            .setHeader("firstModifies").constant("apple")
-            .setHeader("threadName").simple("${threadName}")
-            .to("mock:first");
-
-        from("direct:second")
-            .setHeader("secondModifies").constant("banana")
-            .setHeader("threadName").simple("${threadName}")
-            .to("mock:second");
+            .log("Message ${body}");
     }
 }

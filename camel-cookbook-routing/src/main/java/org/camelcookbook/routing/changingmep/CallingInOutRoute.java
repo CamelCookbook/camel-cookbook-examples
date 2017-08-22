@@ -15,27 +15,25 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.multicast;
+package org.camelcookbook.routing.changingmep;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Simple multicast example with parallel processing.
+ * Changing the MEP of a message for one endpoint invocation to InOut.
  */
-public class MulticastWithAggregationRouteBuilder extends RouteBuilder {
+public class CallingInOutRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .multicast().aggregationStrategy(new ConcatenatingAggregationStrategy())
-                .to("direct:first")
-                .to("direct:second")
-            .end()
-            .transform(body()); // copy the In message to the Out message; this will become the route response
+            .to("mock:beforeMessageModified")
+            .inOut("direct:modifyMessage")
+            .to("log:mainRoute?showAll=true")
+            .to("mock:afterMessageModified");
 
-        from("direct:first")
-            .transform(constant("first response"));
-
-        from("direct:second")
-            .transform(constant("second response"));
+        from("direct:modifyMessage")
+            .to("mock:modifyMessage")
+            .to("log:subRoute?showAll=true")
+            .transform(simple("[${body}] has been modified!"));
     }
 }

@@ -44,7 +44,7 @@ public class RecipientListTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RecipientListRouteBuilder();
+        return new RecipientListRoute();
     }
 
     @Test

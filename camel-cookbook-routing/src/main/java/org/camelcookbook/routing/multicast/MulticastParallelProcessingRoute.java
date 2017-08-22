@@ -15,25 +15,33 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.changingmep;
+package org.camelcookbook.routing.multicast;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Changing the MEP of a message for one endpoint invocation to InOut.
+ * Simple multicast example with parallel processing.
  */
-public class CallingInOutRouteBuilder extends RouteBuilder {
+public class MulticastParallelProcessingRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("mock:beforeMessageModified")
-            .inOut("direct:modifyMessage")
-            .to("log:mainRoute?showAll=true")
-            .to("mock:afterMessageModified");
+            .multicast().parallelProcessing()
+                .to("direct:first")
+                .to("direct:second")
+            .end()
+            .setHeader("threadName").simple("${threadName}")
+            .to("mock:afterMulticast")
+            .transform(constant("response"));
 
-        from("direct:modifyMessage")
-            .to("mock:modifyMessage")
-            .to("log:subRoute?showAll=true")
-            .transform(simple("[${body}] has been modified!"));
+        from("direct:first")
+            .setHeader("firstModifies").constant("apple")
+            .setHeader("threadName").simple("${threadName}")
+            .to("mock:first");
+
+        from("direct:second")
+            .setHeader("secondModifies").constant("banana")
+            .setHeader("threadName").simple("${threadName}")
+            .to("mock:second");
     }
 }

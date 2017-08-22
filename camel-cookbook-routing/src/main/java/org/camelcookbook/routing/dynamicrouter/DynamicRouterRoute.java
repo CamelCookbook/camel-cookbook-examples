@@ -15,22 +15,17 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.recipientlist;
+package org.camelcookbook.routing.dynamicrouter;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * Example showing ignore invalid endpoints.
- */
-public class RecipientListUnrecognizedEndpointRouteBuilder extends RouteBuilder {
+public class DynamicRouterRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .setHeader("multicastTo").constant("direct:first,direct:second,websphere:cheese")
-            .recipientList().header("multicastTo").ignoreInvalidEndpoints();
+            .dynamicRouter(method(MyDynamicRouter.class, "routeMe"));
 
-        from("direct:first").to("mock:first");
-
-        from("direct:second").to("mock:second");
+        from("direct:other")
+            .to("mock:other");
     }
 }

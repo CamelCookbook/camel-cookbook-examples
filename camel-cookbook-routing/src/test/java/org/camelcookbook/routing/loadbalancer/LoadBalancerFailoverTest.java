@@ -40,7 +40,7 @@ public class LoadBalancerFailoverTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new LoadBalancerFailoverRouteBuilder();
+        return new LoadBalancerFailoverRoute();
     }
 
     @Test

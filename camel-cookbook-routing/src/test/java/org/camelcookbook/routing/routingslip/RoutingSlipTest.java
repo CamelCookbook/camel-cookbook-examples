@@ -25,7 +25,7 @@ public class RoutingSlipTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RoutingSlipRouteBuilder();
+        return new RoutingSlipRoute();
     }
 
     @Test
@@ -33,7 +33,7 @@ public class RoutingSlipTest extends CamelTestSupport {
         getMockEndpoint("mock:a").expectedMessageCount(1);
         getMockEndpoint("mock:other").expectedMessageCount(1);
 
-        template.sendBodyAndHeader("direct:start", "Camel Rocks", RoutingSlipRouteBuilder.ROUTING_SLIP_HEADER, "mock:a,direct:other");
+        template.sendBodyAndHeader("direct:start", "Camel Rocks", RoutingSlipRoute.ROUTING_SLIP_HEADER, "mock:a,direct:other");
 
         assertMockEndpointsSatisfied();
     }

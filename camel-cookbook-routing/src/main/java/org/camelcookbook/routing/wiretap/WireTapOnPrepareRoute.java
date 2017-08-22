@@ -15,17 +15,28 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.dynamicrouter;
+package org.camelcookbook.routing.wiretap;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
-public class DynamicRouterRouteBuilder extends RouteBuilder {
+/**
+ * Using the <code>onPrepare</code> statement to modify the tapped message during the send.
+ */
+public class WireTapOnPrepareRoute extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
-        from("direct:start")
-            .dynamicRouter(method(MyDynamicRouter.class, "routeMe"));
+        Processor markProcessed = new Processor() {
+            @Override
+            public void process(Exchange exchange) throws Exception {
+                exchange.getIn().setHeader("processorAction", "triggered");
+            }
+        };
 
-        from("direct:other")
-            .to("mock:other");
+        from("direct:start")
+            .wireTap("mock:tapped").onPrepare(markProcessed)
+            .to("mock:out");
     }
 }

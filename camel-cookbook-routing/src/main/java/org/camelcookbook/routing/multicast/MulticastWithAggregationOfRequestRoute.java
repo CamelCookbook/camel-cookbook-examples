@@ -23,7 +23,7 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
 /**
  * Simple multicast example with parallel processing.
  */
-public class MulticastWithAggregationOfRequestRouteBuilder extends RouteBuilder {
+public class MulticastWithAggregationOfRequestRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         AggregationStrategy concatenationStrategy = new ConcatenatingAggregationStrategy();

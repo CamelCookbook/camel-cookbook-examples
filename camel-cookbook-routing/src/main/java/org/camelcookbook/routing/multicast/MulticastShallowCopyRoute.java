@@ -15,26 +15,31 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.wiretap;
+package org.camelcookbook.routing.multicast;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.routing.model.CheeseRipener;
 
 /**
- * Route showing wiretap state leakage.
+ * Example shows shallow copying of model in multicast.
  */
-class WireTapStateLeaksRouteBuilder extends RouteBuilder {
-
+public class MulticastShallowCopyRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .log("Cheese is ${body.age} months old")
-            .wireTap("direct:processInBackground")
-            .delay(constant(1000))
-            .to("mock:out");
+            .multicast()
+                .to("direct:first")
+                .to("direct:second")
+            .end()
+            .to("mock:afterMulticast");
 
-        from("direct:processInBackground")
-            .bean(CheeseRipener.class, "ripen")
-            .to("mock:tapped");
+        from("direct:first")
+            .setHeader("firstModifies").constant("apple")
+            .setHeader("threadName").simple("${threadName}")
+            .to("mock:first");
+
+        from("direct:second")
+            .setHeader("secondModifies").constant("banana")
+            .setHeader("threadName").simple("${threadName}")
+            .to("mock:second");
     }
 }

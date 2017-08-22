@@ -46,7 +46,7 @@ public class MulticastStopOnExceptionTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastStopOnExceptionRouteBuilder();
+        return new MulticastStopOnExceptionRoute();
     }
 
     @Test

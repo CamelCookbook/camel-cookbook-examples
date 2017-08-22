@@ -15,19 +15,21 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.throttler;
+package org.camelcookbook.routing.multicast;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class ThrottlerAsyncDelayedRouteBuilder extends RouteBuilder {
+/**
+ * Simple multicast example.
+ */
+public class MulticastRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("mock:unthrottled")
-            .throttle(5).timePeriodMillis(2000).asyncDelayed().executorServiceRef("myThrottler")
-                .setHeader("threadName", simple("${threadName}"))
-                .to("mock:throttled")
-            .end()
-            .to("mock:after");
+            .multicast()
+                .to("mock:first")
+                .to("mock:second")
+                .to("mock:third")
+            .end();
     }
 }

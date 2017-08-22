@@ -15,18 +15,23 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.throttler;
+package org.camelcookbook.routing.loadbalancer;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class ThrottlerRouteBuilder extends RouteBuilder {
+public class LoadBalancerFailoverRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("mock:unthrottled")
-            .throttle(5).timePeriodMillis(10000)
-                .to("mock:throttled")
+            .loadBalance()
+                .failover(-1, false, true)
+                .to("mock:first")
+                .to("direct:second")
+                .to("mock:third")
             .end()
-            .to("mock:after");
+            .to("mock:out");
+
+        from("direct:second")
+            .throwException(new IllegalStateException("oops"));
     }
 }

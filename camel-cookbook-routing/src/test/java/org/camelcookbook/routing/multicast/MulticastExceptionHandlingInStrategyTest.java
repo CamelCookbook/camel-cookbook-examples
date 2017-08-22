@@ -46,7 +46,7 @@ public class MulticastExceptionHandlingInStrategyTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastExceptionHandlingInStrategyRouteBuilder();
+        return new MulticastExceptionHandlingInStrategyRoute();
     }
 
     @Test

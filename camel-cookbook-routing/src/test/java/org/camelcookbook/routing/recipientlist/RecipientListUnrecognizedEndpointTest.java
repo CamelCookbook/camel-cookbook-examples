@@ -38,7 +38,7 @@ public class RecipientListUnrecognizedEndpointTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RecipientListUnrecognizedEndpointRouteBuilder();
+        return new RecipientListUnrecognizedEndpointRoute();
     }
 
     @Test

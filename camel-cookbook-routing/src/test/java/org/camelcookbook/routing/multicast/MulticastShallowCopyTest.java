@@ -44,7 +44,7 @@ public class MulticastShallowCopyTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastShallowCopyRouteBuilder();
+        return new MulticastShallowCopyRoute();
     }
 
     @Test

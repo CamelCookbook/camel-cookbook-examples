@@ -23,7 +23,7 @@ public class CallingInOnlyViaToTest extends CallingInOnlyTest {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new CallingInOnlyViaToRouteBuilder();
+        return new CallingInOnlyViaToRoute();
     }
 
 }

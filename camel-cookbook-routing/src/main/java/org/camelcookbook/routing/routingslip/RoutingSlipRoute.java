@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.throttler;
+package org.camelcookbook.routing.routingslip;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class ThrottlerDynamicRouteBuilder extends RouteBuilder {
+public class RoutingSlipRoute extends RouteBuilder {
+    public final static String ROUTING_SLIP_HEADER = "myRoutingSlipHeader";
+
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("mock:unthrottled")
-            .throttle(header("ThrottleRate")).timePeriodMillis(10000)
-                .to("mock:throttled")
-            .end()
-            .to("mock:after");
+            .routingSlip(header(ROUTING_SLIP_HEADER));
+
+        from("direct:other")
+            .to("mock:other");
     }
 }

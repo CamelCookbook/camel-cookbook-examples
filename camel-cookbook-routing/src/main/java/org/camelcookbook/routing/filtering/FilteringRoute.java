@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.changingmep;
+package org.camelcookbook.routing.filtering;
 
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * Changing the MEP of a message for one endpoint invocation to InOnly.
- */
-public class CallingInOnlyRouteBuilder extends RouteBuilder {
+public class FilteringRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("mock:beforeOneWay")
-            .inOnly("direct:oneWay")
-            .to("mock:afterOneWay")
-            .transform().constant("Done");
-
-        from("direct:oneWay")
-            .to("mock:oneWay");
+            .filter()
+                .simple("${body} regex '^C.*'")
+                .to("mock:C")
+            .end()
+            .to("mock:afterC")
+            .filter()
+                .simple("${body} contains 'amel'")
+                .to("mock:amel")
+            .end()
+            .to("mock:other");
     }
 }

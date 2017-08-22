@@ -17,26 +17,24 @@
 
 package org.camelcookbook.routing.wiretap;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.routing.model.CheeseRipener;
 
 /**
- * Using the <code>onPrepare</code> statement to modify the tapped message during the send.
+ * Route showing wiretap state leakage.
  */
-public class WireTapOnPrepareRouteBuilder extends RouteBuilder {
+class WireTapStateLeaksRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        Processor markProcessed = new Processor() {
-            @Override
-            public void process(Exchange exchange) throws Exception {
-                exchange.getIn().setHeader("processorAction", "triggered");
-            }
-        };
-
         from("direct:start")
-            .wireTap("mock:tapped").onPrepare(markProcessed)
+            .log("Cheese is ${body.age} months old")
+            .wireTap("direct:processInBackground")
+            .delay(constant(1000))
             .to("mock:out");
+
+        from("direct:processInBackground")
+            .bean(CheeseRipener.class, "ripen")
+            .to("mock:tapped");
     }
 }

@@ -43,7 +43,7 @@ public class MulticastTimeoutTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastTimeoutRouteBuilder();
+        return new MulticastTimeoutRoute();
     }
 
     @Test

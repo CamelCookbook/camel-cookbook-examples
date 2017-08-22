@@ -33,7 +33,7 @@ public class ThrottlerAsyncDelayedTest extends CamelTestSupport {
         builder.maxQueueSize(5);
         context.getExecutorServiceManager().registerThreadPoolProfile(builder.build());
 
-        return new ThrottlerAsyncDelayedRouteBuilder();
+        return new ThrottlerAsyncDelayedRoute();
     }
 
     @Override

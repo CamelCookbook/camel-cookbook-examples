@@ -15,19 +15,24 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.routingslip;
+package org.camelcookbook.routing.changingmep;
 
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 
-public class RoutingSlipRouteBuilder extends RouteBuilder {
-    public final static String ROUTING_SLIP_HEADER = "myRoutingSlipHeader";
-
+/**
+ * Changing the MEP of a message for one endpoint invocation to InOnly.
+ */
+public class CallingInOnlyViaToRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .routingSlip(header(ROUTING_SLIP_HEADER));
+            .to("mock:beforeOneWay")
+            .to(ExchangePattern.InOnly, "direct:oneWay")
+            .to("mock:afterOneWay")
+            .transform().constant("Done");
 
-        from("direct:other")
-            .to("mock:other");
+        from("direct:oneWay")
+            .to("mock:oneWay");
     }
 }

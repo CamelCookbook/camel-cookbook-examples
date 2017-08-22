@@ -44,7 +44,7 @@ public class MulticastParallelProcessingTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastParallelProcessingRouteBuilder();
+        return new MulticastParallelProcessingRoute();
     }
 
     @Test

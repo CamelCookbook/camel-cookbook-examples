@@ -22,22 +22,23 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Multicast example with exceptions handled in the AggregationStrategy.
+ * Example shows multicast stopping on exception.
  */
-public class MulticastExceptionHandlingInStrategyRouteBuilder extends RouteBuilder {
+public class MulticastStopOnExceptionRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .multicast().aggregationStrategy(new ExceptionHandlingAggregationStrategy())
+            .multicast().stopOnException()
                 .to("direct:first")
                 .to("direct:second")
             .end()
-            .log("continuing with ${body}")
+            .log("continuing with ${body}") // this will never be called
             .to("mock:afterMulticast")
             .transform(body()); // copy the In message to the Out message; this will become the route response
 
         from("direct:first")
             .onException(Exception.class)
+                .handled(true)
                 .log("Caught exception")
                 .to("mock:exceptionHandler")
                 .transform(constant("Oops"))

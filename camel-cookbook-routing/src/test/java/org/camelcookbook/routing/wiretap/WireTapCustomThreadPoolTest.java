@@ -39,7 +39,7 @@ public class WireTapCustomThreadPoolTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new WireTapCustomThreadPoolRouteBuilder();
+        return new WireTapCustomThreadPoolRoute();
     }
 
     @Test

@@ -15,31 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.wiretap;
-
-import java.util.concurrent.ExecutorService;
+package org.camelcookbook.routing.throttler;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.builder.ThreadPoolBuilder;
 
-/**
- * Using a custom thread pool with a wiretap.
- */
-public class WireTapCustomThreadPoolRouteBuilder extends RouteBuilder {
-
+public class ThrottlerAsyncDelayedRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-
-        ThreadPoolBuilder builder = new ThreadPoolBuilder(getContext());
-        ExecutorService oneThreadOnly = builder.poolSize(1).maxPoolSize(1)
-            .maxQueueSize(100).build("JustMeDoingTheTapping");
-
         from("direct:start")
-            .wireTap("direct:tapped").executorService(oneThreadOnly)
-            .to("mock:out");
-
-        from("direct:tapped")
-            .setHeader("threadName").simple("${threadName}")
-            .to("mock:tapped");
+            .to("mock:unthrottled")
+            .throttle(5).timePeriodMillis(2000).asyncDelayed().executorServiceRef("myThrottler")
+                .setHeader("threadName", simple("${threadName}"))
+                .to("mock:throttled")
+            .end()
+            .to("mock:after");
     }
 }

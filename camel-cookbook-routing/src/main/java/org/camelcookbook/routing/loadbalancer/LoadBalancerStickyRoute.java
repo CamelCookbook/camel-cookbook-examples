@@ -15,24 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.changingmep;
+package org.camelcookbook.routing.loadbalancer;
 
-import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 
-/**
- * Changing the MEP of a message for one endpoint invocation to InOut.
- */
-public class CallingInOutViaToRouteBuilder extends RouteBuilder {
+public class LoadBalancerStickyRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .to("mock:beforeMessageModified")
-            .to(ExchangePattern.InOut, "direct:modifyMessage")
-            .to("mock:afterMessageModified");
-
-        from("direct:modifyMessage")
-            .to("mock:modifyMessage")
-            .transform(simple("[${body}] has been modified!"));
+            .loadBalance().sticky(header("customerId"))
+                .to("mock:first")
+                .to("mock:second")
+                .to("mock:third")
+            .end()
+            .to("mock:out");
     }
 }

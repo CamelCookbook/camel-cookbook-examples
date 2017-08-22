@@ -15,21 +15,22 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.multicast;
+package org.camelcookbook.routing.recipientlist;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Simple multicast example.
+ * Example showing ignore invalid endpoints.
  */
-public class MulticastRouteBuilder extends RouteBuilder {
+public class RecipientListUnrecognizedEndpointRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .multicast()
-                .to("mock:first")
-                .to("mock:second")
-                .to("mock:third")
-            .end();
+            .setHeader("multicastTo").constant("direct:first,direct:second,websphere:cheese")
+            .recipientList().header("multicastTo").ignoreInvalidEndpoints();
+
+        from("direct:first").to("mock:first");
+
+        from("direct:second").to("mock:second");
     }
 }

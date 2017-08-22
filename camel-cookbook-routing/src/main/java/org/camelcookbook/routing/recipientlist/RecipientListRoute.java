@@ -15,31 +15,24 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.routing.multicast;
+package org.camelcookbook.routing.recipientlist;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
- * Example shows shallow copying of model in multicast.
+ * Simple RecipientList example.
  */
-public class MulticastShallowCopyRouteBuilder extends RouteBuilder {
+public class RecipientListRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")
-            .multicast()
-                .to("direct:first")
-                .to("direct:second")
-            .end()
-            .to("mock:afterMulticast");
+            .setHeader("endpointsToBeTriggered")
+                .method(MessageRouter.class, "getEndpointsToRouteMessageTo")
+            .recipientList(header("endpointsToBeTriggered"));
 
-        from("direct:first")
-            .setHeader("firstModifies").constant("apple")
-            .setHeader("threadName").simple("${threadName}")
-            .to("mock:first");
-
-        from("direct:second")
-            .setHeader("secondModifies").constant("banana")
-            .setHeader("threadName").simple("${threadName}")
-            .to("mock:second");
+        from("direct:order.priority").to("mock:order.priority");
+        from("direct:order.normal").to("mock:order.normal");
+        from("direct:billing").to("mock:billing");
+        from("direct:unrecognized").to("mock:unrecognized");
     }
 }

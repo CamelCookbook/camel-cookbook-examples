@@ -32,7 +32,7 @@ public class MulticastWithAggregationTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MulticastWithAggregationRouteBuilder();
+        return new MulticastWithAggregationRoute();
     }
 
     @Test

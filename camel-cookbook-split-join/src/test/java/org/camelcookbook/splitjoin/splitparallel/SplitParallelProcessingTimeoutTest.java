@@ -32,7 +32,7 @@ public class SplitParallelProcessingTimeoutTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SplitParallelProcessingTimeoutRouteBuilder();
+        return new SplitParallelProcessingTimeoutRoute();
     }
 
     @Test

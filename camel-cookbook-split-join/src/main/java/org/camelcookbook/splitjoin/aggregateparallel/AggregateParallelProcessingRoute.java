@@ -15,18 +15,20 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.aggregate;
+package org.camelcookbook.splitjoin.aggregateparallel;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-class AggregateCompletionConditionRouteBuilder extends RouteBuilder {
+class AggregateParallelProcessingRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .log("${threadName} - ${body}")
             .aggregate(header("group"), new SetAggregationStrategy())
-                    .completionPredicate(simple("${body.size} == 5"))
-                .log("${threadName} - out")
+                    .completionSize(10).completionTimeout(400)
+                    .parallelProcessing()
+                .log("${threadName} - processing output")
+                .delay(500)
                 .to("mock:out")
             .end();
     }

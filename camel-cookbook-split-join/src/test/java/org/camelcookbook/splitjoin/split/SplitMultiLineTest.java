@@ -28,7 +28,7 @@ import org.junit.Test;
 public class SplitMultiLineTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitMultiLineRouteBuilder();
+        return new SplitMultiLineRoute();
     }
 
     @Test

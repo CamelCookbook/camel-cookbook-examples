@@ -15,28 +15,25 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.split;
+package org.camelcookbook.splitjoin.splitaggregate;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
-class SplitExceptionHandlingRouteBuilder extends RouteBuilder {
+public class SplitAggregateExceptionHandlingRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(simple("${body}"))
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        if (exchange.getProperty("CamelSplitIndex").equals(0)) {
-                            throw new IllegalStateException("boom");
-                        }
-                    }
-                })
-                .log("Processing fragment[${property[CamelSplitIndex]}]:${body}")
-                .to("mock:split")
+            .split(body(), new ExceptionHandlingSetAggregationStrategy())
+                .inOut("direct:someBackEnd")
             .end()
             .to("mock:out");
+
+        from("direct:someBackEnd")
+            .choice()
+                .when(simple("${header.CamelSplitIndex} == 1"))
+                    .throwException(new IllegalStateException())
+                .otherwise()
+                    .transform(simple("Processed: ${body}"))
+            .end();
     }
 }

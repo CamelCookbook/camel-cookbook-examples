@@ -15,20 +15,15 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.aggregatetimeouts;
+package org.camelcookbook.splitjoin.split;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-class AggregateCompletionTimeoutRouteBuilder extends RouteBuilder {
+class SplitSimpleExpressionRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .log("${threadName} - ${body}")
-            .aggregate(header("group"), new SetAggregationStrategy())
-                    .completionSize(10).completionTimeout(1000)
-                .log("${threadName} - out")
-//                .delay(500)
+            .split(simple("${body.wrapped}"))
                 .to("mock:out")
             .end();
     }

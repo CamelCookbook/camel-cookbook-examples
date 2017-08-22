@@ -19,12 +19,11 @@ package org.camelcookbook.splitjoin.splitxml;
 
 import org.apache.camel.builder.RouteBuilder;
 
-class SplitXmlNamespaceRouteBuilder extends RouteBuilder {
+class SplitXmlRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(xpath("/c:books/c:book[@category='Tech']/c:authors/c:author/text()")
-                    .namespace("c", "http://camelcookbook.org/schema/books"))
+            .split(xpath("/books/book[@category='Tech']/authors/author/text()"))
                 .to("mock:out")
             .end();
     }

@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.splitxml;
+package org.camelcookbook.splitjoin.aggregate;
 
 import org.apache.camel.builder.RouteBuilder;
 
-class SplitXmlRouteBuilder extends RouteBuilder {
+class AggregateDynamicCompletionSizeRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(xpath("/books/book[@category='Tech']/authors/author/text()"))
+            .log("${threadName} - ${body}")
+            .aggregate(header("group"), new SetAggregationStrategy())
+                    .completionSize(header("batchSize"))
+                .log("${threadName} - out")
                 .to("mock:out")
             .end();
     }

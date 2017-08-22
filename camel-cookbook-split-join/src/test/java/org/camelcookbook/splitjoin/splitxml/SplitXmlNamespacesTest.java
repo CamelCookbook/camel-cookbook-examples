@@ -33,7 +33,7 @@ import org.junit.Test;
 public class SplitXmlNamespacesTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitXmlNamespacesRouteBuilder();
+        return new SplitXmlNamespacesRoute();
     }
 
     @Test

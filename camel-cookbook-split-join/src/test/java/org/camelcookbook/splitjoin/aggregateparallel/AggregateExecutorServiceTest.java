@@ -38,7 +38,7 @@ public class AggregateExecutorServiceTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregateExecutorServiceRouteBuilder();
+        return new AggregateExecutorServiceRoute();
     }
 
     @Test

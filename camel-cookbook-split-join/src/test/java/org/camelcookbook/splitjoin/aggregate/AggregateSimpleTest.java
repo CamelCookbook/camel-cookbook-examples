@@ -35,7 +35,7 @@ public class AggregateSimpleTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregateSimpleRouteBuilder();
+        return new AggregateSimpleRoute();
     }
 
     @Test

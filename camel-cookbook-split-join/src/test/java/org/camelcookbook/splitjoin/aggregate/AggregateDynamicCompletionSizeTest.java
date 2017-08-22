@@ -32,7 +32,7 @@ public class AggregateDynamicCompletionSizeTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregateDynamicCompletionSizeRouteBuilder();
+        return new AggregateDynamicCompletionSizeRoute();
     }
 
     @Test

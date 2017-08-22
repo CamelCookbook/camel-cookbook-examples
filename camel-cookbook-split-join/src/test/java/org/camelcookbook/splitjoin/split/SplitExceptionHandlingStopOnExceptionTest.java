@@ -35,7 +35,7 @@ public class SplitExceptionHandlingStopOnExceptionTest extends CamelTestSupport 
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitExceptionHandlingStopOnExceptionRouteBuilder();
+        return new SplitExceptionHandlingStopOnExceptionRoute();
     }
 
     @Test

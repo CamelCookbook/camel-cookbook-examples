@@ -17,28 +17,18 @@
 
 package org.camelcookbook.splitjoin.splitparallel;
 
+import java.util.concurrent.Executors;
+
 import org.apache.camel.builder.RouteBuilder;
 
-class SplitParallelProcessingTimeoutRouteBuilder extends RouteBuilder {
+class SplitParallelProcessingRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(body()).parallelProcessing().timeout(1000)
+            .split(body()).parallelProcessing().executorService(Executors.newSingleThreadExecutor())
                 .log("Processing message[${property.CamelSplitIndex}]")
-                .to("direct:delay20th")
+                .to("mock:split")
             .end()
             .to("mock:out");
-
-        from("direct:delay20th")
-            .choice()
-                .when(simple("${property.CamelSplitIndex} == 20"))
-                    .to("direct:longDelay")
-                .otherwise()
-                    .to("mock:split")
-            .end();
-
-        from("direct:longDelay")
-            .delay(1500)
-            .to("mock:delayed");
     }
 }

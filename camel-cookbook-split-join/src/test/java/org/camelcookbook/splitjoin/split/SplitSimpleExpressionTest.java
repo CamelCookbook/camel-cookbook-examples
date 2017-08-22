@@ -31,7 +31,7 @@ import org.junit.Test;
 public class SplitSimpleExpressionTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitSimpleExpressionRouteBuilder();
+        return new SplitSimpleExpressionRoute();
     }
 
     @Test

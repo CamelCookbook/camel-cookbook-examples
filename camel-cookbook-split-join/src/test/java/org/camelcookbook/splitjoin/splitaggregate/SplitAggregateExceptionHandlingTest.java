@@ -33,7 +33,7 @@ import org.junit.Test;
 public class SplitAggregateExceptionHandlingTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitAggregateExceptionHandlingRouteBuilder();
+        return new SplitAggregateExceptionHandlingRoute();
     }
 
     @Test

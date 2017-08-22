@@ -29,7 +29,7 @@ public class AggregateCompletionIntervalTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregateCompletionIntervalRouteBuilder();
+        return new AggregateCompletionIntervalRoute();
     }
 
     @Test

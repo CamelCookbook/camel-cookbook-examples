@@ -20,7 +20,7 @@ package org.camelcookbook.splitjoin.splitreaggregate;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-public class SplitReaggregateRouteBuilder extends RouteBuilder {
+public class SplitReaggregateRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")

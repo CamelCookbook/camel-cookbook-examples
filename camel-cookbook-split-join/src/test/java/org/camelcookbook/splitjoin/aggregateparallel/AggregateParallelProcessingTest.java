@@ -38,7 +38,7 @@ public class AggregateParallelProcessingTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregateParallelProcessingRouteBuilder();
+        return new AggregateParallelProcessingRoute();
     }
 
     @Test

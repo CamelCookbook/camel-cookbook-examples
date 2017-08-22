@@ -15,23 +15,17 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.aggregateparallel;
-
-import java.util.concurrent.Executors;
+package org.camelcookbook.splitjoin.split;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-class AggregateExecutorServiceRouteBuilder extends RouteBuilder {
+class SplitNaturalRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .aggregate(header("group"), new SetAggregationStrategy())
-                    .completionSize(10).completionTimeout(400)
-                    .executorService(Executors.newFixedThreadPool(20))
-                .log("${threadName} - processing output")
-                .delay(500)
-                .to("mock:out")
-            .end();
+            .split(body())
+                .to("mock:split")
+            .end()
+            .to("mock:out");
     }
 }

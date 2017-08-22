@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.split;
+package org.camelcookbook.splitjoin.splitparallel;
+
+import java.util.concurrent.Executors;
 
 import org.apache.camel.builder.RouteBuilder;
 
-class SplitNaturalRouteBuilder extends RouteBuilder {
+class SplitExecutorServiceRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(body())
+            .split(body()).executorService(Executors.newFixedThreadPool(20))
+                .log("Processing message[${property.CamelSplitIndex}]")
                 .to("mock:split")
             .end()
             .to("mock:out");

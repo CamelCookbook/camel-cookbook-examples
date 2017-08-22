@@ -15,16 +15,21 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.split;
+package org.camelcookbook.splitjoin.splitaggregate;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-class SplitSimpleExpressionRouteBuilder extends RouteBuilder {
+public class SplitAggregateRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(simple("${body.wrapped}"))
-                .to("mock:out")
-            .end();
+            .split(body(), new SetAggregationStrategy())
+                .inOut("direct:someBackEnd")
+            .end()
+            .to("mock:out");
+
+        from("direct:someBackEnd")
+            .transform(simple("Processed: ${body}"));
     }
 }

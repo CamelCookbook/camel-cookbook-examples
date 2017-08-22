@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.aggregateintervals;
+package org.camelcookbook.splitjoin.splitxml;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
+import org.apache.camel.builder.xml.Namespaces;
 
-class AggregateCompletionIntervalRouteBuilder extends RouteBuilder {
+class SplitXmlNamespacesRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
+        Namespaces ns = new Namespaces("c", "http://camelcookbook.org/schema/books")
+            .add("se", "http://camelcookbook.org/schema/somethingElse");
+
         from("direct:in")
-            .log("${threadName} - ${body}")
-            .aggregate(header("group"), new SetAggregationStrategy())
-                    .completionSize(10).completionInterval(400)
-                .log("${threadName} - out")
-                .delay(500)
+            .split(ns.xpath("/c:books/c:book[@category='Tech']/c:authors/c:author/text()"))
                 .to("mock:out")
             .end();
     }

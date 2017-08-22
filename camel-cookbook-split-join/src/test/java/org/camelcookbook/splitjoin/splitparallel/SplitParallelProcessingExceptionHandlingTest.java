@@ -32,7 +32,7 @@ public class SplitParallelProcessingExceptionHandlingTest extends CamelTestSuppo
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SplitParallelProcessingExceptionHandlingRouteBuilder();
+        return new SplitParallelProcessingExceptionHandlingRoute();
     }
 
     @Test

@@ -33,7 +33,7 @@ public class SplitExceptionHandlingTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitExceptionHandlingRouteBuilder();
+        return new SplitExceptionHandlingRoute();
     }
 
     @Test

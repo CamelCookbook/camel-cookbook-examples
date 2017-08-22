@@ -19,7 +19,6 @@ package org.camelcookbook.splitjoin.aggregatetimeouts;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.camel.Exchange;
@@ -35,7 +34,7 @@ public class AggregateCompletionTimeoutTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregateCompletionTimeoutRouteBuilder();
+        return new AggregateCompletionTimeoutRoute();
     }
 
     @Test

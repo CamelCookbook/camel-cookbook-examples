@@ -15,25 +15,21 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.splitaggregate;
+package org.camelcookbook.splitjoin.aggregateintervals;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.camelcookbook.splitjoin.aggregate.SetAggregationStrategy;
 
-public class SplitAggregateExceptionHandlingRouteBuilder extends RouteBuilder {
+class AggregateCompletionIntervalRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(body(), new ExceptionHandlingSetAggregationStrategy())
-                .inOut("direct:someBackEnd")
-            .end()
-            .to("mock:out");
-
-        from("direct:someBackEnd")
-            .choice()
-                .when(simple("${header.CamelSplitIndex} == 1"))
-                    .throwException(new IllegalStateException())
-                .otherwise()
-                    .transform(simple("Processed: ${body}"))
+            .log("${threadName} - ${body}")
+            .aggregate(header("group"), new SetAggregationStrategy())
+                    .completionSize(10).completionInterval(400)
+                .log("${threadName} - out")
+                .delay(500)
+                .to("mock:out")
             .end();
     }
 }

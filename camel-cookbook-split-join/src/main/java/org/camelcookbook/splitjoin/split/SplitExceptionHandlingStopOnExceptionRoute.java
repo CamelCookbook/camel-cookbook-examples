@@ -17,14 +17,25 @@
 
 package org.camelcookbook.splitjoin.split;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
-class SplitMultiLineRouteBuilder extends RouteBuilder {
+class SplitExceptionHandlingStopOnExceptionRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(body().tokenize("\n"))
-                .to("mock:out")
-            .end();
+            .split(simple("${body}")).stopOnException()
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        if (exchange.getProperty("CamelSplitIndex").equals(1)) {
+                            throw new IllegalStateException("boom");
+                        }
+                    }
+                })
+                .to("mock:split")
+            .end()
+            .to("mock:out");
     }
 }

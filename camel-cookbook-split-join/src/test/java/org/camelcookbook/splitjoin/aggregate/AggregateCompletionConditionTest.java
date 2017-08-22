@@ -35,7 +35,7 @@ public class AggregateCompletionConditionTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new AggregateCompletionConditionRouteBuilder();
+        return new AggregateCompletionConditionRoute();
     }
 
     @Test

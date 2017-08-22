@@ -30,7 +30,7 @@ import org.junit.Test;
 public class SplitNaturalTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new SplitNaturalRouteBuilder();
+        return new SplitNaturalRoute();
     }
 
     @Test

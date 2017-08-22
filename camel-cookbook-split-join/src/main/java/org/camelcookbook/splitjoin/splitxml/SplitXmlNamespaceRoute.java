@@ -18,16 +18,13 @@
 package org.camelcookbook.splitjoin.splitxml;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.builder.xml.Namespaces;
 
-class SplitXmlNamespacesRouteBuilder extends RouteBuilder {
+class SplitXmlNamespaceRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        Namespaces ns = new Namespaces("c", "http://camelcookbook.org/schema/books")
-            .add("se", "http://camelcookbook.org/schema/somethingElse");
-
         from("direct:in")
-            .split(ns.xpath("/c:books/c:book[@category='Tech']/c:authors/c:author/text()"))
+            .split(xpath("/c:books/c:book[@category='Tech']/c:authors/c:author/text()")
+                    .namespace("c", "http://camelcookbook.org/schema/books"))
                 .to("mock:out")
             .end();
     }

@@ -32,7 +32,7 @@ public class SplitExecutorServiceTest extends CamelTestSupport {
 
     @Override
     public RouteBuilder createRouteBuilder() {
-        return new SplitExecutorServiceRouteBuilder();
+        return new SplitExecutorServiceRoute();
     }
 
     @Test

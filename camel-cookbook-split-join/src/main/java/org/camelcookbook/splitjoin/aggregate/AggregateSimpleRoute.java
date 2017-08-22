@@ -15,26 +15,18 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.splitjoin.splitparallel;
+package org.camelcookbook.splitjoin.aggregate;
 
 import org.apache.camel.builder.RouteBuilder;
 
-class SplitParallelProcessingExceptionHandlingRouteBuilder extends RouteBuilder {
+class AggregateSimpleRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:in")
-            .split(body()).parallelProcessing().stopOnException()
-                .log("Processing message[${property.CamelSplitIndex}]")
-                .to("direct:failOn20th")
-            .end()
-            .to("mock:out");
-
-        from("direct:failOn20th")
-            .choice()
-                .when(simple("${property.CamelSplitIndex} == 20"))
-                    .throwException(new IllegalStateException("boom"))
-                .otherwise()
-                    .to("mock:split")
+            .log("${threadName} - ${body}")
+            .aggregate(header("group"), new SetAggregationStrategy()).completionSize(5)
+                .log("${threadName} - out")
+                .to("mock:out")
             .end();
     }
 }

@@ -27,7 +27,7 @@ import org.junit.Test;
 public class DoTryTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new DoTryRouteBuilder();
+        return new DoTryRoute();
     }
 
     @Test

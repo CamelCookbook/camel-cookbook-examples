@@ -21,7 +21,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.error.shared.FlakyException;
 import org.camelcookbook.error.shared.FlakyProcessor;
 
-public class DoTryRouteBuilder extends RouteBuilder {
+public class DoTryRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("direct:start")

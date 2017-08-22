@@ -24,7 +24,7 @@ import org.camelcookbook.error.shared.FlakyException;
 import org.camelcookbook.error.shared.FlakyProcessor;
 import org.camelcookbook.error.shared.SporadicException;
 
-public class ExceptionRouteBuilder extends RouteBuilder {
+public class ExceptionRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         onException(FlakyException.class, SporadicException.class).to("mock:error");

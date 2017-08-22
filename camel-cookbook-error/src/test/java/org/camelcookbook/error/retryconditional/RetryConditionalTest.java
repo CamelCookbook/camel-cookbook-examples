@@ -26,7 +26,7 @@ import org.junit.Test;
 public class RetryConditionalTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RetryConditionalRouteBuilder();
+        return new RetryConditionalRoute();
     }
 
     @Test

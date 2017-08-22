@@ -15,26 +15,21 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.logging;
+package org.camelcookbook.error.retrycustom;
 
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.error.shared.FlakyProcessor;
 
-public class LoggingRouteBuilder extends RouteBuilder {
+public class RetryCustomRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        errorHandler(loggingErrorHandler()
-            .logName("MyLoggingErrorHandler")
-            .level(LoggingLevel.ERROR)
+        errorHandler(
+            defaultErrorHandler()
+                .onRedelivery(new RetryCustomProcessor())
+                .maximumRedeliveries(2)
         );
 
-        from("direct:start").bean(FlakyProcessor.class).to("mock:result");
-
-        from("direct:routeSpecific")
-            .errorHandler(loggingErrorHandler()
-                .logName("MyRouteSpecificLogging")
-                .level(LoggingLevel.ERROR))
+        from("direct:start")
             .bean(FlakyProcessor.class)
             .to("mock:result");
     }

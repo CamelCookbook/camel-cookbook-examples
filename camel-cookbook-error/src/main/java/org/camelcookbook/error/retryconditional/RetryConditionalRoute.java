@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.retrycustom;
+package org.camelcookbook.error.retryconditional;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.error.shared.FlakyProcessor;
+import org.camelcookbook.error.shared.SporadicProcessor;
 
-public class RetryCustomRouteBuilder extends RouteBuilder {
+public class RetryConditionalRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         errorHandler(
             defaultErrorHandler()
-                .onRedelivery(new RetryCustomProcessor())
-                .maximumRedeliveries(2)
+                .retryWhile(simple("${header.CamelRedeliveryCounter} < 2 or ${date:now:EEE} contains 'Tue'"))
         );
 
         from("direct:start")
-            .bean(FlakyProcessor.class)
+            .bean(SporadicProcessor.class)
             .to("mock:result");
     }
 }

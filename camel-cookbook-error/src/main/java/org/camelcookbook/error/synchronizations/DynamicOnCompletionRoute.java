@@ -15,28 +15,24 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.retry;
+package org.camelcookbook.error.synchronizations;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.error.shared.SporadicProcessor;
 
-public class RetryRouteBuilder extends RouteBuilder {
+/**
+ * Route that demonstrates the use of Synchronizations to define completion logic on-the-fly.
+ */
+public class DynamicOnCompletionRoute extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
-        errorHandler(defaultErrorHandler().maximumRedeliveries(2));
 
-        from("direct:start")
-            .bean(SporadicProcessor.class)
-            .to("mock:result");
-
-        from("direct:routeSpecific")
-            .errorHandler(defaultErrorHandler().maximumRedeliveries(2))
-            .bean(SporadicProcessor.class)
-            .to("mock:result");
-
-        from("direct:routeSpecificDelay")
-            .errorHandler(defaultErrorHandler().maximumRedeliveries(2).redeliveryDelay(500))
-            .bean(SporadicProcessor.class)
-            .to("mock:result");
+        from("direct:in")
+            .process(new ConfirmCancelProcessor())
+            .choice()
+                .when(simple("${body} contains 'explode'"))
+                    .throwException(new IllegalArgumentException("Exchange caused explosion"))
+            .end()
+            .log("Processed message");
     }
 }

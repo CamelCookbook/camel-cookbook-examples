@@ -15,21 +15,27 @@
  * limitations under the License.
  */
 
-package org.camelcookbook.error.retryconditional;
+package org.camelcookbook.error.logging;
 
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.camelcookbook.error.shared.SporadicProcessor;
+import org.camelcookbook.error.shared.FlakyProcessor;
 
-public class RetryConditionalRouteBuilder extends RouteBuilder {
+public class LoggingRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        errorHandler(
-            defaultErrorHandler()
-                .retryWhile(simple("${header.CamelRedeliveryCounter} < 2 or ${date:now:EEE} contains 'Tue'"))
+        errorHandler(loggingErrorHandler()
+            .logName("MyLoggingErrorHandler")
+            .level(LoggingLevel.ERROR)
         );
 
-        from("direct:start")
-            .bean(SporadicProcessor.class)
+        from("direct:start").bean(FlakyProcessor.class).to("mock:result");
+
+        from("direct:routeSpecific")
+            .errorHandler(loggingErrorHandler()
+                .logName("MyRouteSpecificLogging")
+                .level(LoggingLevel.ERROR))
+            .bean(FlakyProcessor.class)
             .to("mock:result");
     }
 }

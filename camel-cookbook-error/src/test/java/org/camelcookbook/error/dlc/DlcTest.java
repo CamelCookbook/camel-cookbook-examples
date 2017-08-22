@@ -26,7 +26,7 @@ import org.junit.Test;
 public class DlcTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new DlcRouteBuilder();
+        return new DlcRoute();
     }
 
     @Test

@@ -24,7 +24,7 @@ import org.junit.Test;
 public class LoggingTest extends CamelTestSupport {
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new LoggingRouteBuilder();
+        return new LoggingRoute();
     }
 
     @Test

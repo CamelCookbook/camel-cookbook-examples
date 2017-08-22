@@ -22,7 +22,7 @@ import org.apache.camel.builder.RouteBuilder;
 /**
  * Route that demonstrates ho multiple onCompletion elements will not execute as expected - only the one defined last will be used.
  */
-public class OnCompletionMultipleRouteBuilder extends RouteBuilder {
+public class OnCompletionMultipleRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {

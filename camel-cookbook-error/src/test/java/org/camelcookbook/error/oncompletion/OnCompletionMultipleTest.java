@@ -31,7 +31,7 @@ public class OnCompletionMultipleTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new OnCompletionMultipleRouteBuilder();
+        return new OnCompletionMultipleRoute();
     }
 
     @Test

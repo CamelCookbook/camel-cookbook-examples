@@ -30,7 +30,7 @@ public class OnCompletionTest extends CamelTestSupport {
     @Override
     protected RouteBuilder[] createRouteBuilders() throws Exception {
         return new RouteBuilder[]{
-            new OnCompletionRouteBuilder(),
+            new OnCompletionRoute(),
             new RouteBuilder() {
                 @Override
                 public void configure() throws Exception {

@@ -22,7 +22,7 @@ import org.apache.camel.builder.RouteBuilder;
 /**
  * Route that demonstrates the use of the onCompletion DSL statement
  */
-public class OnCompletionRouteBuilder extends RouteBuilder {
+public class OnCompletionRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {

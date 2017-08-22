@@ -20,7 +20,7 @@ package org.camelcookbook.error.dlc;
 import org.apache.camel.builder.RouteBuilder;
 import org.camelcookbook.error.shared.FlakyProcessor;
 
-public class DlcRouteBuilder extends RouteBuilder {
+public class DlcRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         errorHandler(deadLetterChannel("seda:error"));

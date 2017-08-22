@@ -32,7 +32,7 @@ public class DynamicOnCompletionTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new DynamicOnCompletionRouteBuilder();
+        return new DynamicOnCompletionRoute();
     }
 
     @Test

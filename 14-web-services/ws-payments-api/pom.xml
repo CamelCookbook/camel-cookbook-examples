@@ -30,7 +30,7 @@
   <artifactId>ws-payments-api</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Web Services :: API</name>
+  <name>${application-name} :: 14 - Web Services :: API</name>
 
   <build>
     <defaultGoal>install</defaultGoal>

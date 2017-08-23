@@ -27,10 +27,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>testing</artifactId>
+  <artifactId>11-testing</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Testing</name>
+  <name>${application-name} :: 11 - Testing</name>
 
   <dependencies>
     <dependency>

@@ -27,10 +27,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>monitoring</artifactId>
+  <artifactId>12-monitoring</artifactId>
   <packaging>jar</packaging>
 
-  <name>${application-name} :: Monitoring &amp; Debugging</name>
+  <name>${application-name} :: 12 - Monitoring &amp; Debugging</name>
 
   <properties>
   </properties>

@@ -27,10 +27,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>web-services</artifactId>
+  <artifactId>14-web-services</artifactId>
   <packaging>pom</packaging>
 
-  <name>${application-name} :: Web Services</name>
+  <name>${application-name} :: 14 - Web Services</name>
 
   <modules>
     <module>ws-payments-api</module>

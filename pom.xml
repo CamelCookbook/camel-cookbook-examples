@@ -101,11 +101,11 @@
   <modules>
     <module>01-structuring-routes</module>
     <module>02-routing</module>
-    <module>03-extend</module>
+    <module>03-extending</module>
     <module>04-rest</module>
     <module>04-rest-hello</module>
-    <module>05-transformation</module>
-    <module>06-split-join</module>
+    <module>05-transforming</module>
+    <module>06-splitting-aggregating</module>
     <module>07-parallel-processing</module>
     <module>08-error-handling</module>
     <module>09-transactions</module>

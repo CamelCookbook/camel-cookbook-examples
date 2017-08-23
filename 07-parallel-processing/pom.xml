@@ -27,10 +27,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>parallel-processing</artifactId>
+  <artifactId>07-parallel-processing</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Parallel Processing</name>
+  <name>${application-name} :: 07 - Parallel Processing</name>
 
   <dependencies>
     <dependency>

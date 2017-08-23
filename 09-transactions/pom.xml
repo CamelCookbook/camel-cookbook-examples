@@ -26,10 +26,10 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>transactions</artifactId>
+  <artifactId>09-transactions</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Transactions</name>
+  <name>${application-name} :: 09 - Transactions</name>
 
   <dependencies>
     <dependency>

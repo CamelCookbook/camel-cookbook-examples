@@ -28,10 +28,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>runtime</artifactId>
+  <artifactId>10-runtimes</artifactId>
   <packaging>pom</packaging>
 
-  <name>${application-name} :: Runtime</name>
+  <name>${application-name} :: 10 - Runtimes</name>
 
   <modules>
     <module>runtime-servlet</module>

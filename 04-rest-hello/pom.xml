@@ -30,7 +30,7 @@
   <artifactId>rest-hello</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: REST Hello</name>
+  <name>${application-name} :: 04 - REST Hello</name>
 
   <dependencies>
     <dependency>

@@ -30,7 +30,7 @@
   <artifactId>ws-camel-routes</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Web Services :: Routes</name>
+  <name>${application-name} :: 14 - Web Services :: Routes</name>
 
   <dependencies>
     <dependency>

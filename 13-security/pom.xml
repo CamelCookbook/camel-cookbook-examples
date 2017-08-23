@@ -26,10 +26,10 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>security</artifactId>
+  <artifactId>13-security</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Security</name>
+  <name>${application-name} :: 13 - Security</name>
 
   <dependencies>
     <dependency>

@@ -27,10 +27,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>error</artifactId>
+  <artifactId>08-error-handling</artifactId>
   <packaging>jar</packaging>
 
-  <name>${application-name} :: Error Handling</name>
+  <name>${application-name} :: 08 - Error Handling</name>
 
   <properties>
   </properties>

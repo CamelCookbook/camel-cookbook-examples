@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) Scott Cranton, Jakub Korab, and Christian Posta
   ~ https://github.com/CamelCookbook
@@ -27,10 +27,13 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>split-join</artifactId>
-  <packaging>bundle</packaging>
+  <artifactId>03-extending</artifactId>
+  <packaging>jar</packaging>
 
-  <name>${application-name} :: Splitting &amp; Aggregating</name>
+  <name>${application-name} :: 03 - Extending Routes with your Code</name>
+
+  <properties>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -41,15 +44,13 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-spring</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-saxon</artifactId>
-    </dependency>
 
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-script</artifactId>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-camel</artifactId>
     </dependency>
+
+    <!-- testing dependencies -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test</artifactId>
@@ -66,6 +67,7 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- logging dependencies -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>

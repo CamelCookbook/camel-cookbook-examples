@@ -27,10 +27,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>transformation</artifactId>
+  <artifactId>05-transforming</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Transformation</name>
+  <name>${application-name} :: 05 - Transforming</name>
 
   <properties>
     <jaxb2-basics-version>0.6.4</jaxb2-basics-version>

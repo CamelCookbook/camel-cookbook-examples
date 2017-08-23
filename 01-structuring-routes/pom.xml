@@ -27,10 +27,10 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>structuring-routes</artifactId>
+  <artifactId>01-structuring-routes</artifactId>
   <packaging>bundle</packaging>
 
-  <name>${application-name} :: Structuring Routes</name>
+  <name>${application-name} :: 01 - Structuring Routes</name>
 
   <dependencies>
     <dependency>

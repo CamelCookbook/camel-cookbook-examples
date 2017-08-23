@@ -18,20 +18,3 @@ Maven will download all of the appropriate project dependencies.
 In order to execute all the tests, all you need to do is run:
 
     $ mvn clean install
-
-You will find the sample code laid out for the chapters as follows:
-
-1. Structuring Routes - `01-structuring-routes`
-2. Message Routing - `02-routing`
-3. Routing to your Code - `03-extend`
-4. Rest - `04-rest`
-5. Transformation - `05-transformation`
-6. Splitting and Aggregating - `06-split-join`
-7. Parallel Processing - `07-parallel-processing`
-8. Error Handling and Compensation - `08-error-handling`
-9. Transactions and Idempotency - `09-transactions`
-10. Runtimes - `10-runtimes`
-11. Testing - `11-testing`
-12. Monitoring and Debugging - `12-monitoring`
-13. Security - `13-security`
-14. Web Services - `14-web-services`

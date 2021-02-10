@@ -16,69 +16,134 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
   <!-- We are purposefully not inheriting from the parent as the
-   transitive parent properties collide with the wildfly-swarm fraction versions-->
-
-  <groupId>org.camelcookbook.examples</groupId>
-  <artifactId>runtime-wildfly-swarm</artifactId>
-  <version>2.0-SNAPSHOT</version>
-
-  <packaging>jar</packaging>
-
-  <properties>
-    <application-name>Camel Cookbook Examples</application-name>
-    <wildfly-swarm-version>2017.3.2</wildfly-swarm-version>
-  </properties>
-
-  <name>${application-name} :: 10 - Runtimes :: WildFly Swarm</name>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>bom-all</artifactId>
-        <version>${wildfly-swarm-version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>camel-cdi</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>camel-undertow</artifactId>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>wildfly-swarm-plugin</artifactId>
-        <version>${wildfly-swarm-version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>package</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <useUberJar>true</useUberJar>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
+   transitive parent properties collide with the wildfly-swarm fraction versions-->  
+  <groupId>org.camelcookbook.examples</groupId>  
+  <artifactId>runtime-wildfly-swarm</artifactId>  
+  <version>2.0-SNAPSHOT</version>  
+  <packaging>jar</packaging>  
+  <properties> 
+    <application-name>Camel Cookbook Examples</application-name>  
+    <wildfly-swarm-version>2017.3.2</wildfly-swarm-version> 
+  </properties>  
+  <name>${application-name} :: 10 - Runtimes :: WildFly Swarm</name>  
+  <dependencyManagement> 
+    <dependencies> 
+      <dependency> 
+        <groupId>org.wildfly.swarm</groupId>  
+        <artifactId>bom-all</artifactId>  
+        <version>${wildfly-swarm-version}</version>  
+        <scope>import</scope>  
+        <type>pom</type> 
+      </dependency>  
+      <dependency> 
+        <groupId>org.wildfly.swarm</groupId>  
+        <artifactId>camel-core</artifactId>  
+        <version>2017.3.2</version> 
+      </dependency>  
+      <dependency> 
+        <groupId>org.apache.camel</groupId>  
+        <artifactId>camel-cdi</artifactId>  
+        <version>2.18.2</version> 
+      </dependency>  
+      <dependency> 
+        <groupId>org.apache.camel</groupId>  
+        <artifactId>camel-undertow</artifactId>  
+        <version>2.18.2</version> 
+      </dependency>  
+      <dependency> 
+        <groupId>org.wildfly.swarm</groupId>  
+        <artifactId>undertow</artifactId>  
+        <version>2017.3.2</version> 
+      </dependency>  
+      <dependency> 
+        <groupId>org.wildfly.swarm</groupId>  
+        <artifactId>cdi-config</artifactId>  
+        <version>2017.3.2</version> 
+      </dependency>  
+      <dependency> 
+        <groupId>org.wildfly.swarm</groupId>  
+        <artifactId>transactions</artifactId>  
+        <version>2017.3.2</version> 
+      </dependency>  
+      <dependency> 
+        <groupId>org.wildfly.swarm</groupId>  
+        <artifactId>meta-spi</artifactId>  
+        <version>2017.3.2</version> 
+      </dependency> 
+    </dependencies> 
+  </dependencyManagement>  
+  <dependencies> 
+    <dependency> 
+      <groupId>org.wildfly.swarm</groupId>  
+      <artifactId>camel-cdi</artifactId>  
+      <exclusions> 
+        <exclusion> 
+          <groupId>com.sun.xml.bind</groupId>  
+          <artifactId>jaxb-impl</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>com.sun.xml.bind</groupId>  
+          <artifactId>jaxb-core</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.wildfly.swarm</groupId>  
+          <artifactId>naming</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.jboss.spec.javax.transaction</groupId>  
+          <artifactId>jboss-transaction-api_1.2_spec</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.jboss.spec.javax.interceptor</groupId>  
+          <artifactId>jboss-interceptors-api_1.2_spec</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.glassfish</groupId>  
+          <artifactId>javax.el-impl</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.jboss.spec.javax.enterprise.concurrent</groupId>  
+          <artifactId>jboss-concurrency-api_1.0_spec</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.jboss.openjdk-orb</groupId>  
+          <artifactId>openjdk-orb</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.wildfly.core</groupId>  
+          <artifactId>wildfly-core-security-api</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.jboss.shrinkwrap</groupId>  
+          <artifactId>shrinkwrap-spi</artifactId> 
+        </exclusion>  
+        <exclusion> 
+          <groupId>org.wildfly.swarm</groupId>  
+          <artifactId>bean-validation</artifactId> 
+        </exclusion> 
+      </exclusions> 
+    </dependency> 
+  </dependencies>  
+  <build> 
+    <plugins> 
+      <plugin> 
+        <groupId>org.wildfly.swarm</groupId>  
+        <artifactId>wildfly-swarm-plugin</artifactId>  
+        <version>${wildfly-swarm-version}</version>  
+        <executions> 
+          <execution> 
+            <goals> 
+              <goal>package</goal> 
+            </goals> 
+          </execution> 
+        </executions>  
+        <configuration> 
+          <useUberJar>true</useUberJar> 
+        </configuration> 
+      </plugin> 
+    </plugins> 
+  </build> 
 </project>

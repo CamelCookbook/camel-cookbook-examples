@@ -625,6 +625,9 @@
         <configuration>
           <!-- set the locale for all tests rather than rely on the system locale -->
           <argLine>-Duser.country=US -Duser.language=en</argLine>
+        	<parallel>classes</parallel>
+        	<useUnlimitedThreads>true</useUnlimitedThreads>
+
         </configuration>
       </plugin>
 
